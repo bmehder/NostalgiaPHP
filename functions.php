@@ -1,3 +1,171 @@
 <?php
-// (Truncated for brevity — same as in canvas)
-?>
+// Minimal helpers for routing, loading, front-matter, and markdown
+
+function config()
+{
+  static $cfg;
+  if (!$cfg)
+    $cfg = require __DIR__ . '/config.php';
+  return $cfg;
+}
+
+function site($key = null)
+{
+  $site = config()['site'];
+  return $key ? ($site[$key] ?? null) : $site;
+}
+
+function path($key)
+{
+  return config()['paths'][$key] ?? null;
+}
+
+function url($path = '')
+{
+  $base = rtrim(site('base_url'), '/');
+  return $base . '/' . ltrim($path, '/');
+}
+
+function request_path()
+{
+  $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+  return '/' . ltrim($uri, '/');
+}
+
+function is_collection($segment)
+{
+  return array_key_exists($segment, config()['collections']);
+}
+
+function read_file($file)
+{
+  return is_file($file) ? file_get_contents($file) : null;
+}
+
+function parse_front_matter($raw)
+{
+  $meta = [];
+  $body = $raw;
+  if (preg_match('/^---\\s*\\n(.+?)\\n---\\s*\\n(.*)$/s', $raw, $m)) {
+    $yaml = trim($m[1]);
+    $body = $m[2];
+    foreach (preg_split('/\\r?\\n/', $yaml) as $line) {
+      if (!trim($line))
+        continue;
+      if (preg_match('/^([A-Za-z0-9_\\-]+):\\s*(.*)$/', $line, $p)) {
+        $k = trim($p[1]);
+        $v = trim($p[2]);
+        // Basic typing for dates & booleans
+        if (preg_match('/^\\d{4}-\\d{2}-\\d{2}/', $v))
+          $v = new DateTime($v);
+        elseif ($v === 'true')
+          $v = true;
+        elseif ($v === 'false')
+          $v = false;
+        $meta[$k] = $v;
+      }
+    }
+  }
+  return [$meta, $body];
+}
+
+function markdown_to_html($md)
+{
+  // Tiny Markdown subset: headings, bold/italic, code, links, lists, paragraphs
+  $html = $md;
+
+  // Headings
+  $html = preg_replace('/^######\\s*(.+)$/m', '<h6>$1</h6>', $html);
+  $html = preg_replace('/^#####\\s*(.+)$/m', '<h5>$1</h5>', $html);
+  $html = preg_replace('/^####\\s*(.+)$/m', '<h4>$1</h4>', $html);
+  $html = preg_replace('/^###\\s*(.+)$/m', '<h3>$1</h3>', $html);
+  $html = preg_replace('/^##\\s*(.+)$/m', '<h2>$1</h2>', $html);
+  $html = preg_replace('/^#\\s*(.+)$/m', '<h1>$1</h1>', $html);
+
+  // Inline
+  $html = preg_replace('/\\*\\*(.+?)\\*\\*/s', '<strong>$1</strong>', $html);
+  $html = preg_replace('/\\*(.+?)\\*/s', '<em>$1</em>', $html);
+  $html = preg_replace('/`([^`]+)`/', '<code>$1</code>', $html);
+  $html = preg_replace('/\$begin:math:display$(.+?)\\$end:math:display$\$begin:math:text$(https?:[^\\$end:math:text$]+)\\)/', '<a href="$2">$1</a>', $html);
+
+  // Lists (very naive)
+  $html = preg_replace_callback('/(^|\\n)(?:-\\s.+\\n?)+/m', function ($m) {
+    $items = preg_replace('/^-\\s(.+)$/m', '<li>$1</li>', trim($m[0]));
+    return "\n<ul>\n$items\n</ul>\n";
+  }, $html);
+
+  // Paragraphs: wrap plain blocks not already HTML
+  $blocks = preg_split('/\\n\\n+/', trim($html));
+  $blocks = array_map(function ($block) {
+    if (preg_match('/^\\s*<\\/?(h\\d|ul|ol|li|pre|blockquote|p|code)/i', $block))
+      return $block;
+    return '<p>' . $block . '</p>';
+  }, $blocks);
+
+  return implode("\n\n", $blocks);
+}
+
+function load_page($slug)
+{
+  $file = path('pages') . '/' . $slug . '.md';
+  if (!is_file($file))
+    return null;
+  [$meta, $md] = parse_front_matter(read_file($file));
+  $html = markdown_to_html($md);
+  return ['type' => 'page', 'slug' => $slug, 'meta' => $meta, 'html' => $html];
+}
+
+function load_collection_item($collection, $slug)
+{
+  $file = path('collections') . "/$collection/$slug.md";
+  if (!is_file($file))
+    return null;
+  [$meta, $md] = parse_front_matter(read_file($file));
+  $meta['slug'] = $slug;
+  $html = markdown_to_html($md);
+  return ['type' => 'item', 'collection' => $collection, 'slug' => $slug, 'meta' => $meta, 'html' => $html];
+}
+
+function list_collection($collection)
+{
+  $dir = path('collections') . "/$collection";
+  if (!is_dir($dir))
+    return [];
+  $items = [];
+  foreach (glob($dir . '/*.md') as $file) {
+    $slug = basename($file, '.md');
+    [$meta, $md] = parse_front_matter(read_file($file));
+    $meta['slug'] = $slug;
+    $items[] = ['slug' => $slug, 'meta' => $meta];
+  }
+  // Sorting by meta key (e.g., date)
+  $cfg = config()['collections'][$collection] ?? null;
+  if ($cfg && isset($cfg['sort'])) {
+    [$key, $dir] = $cfg['sort'];
+    usort($items, function ($a, $b) use ($key, $dir) {
+      $av = $a['meta'][$key] ?? null;
+      $bv = $b['meta'][$key] ?? null;
+      if ($av instanceof DateTime)
+        $av = $av->getTimestamp();
+      if ($bv instanceof DateTime)
+        $bv = $bv->getTimestamp();
+      if ($av == $bv)
+        return 0;
+      $cmp = ($av < $bv) ? -1 : 1;
+      return ($dir === 'desc') ? -$cmp : $cmp;
+    });
+  }
+  return $items;
+}
+
+function render($view, $vars = [])
+{
+  $tpl = path('templates') . "/$view.php";
+  if (!is_file($tpl)) {
+    http_response_code(500);
+    echo "Missing template: $view";
+    exit;
+  }
+  extract($vars);
+  include $tpl;
+}
