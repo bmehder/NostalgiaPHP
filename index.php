@@ -31,10 +31,10 @@ if ($path === '' || $path === '/') {
   exit;
 }
 
-$parts = explode('/', $path);
-$first = $parts[0];
+$parts = $path === '' ? [] : explode('/', $path);
+$first = $parts[0] ?? '';
 
-// Collection routes: /blog  or /blog/my-post
+// ---------- Collection routes: /blog  or /blog/my-post ----------
 if (is_collection($first)) {
   // Collection LIST: /blog
   if (count($parts) === 1) {
@@ -47,7 +47,7 @@ if (is_collection($first)) {
     } else {
       echo '<div class="cards auto-fill">';
       foreach ($items as $it) {
-        // Make vars available to the partial
+        // make vars available to the partial
         $collection = $first;
         $item = $it;
         include path('partials') . '/card.php';
@@ -62,8 +62,8 @@ if (is_collection($first)) {
   }
 
   // Collection ITEM: /blog/my-post
-  $slug = $parts[1];
-  $item = load_collection_item($first, $slug);
+  $slug = $parts[1] ?? '';
+  $item = $slug !== '' ? load_collection_item($first, $slug) : null;
 
   if (!$item) {
     http_response_code(404);
@@ -76,10 +76,9 @@ if (is_collection($first)) {
     // Append tag list if tags exist
     $tags = $item['meta']['tags'] ?? [];
     if ($tags) {
-      $links = array_map(
-        fn($t) => '<a href="' . url('/tags/' . $t) . '">' . htmlspecialchars($t) . '</a>',
-        $tags
-      );
+      $links = array_map(function ($t) {
+        return '<a href="' . url('/tags/' . $t) . '">' . htmlspecialchars($t) . '</a>';
+      }, $tags);
       $content .= '<p><small>Tags: ' . implode(', ', $links) . '</small></p>';
     }
   }
@@ -88,23 +87,45 @@ if (is_collection($first)) {
   exit;
 }
 
-// Global tag route: /tags/{tag}
-if ($first === 'tags' && !empty($parts[1])) {
-  $tag = $parts[1];
-  $items = items_with_tag($tag); // all collections
+// ---------- Tags index: /tags ----------
+if ($parts === ['tags'] || ($first === 'tags' && count($parts) === 1)) {
+  $tagmap = all_tags(); // across all collections
   ob_start();
-  echo '<h1>Tag: ' . htmlspecialchars($tag) . '</h1>';
-  if (!$items)
-    echo '<p>No items with this tag yet.</p>';
-  else {
-    echo '<ul>';
-    foreach ($items as $it) {
-      $c = htmlspecialchars($it['meta']['collection'] ?? '');
-      $title = htmlspecialchars($it['meta']['title'] ?? $it['slug']);
-      $href = url("/{$c}/{$it['slug']}");
-      echo "<li><a href=\"$href\">$title</a> <small>in $c</small></li>";
+  echo '<h1>Tags</h1>';
+  if (!$tagmap) {
+    echo '<p>No tags yet.</p>';
+  } else {
+    echo '<ul class="tags-list">';
+    foreach ($tagmap as $tag => $count) {
+      $href = url('/tags/' . rawurlencode($tag));
+      $label = htmlspecialchars($tag);
+      echo "<li><a class=\"tag-chip\" href=\"$href\">$label <span class=\"tag-count\">$count</span></a></li>";
     }
     echo '</ul>';
+  }
+  $content = ob_get_clean();
+  $title = 'Tags';
+  render('main', compact('title', 'content'));
+  exit;
+}
+
+// ---------- Single tag: /tags/{tag} ----------
+if ($first === 'tags' && !empty($parts[1])) {
+  $tag = urldecode($parts[1]);
+  $items = items_with_tag($tag); // across all collections
+
+  ob_start();
+  echo '<h1>Tag: ' . htmlspecialchars($tag) . '</h1>';
+  if (!$items) {
+    echo '<p>No items with this tag yet.</p>';
+  } else {
+    echo '<div class="cards auto-fill">';
+    foreach ($items as $it) {
+      $collection = $it['meta']['_collection'] ?? 'blog';
+      $item = $it;
+      include path('partials') . '/card.php';
+    }
+    echo '</div>';
   }
   $content = ob_get_clean();
   $title = 'Tag: ' . $tag;
@@ -112,31 +133,31 @@ if ($first === 'tags' && !empty($parts[1])) {
   exit;
 }
 
-// Per-collection tag route: /{collection}/tag/{tag}
-if (is_collection($first) && (isset($parts[1]) && $parts[1] === 'tag') && !empty($parts[2])) {
+// ---------- Per-collection tag: /{collection}/tag/{tag} ----------
+if (is_collection($first) && isset($parts[1]) && $parts[1] === 'tag' && !empty($parts[2])) {
   $collection = $first;
-  $tag = $parts[2];
+  $tag = urldecode($parts[2]);
   $items = items_with_tag($tag, $collection);
+
   ob_start();
   echo '<h1>' . htmlspecialchars(ucfirst($collection)) . ' — Tag: ' . htmlspecialchars($tag) . '</h1>';
-  if (!$items)
-    echo '<p>No items with this tag yet.</p>';
-  else {
-    echo '<ul>';
+  if (!$items) {
+    echo '<p>No items with this tag in this collection.</p>';
+  } else {
+    echo '<div class="cards auto-fill">';
     foreach ($items as $it) {
-      $title = htmlspecialchars($it['meta']['title'] ?? $it['slug']);
-      $href = url("/{$collection}/{$it['slug']}");
-      echo "<li><a href=\"$href\">$title</a></li>";
+      $item = $it;
+      include path('partials') . '/card.php';
     }
-    echo '</ul>';
+    echo '</div>';
   }
   $content = ob_get_clean();
-  $title = ucfirst($collection) . " — $tag";
+  $title = ucfirst($collection) . ' — ' . $tag;
   render('main', compact('title', 'content'));
   exit;
 }
 
-// Page route: support nested pages, e.g. /guides/install
+// ---------- Page route: support nested pages, e.g. /guides/install ----------
 $rel = implode('/', $parts);
 $page = load_page_path($rel);
 
@@ -147,12 +168,13 @@ if (!$page) {
 } else {
   $title = $page['meta']['title'] ?? ucfirst(basename($rel));
 
-  // If front-matter defines `hero`, render the hero partial before the content
+  // Optional hero via front matter (hero: "...", hero_image: "/path")
   if (!empty($page['meta']['hero'])) {
     ob_start();
-    $subtitle = (string) $page['meta']['hero']; // from front-matter
+    $subtitle = (string) $page['meta']['hero'];
+    $image = $page['meta']['hero_image'] ?? null;
     include path('partials') . '/hero.php';
-    echo $page['html'];                         // then the normal page content
+    echo $page['html'];
     $content = ob_get_clean();
   } else {
     $content = $page['html'];

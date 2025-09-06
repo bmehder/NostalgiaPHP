@@ -1,6 +1,8 @@
 <?php
 // Minimal helpers for routing, loading, front-matter, and markdown
 
+/* ------------------------------ Config & paths ----------------------------- */
+
 function config()
 {
   static $cfg;
@@ -34,7 +36,8 @@ function request_path()
 
 function is_collection($segment)
 {
-  return array_key_exists($segment, config()['collections']);
+  $collections = config()['collections'] ?? [];
+  return array_key_exists($segment, $collections);
 }
 
 function read_file($file)
@@ -42,88 +45,54 @@ function read_file($file)
   return is_file($file) ? file_get_contents($file) : null;
 }
 
+/* ------------------------------ Front matter ------------------------------ */
+
 function parse_front_matter($raw)
 {
   $meta = [];
   $body = $raw;
-  if (preg_match('/^---\\s*\\n(.+?)\\n---\\s*\\n(.*)$/s', $raw, $m)) {
+
+  // ---<yaml>--- body ---</yaml>--- (simple YAML-ish parser)
+  if (preg_match('/^---\s*\n(.+?)\n---\s*\n(.*)$/s', $raw, $m)) {
     $yaml = trim($m[1]);
     $body = $m[2];
-    foreach (preg_split('/\\r?\\n/', $yaml) as $line) {
+
+    foreach (preg_split('/\r?\n/', $yaml) as $line) {
       if (!trim($line))
         continue;
-      if (preg_match('/^([A-Za-z0-9_\\-]+):\\s*(.*)$/', $line, $p)) {
+      if (preg_match('/^([A-Za-z0-9_\-]+):\s*(.*)$/', $line, $p)) {
         $k = trim($p[1]);
         $v = trim($p[2]);
-        // Basic typing for dates & booleans
-        if (preg_match('/^\\d{4}-\\d{2}-\\d{2}/', $v))
+
+        // Basic typing
+        if (preg_match('/^\d{4}-\d{2}-\d{2}/', $v)) {
           $v = new DateTime($v);
-        elseif ($v === 'true')
+        } elseif ($v === 'true') {
           $v = true;
-        elseif ($v === 'false')
+        } elseif ($v === 'false') {
           $v = false;
-        $meta[$k] = $v;
-        // Normalize tags: "tag1, tag2" -> ['tag1','tag2']
+        }
+
+        // Normalize tags from a comma string: "a, b, c"
         if ($k === 'tags') {
-          // support "a, b, c" or "[a, b, c]" (we'll just strip brackets if present)
           $v = trim($v, "[] \t");
           $parts = array_filter(array_map('trim', explode(',', $v)));
-          $meta[$k] = array_values($parts);
+          $v = array_values($parts);
         }
+
+        $meta[$k] = $v;
       }
     }
   }
+
   return [$meta, $body];
 }
 
-// function markdown_to_html($md)
-// {
-//   // Tiny Markdown subset: headings, bold/italic, code, links, lists, paragraphs
-//   $html = $md;
-
-//   // Headings
-//   $html = preg_replace('/^######\\s*(.+)$/m', '<h6>$1</h6>', $html);
-//   $html = preg_replace('/^#####\\s*(.+)$/m', '<h5>$1</h5>', $html);
-//   $html = preg_replace('/^####\\s*(.+)$/m', '<h4>$1</h4>', $html);
-//   $html = preg_replace('/^###\\s*(.+)$/m', '<h3>$1</h3>', $html);
-//   $html = preg_replace('/^##\\s*(.+)$/m', '<h2>$1</h2>', $html);
-//   $html = preg_replace('/^#\\s*(.+)$/m', '<h1>$1</h1>', $html);
-
-//   // Inline
-//   $html = preg_replace('/\\*\\*(.+?)\\*\\*/s', '<strong>$1</strong>', $html);
-//   $html = preg_replace('/\\*(.+?)\\*/s', '<em>$1</em>', $html);
-//   $html = preg_replace('/`([^`]+)`/', '<code>$1</code>', $html);
-//   $html = preg_replace('/\$begin:math:display$(.+?)\\$end:math:display$\$begin:math:text$(https?:[^\\$end:math:text$]+)\\)/', '<a href="$2">$1</a>', $html);
-
-//   // Lists (very naive)
-//   $html = preg_replace_callback('/(^|\\n)(?:-\\s.+\\n?)+/m', function ($m) {
-//     $items = preg_replace('/^-\\s(.+)$/m', '<li>$1</li>', trim($m[0]));
-//     return "\n<ul>\n$items\n</ul>\n";
-//   }, $html);
-
-//   // Ordered lists (very naive)
-//   $html = preg_replace_callback('/(^|\n)(?:\d+\.\s.+\n?)+/m', function ($m) {
-//     $items = preg_replace('/^\d+\.\s(.+)$/m', '<li>$1</li>', trim($m[0]));
-//     return "\n<ol>\n$items\n</ol>\n";
-//   }, $html);
-
-//   // Paragraphs: wrap plain blocks not already HTML
-//   $blocks = preg_split('/\\n\\n+/', trim($html));
-//   $blocks = array_map(function ($block) {
-//     // AFTER (broader: recognize common HTML block tags)
-//     if (preg_match('/^\s*<\/?(article|section|div|header|footer|nav|main|aside|figure|figcaption|h\d|p|ul|ol|li|pre|blockquote|code|table|thead|tbody|tr|td|th|img|video|iframe|form|input|button|label|span|a)\b/i', $block)) {
-//       return $block;
-//     }
-//     return '<p>' . $block . '</p>';
-//   }, $blocks);
-
-//   return implode("\n\n", $blocks);
-// }
-
+/* -------------------------------- Markdown -------------------------------- */
 
 function markdown_to_html($md)
 {
-  // --- PREPROCESS: ```gallery ... ``` fences on raw Markdown ---
+  // PRE-PROCESS: ```gallery ... ``` (on raw Markdown, before parsing)
   $md = preg_replace_callback('/```gallery\s*\n([\s\S]*?)\n```/i', function ($m) {
     $raw = trim($m[1]);
     if ($raw === '')
@@ -138,14 +107,22 @@ function markdown_to_html($md)
         continue;
 
       if (preg_match('#^https?://#i', $srcInput)) {
-        $src = $srcInput;                 // external URL
+        $src = $srcInput;                   // external
       } elseif ($srcInput[0] === '/') {
-        $src = url($srcInput);            // site-absolute path
+        $src = url($srcInput);              // site-absolute
       } else {
-        $src = url('/assets/' . $srcInput); // relative → /assets/...
+        $src = url('/assets/' . $srcInput); // relative -> /assets/...
       }
 
-      $alt = $caption !== '' ? $caption : preg_replace('/\.[a-z0-9]+$/i', '', basename($srcInput));
+      // Allow explicit blank caption with a trailing pipe
+      if ($caption === '' && strpos($line, '|') !== false) {
+        $alt = '';
+      } elseif ($caption !== '') {
+        $alt = $caption;
+      } else {
+        $alt = preg_replace('/\.[a-z0-9]+$/i', '', basename($srcInput));
+      }
+
       $images[] = ['src' => $src, 'alt' => $alt];
     }
 
@@ -153,39 +130,34 @@ function markdown_to_html($md)
       return '';
 
     ob_start();
+    // expects $images
     include path('partials') . '/gallery.php';
     return ob_get_clean();
   }, $md);
-  
+
+  // Use Parsedown if available; otherwise return raw (you can keep a tiny fallback if you want)
   static $engine = null;
 
   if ($engine === null) {
-    // Manual include of Parsedown.php
     if (is_file(__DIR__ . '/Parsedown.php')) {
       require_once __DIR__ . '/Parsedown.php';
       $engine = new \Parsedown();
-    } else {
-      $engine = false; // fallback tiny parser if you kept it
-    }
-
-    if ($engine) {
-      // Trusted content → keep SafeMode off
-      if (method_exists($engine, 'setSafeMode')) {
+      if (method_exists($engine, 'setSafeMode'))
         $engine->setSafeMode(false);
-      }
-      if (method_exists($engine, 'setBreaksEnabled')) {
-        $engine->setBreaksEnabled(false); // keep Markdown’s standard line breaks
-      }
+      if (method_exists($engine, 'setBreaksEnabled'))
+        $engine->setBreaksEnabled(false);
+    } else {
+      $engine = false;
     }
   }
 
-  if ($engine) {
+  if ($engine)
     return $engine->text($md);
-  }
 
-  // ---- fallback tiny parser if you want to keep it ----
-  return $md;
+  return $md; // last-resort fallback
 }
+
+/* --------------------------------- Pages ---------------------------------- */
 
 function load_page($slug)
 {
@@ -202,8 +174,7 @@ function sanitize_rel_path($p)
   $p = trim($p, '/');
   if ($p === '' || strpos($p, '..') !== false)
     return null; // safety
-  // collapse duplicate slashes
-  return preg_replace('#/+#', '/', $p);
+  return preg_replace('#/+#', '/', $p); // collapse duplicate slashes
 }
 
 function load_page_path($rel)
@@ -213,11 +184,9 @@ function load_page_path($rel)
     return null;
 
   $base = path('pages');
-
-  // Try a direct file first, then an index.md under a folder
   $candidates = [
-    $base . '/' . $rel . '.md',        // e.g. content/pages/guides/install.md
-    $base . '/' . $rel . '/index.md',  // e.g. content/pages/guides/index.md
+    $base . '/' . $rel . '.md',       // e.g. content/pages/guides/install.md
+    $base . '/' . $rel . '/index.md', // e.g. content/pages/guides/index.md
   ];
 
   foreach ($candidates as $file) {
@@ -236,6 +205,8 @@ function load_page_path($rel)
   return null;
 }
 
+/* ------------------------------- Collections ------------------------------ */
+
 function load_collection_item($collection, $slug)
 {
   $file = path('collections') . "/$collection/$slug.md";
@@ -252,16 +223,31 @@ function list_collection($collection)
   $dir = path('collections') . "/$collection";
   if (!is_dir($dir))
     return [];
+
   $items = [];
   foreach (glob($dir . '/*.md') as $file) {
     $slug = basename($file, '.md');
     [$meta, $md] = parse_front_matter(read_file($file));
     $meta['slug'] = $slug;
-    $items[] = ['slug' => $slug, 'meta' => $meta];
+
+    // Generate HTML so cards can build excerpts reliably
+    $html = markdown_to_html($md);
+
+    $items[] = [
+      'slug' => $slug,
+      'meta' => $meta,
+      'html' => $html,
+    ];
   }
-  // Sorting by meta key (e.g., date)
+
+  // Filter out drafts
+  $items = array_filter($items, function ($it) {
+    return empty($it['meta']['draft']);
+  });
+
+  // Sort by configured key (e.g. ['date','desc'])
   $cfg = config()['collections'][$collection] ?? null;
-  if ($cfg && isset($cfg['sort'])) {
+  if ($cfg && isset($cfg['sort']) && is_array($cfg['sort']) && count($cfg['sort']) === 2) {
     [$key, $dir] = $cfg['sort'];
     usort($items, function ($a, $b) use ($key, $dir) {
       $av = $a['meta'][$key] ?? null;
@@ -276,41 +262,72 @@ function list_collection($collection)
       return ($dir === 'desc') ? -$cmp : $cmp;
     });
   }
-  // filter out drafts
-  $items = array_filter($items, function ($it) {
-    return empty($it['meta']['draft']);
-  });
+
+  return array_values($items);
+}
+
+/* ------------------------------ Tags utilities ---------------------------- */
+
+function all_items($only_collection = null)
+{
+  $items = [];
+  $cfg = config();
+  $collections = $only_collection ? [$only_collection] : array_keys($cfg['collections'] ?? []);
+
+  foreach ($collections as $c) {
+    foreach (list_collection($c) as $it) {
+      // remember the collection
+      $it['meta']['_collection'] = $c;
+      $items[] = $it;
+    }
+  }
   return $items;
 }
+
+function all_tags($only_collection = null)
+{
+  $map = [];
+  foreach (all_items($only_collection) as $it) {
+    $tags = (isset($it['meta']['tags']) && is_array($it['meta']['tags'])) ? $it['meta']['tags'] : [];
+    foreach ($tags as $t) {
+      if ($t === '' || $t === null)
+        continue;
+      $key = (string) $t;
+      $map[$key] = isset($map[$key]) ? $map[$key] + 1 : 1;
+    }
+  }
+  ksort($map, SORT_NATURAL | SORT_FLAG_CASE);
+  return $map;
+}
+
+function items_with_tag($tag, $only_collection = null)
+{
+  $out = [];
+  $want = (string) $tag;
+  foreach (all_items($only_collection) as $it) {
+    $tags = (isset($it['meta']['tags']) && is_array($it['meta']['tags'])) ? $it['meta']['tags'] : [];
+    if (in_array($want, $tags, true)) {
+      $out[] = $it;
+    }
+  }
+  return $out;
+}
+
+/* ------------------------------- Presentation ----------------------------- */
 
 function excerpt_from_html($html, $max = 160)
 {
   if (!is_string($html))
-    return ''; // guard against null/other
+    return '';
   $text = trim(preg_replace('/\s+/', ' ', strip_tags($html)));
   if (mb_strlen($text) <= $max)
     return $text;
   $cut = mb_substr($text, 0, $max);
-  // avoid chopping mid-word
-  $cut = preg_replace('/\s+\S*$/u', '', $cut);
+  $cut = preg_replace('/\s+\S*$/u', '', $cut); // avoid chopping a word
   return rtrim($cut, " \t\n\r\0\x0B.,;:!?\u{200B}") . '…';
 }
 
-function items_with_tag($tag, $collection = null)
-{
-  $results = [];
-  $collections = $collection ? [$collection] : array_keys(config()['collections']);
-  foreach ($collections as $c) {
-    foreach (list_collection($c) as $it) {
-      $tags = $it['meta']['tags'] ?? [];
-      if (in_array($tag, $tags, true)) {
-        $it['meta']['collection'] = $c;
-        $results[] = $it;
-      }
-    }
-  }
-  return $results;
-}
+/* -------------------------------- Rendering ------------------------------- */
 
 function render($view, $vars = [])
 {

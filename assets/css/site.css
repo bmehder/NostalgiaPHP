@@ -473,3 +473,33 @@ footer .inner {
   font-size: 1.25rem;
   margin-top: 0.5rem;
 }
+
+.tags-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .75rem;
+}
+.tags-list li { margin: 0; }
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: #f5f5f7;
+  color: #333;
+  border: 1px solid #e6e6ea;
+  border-radius: 999px;
+  padding: .25rem .6rem;
+  text-decoration: none;
+  font-size: .9rem;
+}
+.tag-chip:hover { background: #ececf1; }
+.tag-count {
+  background: #ddd;
+  color: #222;
+  border-radius: 999px;
+  padding: .05rem .4rem;
+  font-size: .8rem;
+}
