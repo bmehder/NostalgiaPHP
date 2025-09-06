@@ -1,6 +1,6 @@
 ---
 title: Welcome to NostalgiaPHP
-hero: A tiny flat-file CMS that does just enough.
+hero: A tiny Markdown CMS.
 hero_image: /assets/random-images/6.jpg
 ---
 

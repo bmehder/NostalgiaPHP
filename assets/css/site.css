@@ -419,7 +419,6 @@ nav a.active {
 }
 
 /* Main */
-
 main > .outer > .inner {
   --inner-padding-block: var(--size-1-5);
 }
@@ -429,7 +428,6 @@ main ul > * + * {
 }
 
 /* Footer */
-
 footer .outer {
   background-color: #dedede;
 }
