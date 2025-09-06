@@ -8,10 +8,14 @@
   <link rel="stylesheet" href="<?= url('assets/css/site.css') ?>">
 </head>
 <body>
-  <?php include path('partials') . '/header.php'; ?>
-  <main class="container">
-    <?= $content ?>
-  </main>
-  <?php include path('partials') . '/footer.php'; ?>
+  <div class="wrapper">
+    <?php include path('partials') . '/header.php'; ?>
+    <main class="flow">
+      <div class="outer">
+        <div class="inner"><?= $content ?></div>
+      </div>
+    </main>
+    <?php include path('partials') . '/footer.php'; ?>
+  </div>
 </body>
 </html>

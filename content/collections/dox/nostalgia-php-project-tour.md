@@ -1,7 +1,7 @@
 ---
 title: NostalgiaPHP — Project Tour
 slug: nostalgiaphp-project-tour
-date: 2025-09-01
+date: 2025-09-02
 ---
 
 

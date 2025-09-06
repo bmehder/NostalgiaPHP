@@ -1,7 +1,7 @@
 ---
 title: NostalgiaPHP — Developer Guide
 slug: nostalgiaphp-developer-guide
-date: 2025-09-01
+date: 2025-09-06
 ---
 
 # NostalgiaPHP — Developer Guide (for WP/PHP folks)

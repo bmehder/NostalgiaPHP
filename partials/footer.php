@@ -1,5 +1,5 @@
 <footer class="site-footer">
-  <div class="wrap">
-    <small>&copy; <?= date('Y') ?> <?= htmlspecialchars(site('name')) ?></small>
+  <div class="outer">
+    <div class="inner"><small>&copy; <?= date('Y') ?> <?= htmlspecialchars(site('name')) ?></small></div>
   </div>
 </footer>
