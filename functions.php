@@ -135,7 +135,7 @@ function markdown_to_html($md)
     return ob_get_clean();
   }, $md);
 
-  // Use Parsedown if available; otherwise return raw (you can keep a tiny fallback if you want)
+  // Use Parsedown if available; otherwise return raw (you can use a tiny fallback if you want)
   static $engine = null;
 
   if ($engine === null) {
