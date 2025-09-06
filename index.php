@@ -45,7 +45,7 @@ if (is_collection($first)) {
     if (!$items) {
       echo '<p>No items yet.</p>';
     } else {
-      echo '<div class="cards auto-fit">';
+      echo '<div class="cards auto-fill">';
       foreach ($items as $it) {
         // Make vars available to the partial
         $collection = $first;

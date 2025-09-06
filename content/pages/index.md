@@ -1,7 +1,7 @@
 ---
 title: Welcome to NostalgiaPHP
 hero: A tiny flat-file CMS that does just enough.
-hero_image: /assets/random-images/1042-600x400.jpg
+hero_image: /assets/random-images/6.jpg
 ---
 
 # NostalgiaPHP  

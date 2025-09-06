@@ -123,6 +123,40 @@ function parse_front_matter($raw)
 
 function markdown_to_html($md)
 {
+  // --- PREPROCESS: ```gallery ... ``` fences on raw Markdown ---
+  $md = preg_replace_callback('/```gallery\s*\n([\s\S]*?)\n```/i', function ($m) {
+    $raw = trim($m[1]);
+    if ($raw === '')
+      return '';
+
+    $lines = array_filter(array_map('trim', preg_split('/\r?\n/', $raw)));
+    $images = [];
+
+    foreach ($lines as $line) {
+      [$srcInput, $caption] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
+      if ($srcInput === '')
+        continue;
+
+      if (preg_match('#^https?://#i', $srcInput)) {
+        $src = $srcInput;                 // external URL
+      } elseif ($srcInput[0] === '/') {
+        $src = url($srcInput);            // site-absolute path
+      } else {
+        $src = url('/assets/' . $srcInput); // relative → /assets/...
+      }
+
+      $alt = $caption !== '' ? $caption : preg_replace('/\.[a-z0-9]+$/i', '', basename($srcInput));
+      $images[] = ['src' => $src, 'alt' => $alt];
+    }
+
+    if (!$images)
+      return '';
+
+    ob_start();
+    include path('partials') . '/gallery.php';
+    return ob_get_clean();
+  }, $md);
+  
   static $engine = null;
 
   if ($engine === null) {
