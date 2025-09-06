@@ -242,6 +242,10 @@ function list_collection($collection)
       return ($dir === 'desc') ? -$cmp : $cmp;
     });
   }
+  // filter out drafts
+  $items = array_filter($items, function ($it) {
+    return empty($it['meta']['draft']);
+  });
   return $items;
 }
 

@@ -10,8 +10,8 @@ if (!empty($item['meta']['date']) && $item['meta']['date'] instanceof DateTime) 
 }
 
 // Safely build excerpt
-$excerpt = '';
-if (!empty($item['html'])) {
+$excerpt = $item['meta']['excerpt'] ?? '';
+if (!$excerpt && !empty($item['html'])) {
   $excerpt = excerpt_from_html($item['html'], 180);
 }
 
