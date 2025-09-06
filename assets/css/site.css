@@ -426,3 +426,50 @@ footer .outer {
 footer .inner {
   --inner-padding-block: var(--size-1-5);
 }
+
+/* Card */
+
+.card {
+	border: 1px solid;
+
+	.card-text {
+		padding: var(--size);
+	}
+}
+
+/* Hero */
+.hero {
+  padding: 3rem 1rem;
+}
+
+.hero-grid {
+  display: grid;
+}
+
+.hero-bg {
+  grid-area: 1 / 1;
+  /* width: 100%; */
+  height: 100%;
+  object-fit: cover;   /* crop to fill */
+  border-radius: 12px; /* optional, matches content radius */
+}
+
+.hero-content {
+  grid-area: 1 / 1;
+  display: grid;
+	place-content: center;
+	padding: var(--size-2);
+  color: white;
+  text-align: center;
+  background: rgba(0,0,0,0.4); /* dark overlay for readability */
+
+	h1 {
+		margin: 0;
+		font-size: clamp(1.5rem, 5vw, 3rem);
+	}
+}
+
+.hero-sub {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}

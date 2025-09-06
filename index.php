@@ -6,15 +6,26 @@ date_default_timezone_set(site('timezone') ?: 'UTC');
 
 $path = trim(request_path(), '/');
 
+// ---------- Home route ----------
 if ($path === '' || $path === '/') {
-  $page = load_page('index');
+  $page = load_page('index'); // content/pages/index.md
   if (!$page) {
     http_response_code(404);
     $title = 'Not Found';
     $content = '<p>Create content/pages/index.md</p>';
   } else {
     $title = $page['meta']['title'] ?? site('name');
-    $content = $page['html'];
+
+    if (!empty($page['meta']['hero'])) {
+      ob_start();
+      $subtitle = (string) $page['meta']['hero'];
+      $image = $page['meta']['hero_image'] ?? null;
+      include path('partials') . '/hero.php';
+      echo $page['html'];
+      $content = ob_get_clean();
+    } else {
+      $content = $page['html'];
+    }
   }
   render('main', compact('title', 'content'));
   exit;
@@ -25,30 +36,35 @@ $first = $parts[0];
 
 // Collection routes: /blog  or /blog/my-post
 if (is_collection($first)) {
+  // Collection LIST: /blog
   if (count($parts) === 1) {
     $items = list_collection($first);
     ob_start();
     echo '<h1>' . htmlspecialchars(ucfirst($first)) . '</h1>';
-    if (!$items)
+
+    if (!$items) {
       echo '<p>No items yet.</p>';
-    else {
-      echo '<ul>';
+    } else {
+      echo '<div class="cards auto-fit">';
       foreach ($items as $it) {
-        $title = $it['meta']['title'] ?? $it['slug'];
-        $date = $it['meta']['date'] instanceof DateTime ? $it['meta']['date']->format('Y-m-d') : '';
-        $href = url("/$first/{$it['slug']}");
-        echo "<li><a href=\"$href\">" . htmlspecialchars($title) . "</a> <small>$date</small></li>";
+        // Make vars available to the partial
+        $collection = $first;
+        $item = $it;
+        include path('partials') . '/card.php';
       }
-      echo '</ul>';
+      echo '</div>';
     }
+
     $content = ob_get_clean();
     $title = ucfirst($first);
     render('main', compact('title', 'content'));
     exit;
   }
-  // Item view
+
+  // Collection ITEM: /blog/my-post
   $slug = $parts[1];
   $item = load_collection_item($first, $slug);
+
   if (!$item) {
     http_response_code(404);
     $title = 'Not Found';
@@ -67,6 +83,7 @@ if (is_collection($first)) {
       $content .= '<p><small>Tags: ' . implode(', ', $links) . '</small></p>';
     }
   }
+
   render('main', compact('title', 'content'));
   exit;
 }
@@ -119,16 +136,27 @@ if (is_collection($first) && (isset($parts[1]) && $parts[1] === 'tag') && !empty
   exit;
 }
 
-// Page route: /about -> content/pages/about.md
-$page = load_page($first);
+// Page route: support nested pages, e.g. /guides/install
+$rel = implode('/', $parts);
+$page = load_page_path($rel);
 
 if (!$page) {
   http_response_code(404);
   $title = 'Not Found';
   $content = '<p>Page not found.</p>';
 } else {
-  $title = $page['meta']['title'] ?? ucfirst($first);
-  $content = $page['html'];
+  $title = $page['meta']['title'] ?? ucfirst(basename($rel));
+
+  // If front-matter defines `hero`, render the hero partial before the content
+  if (!empty($page['meta']['hero'])) {
+    ob_start();
+    $subtitle = (string) $page['meta']['hero']; // from front-matter
+    include path('partials') . '/hero.php';
+    echo $page['html'];                         // then the normal page content
+    $content = ob_get_clean();
+  } else {
+    $content = $page['html'];
+  }
 }
 
 render('main', compact('title', 'content'));

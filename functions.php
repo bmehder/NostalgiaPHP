@@ -163,6 +163,45 @@ function load_page($slug)
   return ['type' => 'page', 'slug' => $slug, 'meta' => $meta, 'html' => $html];
 }
 
+function sanitize_rel_path($p)
+{
+  $p = trim($p, '/');
+  if ($p === '' || strpos($p, '..') !== false)
+    return null; // safety
+  // collapse duplicate slashes
+  return preg_replace('#/+#', '/', $p);
+}
+
+function load_page_path($rel)
+{
+  $rel = sanitize_rel_path($rel);
+  if (!$rel)
+    return null;
+
+  $base = path('pages');
+
+  // Try a direct file first, then an index.md under a folder
+  $candidates = [
+    $base . '/' . $rel . '.md',        // e.g. content/pages/guides/install.md
+    $base . '/' . $rel . '/index.md',  // e.g. content/pages/guides/index.md
+  ];
+
+  foreach ($candidates as $file) {
+    if (is_file($file)) {
+      [$meta, $md] = parse_front_matter(read_file($file));
+      $html = markdown_to_html($md);
+      return [
+        'type' => 'page',
+        'path' => $rel,
+        'slug' => basename($rel),
+        'meta' => $meta,
+        'html' => $html,
+      ];
+    }
+  }
+  return null;
+}
+
 function load_collection_item($collection, $slug)
 {
   $file = path('collections') . "/$collection/$slug.md";
@@ -204,6 +243,19 @@ function list_collection($collection)
     });
   }
   return $items;
+}
+
+function excerpt_from_html($html, $max = 160)
+{
+  if (!is_string($html))
+    return ''; // guard against null/other
+  $text = trim(preg_replace('/\s+/', ' ', strip_tags($html)));
+  if (mb_strlen($text) <= $max)
+    return $text;
+  $cut = mb_substr($text, 0, $max);
+  // avoid chopping mid-word
+  $cut = preg_replace('/\s+\S*$/u', '', $cut);
+  return rtrim($cut, " \t\n\r\0\x0B.,;:!?\u{200B}") . '…';
 }
 
 function items_with_tag($tag, $collection = null)
