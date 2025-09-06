@@ -55,6 +55,25 @@ That’s it.
 
 ---
 
+## Why Markdown?
+
+Because it’s the glue.  
+
+Your content lives in **Markdown + front-matter**. That’s the portable layer.  
+Write it once, and it can be rendered by just about anything:  
+
+- **PHP** → NostalgiaPHP + Parsedown  
+- **Python** → Flask + Markdown/Mistune + Jinja2  
+- **Ruby** → Sinatra + Kramdown  
+- **JavaScript** → Eleventy (11ty) + Markdown-it  
+- **Haskell** → Hakyll (Pandoc under the hood)  
+- **Go** → Hugo (Markdown + front-matter baked in)  
+
+The runtime doesn’t matter. The content does.  
+NostalgiaPHP just happens to be the tiniest, laziest way to get it on the web right now.
+
+---
+
 ## Philosophy  
 
 - Simple sites deserve simple tools.  
