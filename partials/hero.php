@@ -4,7 +4,7 @@
 <section class="hero">
   <div class="hero-grid">
     <?php if (!empty($image)): ?>
-      <img class="hero-bg" src="<?= $image ?>" alt="">
+      <img class="hero-bg widescreen" src="<?= $image ?>" alt="">
     <?php endif; ?>
     <div class="hero-content">
       <h1><?= htmlspecialchars($title) ?></h1>

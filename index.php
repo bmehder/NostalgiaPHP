@@ -27,7 +27,7 @@ if ($path === '' || $path === '/') {
       $content = $page['html'];
     }
   }
-  render('main', compact('title', 'content'));
+  render('main', compact('title', 'content', 'path'));
   exit;
 }
 
@@ -57,7 +57,7 @@ if (is_collection($first)) {
 
     $content = ob_get_clean();
     $title = ucfirst($first);
-    render('main', compact('title', 'content'));
+    render('main', compact('title', 'content', 'path'));
     exit;
   }
 
@@ -83,7 +83,7 @@ if (is_collection($first)) {
     }
   }
 
-  render('main', compact('title', 'content'));
+  render('main', compact('title', 'content', 'path'));
   exit;
 }
 
@@ -105,7 +105,7 @@ if ($parts === ['tags'] || ($first === 'tags' && count($parts) === 1)) {
   }
   $content = ob_get_clean();
   $title = 'Tags';
-  render('main', compact('title', 'content'));
+  render('main', compact('title', 'content', 'path'));
   exit;
 }
 
@@ -129,7 +129,7 @@ if ($first === 'tags' && !empty($parts[1])) {
   }
   $content = ob_get_clean();
   $title = 'Tag: ' . $tag;
-  render('main', compact('title', 'content'));
+  render('main', compact('title', 'content', 'path'));
   exit;
 }
 
@@ -153,7 +153,7 @@ if (is_collection($first) && isset($parts[1]) && $parts[1] === 'tag' && !empty($
   }
   $content = ob_get_clean();
   $title = ucfirst($collection) . ' — ' . $tag;
-  render('main', compact('title', 'content'));
+  render('main', compact('title', 'content', 'path'));
   exit;
 }
 
@@ -181,4 +181,4 @@ if (!$page) {
   }
 }
 
-render('main', compact('title', 'content'));
+render('main', compact('title', 'content', 'path'));

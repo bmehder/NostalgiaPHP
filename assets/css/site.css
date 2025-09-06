@@ -394,13 +394,24 @@ sup {
 }
 
 /* Header */
-
 header .outer {
   background-color: #dedede;
 }
 
 header .inner {
   --inner-padding-block: var(--size-2);
+}
+
+header a {
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+nav a.active {
+  font-weight: bold;
 }
 
 .brand {
@@ -438,10 +449,6 @@ footer .inner {
 }
 
 /* Hero */
-.hero {
-  padding: 3rem 1rem;
-}
-
 .hero-grid {
   display: grid;
 }

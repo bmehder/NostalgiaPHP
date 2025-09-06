@@ -327,6 +327,17 @@ function excerpt_from_html($html, $max = 160)
   return rtrim($cut, " \t\n\r\0\x0B.,;:!?\u{200B}") . '…';
 }
 
+/* -------------------------------- Active Page Helper ------------------------------- */
+
+function nav_link($href, $label, $path = '')
+{
+  $url = url($href);
+  $rel = trim($href, '/');
+  $path = $path ?? ''; // guard against null
+  $active = ($path === $rel || strpos($path, $rel . '/') === 0) ? 'active' : '';
+  return '<a href="' . htmlspecialchars($url) . '" class="' . $active . '">' . htmlspecialchars($label) . '</a>';
+}
+
 /* -------------------------------- Rendering ------------------------------- */
 
 function render($view, $vars = [])
