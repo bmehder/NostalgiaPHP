@@ -8,9 +8,15 @@ $path = trim(request_path(), '/');
 
 if ($path === '' || $path === '/') {
   $page = load_page('index');
-  if (!$page) { http_response_code(404); $title='Not Found'; $content='<p>Create content/pages/index.md</p>'; }
-  else { $title = $page['meta']['title'] ?? site('name'); $content = $page['html']; }
-  render('main', compact('title','content'));
+  if (!$page) {
+    http_response_code(404);
+    $title = 'Not Found';
+    $content = '<p>Create content/pages/index.md</p>';
+  } else {
+    $title = $page['meta']['title'] ?? site('name');
+    $content = $page['html'];
+  }
+  render('main', compact('title', 'content'));
   exit;
 }
 
@@ -23,7 +29,8 @@ if (is_collection($first)) {
     $items = list_collection($first);
     ob_start();
     echo '<h1>' . htmlspecialchars(ucfirst($first)) . '</h1>';
-    if (!$items) echo '<p>No items yet.</p>';
+    if (!$items)
+      echo '<p>No items yet.</p>';
     else {
       echo '<ul>';
       foreach ($items as $it) {
@@ -36,13 +43,17 @@ if (is_collection($first)) {
     }
     $content = ob_get_clean();
     $title = ucfirst($first);
-    render('main', compact('title','content'));
+    render('main', compact('title', 'content'));
     exit;
   }
   // Item view
   $slug = $parts[1];
   $item = load_collection_item($first, $slug);
-  if (!$item) { http_response_code(404); $title='Not Found'; $content='<p>Missing item.</p>'; } else {
+  if (!$item) {
+    http_response_code(404);
+    $title = 'Not Found';
+    $content = '<p>Missing item.</p>';
+  } else {
     $title = $item['meta']['title'] ?? $slug;
     $content = $item['html'];
 
@@ -56,7 +67,7 @@ if (is_collection($first)) {
       $content .= '<p><small>Tags: ' . implode(', ', $links) . '</small></p>';
     }
   }
-  render('main', compact('title','content'));
+  render('main', compact('title', 'content'));
   exit;
 }
 
@@ -110,6 +121,14 @@ if (is_collection($first) && (isset($parts[1]) && $parts[1] === 'tag') && !empty
 
 // Page route: /about -> content/pages/about.md
 $page = load_page($first);
-if (!$page) { http_response_code(404); $title='Not Found'; $content='<p>Page not found.</p>'; }
-else { $title = $page['meta']['title'] ?? ucfirst($first); $content = $page['html']; }
-render('main', compact('title','content'));
+
+if (!$page) {
+  http_response_code(404);
+  $title = 'Not Found';
+  $content = '<p>Page not found.</p>';
+} else {
+  $title = $page['meta']['title'] ?? ucfirst($first);
+  $content = $page['html'];
+}
+
+render('main', compact('title', 'content'));

@@ -19,5 +19,10 @@ return [
       'list_url' => '/blog',
       'sort' => ['date','desc'],
     ],
+    'dox' => [
+      'permalink' => '/dox/{slug}',
+      'list_url' => '/dox',
+      'sort' => ['date', 'asc'],
+    ],
   ],
 ];

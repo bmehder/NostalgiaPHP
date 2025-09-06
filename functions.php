@@ -76,46 +76,81 @@ function parse_front_matter($raw)
   return [$meta, $body];
 }
 
+// function markdown_to_html($md)
+// {
+//   // Tiny Markdown subset: headings, bold/italic, code, links, lists, paragraphs
+//   $html = $md;
+
+//   // Headings
+//   $html = preg_replace('/^######\\s*(.+)$/m', '<h6>$1</h6>', $html);
+//   $html = preg_replace('/^#####\\s*(.+)$/m', '<h5>$1</h5>', $html);
+//   $html = preg_replace('/^####\\s*(.+)$/m', '<h4>$1</h4>', $html);
+//   $html = preg_replace('/^###\\s*(.+)$/m', '<h3>$1</h3>', $html);
+//   $html = preg_replace('/^##\\s*(.+)$/m', '<h2>$1</h2>', $html);
+//   $html = preg_replace('/^#\\s*(.+)$/m', '<h1>$1</h1>', $html);
+
+//   // Inline
+//   $html = preg_replace('/\\*\\*(.+?)\\*\\*/s', '<strong>$1</strong>', $html);
+//   $html = preg_replace('/\\*(.+?)\\*/s', '<em>$1</em>', $html);
+//   $html = preg_replace('/`([^`]+)`/', '<code>$1</code>', $html);
+//   $html = preg_replace('/\$begin:math:display$(.+?)\\$end:math:display$\$begin:math:text$(https?:[^\\$end:math:text$]+)\\)/', '<a href="$2">$1</a>', $html);
+
+//   // Lists (very naive)
+//   $html = preg_replace_callback('/(^|\\n)(?:-\\s.+\\n?)+/m', function ($m) {
+//     $items = preg_replace('/^-\\s(.+)$/m', '<li>$1</li>', trim($m[0]));
+//     return "\n<ul>\n$items\n</ul>\n";
+//   }, $html);
+
+//   // Ordered lists (very naive)
+//   $html = preg_replace_callback('/(^|\n)(?:\d+\.\s.+\n?)+/m', function ($m) {
+//     $items = preg_replace('/^\d+\.\s(.+)$/m', '<li>$1</li>', trim($m[0]));
+//     return "\n<ol>\n$items\n</ol>\n";
+//   }, $html);
+
+//   // Paragraphs: wrap plain blocks not already HTML
+//   $blocks = preg_split('/\\n\\n+/', trim($html));
+//   $blocks = array_map(function ($block) {
+//     // AFTER (broader: recognize common HTML block tags)
+//     if (preg_match('/^\s*<\/?(article|section|div|header|footer|nav|main|aside|figure|figcaption|h\d|p|ul|ol|li|pre|blockquote|code|table|thead|tbody|tr|td|th|img|video|iframe|form|input|button|label|span|a)\b/i', $block)) {
+//       return $block;
+//     }
+//     return '<p>' . $block . '</p>';
+//   }, $blocks);
+
+//   return implode("\n\n", $blocks);
+// }
+
+
 function markdown_to_html($md)
 {
-  // Tiny Markdown subset: headings, bold/italic, code, links, lists, paragraphs
-  $html = $md;
+  static $engine = null;
 
-  // Headings
-  $html = preg_replace('/^######\\s*(.+)$/m', '<h6>$1</h6>', $html);
-  $html = preg_replace('/^#####\\s*(.+)$/m', '<h5>$1</h5>', $html);
-  $html = preg_replace('/^####\\s*(.+)$/m', '<h4>$1</h4>', $html);
-  $html = preg_replace('/^###\\s*(.+)$/m', '<h3>$1</h3>', $html);
-  $html = preg_replace('/^##\\s*(.+)$/m', '<h2>$1</h2>', $html);
-  $html = preg_replace('/^#\\s*(.+)$/m', '<h1>$1</h1>', $html);
+  if ($engine === null) {
+    // Manual include of Parsedown.php
+    if (is_file(__DIR__ . '/Parsedown.php')) {
+      require_once __DIR__ . '/Parsedown.php';
+      $engine = new \Parsedown();
+    } else {
+      $engine = false; // fallback tiny parser if you kept it
+    }
 
-  // Inline
-  $html = preg_replace('/\\*\\*(.+?)\\*\\*/s', '<strong>$1</strong>', $html);
-  $html = preg_replace('/\\*(.+?)\\*/s', '<em>$1</em>', $html);
-  $html = preg_replace('/`([^`]+)`/', '<code>$1</code>', $html);
-  $html = preg_replace('/\$begin:math:display$(.+?)\\$end:math:display$\$begin:math:text$(https?:[^\\$end:math:text$]+)\\)/', '<a href="$2">$1</a>', $html);
+    if ($engine) {
+      // Trusted content → keep SafeMode off
+      if (method_exists($engine, 'setSafeMode')) {
+        $engine->setSafeMode(false);
+      }
+      if (method_exists($engine, 'setBreaksEnabled')) {
+        $engine->setBreaksEnabled(false); // keep Markdown’s standard line breaks
+      }
+    }
+  }
 
-  // Lists (very naive)
-  $html = preg_replace_callback('/(^|\\n)(?:-\\s.+\\n?)+/m', function ($m) {
-    $items = preg_replace('/^-\\s(.+)$/m', '<li>$1</li>', trim($m[0]));
-    return "\n<ul>\n$items\n</ul>\n";
-  }, $html);
+  if ($engine) {
+    return $engine->text($md);
+  }
 
-  // Ordered lists (very naive)
-  $html = preg_replace_callback('/(^|\n)(?:\d+\.\s.+\n?)+/m', function ($m) {
-    $items = preg_replace('/^\d+\.\s(.+)$/m', '<li>$1</li>', trim($m[0]));
-    return "\n<ol>\n$items\n</ol>\n";
-  }, $html);
-
-  // Paragraphs: wrap plain blocks not already HTML
-  $blocks = preg_split('/\\n\\n+/', trim($html));
-  $blocks = array_map(function ($block) {
-    if (preg_match('/^\\s*<\\/?(h\\d|ul|ol|li|pre|blockquote|p|code)/i', $block))
-      return $block;
-    return '<p>' . $block . '</p>';
-  }, $blocks);
-
-  return implode("\n\n", $blocks);
+  // ---- fallback tiny parser if you want to keep it ----
+  return $md;
 }
 
 function load_page($slug)
