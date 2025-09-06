@@ -63,6 +63,13 @@ function parse_front_matter($raw)
         elseif ($v === 'false')
           $v = false;
         $meta[$k] = $v;
+        // Normalize tags: "tag1, tag2" -> ['tag1','tag2']
+        if ($k === 'tags') {
+          // support "a, b, c" or "[a, b, c]" (we'll just strip brackets if present)
+          $v = trim($v, "[] \t");
+          $parts = array_filter(array_map('trim', explode(',', $v)));
+          $meta[$k] = array_values($parts);
+        }
       }
     }
   }
@@ -92,6 +99,12 @@ function markdown_to_html($md)
   $html = preg_replace_callback('/(^|\\n)(?:-\\s.+\\n?)+/m', function ($m) {
     $items = preg_replace('/^-\\s(.+)$/m', '<li>$1</li>', trim($m[0]));
     return "\n<ul>\n$items\n</ul>\n";
+  }, $html);
+
+  // Ordered lists (very naive)
+  $html = preg_replace_callback('/(^|\n)(?:\d+\.\s.+\n?)+/m', function ($m) {
+    $items = preg_replace('/^\d+\.\s(.+)$/m', '<li>$1</li>', trim($m[0]));
+    return "\n<ol>\n$items\n</ol>\n";
   }, $html);
 
   // Paragraphs: wrap plain blocks not already HTML
@@ -156,6 +169,22 @@ function list_collection($collection)
     });
   }
   return $items;
+}
+
+function items_with_tag($tag, $collection = null)
+{
+  $results = [];
+  $collections = $collection ? [$collection] : array_keys(config()['collections']);
+  foreach ($collections as $c) {
+    foreach (list_collection($c) as $it) {
+      $tags = $it['meta']['tags'] ?? [];
+      if (in_array($tag, $tags, true)) {
+        $it['meta']['collection'] = $c;
+        $results[] = $it;
+      }
+    }
+  }
+  return $results;
 }
 
 function render($view, $vars = [])

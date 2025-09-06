@@ -42,9 +42,69 @@ if (is_collection($first)) {
   // Item view
   $slug = $parts[1];
   $item = load_collection_item($first, $slug);
-  if (!$item) { http_response_code(404); $title='Not Found'; $content='<p>Missing item.</p>'; }
-  else { $title = $item['meta']['title'] ?? $slug; $content = $item['html']; }
+  if (!$item) { http_response_code(404); $title='Not Found'; $content='<p>Missing item.</p>'; } else {
+    $title = $item['meta']['title'] ?? $slug;
+    $content = $item['html'];
+
+    // Append tag list if tags exist
+    $tags = $item['meta']['tags'] ?? [];
+    if ($tags) {
+      $links = array_map(
+        fn($t) => '<a href="' . url('/tags/' . $t) . '">' . htmlspecialchars($t) . '</a>',
+        $tags
+      );
+      $content .= '<p><small>Tags: ' . implode(', ', $links) . '</small></p>';
+    }
+  }
   render('main', compact('title','content'));
+  exit;
+}
+
+// Global tag route: /tags/{tag}
+if ($first === 'tags' && !empty($parts[1])) {
+  $tag = $parts[1];
+  $items = items_with_tag($tag); // all collections
+  ob_start();
+  echo '<h1>Tag: ' . htmlspecialchars($tag) . '</h1>';
+  if (!$items)
+    echo '<p>No items with this tag yet.</p>';
+  else {
+    echo '<ul>';
+    foreach ($items as $it) {
+      $c = htmlspecialchars($it['meta']['collection'] ?? '');
+      $title = htmlspecialchars($it['meta']['title'] ?? $it['slug']);
+      $href = url("/{$c}/{$it['slug']}");
+      echo "<li><a href=\"$href\">$title</a> <small>in $c</small></li>";
+    }
+    echo '</ul>';
+  }
+  $content = ob_get_clean();
+  $title = 'Tag: ' . $tag;
+  render('main', compact('title', 'content'));
+  exit;
+}
+
+// Per-collection tag route: /{collection}/tag/{tag}
+if (is_collection($first) && (isset($parts[1]) && $parts[1] === 'tag') && !empty($parts[2])) {
+  $collection = $first;
+  $tag = $parts[2];
+  $items = items_with_tag($tag, $collection);
+  ob_start();
+  echo '<h1>' . htmlspecialchars(ucfirst($collection)) . ' — Tag: ' . htmlspecialchars($tag) . '</h1>';
+  if (!$items)
+    echo '<p>No items with this tag yet.</p>';
+  else {
+    echo '<ul>';
+    foreach ($items as $it) {
+      $title = htmlspecialchars($it['meta']['title'] ?? $it['slug']);
+      $href = url("/{$collection}/{$it['slug']}");
+      echo "<li><a href=\"$href\">$title</a></li>";
+    }
+    echo '</ul>';
+  }
+  $content = ob_get_clean();
+  $title = ucfirst($collection) . " — $tag";
+  render('main', compact('title', 'content'));
   exit;
 }
 
