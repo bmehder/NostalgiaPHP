@@ -8,6 +8,8 @@ $path = trim(request_path(), '/');
 $parts = $path === '' ? [] : explode('/', $path);
 $first = $parts[0] ?? '';
 
+require __DIR__ . '/sitemap.php';
+
 /**
  * Local helper: render a heading + card grid for a list of items.
  * $collectionContext is used when items don't carry their collection (e.g., list_collection()).

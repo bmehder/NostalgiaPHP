@@ -1,0 +1,97 @@
+<?php
+// sitemap.php
+// Minimal /sitemap.xml endpoint for NostalgiaPHP.
+// Include from index.php after $path/$parts/$first are set.
+
+if (($path ?? '') === 'sitemap.xml') {
+  // include collection index pages like /blog?
+  $includeCollectionIndexes = false;
+
+  // keep XML clean even if notices happen
+  $old_display = ini_get('display_errors');
+  ini_set('display_errors', '0');
+  ob_start();
+
+  $xml = function ($s) {
+    return htmlspecialchars((string) $s, ENT_QUOTES | ENT_XML1, 'UTF-8'); };
+  $entries = [];
+
+  // --- Pages ---
+  $basePages = rtrim(path('pages'), '/');
+  if (is_dir($basePages)) {
+    $it = new RecursiveIteratorIterator(
+      new RecursiveDirectoryIterator($basePages, FilesystemIterator::SKIP_DOTS)
+    );
+    $rels = [];
+    foreach ($it as $f) {
+      if (!$f->isFile() || strtolower($f->getExtension()) !== 'md')
+        continue;
+      $abs = $f->getPathname();
+      $rel = trim(str_replace($basePages, '', $abs), '/');   // "guides/install.md" or "index.md"
+      $rel = preg_replace('/\.md$/i', '', $rel);             // drop .md
+      if ($rel === 'index')
+        $rel = '';
+      if (substr($rel, -6) === '/index')
+        $rel = substr($rel, 0, -6);
+      $rels[] = $rel;
+    }
+    $rels = array_values(array_unique($rels));
+    sort($rels, SORT_NATURAL | SORT_FLAG_CASE);
+
+    foreach ($rels as $rel) {
+      $file = ($rel === '')
+        ? $basePages . '/index.md'
+        : (is_file($basePages . '/' . $rel . '.md') ? $basePages . '/' . $rel . '.md' : $basePages . '/' . $rel . '/index.md');
+      if (!is_file($file))
+        continue;
+
+      [$meta] = parse_front_matter(read_file($file));
+      if (!empty($meta['draft']))
+        continue;
+      if (isset($meta['sitemap']) && $meta['sitemap'] === false)
+        continue;
+
+      $loc = $rel === '' ? url('/') : url('/' . $rel);
+      $lastmod = gmdate('c', filemtime($file));
+      $entries[] = ['loc' => $loc, 'lastmod' => $lastmod];
+    }
+  }
+
+  // --- Collections (items only) ---
+  $collections = array_keys(config()['collections'] ?? []);
+  foreach ($collections as $c) {
+    if ($includeCollectionIndexes) {
+      $entries[] = ['loc' => url('/' . $c), 'lastmod' => null];
+    }
+    foreach (list_collection($c) as $it) {
+      $m = $it['meta'] ?? [];
+      if (!empty($m['draft']))
+        continue; // extra safety
+      if (isset($m['sitemap']) && $m['sitemap'] === false)
+        continue;
+
+      $file = path('collections') . "/$c/{$it['slug']}.md";
+      $loc = url("/$c/{$it['slug']}");
+      $lastmod = is_file($file) ? gmdate('c', filemtime($file)) : null;
+
+      $entries[] = ['loc' => $loc, 'lastmod' => $lastmod];
+    }
+  }
+
+  // output XML
+  ob_clean();
+  header('Content-Type: application/xml; charset=utf-8');
+  echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+  echo "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+  foreach ($entries as $e) {
+    echo "  <url>\n";
+    echo "    <loc>" . $xml($e['loc']) . "</loc>\n";
+    if (!empty($e['lastmod']))
+      echo "    <lastmod>" . $xml($e['lastmod']) . "</lastmod>\n";
+    echo "  </url>\n";
+  }
+  echo "</urlset>";
+
+  ini_set('display_errors', $old_display);
+  exit;
+}
