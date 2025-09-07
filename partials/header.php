@@ -1,4 +1,4 @@
-<header class="site-header">
+<header>
   <div class="outer">
     <div class="inner spread-apart" data-inner-header>
       <a class="brand" href="<?= url('/') ?>"><?= htmlspecialchars(site('name')) ?></a>

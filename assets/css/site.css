@@ -395,6 +395,10 @@ sup {
 }
 
 /* Skins */
+h1 {
+	font-size: var(--size-2-5);
+}
+
 button, .button {
 	padding-block: var(--size-0-5);
 	padding-inline: var(--size-1-5);
@@ -402,7 +406,8 @@ button, .button {
 
 /* Header */
 header .outer {
-	background-color: #dedede;
+	background-color: black;
+	color: white;
 }
 
 header .inner {
@@ -410,6 +415,7 @@ header .inner {
 }
 
 header a {
+	color: white;
 	text-decoration: none;
 	
 	&:hover {
@@ -476,7 +482,8 @@ main > .outer > .inner {
 
 /* Footer */
 footer .outer {
-	background-color: #dedede;
+	background-color: black;
+	color: white;
 }
 
 footer .inner {

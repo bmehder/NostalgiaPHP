@@ -8,9 +8,7 @@ description: This is the homepage description.
 
 # NostalgiaPHP  
 
-> A file-based CMS for people who survived WordPress and the JavaScript framework wars.  
-
----
+A file-based CMS for people who survived WordPress and the JavaScript framework wars.  
 
 ## Why?  
 
@@ -26,8 +24,6 @@ Then the web went sideways:
 
 All you wanted was a website.  
 
----
-
 ## What is NostalgiaPHP?  
 
 It’s **not a framework**.  
@@ -42,8 +38,6 @@ It’s **definitely not WordPress**.
 
 That’s it.  
 
----
-
 ## Features  
 
 - Write pages and collections in **Markdown**.  
@@ -52,16 +46,12 @@ That’s it.
 - No database. No build step. No Node.  
 - Runs anywhere PHP runs (which is… everywhere).  
 
----
-
 ## Installation  
 
 1. Copy the files.  
 2. Run `php -S localhost:8000`.  
 3. Visit [http://localhost:8000](http://localhost:8000).  
 4. Make pages. Done.  
-
----
 
 ## Why Markdown?
 
@@ -77,8 +67,6 @@ Your content lives in **Markdown + front-matter**. That’s the portable layer. 
 - **Go** → Hugo (Markdown + front-matter baked in)  
 
 The runtime doesn’t matter. The content does.
-
----
 
 ## Philosophy  
 

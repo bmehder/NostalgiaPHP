@@ -4,6 +4,8 @@ slug: html-post
 date: 2025-09-06
 ---
 
+# HTML Section
+
 ## Fancy section
 
 <div class="hero">
