@@ -56,10 +56,15 @@ if ($path === '') {
     $meta = $page['meta'] ?? [];
     $title = $meta['title'] ?? site('name');
 
+    $meta = $page['meta'] ?? [];
+    $title = $meta['title'] ?? site('name');
+
     ob_start();
-    if (!empty($meta['hero'])) {
-      $subtitle = (string) $meta['hero'];
-      $image = $meta['hero_image'] ?? null;
+    $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
+    if ($hasHero) {
+      $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? site('name'));
+      $hero_subtitle = $meta['hero_subtitle'] ?? null;
+      $hero_image = $meta['hero_image'] ?? null;
       include path('partials') . '/hero.php';
     }
     echo $page['html'];
@@ -174,10 +179,15 @@ if (!$page) {
   $meta = $page['meta'] ?? [];
   $title = $meta['title'] ?? ucfirst(basename($rel));
 
+  $meta = $page['meta'] ?? [];
+  $title = $meta['title'] ?? ucfirst(basename($rel));
+
   ob_start();
-  if (!empty($meta['hero'])) {
-    $subtitle = (string) $meta['hero'];
-    $image = $meta['hero_image'] ?? null;
+  $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
+  if ($hasHero) {
+    $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? ucfirst(basename($rel)));
+    $hero_subtitle = $meta['hero_subtitle'] ?? null;
+    $hero_image = $meta['hero_image'] ?? null;
     include path('partials') . '/hero.php';
   }
   echo $page['html'];

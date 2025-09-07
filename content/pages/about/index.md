@@ -1,5 +1,8 @@
 ---
 title: About
+hero_title: About NostalgiaPHP
+hero_subtitle: A subtitle.
+hero_image: /assets/random-images/1.jpg
 ---
 
 # Why another CMS?
