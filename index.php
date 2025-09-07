@@ -10,6 +10,14 @@ $first = $parts[0] ?? '';
 
 require __DIR__ . '/sitemap.php';
 
+if ($path === 'robots.txt') {
+  header('Content-Type: text/plain; charset=utf-8');
+  echo "User-agent: *\n";
+  echo "Disallow:\n";
+  echo "Sitemap: " . url('/sitemap.xml') . "\n";
+  exit;
+}
+
 /**
  * Local helper: render a heading + card grid for a list of items.
  * $collectionContext is used when items don't carry their collection (e.g., list_collection()).
