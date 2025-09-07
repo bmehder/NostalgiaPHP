@@ -179,9 +179,6 @@ if (!$page) {
   $meta = $page['meta'] ?? [];
   $title = $meta['title'] ?? ucfirst(basename($rel));
 
-  $meta = $page['meta'] ?? [];
-  $title = $meta['title'] ?? ucfirst(basename($rel));
-
   ob_start();
   $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
   if ($hasHero) {

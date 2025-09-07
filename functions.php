@@ -284,8 +284,6 @@ function list_collection($collection)
   return array_values($items);
 }
 
-/* ------------------------------ Tags utilities ---------------------------- */
-
 function all_items($only_collection = null)
 {
   $items = [];
@@ -301,6 +299,8 @@ function all_items($only_collection = null)
   }
   return $items;
 }
+
+/* ------------------------------ Tags utilities ---------------------------- */
 
 function all_tags($only_collection = null)
 {
