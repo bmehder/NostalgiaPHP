@@ -52,26 +52,27 @@ if ($path === '') {
     $title = 'Not Found';
     $content = '<p>Create content/pages/index.md</p>';
     $meta = [];
+    $hero_html = '';
   } else {
     $meta = $page['meta'] ?? [];
     $title = $meta['title'] ?? site('name');
+    $content = $page['html']; // just the markdown HTML
 
-    $meta = $page['meta'] ?? [];
-    $title = $meta['title'] ?? site('name');
-
-    ob_start();
+    // Build hero separately (OPTION A)
     $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
     if ($hasHero) {
       $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? site('name'));
       $hero_subtitle = $meta['hero_subtitle'] ?? null;
       $hero_image = $meta['hero_image'] ?? null;
+      ob_start();
       include path('partials') . '/hero.php';
+      $hero_html = ob_get_clean();
+    } else {
+      $hero_html = '';
     }
-    echo $page['html'];
-    $content = ob_get_clean();
   }
 
-  render('main', compact('title', 'content', 'path', 'meta'));
+  render('main', compact('title', 'content', 'path', 'meta', 'hero_html'));
   exit;
 }
 
@@ -175,21 +176,24 @@ if (!$page) {
   $title = 'Not Found';
   $content = '<p>Page not found.</p>';
   $meta = [];
+  $hero_html = '';
 } else {
   $meta = $page['meta'] ?? [];
   $title = $meta['title'] ?? ucfirst(basename($rel));
+  $content = $page['html']; // just the markdown HTML
 
-  ob_start();
   $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
   if ($hasHero) {
     $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? ucfirst(basename($rel)));
     $hero_subtitle = $meta['hero_subtitle'] ?? null;
     $hero_image = $meta['hero_image'] ?? null;
+    ob_start();
     include path('partials') . '/hero.php';
+    $hero_html = ob_get_clean();
+  } else {
+    $hero_html = '';
   }
-  echo $page['html'];
-  $content = ob_get_clean();
 }
 
-render('main', compact('title', 'content', 'path', 'meta'));
+render('main', compact('title', 'content', 'path', 'meta', 'hero_html'));
 exit;

@@ -394,6 +394,12 @@ sup {
 	object-fit: cover;
 }
 
+/* Skins */
+button, .button {
+	padding-block: var(--size-0-5);
+	padding-inline: var(--size-1-5);
+}
+
 /* Header */
 header .outer {
 	background-color: #dedede;
@@ -405,14 +411,14 @@ header .inner {
 
 header a {
 	text-decoration: none;
-
+	
 	&:hover {
 		text-decoration: underline;
 	}
-}
-
-nav a.active {
-	font-weight: bold;
+	
+	&.active {
+		font-weight: bold;
+	}
 }
 
 .brand {
@@ -420,26 +426,31 @@ nav a.active {
 	font-weight: bold;
 }
 
-/* Mobile nav */
+/* Hamburger: hidden on desktop */
 .nav-toggle {
+	display: none;
+	margin: 0;
+	padding: 0;
 	background: none;
-	border: none;
-	font-size: 1.5rem;
+	line-height: 1;
+	border: 0;
 	cursor: pointer;
-	display: none; /* hidden on desktop */
 }
 
+/* --------- Mobile ≤ 48rem --------- */
 @media (max-width: 48rem) {
-	.inner.spread-apart.nav-open {
+	/* show hamburger */
+	.nav-toggle {
 		display: grid;
-		grid-template-columns: 1fr auto; /* brand left, button right */
-		grid-template-rows: auto auto; /* row1: header, row2: nav */
 		align-items: center;
+		gap: var(--size-0-5);
 	}
 
-	.brand {
-		grid-column: 1;
-		grid-row: 1;
+	/* turn header inner into a 2-col grid (brand | button) */
+	.inner.spread-apart {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		align-items: center;
 	}
 
 	.nav-toggle {
@@ -448,84 +459,13 @@ nav a.active {
 		justify-self: end;
 	}
 
+	/* nav sits on row 2 and is hidden by default */
 	#site-nav {
-		grid-column: 1 / -1;
-		grid-row: 2;
-		display: none; /* default hidden */
-	}
-
-	#site-nav[aria-expanded='true'] {
-		display: flex;
-		flex-direction: column;
-		gap: var(--size);
-		padding-block: var(--size);
-	}
-
-	/* hamburger hidden on desktop */
-	.nav-toggle {
 		display: none;
-		background: none;
-		border: 0;
-		font-size: 1.5rem;
-		line-height: 1;
-		cursor: pointer;
-	}
-
-	/* mobile behavior at <= 48rem */
-	@media (max-width: 48rem) {
-		.nav-toggle {
-			display: inline-flex;
-			align-items: center;
-			gap: 0.5rem;
-		}
-
-		/* hide nav by default on mobile */
-		#site-nav {
-			display: none;
-		}
-
-		/* show (stacked) when expanded */
-		#site-nav[aria-expanded='true'] {
-			display: flex;
-			flex-direction: column;
-			gap: var(--size, 1rem);
-			padding-block: var(--size, 1rem);
-		}
-
-		/* stack brand + button above nav when open (class toggle from JS) */
-		.inner.spread-apart.nav-open {
+		/* show stacked menu when expanded */
+		&[aria-expanded='true'] {
 			display: grid;
-			grid-template-columns: 1fr auto; /* brand left, button right */
-			grid-template-rows: auto auto; /* nav on row 2 */
-			align-items: center;
 		}
-
-		.brand {
-			grid-column: 1;
-			grid-row: 1;
-		}
-		.nav-toggle {
-			grid-column: 2;
-			grid-row: 1;
-			justify-self: end;
-		}
-		#site-nav {
-			grid-column: 1 / -1;
-			grid-row: 2;
-		}
-	}
-
-	/* a11y utility if you don’t already have it */
-	.visually-hidden {
-		position: absolute !important;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0 0 0 0);
-		white-space: nowrap;
-		border: 0;
 	}
 }
 
@@ -568,10 +508,7 @@ footer .inner {
 
 .hero-bg {
 	grid-area: 1 / 1;
-	/* width: 100%; */
-	height: 100%;
 	object-fit: cover; /* crop to fill */
-	border-radius: 12px; /* optional, matches content radius */
 }
 
 .hero-content {

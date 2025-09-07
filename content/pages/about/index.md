@@ -1,6 +1,6 @@
 ---
 title: About
-hero_title: About NostalgiaPHP
+hero_title: About Nostalgia PHP
 hero_subtitle: A subtitle.
 hero_image: /assets/random-images/1.jpg
 ---

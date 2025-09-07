@@ -1,4 +1,4 @@
-# NostalgiaPHP  
+# Nostalgia PHP  
 
 > A file-based CMS for people who survived WordPress and the JavaScript framework wars.  
 
