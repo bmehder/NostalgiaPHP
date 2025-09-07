@@ -5,59 +5,68 @@ require __DIR__ . '/functions.php';
 date_default_timezone_set(site('timezone') ?: 'UTC');
 
 $path = trim(request_path(), '/');
+$parts = $path === '' ? [] : explode('/', $path);
+$first = $parts[0] ?? '';
+
+/**
+ * Local helper: render a heading + card grid for a list of items.
+ * $collectionContext is used when items don't carry their collection (e.g., list_collection()).
+ */
+$render_cards = function (array $items, $heading = null, $empty_msg = 'No items yet.', $collectionContext = null) {
+  ob_start();
+  if ($heading) {
+    echo '<h1>' . htmlspecialchars($heading) . '</h1>';
+  }
+  if (!$items) {
+    echo '<p>' . htmlspecialchars($empty_msg) . '</p>';
+  } else {
+    echo '<div class="cards auto-fill">';
+    foreach ($items as $it) {
+      // Prefer explicit context, otherwise look for metadata hints
+      $collection = $collectionContext
+        ?? ($it['meta']['_collection'] ?? ($it['collection'] ?? ''));
+      $item = $it;
+      include path('partials') . '/card.php';
+    }
+    echo '</div>';
+  }
+  return ob_get_clean();
+};
 
 // ---------- Home route ----------
-if ($path === '' || $path === '/') {
-  $page = load_page('index'); // content/pages/index.md
+if ($path === '') {
+  $page = load_page('index');
+
   if (!$page) {
     http_response_code(404);
     $title = 'Not Found';
     $content = '<p>Create content/pages/index.md</p>';
+    $meta = [];
   } else {
-    $title = $page['meta']['title'] ?? site('name');
+    $meta = $page['meta'] ?? [];
+    $title = $meta['title'] ?? site('name');
 
-    if (!empty($page['meta']['hero'])) {
-      ob_start();
-      $subtitle = (string) $page['meta']['hero'];
-      $image = $page['meta']['hero_image'] ?? null;
+    ob_start();
+    if (!empty($meta['hero'])) {
+      $subtitle = (string) $meta['hero'];
+      $image = $meta['hero_image'] ?? null;
       include path('partials') . '/hero.php';
-      echo $page['html'];
-      $content = ob_get_clean();
-    } else {
-      $content = $page['html'];
     }
+    echo $page['html'];
+    $content = ob_get_clean();
   }
-  $title = $page['meta']['title'] ?? site('name');
-  $meta = $page['meta'] ?? [];
+
   render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
-$parts = $path === '' ? [] : explode('/', $path);
-$first = $parts[0] ?? '';
-
-// ---------- Collection routes: /blog  or /blog/my-post ----------
+// ---------- Collection routes: /blog or /blog/my-post ----------
 if (is_collection($first)) {
+
   // Collection LIST: /blog
   if (count($parts) === 1) {
     $items = list_collection($first);
-    ob_start();
-    echo '<h1>' . htmlspecialchars(ucfirst($first)) . '</h1>';
-
-    if (!$items) {
-      echo '<p>No items yet.</p>';
-    } else {
-      echo '<div class="cards auto-fill">';
-      foreach ($items as $it) {
-        // make vars available to the partial
-        $collection = $first;
-        $item = $it;
-        include path('partials') . '/card.php';
-      }
-      echo '</div>';
-    }
-
-    $content = ob_get_clean();
+    $content = $render_cards($items, ucfirst($first), 'No items yet.', $first);
     $title = ucfirst($first);
     $meta = [];
     render('main', compact('title', 'content', 'path', 'meta'));
@@ -72,12 +81,14 @@ if (is_collection($first)) {
     http_response_code(404);
     $title = 'Not Found';
     $content = '<p>Missing item.</p>';
+    $meta = [];
   } else {
-    $title = $item['meta']['title'] ?? $slug;
+    $meta = $item['meta'] ?? [];
+    $title = $meta['title'] ?? $slug;
     $content = $item['html'];
 
     // Append tag list if tags exist
-    $tags = $item['meta']['tags'] ?? [];
+    $tags = $meta['tags'] ?? [];
     if ($tags) {
       $links = array_map(function ($t) {
         return '<a href="' . url('/tags/' . $t) . '">' . htmlspecialchars($t) . '</a>';
@@ -86,15 +97,14 @@ if (is_collection($first)) {
     }
   }
 
-  $title = $item['meta']['title'] ?? $slug;
-  $meta = $item['meta'] ?? [];
   render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
 // ---------- Tags index: /tags ----------
-if ($parts === ['tags'] || ($first === 'tags' && count($parts) === 1)) {
+if ($first === 'tags' && count($parts) === 1) {
   $tagmap = all_tags(); // across all collections
+
   ob_start();
   echo '<h1>Tags</h1>';
   if (!$tagmap) {
@@ -109,8 +119,8 @@ if ($parts === ['tags'] || ($first === 'tags' && count($parts) === 1)) {
     echo '</ul>';
   }
   $content = ob_get_clean();
-  $title = 'Tags';
 
+  $title = 'Tags';
   $meta = [];
   render('main', compact('title', 'content', 'path', 'meta'));
   exit;
@@ -120,47 +130,24 @@ if ($parts === ['tags'] || ($first === 'tags' && count($parts) === 1)) {
 if ($first === 'tags' && !empty($parts[1])) {
   $tag = urldecode($parts[1]);
   $items = items_with_tag($tag); // across all collections
-
-  ob_start();
-  echo '<h1>Tag: ' . htmlspecialchars($tag) . '</h1>';
-  if (!$items) {
-    echo '<p>No items with this tag yet.</p>';
-  } else {
-    echo '<div class="cards auto-fill">';
-    foreach ($items as $it) {
-      $collection = $it['meta']['_collection'] ?? 'blog';
-      $item = $it;
-      include path('partials') . '/card.php';
-    }
-    echo '</div>';
-  }
-  $content = ob_get_clean();
+  $content = $render_cards($items, 'Tag: ' . $tag, 'No items with this tag yet.');
   $title = 'Tag: ' . $tag;
-  render('main', compact('title', 'content', 'path'));
+  $meta = [];
+  render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
 // ---------- Per-collection tag: /{collection}/tag/{tag} ----------
-if (is_collection($first) && isset($parts[1]) && $parts[1] === 'tag' && !empty($parts[2])) {
+if (is_collection($first) && ($parts[1] ?? '') === 'tag' && !empty($parts[2])) {
   $collection = $first;
   $tag = urldecode($parts[2]);
   $items = items_with_tag($tag, $collection);
 
-  ob_start();
-  echo '<h1>' . htmlspecialchars(ucfirst($collection)) . ' — Tag: ' . htmlspecialchars($tag) . '</h1>';
-  if (!$items) {
-    echo '<p>No items with this tag in this collection.</p>';
-  } else {
-    echo '<div class="cards auto-fill">';
-    foreach ($items as $it) {
-      $item = $it;
-      include path('partials') . '/card.php';
-    }
-    echo '</div>';
-  }
-  $content = ob_get_clean();
-  $title = ucfirst($collection) . ' — ' . $tag;
-  render('main', compact('title', 'content', 'path'));
+  $heading = ucfirst($collection) . ' — Tag: ' . $tag;
+  $content = $render_cards($items, $heading, 'No items with this tag in this collection.', $collection);
+  $title = $heading;
+  $meta = [];
+  render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
@@ -172,22 +159,20 @@ if (!$page) {
   http_response_code(404);
   $title = 'Not Found';
   $content = '<p>Page not found.</p>';
+  $meta = [];
 } else {
-  $title = $page['meta']['title'] ?? ucfirst(basename($rel));
+  $meta = $page['meta'] ?? [];
+  $title = $meta['title'] ?? ucfirst(basename($rel));
 
-  // Optional hero via front matter (hero: "...", hero_image: "/path")
-  if (!empty($page['meta']['hero'])) {
-    ob_start();
-    $subtitle = (string) $page['meta']['hero'];
-    $image = $page['meta']['hero_image'] ?? null;
+  ob_start();
+  if (!empty($meta['hero'])) {
+    $subtitle = (string) $meta['hero'];
+    $image = $meta['hero_image'] ?? null;
     include path('partials') . '/hero.php';
-    echo $page['html'];
-    $content = ob_get_clean();
-  } else {
-    $content = $page['html'];
   }
+  echo $page['html'];
+  $content = ob_get_clean();
 }
 
-$title = $page['meta']['title'] ?? ucfirst(basename($rel));
-$meta = $page['meta'] ?? [];
 render('main', compact('title', 'content', 'path', 'meta'));
+exit;

@@ -2,6 +2,7 @@
 title: Welcome to NostalgiaPHP
 hero: A tiny Markdown CMS.
 hero_image: /assets/random-images/6.jpg
+description: This is the homepage description.
 ---
 
 # NostalgiaPHP  
