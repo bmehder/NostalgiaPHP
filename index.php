@@ -27,7 +27,9 @@ if ($path === '' || $path === '/') {
       $content = $page['html'];
     }
   }
-  render('main', compact('title', 'content', 'path'));
+  $title = $page['meta']['title'] ?? site('name');
+  $meta = $page['meta'] ?? [];
+  render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
@@ -57,7 +59,8 @@ if (is_collection($first)) {
 
     $content = ob_get_clean();
     $title = ucfirst($first);
-    render('main', compact('title', 'content', 'path'));
+    $meta = [];
+    render('main', compact('title', 'content', 'path', 'meta'));
     exit;
   }
 
@@ -83,7 +86,9 @@ if (is_collection($first)) {
     }
   }
 
-  render('main', compact('title', 'content', 'path'));
+  $title = $item['meta']['title'] ?? $slug;
+  $meta = $item['meta'] ?? [];
+  render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
@@ -105,7 +110,9 @@ if ($parts === ['tags'] || ($first === 'tags' && count($parts) === 1)) {
   }
   $content = ob_get_clean();
   $title = 'Tags';
-  render('main', compact('title', 'content', 'path'));
+
+  $meta = [];
+  render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 
@@ -181,4 +188,6 @@ if (!$page) {
   }
 }
 
-render('main', compact('title', 'content', 'path'));
+$title = $page['meta']['title'] ?? ucfirst(basename($rel));
+$meta = $page['meta'] ?? [];
+render('main', compact('title', 'content', 'path', 'meta'));

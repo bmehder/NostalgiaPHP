@@ -4,7 +4,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= htmlspecialchars(($title ?? 'Untitled') . ' — ' . $siteName) ?></title>
+  <title>
+    <?= htmlspecialchars(($meta['title'] ?? $title ?? site('name')) . ' · ' . site('name')) ?>
+  </title>
+  
+  <?php if (!empty($meta['description'])): ?>
+    <meta name="description" content="<?= htmlspecialchars($meta['description']) ?>">
+  <?php endif; ?>
   <link rel="stylesheet" href="<?= url('assets/css/site.css') ?>">
 </head>
 <body>

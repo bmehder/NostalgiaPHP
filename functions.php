@@ -65,11 +65,12 @@ function parse_front_matter($raw)
         $v = trim($p[2]);
 
         // Basic typing
+        $val_lc = strtolower($v);
         if (preg_match('/^\d{4}-\d{2}-\d{2}/', $v)) {
           $v = new DateTime($v);
-        } elseif ($v === 'true') {
+        } elseif (in_array($val_lc, ['true', 'yes', 'on', '1'], true)) {
           $v = true;
-        } elseif ($v === 'false') {
+        } elseif (in_array($val_lc, ['false', 'no', 'off', '0'], true)) {
           $v = false;
         }
 
