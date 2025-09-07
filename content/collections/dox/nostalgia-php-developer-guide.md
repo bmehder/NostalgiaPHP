@@ -2,7 +2,7 @@
 title: NostalgiaPHP — Developer Guide
 slug: nostalgiaphp-developer-guide
 date: 2025-09-06
-draft: false
+draft: true
 excerpt: This is an excerpt.
 ---
 

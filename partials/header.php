@@ -8,6 +8,7 @@
         <?= nav_link('/about', 'About', $path) ?>
         <?= nav_link('/tags', 'Tags', $path) ?>
         <?= nav_link('/dox', 'Dox', $path) ?>
+        <?= nav_link('/contact', 'Contact', $path) ?>
         <a href="https://github.com/bmehder/NostalgiaPHP" class="github-link" target="_blank" rel="noopener">
           <!-- GitHub mark as inline SVG -->
           <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">

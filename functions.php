@@ -136,6 +136,19 @@ function markdown_to_html($md)
     return ob_get_clean();
   }, $md);
 
+  // --- Shortcode embeds with post-parse replacement ---
+  $embeds = [];
+
+  // {{contact-form}} → placeholder token; store rendered HTML for later
+  $md = preg_replace_callback('/\{\{\s*contact\-form\s*\}\}/i', function () use (&$embeds) {
+    ob_start();
+    include path('partials') . '/contact-form.php';
+    $html = ob_get_clean();
+    $token = '[[EMBED:CONTACT:' . count($embeds) . ']]';
+    $embeds[$token] = $html;
+    return $token;
+  }, $md);
+
   // Use Parsedown if available; otherwise return raw (you can use a tiny fallback if you want)
   static $engine = null;
 
@@ -152,10 +165,14 @@ function markdown_to_html($md)
     }
   }
 
-  if ($engine)
-    return $engine->text($md);
+  $out = $engine ? $engine->text($md) : $md;
 
-  return $md; // last-resort fallback
+  // Replace placeholders with the real HTML AFTER Markdown parsing
+  if (!empty($embeds)) {
+    $out = strtr($out, $embeds);
+  }
+
+  return $out; // (If you want "Parsedown-or-bust", you can error instead of returning $md)
 }
 
 /* --------------------------------- Pages ---------------------------------- */

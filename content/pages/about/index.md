@@ -8,7 +8,7 @@ Because *modern web development* doesn’t have to be so stupid.
 
 [Nested Page](/about/nested)
 
-## Photo set
+## Gallery
 
 ```gallery
 random-images/1.jpg

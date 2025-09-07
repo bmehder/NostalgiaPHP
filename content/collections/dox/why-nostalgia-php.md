@@ -2,13 +2,13 @@
 title: Why NostalgiaPHP?
 slug: why-nostalgia-php
 date: 2025-09-06
-draft: true
+draft: false
 ---
 
 # Why NostalgiaPHP?
 
 ## The Problem
-Most ways to build a website today are overkill:
+Most ways to build a simple website today are overkill:
 
 - **WordPress** → instantly drags in a DB, admin UI, plugins, themes, update cycles, PHP version nags, etc.
 - **Astro / Next / Eleventy** → modern, fast, static-friendly… but need Node, npm, dependencies, configs, build steps.

@@ -55,6 +55,7 @@ html {
 
 body {
   margin: 0;
+	line-height: 1.6;
 }
 
 dialog {
@@ -416,15 +417,12 @@ nav a.active {
 
 .brand {
   font-size: var(--size-1-5);
+	font-weight: bold;
 }
 
 /* Main */
 main > .outer > .inner {
   --inner-padding-block: var(--size-1-5);
-}
-
-main ul > * + * {
-  margin-block-start: var(--size);
 }
 
 /* Footer */
@@ -443,6 +441,14 @@ footer .inner {
 
 	.card-text {
 		padding: var(--size);
+	}
+
+	a {
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 }
 
@@ -508,4 +514,22 @@ footer .inner {
   border-radius: 999px;
   padding: .05rem .4rem;
   font-size: .8rem;
+}
+
+/* Contact Form */
+.contact-form {
+  display: grid;
+  gap: var(--size);
+  max-width: var(--sm);
+}
+
+.contact-form label {
+  display: grid;
+  gap: var(--size-0-2-5);
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: var(--size-0-5);
+  border: 1px solid #dedede;
 }
