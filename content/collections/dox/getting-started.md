@@ -1,6 +1,6 @@
 ---
 title: Getting Started
-date: 2006-09-07
+date: 2025-09-07
 ---
 
 # Getting Started with NostalgiaPHP

@@ -22,7 +22,7 @@ return [
     'dox' => [
       'permalink' => '/dox/{slug}',
       'list_url' => '/dox',
-      'sort' => ['date', 'asc'],
+      'sort' => ['date', 'desc'],
     ],
   ],
 ];
