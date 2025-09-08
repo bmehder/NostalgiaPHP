@@ -6,7 +6,7 @@
       <!-- add this button -->
       <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
         <span class="visually-hidden">Menu</span>
-        <svg viewBox="0 0 24 24" width="40" height="40" fill="currentColor" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="white" aria-hidden="true">
           <rect x="3" y="6" width="18" height="2" rx="1"></rect>
           <rect x="3" y="11" width="18" height="2" rx="1"></rect>
           <rect x="3" y="16" width="18" height="2" rx="1"></rect>

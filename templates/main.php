@@ -22,7 +22,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="<?= htmlspecialchars(url($_SERVER['REQUEST_URI'] ?? '/')) ?>">
 
-  <link rel="stylesheet" href="<?= url('assets/css/site.css') ?>">
+  <link rel="stylesheet" href="<?= url('assets/css/style.css') ?>">
   <script type="module">
 
   </script>
@@ -35,7 +35,7 @@
       <?php if (!empty($hero_html)): ?>
         <?= $hero_html ?>
       <?php endif; ?>
-      <section class="page-content">
+      <section id="page-content">
         <div class="outer">
           <div class="inner" style="--inner-padding-block: var(--size-3);">
             <div class="content"><?= $content ?></div>

@@ -7,7 +7,7 @@
       <img class="hero-bg widescreen" src="<?= $hero_image ?>" alt="">
     <?php endif; ?>
     <div class="hero-content">
-      <h1><?= htmlspecialchars($hero_title) ?></h1>
+      <div class="h1"><?= htmlspecialchars($hero_title) ?></div>
       <?php if (!empty($hero_subtitle)): ?>
         <p class="hero-sub"><?= htmlspecialchars($hero_subtitle) ?></p>
       <?php endif; ?>
