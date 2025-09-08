@@ -112,7 +112,7 @@ function markdown_to_html($md)
       } elseif ($srcInput[0] === '/') {
         $src = url($srcInput);              // site-absolute
       } else {
-        $src = url('/assets/' . $srcInput); // relative -> /assets/...
+        $src = url('/static/' . $srcInput); // relative -> /static/...
       }
 
       // Allow explicit blank caption with a trailing pipe

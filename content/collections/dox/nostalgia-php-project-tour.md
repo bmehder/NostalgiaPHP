@@ -21,7 +21,7 @@ This is a tiny **file‑based PHP CMS**: Markdown in, HTML out. No database, no 
 - **content/** — File‑based content.
   - **pages/** — Static pages (e.g., `about.md`). URL is `/{filename}`.
   - **collections/** — Named groups (e.g., `blog/`). Items are `/{collection}/{slug}`.
-- **assets/** — CSS, images, etc. Served as static files.
+- **static/** — CSS, images, etc. Served as static files.
 
 ## Routing Flow (index.php)
 1. Parse the current request path.
@@ -79,10 +79,9 @@ Create items under `content/collections/blog/*.md`. The filename (without `.md`)
 ## Mental Model for WP Folks
 - Think **template hierarchy** without the hierarchy: it’s all handled by `index.php`.
 - Think **Loop**, but the “query” is a directory listing for a collection.
-- Think **The_content()** being `$content` already HTML‑ified from Markdown.
+- Think **the_content()** being `$content` already HTML‑ified from Markdown.
 - Menus are old‑school: edit `partials/header.php` by hand.
 
 ## Deploy Notes
 - Apache: enable `.htaccess` as included. Nginx: route non‑file requests to `index.php`.
 - Set correct `base_url` in `config.php` if serving from a subdirectory.
-- For speed, you can add an optional cache layer (e.g., write parsed HTML to `cache/` keyed by filemtime).

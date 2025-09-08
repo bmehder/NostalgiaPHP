@@ -45,6 +45,6 @@ php -S localhost:8000
 - **Collections** are just folders of Markdown files.
 - **Partials** are PHP includes.
 - **Templates** are simple PHP files.
-- **Assets** are whatever you put in `/assets`.
+- **Assets** are whatever you put in `/static`.
 
 No database migrations. No npm install. No build pipeline. No JS metaframeworks.

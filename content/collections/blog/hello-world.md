@@ -2,7 +2,7 @@
 title: Hello World
 slug: hello-world
 date: 2025-09-01
-image: /assets/uploads/foo.jpg
+image: /static/uploads/foo.jpg
 tags: php, nostalgia, file-based
 ---
 

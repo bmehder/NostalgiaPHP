@@ -11,7 +11,7 @@ return [
     'collections' => __DIR__ . '/content/collections',
     'templates' => __DIR__ . '/templates',
     'partials' => __DIR__ . '/partials',
-    'assets' => '/assets',
+    'static' => '/static',
   ],
   'collections' => [
     'blog' => [
@@ -22,7 +22,7 @@ return [
     'dox' => [
       'permalink' => '/dox/{slug}',
       'list_url' => '/dox',
-      'sort' => ['date', 'desc'],
+      'sort' => ['date', 'asc'],
     ],
   ],
 ];

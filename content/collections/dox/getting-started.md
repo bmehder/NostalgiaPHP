@@ -23,8 +23,8 @@ No database. No build step. No CLI wizard. Just unzip, drop in some Markdown fil
 1. Clone or unzip the project:
 
    ```bash
-   git clone https://github.com/you/nostalgiaphp.git
-   cd nostalgiaphp
+   git clone https://github.com/bmehder/NostalgiaPHP.git
+   cd NostalgiaPHP-main
    ```
 
 2. Start PHP’s built-in server:
@@ -33,8 +33,7 @@ No database. No build step. No CLI wizard. Just unzip, drop in some Markdown fil
    php -S localhost:8000
    ```
 
-3. Visit [http://localhost:8000](http://localhost:8000) in your browser.  
-   You should see the demo homepage.
+3. Visit [http://localhost:8000](http://localhost:8000) in your browser.
 
 ---
 
@@ -42,7 +41,7 @@ No database. No build step. No CLI wizard. Just unzip, drop in some Markdown fil
 
 ```
 nostalgia-php/
-├── assets/           # images, css, js
+├── static/           # images, css, js
 ├── content/
 │   ├── pages/        # static pages (Markdown)
 │   └── collections/  # e.g. blog, docs, portfolio
@@ -70,8 +69,8 @@ nostalgia-php/
    ```php
    'site' => [
      'name' => 'My First NostalgiaPHP Site',
-     'base_url' => 'http://localhost:8000',
-     'timezone' => 'UTC',
+     'base_url' => '/',
+     'timezone' => 'Europe/London',
    ],
    ```
 
@@ -99,15 +98,7 @@ nostalgia-php/
 
 - **Apache**: use the included `.htaccess` for pretty URLs.
 - **Nginx**: add `try_files $uri $uri/ /index.php?$query_string;`.
-- **Security**: add this to `.htaccess` to block raw Markdown:
-
-  ```apache
-  RedirectMatch 403 ^/content/
-  ```
-
-- Update `base_url` in `config.php` to your production domain.
 
 ---
 
 ✅ That’s it — you’re live.  
-Next, check out [Content Authoring](content.md) to learn about front matter, tags, and collections.
