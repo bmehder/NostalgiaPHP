@@ -534,3 +534,20 @@ footer {
 		border: 1px solid #dedede;
 	}
 }
+
+/* Sidebar layout */
+.layout-sidebar .two-col {
+  display: grid;
+  grid-template-columns: 1fr min(18rem, 30%);
+  gap: var(--size-3);
+}
+
+/* Stack on narrow screens */
+@media (max-width: 48rem) {
+  .layout-sidebar .two-col {
+    grid-template-columns: 1fr;
+  }
+  .layout-sidebar .sidebar {
+    order: 2; /* put sidebar below content */
+  }
+}

@@ -39,6 +39,21 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 
+  <script type="module">
+    const btn   = document.querySelector('[data-nav-toggle]');
+    const nav   = document.querySelector('[data-site-nav]');
+    const inner = document.querySelector('[data-inner-header]');
+
+    if (btn && nav) {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        nav.setAttribute('aria-expanded', String(!expanded));
+        if (inner) inner.classList.toggle('nav-open', !expanded);
+      });
+    }
+  </script>
+
   <?php
   // Optional hook: per-page extra head HTML (inline CSS, fonts, etc.)
   if (!empty($meta['head_html']))
