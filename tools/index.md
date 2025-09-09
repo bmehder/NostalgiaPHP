@@ -3,7 +3,7 @@
 title: Example Page Title
 description: Example description for meta tags.
 draft: false
-layout: main          # options: main, sidebar, etc.
+layout: main
 
 # Hero options
 hero_title: Example Hero Title
@@ -15,8 +15,8 @@ date: 2025-09-09
 tags: [example, demo, test]
 
 # SEO & sitemap
-noindex: false        # exclude from search engines if true
-sitemap: true         # include in sitemap (default: true)
+noindex: false
+sitemap: true
 
 # Extra fields (custom for your use case)
 author: John Doe

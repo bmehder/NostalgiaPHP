@@ -1,3 +1,7 @@
+// Mental model of what is going on here.
+
+// view = blink(state)
+
 // 0. Import blink - a dead simple signals (observables) system
 const { explicit, fx } = window.slank
 
@@ -9,7 +13,6 @@ document.querySelectorAll('[data-scope]').forEach(scope => {
 	}
 
 	// 2. Create component state
-	// const isOpen = explicit(false)
 	const state = {
 		isOpen: explicit(false)
 	}

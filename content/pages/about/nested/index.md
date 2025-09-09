@@ -2,7 +2,7 @@
 title: Nested
 description: An example of a nested page.
 sitemap: false
-layout: landing
+layout: blank
 ---
 
 # Nested page

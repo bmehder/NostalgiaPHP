@@ -355,6 +355,7 @@ foreach ($cols as $c => $items) {
             <th>Description</th>
             <th>Date</th>
             <th>Tags</th>
+            <th>Layout</th>
             <th>Draft</th>
             <th>Sitemap</th>
             <th>Last modified</th>
@@ -370,6 +371,7 @@ foreach ($cols as $c => $items) {
               <td class="wrap"><?= h($m['description'] ?? '') ?></td>
               <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
               <td class="tags"><?= h(isset($m['tags']) && is_array($m['tags']) ? implode(', ', $m['tags']) : '') ?></td>
+              <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
               <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
               <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
               <td><?= date('Y-m-d', $p['lastmod']) ?></td>
@@ -395,6 +397,7 @@ foreach ($cols as $c => $items) {
               <th>Description</th>
               <th>Date</th>
               <th>Tags</th>
+              <th>Layout</th>
               <th>Draft</th>
               <th>Sitemap</th>
               <th>URL</th>
@@ -411,6 +414,7 @@ foreach ($cols as $c => $items) {
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
                 <td class="tags"><?= h(isset($m['tags']) && is_array($m['tags']) ? implode(', ', $m['tags']) : '') ?></td>
+                <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
                 <td><a href="<?= h(url($it['url'])) ?>"><?= h($it['url']) ?></a></td>

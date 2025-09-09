@@ -2,12 +2,16 @@
 <html lang="en">
 <?php include path('partials') . '/head.php'; ?>
 
-<body class="landing">
-  <main id="main" tabindex="-1">
+<body class="blank">
+  <main>
     <?php if (!empty($hero_html))
       echo $hero_html; ?>
     <section class="page-content">
-      <?= $content ?>
+      <div class="outer">
+        <div class="inner">
+          <div class="content"><?= $content ?></div>
+        </div>
+      </div>
     </section>
   </main>
 </body>

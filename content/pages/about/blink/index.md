@@ -5,22 +5,15 @@ draft: true
 date: 2025-09-06
 ---
 
-# Demo Blink
+# Blink Demo
 
 Here’s a little interactive block:
 
 <style>
-  /* Optional minimal styling (safe to inline in MD) */
-  .accordion { 
-    [data-panel] {
-      padding-block: var(--size-0-5);
-      padding-inline: var(--size);
-      border: 1px solid #ddd;
-    }
-   
-    [data-toggle] {
-      cursor: pointer; 
-    }
+  .accordion [data-panel] {
+    padding-block: var(--size-0-5);
+    padding-inline: var(--size);
+    border: 1px solid #ddd;
   }
 </style>
 
