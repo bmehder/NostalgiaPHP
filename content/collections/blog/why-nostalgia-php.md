@@ -1,8 +1,8 @@
 ---
 title: Why NostalgiaPHP?
-slug: why-nostalgia-php
-date: 2025-09-06
-draft: false
+description: Why was NostalgiaPHP created?
+date: 2025-09-08
+tags: nostalgia
 ---
 
 # Why NostalgiaPHP?

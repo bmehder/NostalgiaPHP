@@ -1,5 +1,6 @@
 ---
 title: NostalgiaPHP — Developer Guide
+description: A guide to NostalgiaPHP for developers that is almost certiainly out of date most of the time.
 slug: nostalgiaphp-developer-guide
 date: 2025-09-06
 draft: true

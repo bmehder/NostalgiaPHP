@@ -1,7 +1,4 @@
 :root {
-	--default-font: Nunito, san-serif;
-	--heading-font: Lora;
-
 	--xxs: 8rem;
 	--xs: 16rem;
 	--sm: 32rem;
@@ -20,17 +17,14 @@
 	--size-5: calc(var(--size) * 5);
 	--size-6: calc(var(--size) * 6);
 
-	--preheading-font-size: 1.125rem;
+	--text-max-width: 65ch;
 }
 
-/* CHEEKY */
 /* Resets */
 *,
 *::before,
 *::after {
 	box-sizing: border-box;
-	/* margin: 0; */
-	/* padding: 0; */
 	/* outline: 1px solid red; */
 }
 
@@ -55,16 +49,7 @@ html {
 
 body {
 	margin: 0;
-	line-height: 1.6;
 }
-
-dialog {
-	margin: auto;
-}
-
-/* ul:not(.list) {
-	list-style: none;
-} */
 
 h1,
 .h1,
@@ -83,7 +68,7 @@ p,
 li,
 figcaption,
 blockquote {
-	max-width: 65ch;
+	max-width: var(--text-max-width);
 	text-wrap: pretty;
 }
 
@@ -225,11 +210,6 @@ sup {
 	gap: var(--auto-fill-gap);
 }
 
-.auto-flow {
-	grid-auto-flow: column;
-	grid-auto-columns: 1fr;
-}
-
 .spread-apart {
 	--spread-apart-gap: var(--size-1-5);
 
@@ -238,30 +218,6 @@ sup {
 	justify-content: space-between;
 	align-items: center;
 	gap: var(--spread-apart-gap);
-}
-
-.columns {
-	--columns-width: 20rem;
-	--columns-gap: var(--size-3);
-
-	column-width: var(--columns-width);
-	gap: var(--columns-gap);
-}
-
-.column-span-all {
-	column-span: all;
-}
-
-.grid {
-	display: grid;
-}
-
-.flex {
-	display: flex;
-}
-
-.flex-wrap {
-	flex-wrap: wrap;
 }
 
 .float-left {
@@ -310,16 +266,24 @@ sup {
 	white-space: nowrap;
 }
 
+.grid {
+	display: grid;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
 .bold {
 	font-weight: bold;
 }
 
 .italic {
 	font-style: italic;
-}
-
-.relative {
-	position: relative;
 }
 
 .balance {
@@ -367,6 +331,10 @@ sup {
 }
 
 /* Skins & Typography */
+body {
+	line-height: 1.6;
+}
+
 h1,
 .h1 {
 	font-size: var(--size-2-5);
@@ -395,22 +363,22 @@ header {
 	.outer {
 		background-color: black;
 		color: white;
-	}
 
-	.inner {
-		--inner-padding-block: var(--size-2);
-	}
-
-	a {
-		color: white;
-		text-decoration: none;
-
-		&:hover {
-			text-decoration: underline;
-		}
-
-		&.active {
-			font-weight: bold;
+		.inner {
+			--inner-padding-block: var(--size-2);
+			
+			a {
+				color: white;
+				text-decoration: none;
+				
+				&:hover {
+					text-decoration: underline;
+				}
+				
+				&.active {
+					font-weight: bold;
+				}
+			}
 		}
 	}
 
@@ -454,10 +422,10 @@ footer {
 	.outer {
 		background-color: black;
 		color: white;
-	}
 
-	.inner {
-		--inner-padding-block: var(--size-1-5);
+		.inner {
+			--inner-padding-block: var(--size-1-5);
+		}
 	}
 }
 
@@ -502,13 +470,12 @@ footer {
 			margin: 0;
 			font-size: clamp(1.5rem, 5vw, 3rem);
 		}
-		
+
 		.hero-sub {
-			font-size: clamp(1rem, 3vw, 1.5rem);;
+			font-size: clamp(1rem, 3vw, 1.5rem);
 			margin-top: 0.5rem;
 		}
 	}
-
 }
 
 /* Tags page */

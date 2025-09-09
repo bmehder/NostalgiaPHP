@@ -1,7 +1,8 @@
 ---
 title: NostalgiaPHP vs Early WordPress
-slug: nostalgiaphp-vs-early-wordpress
-date: 2025-09-01
+description: A comparison of early WordPress and NostalgiaPHP.
+slug: nostalgia-php-vs-early-wordpress
+date: 2025-09-06
 ---
 
 # NostalgiaPHP vs Early WordPress

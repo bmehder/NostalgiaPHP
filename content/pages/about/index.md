@@ -1,5 +1,6 @@
 ---
 title: About
+description: This is a sample About page.
 hero_title: About Nostalgia PHP
 hero_subtitle: A subtitle.
 hero_image: /static/random-images/1.jpg

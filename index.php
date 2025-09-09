@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 'On');
+
 $cfg = require __DIR__ . '/config.php';
 require __DIR__ . '/functions.php';
 
@@ -13,7 +15,8 @@ require __DIR__ . '/sitemap.php';
 if ($path === 'robots.txt') {
   header('Content-Type: text/plain; charset=utf-8');
   echo "User-agent: *\n";
-  echo "Disallow:\n";
+  echo "Disallow: /*.md$\n";   // prevent crawling raw markdown files
+  echo "\n";
   echo "Sitemap: " . url('/sitemap.xml') . "\n";
   exit;
 }

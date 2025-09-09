@@ -20,6 +20,8 @@
         <?= nav_link('/tags', 'Tags', $path) ?>
         <?= nav_link('/dox', 'Dox', $path) ?>
         <?= nav_link('/contact', 'Contact', $path) ?>
+        <?= nav_link('/tools/admin.php', 'Admin', $path) ?>
+        <?= nav_link('/sitemap.xml', 'Sitemap', $path) ?>
         <a href="https://github.com/bmehder/NostalgiaPHP" class="github-link" target="_blank" rel="noopener">
           <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
             <path fill="currentColor"

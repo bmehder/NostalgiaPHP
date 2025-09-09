@@ -1,5 +1,6 @@
 ---
 title: Hello World
+description: The usual hello world post.
 slug: hello-world
 date: 2025-09-01
 image: /static/uploads/foo.jpg

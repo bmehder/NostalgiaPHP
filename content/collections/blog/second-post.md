@@ -1,7 +1,8 @@
 ---
 title: Second Post
+description: Just a post, but not the first.
 slug: second-post
-date: 2025-09-03
+date: 2025-09-02
 ---
 
 # Second Post

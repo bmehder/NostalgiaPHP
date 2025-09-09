@@ -7,4 +7,4 @@ RewriteRule ^ - [L]
 RewriteRule ^ index.php [L,QSA]
 
 # Block direct access to the raw content directory
-RedirectMatch 403 ^/content/
+# RedirectMatch 403 ^/content/

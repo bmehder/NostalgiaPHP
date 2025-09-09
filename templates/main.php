@@ -23,9 +23,6 @@
   <meta property="og:url" content="<?= htmlspecialchars(url($_SERVER['REQUEST_URI'] ?? '/')) ?>">
 
   <link rel="stylesheet" href="<?= url('static/css/style.css') ?>">
-  <script type="module">
-
-  </script>
 </head>
 
 <body>
