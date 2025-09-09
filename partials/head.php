@@ -36,9 +36,16 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
     <meta property="og:image" content="<?= htmlspecialchars($og_image) ?>">
   <?php endif; ?>
 
+  <meta name="base-url" content="<?= htmlspecialchars(rtrim(site('base_url'), '/')) ?>">
+
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 
+  <script type="module">
+  import { explicit, implicit, fx } from "<?= url('/static/js/blink.js') ?>"
+    window.slank = { explicit, implicit, fx }
+  </script>
+ 
   <script type="module">
     const btn   = document.querySelector('[data-nav-toggle]');
     const nav   = document.querySelector('[data-site-nav]');
