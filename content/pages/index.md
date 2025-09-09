@@ -1,7 +1,7 @@
 ---
 title: Welcome to NostalgiaPHP
 hero_title: Welcome to Nostalgia PHP
-hero_subtitle: Make site. Files good. Framework bad.
+hero_subtitle: Files good. Framework bad.
 hero_image: /static/uploads/cave-water.jpg
 description: This is the homepage description.
 ---

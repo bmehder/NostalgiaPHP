@@ -20,6 +20,7 @@
         <?= nav_link('/tags', 'Tags', $path) ?>
         <?= nav_link('/dox', 'Dox', $path) ?>
         <?= nav_link('/contact', 'Contact', $path) ?>
+        <?= nav_link('/about/blink', 'Blink', $path) ?>
         <?= nav_link('/tools/admin.php', 'Admin', $path) ?>
         <?= nav_link('/sitemap.xml', 'Sitemap', $path) ?>
         <a href="https://github.com/bmehder/NostalgiaPHP" class="github-link" target="_blank" rel="noopener">
