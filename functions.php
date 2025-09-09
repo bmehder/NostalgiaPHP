@@ -360,6 +360,13 @@ function nav_link($href, $label, $path = '')
 
 function render($view, $vars = [])
 {
+  $vars += [
+    'title' => '',
+    'content' => '',
+    'path' => '',
+    'meta' => [],
+    'hero_html' => '',
+  ];
   $tpl = path('templates') . "/$view.php";
   if (!is_file($tpl)) {
     http_response_code(500);

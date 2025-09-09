@@ -10,6 +10,8 @@ $path = trim(request_path(), '/');
 $parts = $path === '' ? [] : explode('/', $path);
 $first = $parts[0] ?? '';
 
+$hero_html = null;
+
 require __DIR__ . '/sitemap.php';
 
 if ($path === 'robots.txt') {
@@ -75,7 +77,8 @@ if ($path === '') {
     }
   }
 
-  render('main', compact('title', 'content', 'path', 'meta', 'hero_html'));
+  $layout = $meta['layout'] ?? 'main';
+  render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
   exit;
 }
 
@@ -116,7 +119,8 @@ if (is_collection($first)) {
     }
   }
 
-  render('main', compact('title', 'content', 'path', 'meta'));
+  $layout = $meta['layout'] ?? 'main';
+  render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
   exit;
 }
 
@@ -198,5 +202,6 @@ if (!$page) {
   }
 }
 
-render('main', compact('title', 'content', 'path', 'meta', 'hero_html'));
+$layout = $meta['layout'] ?? 'main';
+render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
 exit;
