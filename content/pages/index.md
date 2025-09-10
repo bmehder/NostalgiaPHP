@@ -6,7 +6,7 @@ hero_subtitle: A caveman-simple file-based CMS
 hero_image: /static/uploads/cave-water.jpg
 ---
 
-# NostalgiaPHP  
+# NostalgiaPHP 
 
 A file-based CMS for people who survived WordPress and the JavaScript framework wars.  
 

@@ -454,6 +454,7 @@ footer {
 
 	.hero-bg {
 		grid-area: 1 / 1;
+		height: 100%;
 		object-fit: cover; /* crop to fill */
 	}
 
