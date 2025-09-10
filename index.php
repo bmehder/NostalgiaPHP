@@ -1,4 +1,11 @@
 <?php
+// Dev-only: prevent HTML caching
+if (!headers_sent()) {
+  header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+  header('Pragma: no-cache');
+  header('Expires: 0');
+}
+
 ini_set('display_errors', 'On');
 
 $cfg = require __DIR__ . '/config.php';
