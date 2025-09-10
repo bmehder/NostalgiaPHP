@@ -1,7 +1,6 @@
 ---
 title: Blink Demo
 description: Demo of the Blink (Slank) reactivity system.
-draft: true
 date: 2025-09-06
 ---
 
@@ -10,33 +9,57 @@ date: 2025-09-06
 Here’s a little interactive block:
 
 <style>
+  .inner {
+    --inner-padding-block: var(--size);
+  }
+
   .accordion [data-panel] {
     padding-block: var(--size-0-5);
     padding-inline: var(--size);
-    border: 1px solid #ddd;
   }
 </style>
 
 <script type="module" src="/static/js/accordion.js"></script>
 
 <!-- You can add multiple instances on the same page -->
-<section class="flow">
-  <div class="accordion" data-scope>
-    <button data-toggle aria-expanded="false"></button>
-    <div data-panel hidden>
-      <p>First instance. Independent state.</p>
+<section>
+  <div class="outer">
+    <div class="inner flow">
+      <h2>Accordion Type Thing</h2>
+      <div class="accordion" data-scope>
+        <button data-toggle aria-expanded="false"></button>
+        <div data-panel hidden>
+          <p>First instance. Independent state.</p>
+        </div>
+      </div>
+      <div class="accordion" data-scope>
+        <button data-toggle aria-expanded="false"></button>
+        <div data-panel hidden>
+          <p>Second instance. Independent state.</p>
+        </div>
+      </div>
+      <div class="accordion" data-scope>
+        <button data-toggle aria-expanded="false"></button>
+        <div data-panel hidden>
+          <p>Third instance. Independent state.</p>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="accordion" data-scope>
-    <button data-toggle aria-expanded="false"></button>
-    <div data-panel hidden>
-      <p>Second instance. Independent state.</p>
-    </div>
-  </div>
-  <div class="accordion" data-scope>
-    <button data-toggle aria-expanded="false"></button>
-    <div data-panel hidden>
-      <p>Third instance. Independent state.</p>
+</section>
+
+<script type="module" src="/static/js/counter.js"></script>
+
+<section>
+  <div class="outer">
+    <div class="inner flow">
+      <h2>Counter</h2>
+      <div class="counter">
+        <button data-decrement>-</button>
+        <span data-counter-result></span>
+        <button data-increment>+</button>
+        <button data-reset>Reset</button>
+      </div>
     </div>
   </div>
 </section>
