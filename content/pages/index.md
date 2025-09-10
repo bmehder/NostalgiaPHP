@@ -2,7 +2,7 @@
 title: Welcome to NostalgiaPHP
 description: This is the homepage description.
 hero_title: Welcome to Nostalgia PHP
-hero_subtitle: Caveman-simple file-based CMS.
+hero_subtitle: A caveman-simple file-based CMS
 hero_image: /static/uploads/cave-water.jpg
 ---
 
