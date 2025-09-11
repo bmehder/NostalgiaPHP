@@ -4,7 +4,6 @@
 // Include from index.php after $path/$parts/$first are set.
 
 if (($path ?? '') === 'sitemap.xml') {
-  // include collection index pages like /blog?
   $includeCollectionIndexes = false;
 
   // keep XML clean even if notices happen
@@ -14,6 +13,21 @@ if (($path ?? '') === 'sitemap.xml') {
 
   $xml = function ($s) {
     return htmlspecialchars((string) $s, ENT_QUOTES | ENT_XML1, 'UTF-8'); };
+
+  // --- ensure absolute base URL ---
+  $baseUrl = rtrim((string) site('base_url'), '/');
+  if ($baseUrl === '' || $baseUrl === '/') {
+    // Build from current host as a fallback
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $baseUrl = $scheme . '://' . $host;
+  }
+
+  // Helper that makes absolute locs
+  $abs = function (string $path) use ($baseUrl): string {
+    return $baseUrl . '/' . ltrim($path, '/');
+  };
+
   $entries = [];
 
   // --- Pages ---
@@ -26,9 +40,9 @@ if (($path ?? '') === 'sitemap.xml') {
     foreach ($it as $f) {
       if (!$f->isFile() || strtolower($f->getExtension()) !== 'md')
         continue;
-      $abs = $f->getPathname();
-      $rel = trim(str_replace($basePages, '', $abs), '/');   // "guides/install.md" or "index.md"
-      $rel = preg_replace('/\.md$/i', '', $rel);             // drop .md
+      $absPath = $f->getPathname();
+      $rel = trim(str_replace($basePages, '', $absPath), '/');  // "guides/install.md" or "index.md"
+      $rel = preg_replace('/\.md$/i', '', $rel);                // drop .md
       if ($rel === 'index')
         $rel = '';
       if (substr($rel, -6) === '/index')
@@ -51,8 +65,8 @@ if (($path ?? '') === 'sitemap.xml') {
       if (isset($meta['sitemap']) && $meta['sitemap'] === false)
         continue;
 
-      $loc = $rel === '' ? url('/') : url('/' . $rel);
-      $lastmod = gmdate('c', filemtime($file));
+      $loc = $rel === '' ? $abs('/') : $abs('/' . $rel);
+      $lastmod = gmdate('c', filemtime($file) ?: time());
       $entries[] = ['loc' => $loc, 'lastmod' => $lastmod];
     }
   }
@@ -61,7 +75,7 @@ if (($path ?? '') === 'sitemap.xml') {
   $collections = array_keys(config()['collections'] ?? []);
   foreach ($collections as $c) {
     if ($includeCollectionIndexes) {
-      $entries[] = ['loc' => url('/' . $c), 'lastmod' => null];
+      $entries[] = ['loc' => $abs('/' . $c), 'lastmod' => null];
     }
     foreach (list_collection($c) as $it) {
       $m = $it['meta'] ?? [];
@@ -71,12 +85,20 @@ if (($path ?? '') === 'sitemap.xml') {
         continue;
 
       $file = path('collections') . "/$c/{$it['slug']}.md";
-      $loc = url("/$c/{$it['slug']}");
+      $loc = $abs("/$c/{$it['slug']}");
       $lastmod = is_file($file) ? gmdate('c', filemtime($file)) : null;
 
       $entries[] = ['loc' => $loc, 'lastmod' => $lastmod];
     }
   }
+
+  // --- De-dupe by loc & sort for stable output ---
+  $byLoc = [];
+  foreach ($entries as $e) {
+    $byLoc[$e['loc']] = $e;
+  } // later wins, which is fine here
+  $entries = array_values($byLoc);
+  usort($entries, fn($a, $b) => strcmp($a['loc'], $b['loc']));
 
   // output XML
   ob_clean();
@@ -86,11 +108,12 @@ if (($path ?? '') === 'sitemap.xml') {
   foreach ($entries as $e) {
     echo "  <url>\n";
     echo "    <loc>" . $xml($e['loc']) . "</loc>\n";
-    if (!empty($e['lastmod']))
+    if (!empty($e['lastmod'])) {
       echo "    <lastmod>" . $xml($e['lastmod']) . "</lastmod>\n";
+    }
     echo "  </url>\n";
   }
-  echo "</urlset>";
+  echo "</urlset>\n";
 
   ini_set('display_errors', $old_display);
   exit;
