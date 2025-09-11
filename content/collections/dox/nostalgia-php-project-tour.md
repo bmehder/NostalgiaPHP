@@ -3,7 +3,6 @@ title: NostalgiaPHP — Project Tour
 description: A tour of the NostalgiaPHP project files.
 date: 2025-09-02
 excerpt: This is a tiny file‑based PHP CMS: Markdown in, HTML out. No database, no framework. Explore the project.
-tags: nostalgia
 ---
 
 # NostalgiaPHP — Project Tour

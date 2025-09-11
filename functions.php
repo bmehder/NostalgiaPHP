@@ -74,13 +74,6 @@ function parse_front_matter($raw)
           $v = false;
         }
 
-        // Normalize tags from a comma string: "a, b, c"
-        if ($k === 'tags') {
-          $v = trim($v, "[] \t");
-          $parts = array_filter(array_map('trim', explode(',', $v)));
-          $v = array_values($parts);
-        }
-
         $meta[$k] = $v;
       }
     }
@@ -237,37 +230,6 @@ function all_items($only_collection = null)
     }
   }
   return $items;
-}
-
-/* ------------------------------ Tags utilities ---------------------------- */
-
-function all_tags($only_collection = null)
-{
-  $map = [];
-  foreach (all_items($only_collection) as $it) {
-    $tags = (isset($it['meta']['tags']) && is_array($it['meta']['tags'])) ? $it['meta']['tags'] : [];
-    foreach ($tags as $t) {
-      if ($t === '' || $t === null)
-        continue;
-      $key = (string) $t;
-      $map[$key] = isset($map[$key]) ? $map[$key] + 1 : 1;
-    }
-  }
-  ksort($map, SORT_NATURAL | SORT_FLAG_CASE);
-  return $map;
-}
-
-function items_with_tag($tag, $only_collection = null)
-{
-  $out = [];
-  $want = (string) $tag;
-  foreach (all_items($only_collection) as $it) {
-    $tags = (isset($it['meta']['tags']) && is_array($it['meta']['tags'])) ? $it['meta']['tags'] : [];
-    if (in_array($want, $tags, true)) {
-      $out[] = $it;
-    }
-  }
-  return $out;
 }
 
 /* ------------------------------- Presentation ----------------------------- */

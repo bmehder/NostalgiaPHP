@@ -17,7 +17,6 @@
         <?= nav_link('/', 'Home', $path) ?>
         <?= nav_link('/about', 'About', $path) ?>
         <?= nav_link('/blog', 'Blog', $path) ?>
-        <?= nav_link('/tags', 'Tags', $path) ?>
         <?= nav_link('/dox', 'Dox', $path) ?>
         <?= nav_link('/contact', 'Contact', $path) ?>
         <?= nav_link('/about/blink', 'Blink', $path) ?>

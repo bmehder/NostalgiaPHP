@@ -115,69 +115,10 @@ if (is_collection($first)) {
     $meta = $item['meta'] ?? [];
     $title = $meta['title'] ?? $slug;
     $content = $item['html'];
-
-    // Append tag list if tags exist
-    $tags = $meta['tags'] ?? [];
-    if ($tags) {
-      $links = array_map(function ($t) {
-        return '<a href="' . url('/tags/' . $t) . '">' . htmlspecialchars($t) . '</a>';
-      }, $tags);
-      $content .= '<p><small>Tags: ' . implode(', ', $links) . '</small></p>';
-    }
   }
 
   $layout = $meta['layout'] ?? 'main';
   render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
-  exit;
-}
-
-// ---------- Tags index: /tags ----------
-if ($first === 'tags' && count($parts) === 1) {
-  $tagmap = all_tags(); // across all collections
-
-  ob_start();
-  echo '<h1>Tags</h1>';
-  if (!$tagmap) {
-    echo '<p>No tags yet.</p>';
-  } else {
-    echo '<ul class="tags-list">';
-    foreach ($tagmap as $tag => $count) {
-      $href = url('/tags/' . rawurlencode($tag));
-      $label = htmlspecialchars($tag);
-      echo "<li><a class=\"tag-chip\" href=\"$href\">$label <span class=\"tag-count\">$count</span></a></li>";
-    }
-    echo '</ul>';
-  }
-  $content = ob_get_clean();
-
-  $title = 'Tags';
-  $meta = [];
-  render('main', compact('title', 'content', 'path', 'meta'));
-  exit;
-}
-
-// ---------- Single tag: /tags/{tag} ----------
-if ($first === 'tags' && !empty($parts[1])) {
-  $tag = urldecode($parts[1]);
-  $items = items_with_tag($tag); // across all collections
-  $content = $render_cards($items, 'Tag: ' . $tag, 'No items with this tag yet.');
-  $title = 'Tag: ' . $tag;
-  $meta = [];
-  render('main', compact('title', 'content', 'path', 'meta'));
-  exit;
-}
-
-// ---------- Per-collection tag: /{collection}/tag/{tag} ----------
-if (is_collection($first) && ($parts[1] ?? '') === 'tag' && !empty($parts[2])) {
-  $collection = $first;
-  $tag = urldecode($parts[2]);
-  $items = items_with_tag($tag, $collection);
-
-  $heading = ucfirst($collection) . ' — Tag: ' . $tag;
-  $content = $render_cards($items, $heading, 'No items with this tag in this collection.', $collection);
-  $title = $heading;
-  $meta = [];
-  render('main', compact('title', 'content', 'path', 'meta'));
   exit;
 }
 

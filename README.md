@@ -40,7 +40,6 @@ That’s it.
 
 - Write pages and collections in **Markdown**.  
 - Drop in **partials** (`header.php`, `footer.php`).  
-- Add **tags** if you feel fancy.  
 - No database. No build step. No Node.  
 - Runs anywhere PHP runs (which is… everywhere).  
 

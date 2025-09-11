@@ -256,10 +256,6 @@ foreach ($cols as $c => $items) {
       border-radius: 4px;
     }
 
-    .tags {
-      color: var(--muted);
-    }
-
     .muted {
       color: var(--muted);
     }
@@ -351,7 +347,6 @@ foreach ($cols as $c => $items) {
               <th>Title</th>
               <th>Description</th>
               <th>Date</th>
-              <th>Tags</th>
               <th>Layout</th>
               <th>Draft</th>
               <th>Sitemap</th>
@@ -367,7 +362,6 @@ foreach ($cols as $c => $items) {
                 <td><?= h($m['title'] ?? '') ?></td>
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
-                <td class="tags"><?= h(isset($m['tags']) && is_array($m['tags']) ? implode(', ', $m['tags']) : '') ?></td>
                 <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
@@ -392,7 +386,6 @@ foreach ($cols as $c => $items) {
                 <th>Title</th>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Tags</th>
                 <th>Layout</th>
                 <th>Draft</th>
                 <th>Sitemap</th>
@@ -409,7 +402,6 @@ foreach ($cols as $c => $items) {
                   <td><?= h($m['title'] ?? '') ?></td>
                   <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                   <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
-                  <td class="tags"><?= h(isset($m['tags']) && is_array($m['tags']) ? implode(', ', $m['tags']) : '') ?></td>
                   <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
                   <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                   <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>

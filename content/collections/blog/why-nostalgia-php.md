@@ -2,7 +2,6 @@
 title: Why NostalgiaPHP?
 description: Why was NostalgiaPHP created?
 date: 2025-09-08
-tags: nostalgia
 ---
 
 # Why NostalgiaPHP?

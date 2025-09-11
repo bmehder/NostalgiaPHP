@@ -12,7 +12,6 @@ hero_image: /static/uploads/1.jpg
 
 # Collection / item metadata
 date: 2025-09-09
-tags: [example, demo, test]
 
 # SEO & sitemap
 noindex: false
