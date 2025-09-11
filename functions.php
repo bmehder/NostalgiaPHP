@@ -52,25 +52,25 @@ function parse_front_matter($raw)
   $meta = [];
   $body = $raw;
 
-  // ---<yaml>--- body ---</yaml>--- (simple YAML-ish parser)
-  if (preg_match('/^---\s*\n(.+?)\n---\s*\n(.*)$/s', $raw, $m)) {
+  // Match optional front matter at the very start
+  if (preg_match('/^---\s*\R([\s\S]*?)\R---\s*(?:\R)?([\s\S]*)\z/u', $raw, $m)) {
     $yaml = trim($m[1]);
-    $body = $m[2];
+    $body = $m[2]; // may be empty
 
-    foreach (preg_split('/\r?\n/', $yaml) as $line) {
+    foreach (preg_split('/\R/', $yaml) as $line) {
       if (!trim($line))
         continue;
+
       if (preg_match('/^([A-Za-z0-9_\-]+):\s*(.*)$/', $line, $p)) {
         $k = trim($p[1]);
         $v = trim($p[2]);
 
         // Basic typing
-        $val_lc = strtolower($v);
         if (preg_match('/^\d{4}-\d{2}-\d{2}/', $v)) {
           $v = new DateTime($v);
-        } elseif (in_array($val_lc, ['true', 'yes', 'on', '1'], true)) {
+        } elseif (strcasecmp($v, 'true') === 0) {
           $v = true;
-        } elseif (in_array($val_lc, ['false', 'no', 'off', '0'], true)) {
+        } elseif (strcasecmp($v, 'false') === 0) {
           $v = false;
         }
 
