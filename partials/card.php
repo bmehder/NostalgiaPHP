@@ -15,7 +15,7 @@ if (!$excerpt && !empty($item['html'])) {
   $excerpt = excerpt_from_html($item['html'], 180);
 }
 
-// Image: prefer front-matter, else random from /static/random-images
+// Image
 if (!empty($item['meta']['image'])) {
   $image = $item['meta']['image'];
   if ($image[0] === '/') {
@@ -23,13 +23,7 @@ if (!empty($item['meta']['image'])) {
     $image = url($image);
   }
 } else {
-  $dir = __DIR__ . '/../static/random-images';
-  $files = glob($dir . '/*.{jpg,jpeg,png,gif,webp}', GLOB_BRACE);
   $image = '';
-  if ($files) {
-    $file = $files[array_rand($files)];
-    $image = url('/static/random-images/' . basename($file));
-  }
 }
 ?>
 <article class="card">

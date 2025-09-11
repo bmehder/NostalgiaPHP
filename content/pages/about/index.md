@@ -3,7 +3,7 @@ title: About
 description: This is a sample About page.
 hero_title: About Nostalgia PHP
 hero_subtitle: A subtitle.
-hero_image: /static/random-images/1.jpg
+hero_image: /static/uploads/1.jpg
 layout: sidebar
 ---
 
@@ -12,13 +12,3 @@ layout: sidebar
 Because *modern web development* doesn’t have to be so stupid.
 
 [Nested Page](/about/nested)
-
-## Gallery
-
-```gallery
-random-images/1.jpg
-random-images/2.jpg | My fave shot
-random-images/3.jpg |
-/static/random-images/6.jpg | Big hero image
-https://picsum.photos/seed/123/800/600 | External allowed
-```

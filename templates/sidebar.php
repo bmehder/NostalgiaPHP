@@ -5,7 +5,7 @@
 <body class="layout-sidebar">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
-    <main id="main" tabindex="-1">
+    <main>
       <?php if (!empty($hero_html))
         echo $hero_html; ?>
       <div class="outer">

@@ -8,7 +8,7 @@ layout: main
 # Hero options
 hero_title: Example Hero Title
 hero_subtitle: This is a hero subtitle.
-hero_image: /static/random-images/1.jpg
+hero_image: /static/uploads/1.jpg
 
 # Collection / item metadata
 date: 2025-09-09

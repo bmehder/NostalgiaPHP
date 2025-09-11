@@ -93,62 +93,6 @@ function parse_front_matter($raw)
 
 function markdown_to_html($md)
 {
-  // PRE-PROCESS: ```gallery ... ``` (on raw Markdown, before parsing)
-  $md = preg_replace_callback('/```gallery\s*\n([\s\S]*?)\n```/i', function ($m) {
-    $raw = trim($m[1]);
-    if ($raw === '')
-      return '';
-
-    $lines = array_filter(array_map('trim', preg_split('/\r?\n/', $raw)));
-    $images = [];
-
-    foreach ($lines as $line) {
-      [$srcInput, $caption] = array_pad(array_map('trim', explode('|', $line, 2)), 2, '');
-      if ($srcInput === '')
-        continue;
-
-      if (preg_match('#^https?://#i', $srcInput)) {
-        $src = $srcInput;                   // external
-      } elseif ($srcInput[0] === '/') {
-        $src = url($srcInput);              // site-absolute
-      } else {
-        $src = url('/static/' . $srcInput); // relative -> /static/...
-      }
-
-      // Allow explicit blank caption with a trailing pipe
-      if ($caption === '' && strpos($line, '|') !== false) {
-        $alt = '';
-      } elseif ($caption !== '') {
-        $alt = $caption;
-      } else {
-        $alt = preg_replace('/\.[a-z0-9]+$/i', '', basename($srcInput));
-      }
-
-      $images[] = ['src' => $src, 'alt' => $alt];
-    }
-
-    if (!$images)
-      return '';
-
-    ob_start();
-    // expects $images
-    include path('partials') . '/gallery.php';
-    return ob_get_clean();
-  }, $md);
-
-  // --- Shortcode embeds with post-parse replacement ---
-  $embeds = [];
-
-  // {{contact-form}} → placeholder token; store rendered HTML for later
-  $md = preg_replace_callback('/\{\{\s*contact\-form\s*\}\}/i', function () use (&$embeds) {
-    ob_start();
-    include path('partials') . '/contact-form.php';
-    $html = ob_get_clean();
-    $token = '[[EMBED:CONTACT:' . count($embeds) . ']]';
-    $embeds[$token] = $html;
-    return $token;
-  }, $md);
-
   // Use Parsedown if available; otherwise return raw (you can use a tiny fallback if you want)
   static $engine = null;
 
@@ -166,11 +110,6 @@ function markdown_to_html($md)
   }
 
   $out = $engine ? $engine->text($md) : $md;
-
-  // Replace placeholders with the real HTML AFTER Markdown parsing
-  if (!empty($embeds)) {
-    $out = strtr($out, $embeds);
-  }
 
   return $out; // (If you want "Parsedown-or-bust", you can error instead of returning $md)
 }
