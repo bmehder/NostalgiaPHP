@@ -10,7 +10,8 @@ const view = {
 	decrement: document.querySelector('[data-decrement]'),
 	increment: document.querySelector('[data-increment]'),
 	reset: document.querySelector('[data-reset]'),
-	result: document.querySelector('[data-counter-result]'),
+	value: document.querySelector('[data-counter-value]'),
+	doubled: document.querySelector('[data-counter-doubled]'),
 }
 
 // 2. Create component state
@@ -19,7 +20,8 @@ const doubled = implicit(() => count.value * 2)
 
 // 3. Bind the state to the view elements inside an fx function
 fx(() => {
-	view.result.textContent = `${count.value} x 2 = ${doubled.value}`
+	view.value.textContent = count.value
+	view.doubled.textContent = doubled.value
 })
 
 // 4. Toggle the state - don't even need an event listener. No bubbles.

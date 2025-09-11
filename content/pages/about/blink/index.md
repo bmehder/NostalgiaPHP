@@ -56,9 +56,10 @@ Here’s a little interactive block:
       <h2>Counter</h2>
       <div class="counter">
         <button data-decrement>-</button>
-        <span data-counter-result></span>
         <button data-increment>+</button>
         <button data-reset>Reset</button>
+        <p>Count (explicit state): <span data-counter-value></span></p>
+        <p>Doubled (implicit state): <span data-counter-doubled></span></p>
       </div>
     </div>
   </div>
