@@ -7,7 +7,6 @@ excerpt: This is a tiny file‑based PHP CMS: Markdown in, HTML out. No database
 tags: nostalgia
 ---
 
-
 # NostalgiaPHP — Project Tour
 
 This is a tiny **file‑based PHP CMS**: Markdown in, HTML out. No database, no framework.
@@ -88,3 +87,4 @@ Create items under `content/collections/blog/*.md`. The filename (without `.md`)
 ## Deploy Notes
 - Apache: enable `.htaccess` as included. Nginx: route non‑file requests to `index.php`.
 - Set correct `base_url` in `config.php` if serving from a subdirectory.
+- Set permissions: directories `755`, files `644`.

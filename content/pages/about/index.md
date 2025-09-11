@@ -12,3 +12,4 @@ layout: sidebar
 Because *modern web development* doesn’t have to be so stupid.
 
 [Nested Page](/about/nested)
+[Blank Page](/about/blank)

@@ -2,11 +2,11 @@
 // tools/front-matter-report.php
 // A nostalgic, no-login "admin" that reports front-matter across pages & collections.
 
-$root = dirname(__DIR__);
-require $root . '/config.php';
-require $root . '/functions.php';
-
 date_default_timezone_set(site('timezone') ?: 'UTC');
+
+// templates/admin.php
+// Make a local ROOT for display-only path trimming.
+$root = rtrim(dirname(__DIR__), '/');
 
 function h($s)
 {
@@ -174,13 +174,6 @@ foreach ($cols as $c => $items) {
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <title>Front-matter Report — <?= h(site('name')) ?></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
     :root {
       --bg: #fff;
@@ -192,6 +185,7 @@ foreach ($cols as $c => $items) {
       --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
     }
 
+    .admin {
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       color: var(--ink);
@@ -199,13 +193,13 @@ foreach ($cols as $c => $items) {
       margin: 0;
     }
 
-    header,
+    /* header, */
     section {
       padding: 1rem clamp(.75rem, 2vw, 2rem);
     }
 
     header {
-      border-bottom: 1px solid var(--line);
+      /* border-bottom: 1px solid var(--line); */
     }
 
     h1 {
@@ -281,118 +275,79 @@ foreach ($cols as $c => $items) {
     .wrap {
       white-space: pre-wrap;
     }
+  }
   </style>
-</head>
 
-<body>
-  <header>
-    <h1>Front-matter Report</h1>
-    <div class="meta"><?= h(site('name')) ?> · Generated <?= date('Y-m-d H:i') ?></div>
-    <div class="summary">
-      <div class="card">
-        <div class="n"><?= $sum['pages'] ?></div>
-        <div>Pages</div>
-      </div>
-      <div class="card">
-        <div class="n"><?= $sum['items'] ?></div>
-        <div>Collection items</div>
-      </div>
-      <div class="card">
-        <div class="n"><?= $sum['drafts'] ?></div>
-        <div>Drafts</div>
-      </div>
-      <div class="card">
-        <div class="n"><?= $sum['sitemap_off'] ?></div>
-        <div>Sitemap off</div>
-      </div>
-      <div class="card">
-        <div class="n"><?= $sum['missing_title'] ?></div>
-        <div>Missing titles</div>
-      </div>
-      <div class="card">
-        <div class="n"><?= $sum['missing_desc'] ?></div>
-        <div>Missing descriptions</div>
-      </div>
-    </div>
-  </header>
+  <?php include path('partials') . '/head.php'; ?>
 
-  <section>
-    <h2>Potential issues</h2>
-    <?php if (!$issues): ?>
-      <p class="ok">No obvious issues found.</p>
-    <?php else: ?>
-      <table>
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Where</th>
-            <th>Problem</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($issues as $row): ?>
-            <tr>
-              <td><?= h($row['type']) ?></td>
-              <td><code><?= h($row['where']) ?></code></td>
-              <td class="problem"><?= h($row['problem']) ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    <?php endif; ?>
-  </section>
+<body class="admin">
+  <div class="wrapper">
+    <?php include path('partials') . '/header.php'; ?>
 
-  <section>
-    <h2>Pages</h2>
-    <?php if (!$pages): ?>
-      <p class="muted">No pages found.</p>
-    <?php else: ?>
-      <table>
-        <thead>
-          <tr>
-            <th>URL</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Tags</th>
-            <th>Layout</th>
-            <th>Draft</th>
-            <th>Sitemap</th>
-            <th>Last modified</th>
-            <th>File</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($pages as $p):
-            $m = $p['meta']; ?>
-            <tr>
-              <td><a href="<?= h(url($p['url'])) ?>"><?= h($p['url']) ?></a></td>
-              <td><?= h($m['title'] ?? '') ?></td>
-              <td class="wrap"><?= h($m['description'] ?? '') ?></td>
-              <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
-              <td class="tags"><?= h(isset($m['tags']) && is_array($m['tags']) ? implode(', ', $m['tags']) : '') ?></td>
-              <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
-              <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
-              <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
-              <td><?= date('Y-m-d', $p['lastmod']) ?></td>
-              <td><code><?= h(str_replace($root . '/', '', $p['file'])) ?></code></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    <?php endif; ?>
-  </section>
-
-  <?php foreach ($cols as $c => $items): ?>
     <section>
-      <h2>Collection: <?= h($c) ?></h2>
-      <?php if (!$items): ?>
-        <p class="muted">No items.</p>
+      <h1>Front-matter Report</h1>
+      <div class="meta"><?= h(site('name')) ?> · Generated <?= date('Y-m-d H:i') ?></div>
+      <div class="summary">
+        <div class="card">
+          <div class="n"><?= $sum['pages'] ?></div>
+          <div>Pages</div>
+        </div>
+        <div class="card">
+          <div class="n"><?= $sum['items'] ?></div>
+          <div>Collection items</div>
+        </div>
+        <div class="card">
+          <div class="n"><?= $sum['drafts'] ?></div>
+          <div>Drafts</div>
+        </div>
+        <div class="card">
+          <div class="n"><?= $sum['sitemap_off'] ?></div>
+          <div>Sitemap off</div>
+        </div>
+        <div class="card">
+          <div class="n"><?= $sum['missing_title'] ?></div>
+          <div>Missing titles</div>
+        </div>
+        <div class="card">
+          <div class="n"><?= $sum['missing_desc'] ?></div>
+          <div>Missing descriptions</div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>Potential issues</h2>
+      <?php if (!$issues): ?>
+        <p class="ok">No obvious issues found.</p>
       <?php else: ?>
         <table>
           <thead>
             <tr>
-              <th>Slug</th>
+              <th>Type</th>
+              <th>Where</th>
+              <th>Problem</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($issues as $row): ?>
+              <tr>
+                <td><?= h($row['type']) ?></td>
+                <td><code><?= h($row['where']) ?></code></td>
+                <td class="problem"><?= h($row['problem']) ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      <?php endif; ?>
+    </section>
+    <section>
+      <h2>Pages</h2>
+      <?php if (!$pages): ?>
+        <p class="muted">No pages found.</p>
+      <?php else: ?>
+        <table>
+          <thead>
+            <tr>
+              <th>URL</th>
               <th>Title</th>
               <th>Description</th>
               <th>Date</th>
@@ -400,16 +355,15 @@ foreach ($cols as $c => $items) {
               <th>Layout</th>
               <th>Draft</th>
               <th>Sitemap</th>
-              <th>URL</th>
               <th>Last modified</th>
               <th>File</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($items as $it):
-              $m = $it['meta']; ?>
+            <?php foreach ($pages as $p):
+              $m = $p['meta']; ?>
               <tr>
-                <td><code><?= h($it['slug']) ?></code></td>
+                <td><a href="<?= h(url($p['url'])) ?>"><?= h($p['url']) ?></a></td>
                 <td><?= h($m['title'] ?? '') ?></td>
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
@@ -417,16 +371,60 @@ foreach ($cols as $c => $items) {
                 <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
-                <td><a href="<?= h(url($it['url'])) ?>"><?= h($it['url']) ?></a></td>
-                <td><?= date('Y-m-d', $it['lastmod']) ?></td>
-                <td><code><?= h(str_replace($root . '/', '', $it['file'])) ?></code></td>
+                <td><?= date('Y-m-d', $p['lastmod']) ?></td>
+                <td><code><?= h(str_replace($root . '/', '', $p['file'])) ?></code></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
         </table>
       <?php endif; ?>
     </section>
-  <?php endforeach; ?>
+    <?php foreach ($cols as $c => $items): ?>
+      <section>
+        <h2>Collection: <?= h($c) ?></h2>
+        <?php if (!$items): ?>
+          <p class="muted">No items.</p>
+        <?php else: ?>
+          <table>
+            <thead>
+              <tr>
+                <th>Slug</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Tags</th>
+                <th>Layout</th>
+                <th>Draft</th>
+                <th>Sitemap</th>
+                <th>URL</th>
+                <th>Last modified</th>
+                <th>File</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($items as $it):
+                $m = $it['meta']; ?>
+                <tr>
+                  <td><code><?= h($it['slug']) ?></code></td>
+                  <td><?= h($m['title'] ?? '') ?></td>
+                  <td class="wrap"><?= h($m['description'] ?? '') ?></td>
+                  <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
+                  <td class="tags"><?= h(isset($m['tags']) && is_array($m['tags']) ? implode(', ', $m['tags']) : '') ?></td>
+                  <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
+                  <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
+                  <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
+                  <td><a href="<?= h(url($it['url'])) ?>"><?= h($it['url']) ?></a></td>
+                  <td><?= date('Y-m-d', $it['lastmod']) ?></td>
+                  <td><code><?= h(str_replace($root . '/', '', $it['file'])) ?></code></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        <?php endif; ?>
+      </section>
+    <?php endforeach; ?>
+    <?php include path('partials') . '/footer.php'; ?>
+  </div>
 
 </body>
 

@@ -212,3 +212,19 @@ if (!$page) {
 $layout = $meta['layout'] ?? 'main';
 render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
 exit;
+
+// ---------- Admin route ----------
+if ($path === 'admin') {
+  $pages = collect_pages();
+  $cols = collect_collections();
+  // ... calculate $sum and $issues same as before ...
+
+  ob_start();
+  include path('templates') . '/admin.php';
+  $content = ob_get_clean();
+
+  $title = 'Admin — ' . site('name');
+  $meta = [];
+  render('main', compact('title', 'content', 'path', 'meta'));
+  exit;
+}

@@ -21,6 +21,7 @@ sitemap: true
 # Extra fields (custom for your use case)
 author: John Doe
 ---
+
 # Page Content
 
 This is the body of the page.  
