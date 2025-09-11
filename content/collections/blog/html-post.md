@@ -1,7 +1,6 @@
 ---
 title: HTML Post
 description: An example of html in a md file.
-slug: html-post
 date: 2025-09-02
 ---
 
