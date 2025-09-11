@@ -23,7 +23,12 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
     <meta name="description" content="<?= htmlspecialchars($description) ?>">
   <?php endif; ?>
 
-  <link rel="canonical" href="<?= htmlspecialchars($canonical) ?>">
+  <?php
+  $canon = $path === '' || $path === '/'
+    ? url('/')
+    : url('/' . trim($path, '/'));
+  ?>
+  <link rel="canonical" href="<?= $canon ?>">
 
   <!-- Open Graph (basic) -->
   <meta property="og:type" content="website">
@@ -56,7 +61,7 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
         const expanded = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!expanded));
         nav.setAttribute('aria-expanded', String(!expanded));
-        if (inner) inner.classList.toggle('nav-open', !expanded);
+        inner && inner.classList.toggle('nav-open', !expanded);
       });
     }
   </script>

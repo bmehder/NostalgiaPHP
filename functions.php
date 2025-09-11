@@ -1,7 +1,18 @@
 <?php
 // Minimal helpers for routing, loading, front-matter, and markdown
 
-/* ------------------------------ Config & paths ----------------------------- */
+function normalize_path(string $path): string
+{
+  // Always start with a single leading slash
+  $path = '/' . ltrim($path, '/');
+
+  // Drop trailing slash unless root
+  if ($path !== '/' && str_ends_with($path, '/')) {
+    $path = rtrim($path, '/');
+  }
+
+  return $path;
+}
 
 /* ------------------------------ Config & paths ----------------------------- */
 
@@ -53,16 +64,18 @@ function path($key)
   return $paths[$key] ?? null;
 }
 
-function url($path = '')
+function url(string $rel = ''): string
 {
-  $base = rtrim(site('base_url'), '/');
-  return $base . '/' . ltrim($path, '/');
+  $base = rtrim(config()['site']['base_url'] ?? '', '/');
+  $rel = normalize_path($rel);
+  return $base . $rel;
 }
 
-function request_path()
+function request_path(): string
 {
-  $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
-  return '/' . ltrim($uri, '/');
+  $uri = $_SERVER['REQUEST_URI'] ?? '';
+  $uri = parse_url($uri, PHP_URL_PATH) ?: '';
+  return normalize_path($uri);
 }
 
 function is_collection($segment)

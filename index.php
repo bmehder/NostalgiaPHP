@@ -13,15 +13,15 @@ require __DIR__ . '/functions.php';
 
 date_default_timezone_set(site('timezone') ?: 'UTC');
 
-$path = trim(request_path(), '/');
-$parts = $path === '' ? [] : explode('/', $path);
+$path = request_path();
+$parts = $path === '/' ? [] : explode('/', ltrim($path, '/'));
 $first = $parts[0] ?? '';
 
 $hero_html = null;
 
 require __DIR__ . '/sitemap.php';
 
-if ($path === 'robots.txt') {
+if ($path === '/robots.txt') {
   header('Content-Type: text/plain; charset=utf-8');
   echo "User-agent: *\n";
   echo "Disallow: /*.md$\n";   // prevent crawling raw markdown files
@@ -56,7 +56,7 @@ $render_cards = function (array $items, $heading = null, $empty_msg = 'No items 
 };
 
 // ---------- Home route ----------
-if ($path === '') {
+if ($path === '/') {
   $page = load_page('index');
 
   if (!$page) {
@@ -123,8 +123,8 @@ if (is_collection($first)) {
 }
 
 // ---------- Page route: support nested pages, e.g. /guides/install ----------
-$rel = implode('/', $parts);
-$page = load_page_path($rel);
+$rel = sanitize_rel_path(implode('/', $parts));
+$page = $rel ? load_page_path($rel) : null;
 
 if (!$page) {
   http_response_code(404);

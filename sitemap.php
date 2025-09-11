@@ -3,7 +3,7 @@
 // Minimal /sitemap.xml endpoint for NostalgiaPHP.
 // Include from index.php after $path/$parts/$first are set.
 
-if (($path ?? '') === 'sitemap.xml') {
+if (($path ?? '') === '/sitemap.xml') {
   $includeCollectionIndexes = false;
 
   // keep XML clean even if notices happen
