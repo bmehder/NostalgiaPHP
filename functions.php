@@ -3,23 +3,54 @@
 
 /* ------------------------------ Config & paths ----------------------------- */
 
+/* ------------------------------ Config & paths ----------------------------- */
+
 function config()
 {
   static $cfg;
-  if (!$cfg)
-    $cfg = require __DIR__ . '/config.php';
+  if ($cfg)
+    return $cfg;
+
+  $user = require __DIR__ . '/config.php';
+
+  // Defaults you don’t want users to worry about
+  $defaults = [
+    'site' => [
+      'name' => 'My Site',
+      'base_url' => '/',
+      'timezone' => 'UTC',
+    ],
+    'paths' => [
+      'content' => __DIR__ . '/content',
+      'pages' => __DIR__ . '/content/pages',
+      'collections' => __DIR__ . '/content/collections',
+      'templates' => __DIR__ . '/templates',
+      'partials' => __DIR__ . '/partials',
+      // for URL generation only; file assets still live under project /static
+      'static' => '/static',
+    ],
+  ];
+
+  // Merge (user wins)
+  $cfg = array_replace_recursive($defaults, is_array($user) ? $user : []);
   return $cfg;
 }
 
 function site($key = null)
 {
-  $site = config()['site'];
+  // Apply defaults even if user omitted parts of 'site'
+  $site = (config()['site'] ?? []) + [
+    'name' => 'My Site',
+    'base_url' => '/',
+    'timezone' => 'UTC',
+  ];
   return $key ? ($site[$key] ?? null) : $site;
 }
 
 function path($key)
 {
-  return config()['paths'][$key] ?? null;
+  $paths = config()['paths'] ?? [];
+  return $paths[$key] ?? null;
 }
 
 function url($path = '')
