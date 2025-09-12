@@ -1,31 +1,31 @@
 ---
 title: Getting Started
-description: The guide to getting started with NostalgiaPHP.
-date: 2025-09-07
+description: The updated guide to getting started with NostalgiaPHP.
+date: 2025-09-12
 ---
 
 # Getting Started with NostalgiaPHP
 
-NostalgiaPHP is a tiny, file-driven CMS.  
-No database. No build step. No CLI wizard. Just unzip, drop in some Markdown files, and you’re publishing.
+NostalgiaPHP is a **caveman-simple, file-based CMS**.  
+No database. No build step. No framework. Just drop in some Markdown files, and you’re publishing.
 
 ---
 
 ## Requirements
 
-- PHP **7.4+** (works great on PHP 8.x)
-- A web server with rewrites enabled (Apache with `.htaccess` or Nginx with `try_files`)
+- PHP **8.0+** (works on modern PHP versions)
+- A web server with rewrites enabled (Apache `.htaccess` or Nginx `try_files`)
 - That’s it. No Node, no npm, no Composer, no database.
 
 ---
 
 ## Quickstart (local dev)
 
-1. Clone or unzip the project:
+1. Clone or download the project:
 
    ```bash
    git clone https://github.com/bmehder/NostalgiaPHP.git
-   cd NostalgiaPHP-main
+   cd NostalgiaPHP
    ```
 
 2. Start PHP’s built-in server:
@@ -34,7 +34,7 @@ No database. No build step. No CLI wizard. Just unzip, drop in some Markdown fil
    php -S localhost:8000
    ```
 
-3. Visit [http://localhost:8000](http://localhost:8000) in your browser.
+3. Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 ---
 
@@ -42,24 +42,27 @@ No database. No build step. No CLI wizard. Just unzip, drop in some Markdown fil
 
 ```
 nostalgia-php/
-├── static/           # images, css, js
+
+│── routes/           # routing logic (pages, collections, admin, etc.)
 ├── content/
 │   ├── pages/        # static pages (Markdown)
-│   └── collections/  # e.g. blog, docs, portfolio
-├── partials/         # header, footer, hero, card, gallery, etc
-├── templates/        # main layout(s)
+│   └── collections/  # groups like blog, docs
+├── partials/         # header, footer, hero, card, etc.
+├── templates/        # layouts (main, sidebar, admin)
+├── static/           # css, images, js
 ├── config.php        # site settings
 ├── functions.php     # helpers
-├── index.php         # router
+├── index.php         # router entry point
 └── sitemap.php       # sitemap generator
 ```
 
-- **Pages** live in `content/pages/` as `.md` files.  
-  Example: `about.md` → `/about/`.
-- **Collections** are folders inside `content/collections/`.  
-  Example: `content/collections/blog/hello-world.md` → `/blog/hello-world/`.
-- **Partials** (`partials/`) are reusable chunks (like header/footer/cards).  
-- **Templates** (`templates/`) define overall layout.
+- **Pages** live in `content/pages/` as `.md`.  
+  Example: `about.md` → `/about`
+- **Collections** are folders under `content/collections/`.  
+  Example: `content/collections/blog/hello-world.md` → `/blog/hello-world`
+- **Partials** (`partials/`) are reusable chunks.  
+- **Templates** (`templates/`) define page layouts.  
+- **Routes** (`app/routes/`) handle how requests map to content.
 
 ---
 
@@ -71,7 +74,7 @@ nostalgia-php/
    'site' => [
      'name' => 'My First NostalgiaPHP Site',
      'base_url' => '/',
-     'timezone' => 'Europe/London',
+     'timezone' => 'America/New_York',
    ],
    ```
 
@@ -91,7 +94,22 @@ nostalgia-php/
      We’re building simple sites with simple tools.
      ```
 
-   - Visit <http://localhost:8000/about/>.
+   - Visit <http://localhost:8000/about>.
+
+4. Add a new collection:  
+   Edit `config.php` and add a block like:
+
+   ```php
+   'collections' => [
+     'blog' => [
+       'permalink' => '/blog/{slug}',
+       'list_url'  => '/blog',
+       'sort'      => ['date', 'desc'],
+     ],
+   ],
+   ```
+
+   Then add items under `content/collections/blog/`.
 
 ---
 
@@ -99,7 +117,8 @@ nostalgia-php/
 
 - **Apache**: use the included `.htaccess` for pretty URLs.
 - **Nginx**: add `try_files $uri $uri/ /index.php?$query_string;`.
+- **Permissions**: make sure directories are `755` and files are `644`.
 
 ---
 
-✅ That’s it — you’re live.  
+✅ That’s it — edit Markdown, refresh the browser, and your site updates.
