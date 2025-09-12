@@ -1,20 +1,35 @@
 ---
-title: Blink Demo
+title: Blink Reactivity
 description: Demo of the Blink (Slank) reactivity system.
 date: 2025-09-06
 ---
 
-# Blink (officially, Slank) Demo
+# Blink Reactivity
 
 **Blink** is a dead-simple reactive signal system for JavaScript — no tooling, no build steps, no opinions.
 
-It gives you three primitives:
+Blink gives you three primitives:
 
-- explicit() – create manually updated reactive values
-- implicit() – create derived values that automatically update
-- fx() – create reactive effects that re-run when dependencies change
+- explicit() – to create state that is manually updated
+- implicit() – to create state derived from explicit state
+- fx() – to create side effects that re-run when state changes
 
 Learn more at [NPM](https://www.npmjs.com/package/slank).
+
+
+> **Mental Model for Any Reactive UI Library (React, Vue, Svelte, Blink, etc.):**
+>
+> library eats state → view comes out
+>
+> ```
+> library(📦) → 💩👀
+> ```
+>
+> The view is always the result of applying the library to the state — in *real time*.  
+> 
+> **Change the state → the view reacts to the change.**
+>
+> (state → library → view)
 
 <style>
   main {
@@ -34,7 +49,9 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
 <!-- You can add multiple instances on the same page -->
 
 <div class="flow">
-  <h2>Accordion Type Thing</h2>
+  <h2>Demos</h2>
+  <h3>Accordion<em>-ish</em> Thing</h3>
+  <p>Uses explicit state <code>isOpen</code>.</p>
   <div class="accordion" data-scope>
     <button data-toggle aria-expanded="false"></button>
     <div data-panel hidden>
@@ -58,12 +75,14 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
 <script type="module" src="/static/js/counter.js"></script>
 
 <div class="flow">
-  <h2>Counter</h2>
+  <h3>Counter</h3>
+  <p>Uses explicit state <code>count</code> and implicit state <code>doubled</code>.</p>
+
   <div class="counter">
     <button data-decrement>-</button>
     <button data-increment>+</button>
     <button data-reset>Reset</button>
-    <p>Count (explicit state): <span data-counter-value></span></br>
-    Doubled (implicit state): <span data-counter-doubled></span></p>
+    <p>Count: <span data-counter-value></span></br>
+    Doubled: <span data-counter-doubled></span></p>
   </div>
 </div>
