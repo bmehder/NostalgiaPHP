@@ -2,7 +2,7 @@
 return [
   'site' => [
     'name' => 'NostalgiaPHP',
-    'base_url' => '/',           // adjust if in subfolder or use absolute URL in prod
+    'base_url' => '/',           // adjust if in subfolder
     'timezone' => 'Europe/London',
   ],
   'collections' => [

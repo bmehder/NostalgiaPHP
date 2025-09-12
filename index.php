@@ -1,171 +1,34 @@
 <?php
-// Dev-only: prevent HTML caching
-if (!headers_sent()) {
-  header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-  header('Pragma: no-cache');
-  header('Expires: 0');
-}
-
-ini_set('display_errors', 'On');
-
-$cfg = require __DIR__ . '/config.php';
+// index.php — tiny router
 require __DIR__ . '/functions.php';
-
 date_default_timezone_set(site('timezone') ?: 'UTC');
 
-$path = request_path();
+// Normalized path & parts
+$path = request_path();            // e.g. '/', '/blog', '/blog/hello'
 $parts = $path === '/' ? [] : explode('/', ltrim($path, '/'));
 $first = $parts[0] ?? '';
 
-$hero_html = null;
-
-require __DIR__ . '/sitemap.php';
-
+// Special files
 if ($path === '/robots.txt') {
-  header('Content-Type: text/plain; charset=utf-8');
-  echo "User-agent: *\n";
-  echo "Disallow: /*.md$\n";   // prevent crawling raw markdown files
-  echo "\n";
-  echo "Sitemap: " . url('/sitemap.xml') . "\n";
+  require __DIR__ . '/routes/robots.php';
+  exit;
+}
+if ($path === '/sitemap.xml') {
+  require __DIR__ . '/routes/sitemap.php';
   exit;
 }
 
-/**
- * Local helper: render a heading + card grid for a list of items.
- * $collectionContext is used when items don't carry their collection (e.g., list_collection()).
- */
-$render_cards = function (array $items, $heading = null, $empty_msg = 'No items yet.', $collectionContext = null) {
-  ob_start();
-  if ($heading) {
-    echo '<h1>' . htmlspecialchars($heading) . '</h1>';
-  }
-  if (!$items) {
-    echo '<p>' . htmlspecialchars($empty_msg) . '</p>';
-  } else {
-    echo '<div class="cards auto-fill">';
-    foreach ($items as $it) {
-      // Prefer explicit context, otherwise look for metadata hints
-      $collection = $collectionContext
-        ?? ($it['meta']['_collection'] ?? ($it['collection'] ?? ''));
-      $item = $it;
-      include path('partials') . '/card.php';
-    }
-    echo '</div>';
-  }
-  return ob_get_clean();
-};
-
-// ---------- Home route ----------
+// Home
 if ($path === '/') {
-  $page = load_page('index');
-
-  if (!$page) {
-    http_response_code(404);
-    $title = 'Not Found';
-    $content = '<p>Create content/pages/index.md</p>';
-    $meta = [];
-    $hero_html = '';
-  } else {
-    $meta = $page['meta'] ?? [];
-    $title = $meta['title'] ?? site('name');
-    $content = $page['html']; // just the markdown HTML
-
-    // Build hero separately (OPTION A)
-    $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
-    if ($hasHero) {
-      $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? site('name'));
-      $hero_subtitle = $meta['hero_subtitle'] ?? null;
-      $hero_image = $meta['hero_image'] ?? null;
-      ob_start();
-      include path('partials') . '/hero.php';
-      $hero_html = ob_get_clean();
-    } else {
-      $hero_html = '';
-    }
-  }
-
-  $layout = $meta['layout'] ?? 'main';
-  render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
+  require __DIR__ . '/routes/pages.php';
   exit;
 }
 
-// ---------- Collection routes: /blog or /blog/my-post ----------
+// Collections: /blog  or  /blog/slug
 if (is_collection($first)) {
-
-  // Collection LIST: /blog
-  if (count($parts) === 1) {
-    $items = list_collection($first);
-    $content = $render_cards($items, ucfirst($first), 'No items yet.', $first);
-    $title = ucfirst($first);
-    $meta = [];
-    render('main', compact('title', 'content', 'path', 'meta'));
-    exit;
-  }
-
-  // Collection ITEM: /blog/my-post
-  $slug = $parts[1] ?? '';
-  $item = $slug !== '' ? load_collection_item($first, $slug) : null;
-
-  if (!$item) {
-    http_response_code(404);
-    $title = 'Not Found';
-    $content = '<p>Missing item.</p>';
-    $meta = [];
-  } else {
-    $meta = $item['meta'] ?? [];
-    $title = $meta['title'] ?? $slug;
-    $content = $item['html'];
-  }
-
-  $layout = $meta['layout'] ?? 'main';
-  render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
+  require __DIR__ . '/routes/collections.php';
   exit;
 }
 
-// ---------- Page route: support nested pages, e.g. /guides/install ----------
-$rel = sanitize_rel_path(implode('/', $parts));
-$page = $rel ? load_page_path($rel) : null;
-
-if (!$page) {
-  http_response_code(404);
-  $title = 'Not Found';
-  $content = '<p>Page not found.</p>';
-  $meta = [];
-  $hero_html = '';
-} else {
-  $meta = $page['meta'] ?? [];
-  $title = $meta['title'] ?? ucfirst(basename($rel));
-  $content = $page['html']; // just the markdown HTML
-
-  $hasHero = !empty($meta['hero_title']) || !empty($meta['hero_subtitle']) || !empty($meta['hero_image']);
-  if ($hasHero) {
-    $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? ucfirst(basename($rel)));
-    $hero_subtitle = $meta['hero_subtitle'] ?? null;
-    $hero_image = $meta['hero_image'] ?? null;
-    ob_start();
-    include path('partials') . '/hero.php';
-    $hero_html = ob_get_clean();
-  } else {
-    $hero_html = '';
-  }
-}
-
-$layout = $meta['layout'] ?? 'main';
-render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
-exit;
-
-// ---------- Admin route ----------
-if ($path === 'admin') {
-  $pages = collect_pages();
-  $cols = collect_collections();
-  // ... calculate $sum and $issues same as before ...
-
-  ob_start();
-  include path('templates') . '/admin.php';
-  $content = ob_get_clean();
-
-  $title = 'Admin — ' . site('name');
-  $meta = [];
-  render('main', compact('title', 'content', 'path', 'meta'));
-  exit;
-}
+// Fallback: nested pages (/about, /guides/install, etc.)
+require __DIR__ . '/routes/pages.php';
