@@ -292,13 +292,21 @@ function excerpt_from_html($html, $max = 160)
 
 /* -------------------------------- Active Page Helper ------------------------------- */
 
-function nav_link($href, $label, $path = '')
+function nav_link(string $href, string $label, string $current_path): string
 {
-  $url = url($href);
-  $rel = trim($href, '/');
-  $path = $path ?? ''; // guard against null
-  $active = ($path === $rel || strpos($path, $rel . '/') === 0) ? 'active' : '';
-  return '<a href="' . htmlspecialchars($url) . '" class="' . $active . '">' . htmlspecialchars($label) . '</a>';
+  // normalize both
+  $href_norm = rtrim($href, '/');
+  $path_norm = '/' . trim($current_path, '/');
+
+  // special case: home is just '/'
+  if ($href_norm === '') {
+    $href_norm = '/';
+  }
+
+  $is_active = ($href_norm === $path_norm);
+
+  $class = $is_active ? 'active' : '';
+  return '<a href="' . url($href) . '" class="' . $class . '">' . htmlspecialchars($label) . '</a>';
 }
 
 /* -------------------------------- Rendering ------------------------------- */

@@ -4,8 +4,6 @@
 
 <body class="blank">
   <main>
-    <?php if (!empty($hero_html))
-      echo $hero_html; ?>
     <section class="page-content">
       <div class="outer">
         <div class="inner">

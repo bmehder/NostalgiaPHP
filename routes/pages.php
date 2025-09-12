@@ -1,5 +1,5 @@
 <?php
-// app/routes/pages.php
+// routes/pages.php
 // Uses: $path, $parts  (provided by index.php)
 
 if ($path === '/') {
@@ -13,27 +13,25 @@ if ($path === '/') {
 }
 
 if (!$page) {
-  http_response_code(404);
-  $title = 'Not Found';
-  $meta = [];
-  $content = '<p>Page not found.</p>';
-} else {
-  $meta = $page['meta'] ?? [];
-  $title = $meta['title'] ?? ucfirst(basename($path));
-
-  // Optional hero via front matter
-  $hero_html = '';
-  if (!empty($meta['hero_title']) || !empty($meta['hero'])) {
-    ob_start();
-    $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? '');
-    $hero_subtitle = $meta['hero_subtitle'] ?? ($meta['hero'] ?? '');
-    $hero_image = $meta['hero_image'] ?? null;
-    include path('partials') . '/hero.php';
-    $hero_html = ob_get_clean();
-  }
-
-  $content = $page['html'];
+  require __DIR__ . '/404.php';
+  exit;
 }
 
+$meta = $page['meta'] ?? [];
+$title = $meta['title'] ?? ucfirst(basename($path));
+
+// Optional hero via front matter
+// $hero_html = '';
+// if (!empty($meta['hero_title']) || !empty($meta['hero'])) {
+//   ob_start();
+//   $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? '');
+//   $hero_subtitle = $meta['hero_subtitle'] ?? ($meta['hero'] ?? '');
+//   $hero_image = $meta['hero_image'] ?? null;
+//   include path('partials') . '/hero.php';
+//   $hero_html = ob_get_clean();
+// }
+
+$content = $page['html'];
+
 $layout = !empty($meta['layout']) ? $meta['layout'] : 'main';
-render($layout, compact('title', 'content', 'path', 'meta', 'hero_html'));
+render($layout, compact('title', 'content', 'path', 'meta'));
