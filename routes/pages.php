@@ -20,17 +20,6 @@ if (!$page) {
 $meta = $page['meta'] ?? [];
 $title = $meta['title'] ?? ucfirst(basename($path));
 
-// Optional hero via front matter
-// $hero_html = '';
-// if (!empty($meta['hero_title']) || !empty($meta['hero'])) {
-//   ob_start();
-//   $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? '');
-//   $hero_subtitle = $meta['hero_subtitle'] ?? ($meta['hero'] ?? '');
-//   $hero_image = $meta['hero_image'] ?? null;
-//   include path('partials') . '/hero.php';
-//   $hero_html = ob_get_clean();
-// }
-
 $content = $page['html'];
 
 $layout = !empty($meta['layout']) ? $meta['layout'] : 'main';

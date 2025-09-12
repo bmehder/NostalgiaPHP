@@ -14,7 +14,7 @@ It gives you three primitives:
 - implicit() – create derived values that automatically update
 - fx() – create reactive effects that re-run when dependencies change
 
-Learn more at on [NPM](https://www.npmjs.com/package/slank).
+Learn more at [NPM](https://www.npmjs.com/package/slank).
 
 <style>
   main {
