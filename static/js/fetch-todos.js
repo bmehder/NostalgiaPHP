@@ -1,10 +1,10 @@
-import { pipe, map, filter, join } from 'https://esm.sh/canary-js@latest'
+import { always, pipe, map, filter, join } from 'https://esm.sh/canary-js@latest'
 import { explicit, implicit, fx } from './blink.js'
 
 // Fetch helpers
-const toJson = response => response.json()
 const logError = console.error
 const logDone = () => console.log('Fetch complete')
+const toJson = response => response.json()
 
 // Set state helpers
 const setTodos = newValue => (todos.value = newValue)
@@ -36,7 +36,6 @@ const createTodoList = pipe(createListItems, joinItems)
 // 1) DOM
 const view = {
 	list: document.querySelector('[data-todos]'),
-	filtersContainer: document.querySelector('[data-filters]'),
 	filterButtons: document.querySelectorAll('[data-filter]'),
 }
 
@@ -45,13 +44,13 @@ const todos = explicit([])
 const filterBtn = explicit('all') // 'all' | 'active' | 'completed'
 
 const visibleTodos = implicit(() => {
-	const current = filterBtn.value
-	
-	return current === 'active'
-		? filter(t => !t.completed)(todos.value)
-		: current === 'completed'
-		? filter(t => t.completed)(todos.value)
-		: todos.value
+	const filterLookup = {
+		active: ({ completed }) => !completed,
+		completed: ({ completed }) => completed,
+		all: always(true),
+	}[filterBtn.value]
+
+	return filter(filterLookup)(todos.value)
 })
 
 // 3) Checkbox change (event delegation) - set Todos state
@@ -60,32 +59,26 @@ view.list.addEventListener('change', event => {
 	const id = checkbox.dataset.id
 	const isChecked = checkbox.checked
 
-	const updateItems = map(todo =>
+	const newItems = map(todo =>
 		String(todo.id) === id ? { ...todo, completed: isChecked } : todo
 	)
 
-	setTodos(updateItems(todos.value))
+	pipe(newItems, setTodos)(todos.value)
 })
 
-// 4) Filter clicks — set state + toggle aria-pressed
+// 4) Set filter state when a Filter button is clicked
 view.filterButtons.forEach(button => {
 	button.onclick = () => {
-		// update state
 		setFilter(button.dataset.filter)
-
-		// reflect pressed state on all buttons
-		view.filterButtons.forEach(btn =>
-			btn.setAttribute('aria-pressed', String(btn === button))
-		)
 	}
 })
 
-// 5) Render whenever state or filter changes
+// 5) Render whenever state changes
 fx(() => {
 	view.list.innerHTML = createTodoList(visibleTodos.value)
 
 	view.filterButtons.forEach(btn => {
-		btn.setAttribute('aria-pressed', String(btn.dataset.filter === filterBtn.value))
+		btn.setAttribute('aria-pressed', btn.dataset.filter === filterBtn.value)
 	})
 })
 

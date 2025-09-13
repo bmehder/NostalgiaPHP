@@ -529,20 +529,21 @@ footer {
 	}
 }
 
+/* Components */
 /* Todo List - never gets wiped by re-renders */
-.data-filters [aria-pressed="true"] {
-	font-weight: bold;
-}
+.todo-list {
+	.data-filters [aria-pressed='true'] {
+		font-weight: bold;
+	}
 
-ul.todos {
-  list-style: none;
-	margin-inline: 0;
-  padding: 0;
-}
+	.todos {
+		list-style: none;
+		padding: 0;
 
-ul.todos .todo-row {
-  display: grid;
-  grid-template-columns: 3ch 1fr;
-  column-gap: .5rem;
-  align-items: center;
+		.todo-row {
+			display: grid;
+			grid-template-columns: 4ch 1fr;
+			align-items: center;
+		}
+	}
 }
