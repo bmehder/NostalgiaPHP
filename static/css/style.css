@@ -286,6 +286,10 @@ sup {
 	font-style: italic;
 }
 
+.linethrough {
+	text-decoration: line-through;
+}
+
 .balance {
 	text-wrap: balance;
 }
@@ -523,4 +527,22 @@ footer {
 	.sidebar {
 		order: 2; /* put sidebar below content */
 	}
+}
+
+/* Todo List - never gets wiped by re-renders */
+.data-filters [aria-pressed="true"] {
+	font-weight: bold;
+}
+
+ul.todos {
+  list-style: none;
+	margin-inline: 0;
+  padding: 0;
+}
+
+ul.todos .todo-row {
+  display: grid;
+  grid-template-columns: 3ch 1fr;
+  column-gap: .5rem;
+  align-items: center;
 }
