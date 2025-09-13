@@ -278,6 +278,10 @@ sup {
 	flex-wrap: wrap;
 }
 
+.align-items-center {
+	align-items: center;
+}
+
 .bold {
 	font-weight: bold;
 }
@@ -290,12 +294,20 @@ sup {
 	text-decoration: line-through;
 }
 
+.list-style-none {
+	list-style: none;
+}
+
 .balance {
 	text-wrap: balance;
 }
 
 .no-balance {
 	text-wrap: initial;
+}
+
+.no-padding {
+	padding: 0;
 }
 
 .text-align-center {
@@ -360,6 +372,10 @@ blockquote {
 	padding-block: var(--size);
 	padding-inline: var(--size-1-5);
 	background-color: #efefef;
+}
+
+.bg-white {
+	background-color: white;
 }
 
 /* Header */
@@ -530,20 +546,8 @@ footer {
 }
 
 /* Components */
-/* Todo List - never gets wiped by re-renders */
 .todo-list {
 	.data-filters [aria-pressed='true'] {
 		font-weight: bold;
-	}
-
-	.todos {
-		list-style: none;
-		padding: 0;
-
-		.todo-row {
-			display: grid;
-			grid-template-columns: 4ch 1fr;
-			align-items: center;
-		}
 	}
 }

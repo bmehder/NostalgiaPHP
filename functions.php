@@ -6,10 +6,12 @@ function normalize_path(string $path): string
   // Always start with a single leading slash
   $path = '/' . ltrim($path, '/');
 
-  // Drop trailing slash unless root
-  if ($path !== '/' && str_ends_with($path, '/')) {
-    $path = rtrim($path, '/');
-  }
+  // Drop trailing slash unless root (NEEDS PHP 8)
+//   if ($path !== '/' && str_ends_with($path, '/')) {
+//     $path = rtrim($path, '/');
+//   }
+
+  $path = $path == '/' ? $path : rtrim($path, '/');
 
   return $path;
 }

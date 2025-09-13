@@ -1,24 +1,8 @@
+<IfModule mod_rewrite.c>
 RewriteEngine On
-
-# Serve existing files/directories directly
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
-# ----------------------------------------
-# Option A: Remove trailing slashes
-# ----------------------------------------
-RewriteCond %{REQUEST_URI} !^/$
-RewriteCond %{REQUEST_URI} /$
-RewriteRule ^(.+)/$ /$1 [L,R=301]
-
-# ----------------------------------------
-# Option B: Force trailing slashes
-# ----------------------------------------
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteCond %{REQUEST_URI} !/$
-# RewriteRule ^(.*)$ /$1/ [L,R=301]
-
-# Fallback: route everything else to index.php
-RewriteRule ^ index.php [L,QSA]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>

@@ -19,5 +19,5 @@ _Note: State not persisted._
     <button type="button" data-filter="completed" aria-pressed="false">Completed</button>
   </nav>
   
-  <ul class="todos" data-todos></ul>
+  <ul class="todos no-padding list-style-none" data-todos></ul>
 </div>

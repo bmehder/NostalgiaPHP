@@ -15,7 +15,7 @@ const joinItems = join('')
 const createListItems = map(
 	({ id, title, completed }) => `
     <li>
-      <div class="todo-row">
+      <div class="todo-row grid align-items-center" style="grid-template-columns: 4ch 1fr;">
         <span class="num">${id}.</span>
         <label for="todo-${id}">
           <input
@@ -53,7 +53,7 @@ const visibleTodos = implicit(() => {
 	return filter(filterLookup)(todos.value)
 })
 
-// 3) Checkbox change (event delegation) - set Todos state
+// 3) Listen for events and set state
 view.list.addEventListener('change', event => {
 	const checkbox = event.target
 	const id = checkbox.dataset.id
@@ -66,14 +66,13 @@ view.list.addEventListener('change', event => {
 	pipe(newItems, setTodos)(todos.value)
 })
 
-// 4) Set filter state when a Filter button is clicked
 view.filterButtons.forEach(button => {
 	button.onclick = () => {
 		setFilter(button.dataset.filter)
 	}
 })
 
-// 5) Render whenever state changes
+// 4) Run side effects whenever state changes
 fx(() => {
 	view.list.innerHTML = createTodoList(visibleTodos.value)
 
@@ -82,7 +81,7 @@ fx(() => {
 	})
 })
 
-// 6) Fetch data
+// 5) Fetch data
 fetch('https://jsonplaceholder.typicode.com/todos')
 	.then(toJson)
 	.then(setTodos)
