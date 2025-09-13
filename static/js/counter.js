@@ -3,7 +3,7 @@
 // view = blink(state)
 
 // 0. Import blink - a dead simple signals (observables) system
-const { explicit, implicit, fx } = window.slank
+import { explicit, implicit, fx } from './blink.js'
 
 // 1. Get the DOM elements
 const view = {
