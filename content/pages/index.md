@@ -17,13 +17,13 @@ layout: full-width
 <section class="section">
   <div class="outer">
     <div class="inner auto-fit">
-      <div>
+      <div class="flow">
         <h2>Rock, Paper, Markdown</h2>
-        <p class="lead" style="font-size:1.125rem;max-width:60ch">
+        <p class="lead">
           Build real content sites fast with flat files. Markdown in, HTML out.
           No framework. No database. Just pages, collections, and a few partials.
         </p>
-        <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem">
+        <div class="flex flex-wrap" style="gap: var(--size-0-5);">
           <a class="button" href="/dox/getting-started">Get Started</a>
           <a class="button" href="/blog">View Blog</a>
           <a class="button" href="https://github.com/bmehder/NostalgiaPHP" target="_blank" rel="noopener">GitHub</a>
@@ -152,7 +152,7 @@ layout: full-width
           <li><strong>Add front-matter</strong> for <code>title</code>, <code>description</code>, <code>date</code> (optional).</li>
           <li><strong>Pick a layout</strong> via <code>layout: main</code> (or your own), and ship.</li>
         </ol>
-        <a class="button" href="/dox/nostalgia-php-project-tour">Project Tour</a>
+        <a class="button" href="/dox/">View the Dox</a>
       </div>
       <figure>
         <img src="/static/uploads/3.jpg" alt="NostalgiaPHP project structure overview">

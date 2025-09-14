@@ -30,5 +30,11 @@ if (is_collection($first)) {
   exit;
 }
 
+// Search (server-side)
+if ($path === '/search') {
+  require __DIR__ . '/routes/search.php';
+  exit;
+}
+
 // Fallback: nested pages (/about, /guides/install, etc.)
 require __DIR__ . '/routes/pages.php';
