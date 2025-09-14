@@ -45,12 +45,15 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <link rel="icon" href="<?= url('/static/favicon.png') ?>" type="image/png">
 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
+
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
- 
+
   <script type="module">
-    const btn   = document.querySelector('[data-nav-toggle]');
-    const nav   = document.querySelector('[data-site-nav]');
+    const btn = document.querySelector('[data-nav-toggle]');
+    const nav = document.querySelector('[data-site-nav]');
     const inner = document.querySelector('[data-inner-header]');
 
     if (btn && nav) {

@@ -19,6 +19,8 @@
 	--size-6: calc(var(--size) * 6);
 
 	--text-max-width: 65ch;
+	
+	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
 }
 
 /* Resets */
@@ -358,6 +360,24 @@ h1,
 	font-weight: bold;
 }
 
+.h1, h1,
+.h2, h2,
+.h3, h3 {
+  font-family: var(--heading-font);
+  font-weight: 750;             /* slightly heavier if supported */
+  letter-spacing: -0.015em;     /* subtle tighten */
+  line-height: 1.05;
+  text-wrap: balance;           /* nicer multi-line titles */
+  margin: 0 0 .5em;
+}
+
+.kicker {
+  font-size: .8rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #6b7280; /* gray-500 */
+}
+
 main h2 {
 	margin-block-start: var(--size-2-5);
 }
@@ -425,7 +445,7 @@ button:disabled,
 }
 
 a {
-	color: rebeccapurple;
+	color: #1d4ed8;
 	text-decoration: none;
 
 	&:hover {
@@ -524,15 +544,18 @@ footer {
 	border: 1px solid #efefef;
 
 	.card-text {
-		padding-block: var(--size);
+		padding-block: var(--size-3);
 		padding-inline: var(--size-1-5);
-	}
 
-	a {
-		text-decoration: none;
+		.card-title {
+			display: flex;
+			align-items: center;
+			gap: var(--size-0-5);
+		}
 
-		&:hover {
-			text-decoration: underline;
+		.card-title .icon {
+			display: grid;
+			grid-template-columns: auto 1fr;
 		}
 	}
 }
