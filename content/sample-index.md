@@ -5,6 +5,9 @@ description: Example description for meta tags.
 draft: false
 layout: main
 
+# Featured image - for Card thumbnails
+image: /static/uploads/foo.jpg
+
 # Hero options
 hero_title: Example Hero Title
 hero_subtitle: This is a hero subtitle.
