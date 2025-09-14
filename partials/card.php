@@ -26,7 +26,7 @@ if (!empty($item['meta']['image'])) {
   $image = '';
 }
 ?>
-<article class="card">
+<article class="card bg-white">
   <?php if ($image): ?>
     <a href="<?= $href ?>"><img class="card-image" src="<?= $image ?>" alt="<?= $title ?>"></a>
   <?php endif; ?>

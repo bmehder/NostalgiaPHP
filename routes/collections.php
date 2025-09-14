@@ -27,8 +27,8 @@ if (count($parts) === 1) {
   $title = ucfirst($collection);
   $meta = [];
 
-  $layout = !empty($meta['layout']) ? $meta['layout'] : 'main';
-  render($layout, compact('title', 'content', 'path', 'meta'));
+  // $layout = !empty($meta['layout']) ? $meta['layout'] : 'main';
+  render('blog', compact('title', 'content', 'path', 'meta'));
   return;
 }
 

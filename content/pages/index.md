@@ -24,9 +24,9 @@ layout: full-width
           No framework. No database. Just pages, collections, and a few partials.
         </p>
         <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem">
-          <a class="btn" href="/dox/getting-started">Get Started</a>
-          <a class="btn" href="/blog">View Blog</a>
-          <a class="btn" href="https://github.com/bmehder/NostalgiaPHP" target="_blank" rel="noopener">GitHub</a>
+          <a class="button" href="/dox/getting-started">Get Started</a>
+          <a class="button" href="/blog">View Blog</a>
+          <a class="button" href="https://github.com/bmehder/NostalgiaPHP" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
       <figure>
@@ -41,17 +41,18 @@ layout: full-width
 <section class="section">
   <div class="outer">
     <div class="inner">
-      <div class="cards auto-fill">
+      <h2>The Simple Superpowers</h2>
+      <div class="cards auto-fill" style="margin-block-start: var(--size-3)">
         <article class="card bg-white">
           <div class="card-text">
-            <h3 class="card-title">Files, not fuss</h3>
+            <h3 class="card-title">Files, no faff</h3>
             <p class="card-excerpt">Pages and collections are just <code>.md</code> files with front-matter. Rename a file to change a URL. That’s it.</p>
           </div>
         </article>
         <article class="card bg-white">
           <div class="card-text">
             <h3 class="card-title">Templates &amp; partials</h3>
-            <p class="card-excerpt">Small PHP templates wrap your content; partials handle header, footer, hero.</p>
+            <p class="card-excerpt">Choose your template. Wrap your content; partials handle header, footer, hero, etc.</p>
           </div>
         </article>
         <article class="card bg-white">
@@ -64,6 +65,18 @@ layout: full-width
           <div class="card-text">
             <h3 class="card-title">Zero build step</h3>
             <p class="card-excerpt">No Node, no bundlers. Drop on a PHP host or run <code>php -S localhost:8000</code> and you’re live.</p>
+          </div>
+        </article>
+        <article class="card bg-white">
+          <div class="card-text">
+            <h3 class="card-title">Instant sitemap</h3>
+            <p class="card-excerpt"><code>sitemap.xml</code> is built automatically from your content—no plugins needed.</p>
+          </div>
+        </article>
+        <article class="card bg-white">
+          <div class="card-text">
+            <h3 class="card-title">404, sorted</h3>
+            <p class="card-excerpt">Bad links happen. A built-in <code>404.php</code> route is ready out of the box—or tweak it to fit your site.</p>
           </div>
         </article>
       </div>
@@ -82,6 +95,7 @@ layout: full-width
           <li><strong>Add front-matter</strong> for <code>title</code>, <code>description</code>, <code>date</code> (optional).</li>
           <li><strong>Pick a layout</strong> via <code>layout: main</code> (or your own), and ship.</li>
         </ol>
+        <a class="button" href="/dox/nostalgia-php-project-tour">Project Tour</a>
       </div>
       <figure>
         <img src="/static/uploads/3.jpg" alt="NostalgiaPHP project structure overview">
@@ -97,7 +111,7 @@ layout: full-width
     <div class="inner">
       <h2>From the blog</h2>
       <p>Browse the latest posts and examples.</p>
-      <p><a class="btn" href="/blog">See all posts →</a></p>
+      <p><a class="button" href="/blog">See all posts →</a></p>
     </div>
   </div>
 </section>

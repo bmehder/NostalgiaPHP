@@ -11,5 +11,6 @@ layout: sidebar
 
 Because *modern web development* doesn’t have to be so stupid.
 
-[Blink Page](/about/blink)
-[Blank Page](/about/blank)
+<a href="/about/blink" class="button">Blink</a>
+<a href="/about/blank" class="button">Blank</a>
+<a href="/about/fetch" class="button">Fetch</a>

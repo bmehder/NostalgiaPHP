@@ -13,7 +13,7 @@ No database. No build step. No framework. Just drop in some Markdown files, and 
 
 ## Requirements
 
-- PHP **8.0+** (works on modern PHP versions)
+- PHP **7.4+** (works on modern PHP versions)
 - A web server with rewrites enabled (Apache `.htaccess` or Nginx `try_files`)
 - That’s it. No Node, no npm, no Composer, no database.
 

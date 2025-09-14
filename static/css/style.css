@@ -9,6 +9,7 @@
 	--size: 1rem;
 	--size-0-2-5: calc(var(--size) / 4);
 	--size-0-5: calc(var(--size) / 2);
+	--size-1-2-5: calc(var(--size) * 1.25);
 	--size-1-5: calc(var(--size) * 1.5);
 	--size-2: calc(var(--size) * 2);
 	--size-2-5: calc(var(--size) * 2.5);
@@ -378,6 +379,64 @@ blockquote {
 	background-color: white;
 }
 
+button,
+.button {
+	display: inline-flex;
+	justify-content: center;
+	margin-block-start: var(--size-0-2-5);
+	padding: 0.6em 1.2em;
+	appearance: none;
+	background-color: #000;
+	color: #fff;
+	border: none;
+	font: inherit;
+	line-height: 1.2;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover,
+.button:hover {
+	background-color: #222;
+}
+
+button:focus-visible,
+.button:focus-visible {
+	outline: 2px solid #000;
+	outline-offset: 2px;
+	background-color: #333;
+}
+
+button:active,
+.button:active {
+	transform: translateY(1px);
+}
+
+/* Disabled state */
+button:disabled,
+.button[aria-disabled='true'] {
+	background-color: #666;
+	color: #ccc;
+	cursor: not-allowed;
+	opacity: 0.7;
+}
+
+a {
+	color: rebeccapurple;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+figure img {
+	border: 1px solid #efefef;
+}
+
 /* Header */
 /* Hamburger: hidden on desktop */
 .nav-toggle {
@@ -462,10 +521,11 @@ footer {
 
 /* Card */
 .card {
-	border: 1px solid;
+	border: 1px solid #efefef;
 
 	.card-text {
-		padding: var(--size);
+		padding-block: var(--size);
+		padding-inline: var(--size-1-5);
 	}
 
 	a {
