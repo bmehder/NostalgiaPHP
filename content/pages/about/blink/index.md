@@ -16,7 +16,6 @@ Blink gives you three primitives:
 
 Learn more at [NPM](https://www.npmjs.com/package/slank).
 
-
 > **Mental Model for Any Reactive UI Library (React, Vue, Svelte, Blink, etc.):**
 >
 > library eats state → view comes out
@@ -25,19 +24,13 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
 > library(📦) → 💩👀
 > ```
 >
-> The view is always the result of applying the library to the state — in *real time*.  
-> 
+> The view is always the result of applying the library to the state — in _real time_.
+>
 > **Change the state → the view reacts to the change.**
 >
 > (state → library → view)
 
 <style>
-  main {
-    .inner {
-      --inner-padding-block: var(--size);
-    }
-  }
-
   .accordion [data-panel] {
     padding-block: var(--size-0-5);
     padding-inline: var(--size);
@@ -48,41 +41,48 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
 
 <!-- You can add multiple instances on the same page -->
 
-<div class="flow">
-  <h2>Demos</h2>
-  <h3>Accordion<em>-ish</em> Thing</h3>
-  <p>Uses explicit state <code>isOpen</code>.</p>
-  <div class="accordion" data-scope>
-    <button data-toggle aria-expanded="false"></button>
-    <div data-panel hidden>
-      <p>First instance. Independent state.</p>
-    </div>
-  </div>
-  <div class="accordion" data-scope>
-    <button data-toggle aria-expanded="false"></button>
-    <div data-panel hidden>
-      <p>Second instance. Independent state.</p>
-    </div>
-  </div>
-  <div class="accordion" data-scope>
-    <button data-toggle aria-expanded="false"></button>
-    <div data-panel hidden>
-      <p>Third instance. Independent state.</p>
+<div class="outer">
+  <div class="inner" style="width: unset; --inner-padding-block: var(--size)">
+    <div class="flow">
+      <h2>Demos</h2>
+      <h3>Accordion<em>-ish</em> Thing</h3>
+      <p>Uses explicit state <code>isOpen</code>.</p>
+      <div class="accordion" data-scope>
+        <button data-toggle aria-expanded="false"></button>
+        <div data-panel hidden>
+          <p>First instance. Independent state.</p>
+        </div>
+      </div>
+      <div class="accordion" data-scope>
+        <button data-toggle aria-expanded="false"></button>
+        <div data-panel hidden>
+          <p>Second instance. Independent state.</p>
+        </div>
+      </div>
+      <div class="accordion" data-scope>
+        <button data-toggle aria-expanded="false"></button>
+        <div data-panel hidden>
+          <p>Third instance. Independent state.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <script type="module" src="/static/js/counter.js"></script>
 
-<div class="flow">
-  <h3>Counter</h3>
-  <p>Uses explicit state <code>count</code> and implicit state <code>doubled</code>.</p>
-
-  <div class="counter">
-    <button data-decrement>-</button>
-    <button data-increment>+</button>
-    <button data-reset>Reset</button>
-    <p>Count: <span data-counter-value></span></br>
-    Doubled: <span data-counter-doubled></span></p>
-  </div>
+<div class="outer">
+  <div class="inner" style="width: unset; --inner-padding-block: var(--size)">
+    <div class="flow">
+      <h3>Counter</h3>
+      <p>Uses explicit state <code>count</code> and implicit state <code>doubled</code>.</p>
+      <div class="counter">
+        <button data-decrement>-</button>
+        <button data-increment>+</button>
+        <button data-reset>Reset</button>
+        <p>Count: <span data-counter-value></span></br>
+        Doubled: <span data-counter-doubled></span></p>
+      </div>
+    </div>
+  <div>
 </div>
