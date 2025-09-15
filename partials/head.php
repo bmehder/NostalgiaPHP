@@ -48,6 +48,11 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
 
+  <!-- Prism -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-jsx.min.js"></script>
+
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 
