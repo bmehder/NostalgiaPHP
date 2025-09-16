@@ -638,7 +638,24 @@ footer {
 
 /* Components */
 .todo-list {
-	.data-filters [aria-pressed='true'] {
-		font-weight: bold;
+	menu {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--size-0-2-5);
+		padding: 0;
+		list-style: none;
+
+		[aria-pressed='true'] {
+			font-weight: bold;
+		}
+	}
+}
+
+/* Card / List Toggle */
+.card-grid.list-view {
+  grid-template-columns: unset;
+
+	img {
+		display: none;
 	}
 }

@@ -13,11 +13,11 @@ _Note: State not persisted._
 <script type="module" src="/static/js/fetch-todos.js"></script>
 
 <div class="todo-list">
-  <nav class="data-filters" data-filters>
-    <button type="button" data-filter="all" aria-pressed="true">All</button>
-    <button type="button" data-filter="active" aria-pressed="false">Active</button>
-    <button type="button" data-filter="completed" aria-pressed="false">Completed</button>
-  </nav>
+  <menu>
+    <li><button type="button" data-filter="all" aria-pressed="true">All</button></li>
+    <li><button type="button" data-filter="active" aria-pressed="false">Active</button></li>
+    <li><button type="button" data-filter="completed" aria-pressed="false">Completed</button></li>
+  </menu>
   
   <ul class="todos no-padding list-style-none" data-todos></ul>
 </div>

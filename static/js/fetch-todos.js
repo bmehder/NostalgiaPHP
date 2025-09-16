@@ -1,6 +1,9 @@
 import { always, pipe, map, filter, join } from 'https://esm.sh/canary-js@latest'
 import { explicit, implicit, fx } from './blink.js'
 
+// Data
+const todosRoute = 'https://jsonplaceholder.typicode.com/todos'
+
 // Fetch helpers
 const logError = console.error
 const logDone = () => console.log('Fetch complete')
@@ -82,8 +85,4 @@ fx(() => {
 })
 
 // 5) Fetch data
-fetch('https://jsonplaceholder.typicode.com/todos')
-	.then(toJson)
-	.then(setTodos)
-	.catch(logError)
-	.finally(logDone)
+fetch(todosRoute).then(toJson).then(setTodos).catch(logError).finally(logDone)
