@@ -506,7 +506,7 @@ header {
 	}
 
 	/* --------- Mobile ≤ 48rem --------- */
-	@media (max-width: 48rem) {
+	@media (width <= 48rem) {
 		/* show hamburger */
 		.nav-toggle {
 			display: grid;
@@ -627,7 +627,7 @@ footer {
 }
 
 /* Stack on narrow screens */
-@media (max-width: 48rem) {
+@media (width <= 48rem) {
 	.two-col {
 		grid-template-columns: 1fr;
 	}
@@ -648,14 +648,5 @@ footer {
 		[aria-pressed='true'] {
 			font-weight: bold;
 		}
-	}
-}
-
-/* Card / List Toggle */
-.card-grid.list-view {
-  grid-template-columns: unset;
-
-	img {
-		display: none;
 	}
 }

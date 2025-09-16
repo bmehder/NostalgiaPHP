@@ -7,39 +7,21 @@ $collection = $first;
 // LIST: /blog
 if (count($parts) === 1) {
   $items = list_collection($collection);
-
+  
   ob_start();
+  echo '<h1>' . htmlspecialchars(ucfirst($collection)) . '</h1>';
   
   if (!$items) {
-    echo '<h1>' . htmlspecialchars(ucfirst($collection)) . '</h1>';
     echo '<p>No items yet.</p>';
   } else {
-    echo '<div class="spread-apart" style="align-items: unset;">';
-    echo '<h1>' . htmlspecialchars(ucfirst($collection)) . '</h1>';
 
-    echo '<button id="toggleView" type="button" style="margin-block-end: var(--size-3)">List View</button>';
-    echo '</div>';
-    echo '<div class="cards card-grid auto-fill">';
+    echo '<div class="cards auto-fill">';
     foreach ($items as $it) {
       // variables expected by the card partial
       $item = $it;
       include path('partials') . '/card.php';
     }
     echo '</div>';
-    echo "<script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var btn = document.getElementById('toggleView')
-        var grid = document.querySelector('.card-grid')
-        if (!btn || !grid) return
-
-        btn.addEventListener('click', function () {
-          grid.classList.toggle('list-view')
-          btn.textContent = grid.classList.contains('list-view')
-            ? 'Card View'
-            : 'List View'
-        })
-      })
-      </script>";
   }
 
   $content = ob_get_clean();
