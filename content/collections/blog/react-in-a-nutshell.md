@@ -2,11 +2,11 @@
 title: React in a Nutshell
 description: This page shows you most of what you need to know to understand React.
 date: 2025-09-15
-excerpt: This page shows you most of what you need to know to understand React. React components are functions that return HTML and keep track of its state.
+excerpt: This page covers the essentials of React. A React component is simply a function that outputs HTML and manages its own state.
 ---
 # React in a Nutshell
 
-This page shows you most of what you need to know to understand React. React components are functions that return HTML and keep track of its state.
+This page covers the essentials of React. A React component is simply a function that outputs HTML and manages its own state.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/OA5JAmTcTz4?si=3thxFpQE6-ESJ0aJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
