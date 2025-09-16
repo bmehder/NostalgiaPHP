@@ -53,6 +53,9 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-jsx.min.js"></script>
 
+  <!-- Grid/List toggle -->
+  <script type="module" src="/static/js/grid-toggle.js"></script>
+
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 

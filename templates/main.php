@@ -26,7 +26,6 @@
       </section>
     </main>
     <?php include path('partials') . '/footer.php'; ?>
-  </div>
+    </div>
 </body>
-
 </html>

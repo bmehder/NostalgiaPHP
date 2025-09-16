@@ -530,6 +530,7 @@ header {
 			/* show stacked menu when expanded */
 			&[aria-expanded='true'] {
 				display: grid;
+				grid-template-columns: 1fr;
 			}
 		}
 	}
