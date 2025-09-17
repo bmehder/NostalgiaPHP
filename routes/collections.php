@@ -14,7 +14,7 @@ if (count($parts) === 1) {
   if (!$items) {
     echo '<p>No items yet.</p>';
   } else { 
-    echo '<div class="cards auto-fill" data-card-grid>';
+    echo '<div class="cards auto-fill" style="margin-block-start: var(--size-3)" data-card-grid>';
     foreach ($items as $it) {
       // variables expected by the card partial
       $item = $it;

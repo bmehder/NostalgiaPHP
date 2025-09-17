@@ -27,7 +27,7 @@ if (heading && grid) {
 	btn.type = 'button'
 	btn.dataset.gridToggle = ''
 	btn.setAttribute('aria-pressed', 'false')
-	btn.style.marginBlockEnd = 'var(--size-3)'
+	btn.style.marginBlockEnd = 'var(--size-1-5)'
 	btn.textContent = 'List'
 	heading.insertAdjacentElement('afterend', btn)
 

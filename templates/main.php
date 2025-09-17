@@ -3,7 +3,7 @@
 
 <?php include path('partials') . '/head.php'; ?>
 
-<body>
+<body class="dark">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
     <main>

@@ -22,18 +22,6 @@
 
 	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
 		sans-serif;
-
-	--gray-100: #f3f4f6;
-	--gray-200: #e5e7eb;
-	--gray-300: #d1d5db;
-	--gray-400: #9ca3af;
-	--gray-500: #6b7280;
-	--gray-600: #4b5563;
-	--gray-700: #374151;
-	--gray-800: #374151;
-	--gray-900: #111827;
-
-	--blue-700: #1d4ed8;
 }
 
 /* Resets */
@@ -499,8 +487,10 @@ a {
 	}
 }
 
-figure img {
+figure {
 	border: 1px solid var(--gray-200);
+	box-shadow: var(--shadow-4);
+
 }
 
 /* Header */
@@ -597,7 +587,9 @@ footer {
 
 /* Card */
 .card {
-	border: 1px solid var(--gray-100);
+	/* border: 1px solid var(--gray-100); */
+	/* border: var(--border-size-2) solid var(--gray-200); */
+	box-shadow: var(--shadow-1);
 
 	.card-text {
 		padding-block: var(--size-3);
@@ -706,6 +698,7 @@ footer {
 	.card {
 		background-color: unset;
 		border: unset;
+		box-shadow: none;
 
 		.card-image {
 			display: none;
@@ -721,4 +714,6 @@ footer {
 	}
 }
 
-
+.gallery {
+	margin-block: var(--size-3);
+}

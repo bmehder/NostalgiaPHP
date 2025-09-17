@@ -58,6 +58,7 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <script type="module" src="/static/js/nav.js"></script>
   
   <!-- Styles -->
+  <link rel="stylesheet" href="<?= url('/static/css/colors.css') ?>">
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 
   <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
