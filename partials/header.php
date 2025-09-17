@@ -3,7 +3,7 @@
     <div class="inner spread-apart" data-inner-header>
       <!-- <a class="brand" href="<?= url('/') ?>"><?= htmlspecialchars(site('name')) ?></a> -->
 
-      <a class="brand flex gap-0-5" href="<?= url('/') ?>">
+      <a class="brand flex align-items-center gap-0-5" href="<?= url('/') ?>">
         <!-- NostalgiaPHP mark -->
         <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="none">
           <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
