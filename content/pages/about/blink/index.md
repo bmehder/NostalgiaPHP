@@ -37,7 +37,7 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
   }
 </style>
 
-<script type="module" src="/static/js/accordion.js"></script>
+<script type="module" src="/static/js/apps/accordion.js"></script>
 
 <!-- You can add multiple instances on the same page -->
 
@@ -69,7 +69,7 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
   </div>
 </div>
 
-<script type="module" src="/static/js/counter.js"></script>
+<script type="module" src="/static/js/apps/counter.js"></script>
 
 <div class="outer">
   <div class="inner" style="width: unset; --inner-padding-block: var(--size)">

@@ -1,5 +1,5 @@
 import { always, pipe, map, filter, join } from 'https://esm.sh/canary-js@latest'
-import { explicit, implicit, fx } from './blink.js'
+import { explicit, implicit, fx } from '../blink.js'
 
 // Data
 const todosRoute = 'https://jsonplaceholder.typicode.com/todos'

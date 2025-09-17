@@ -22,7 +22,7 @@ if (count($parts) === 1) {
     }
     echo '</div>';
     // Add Cards/List toggle button
-    echo '<script type="module" src="/static/js/grid-toggle.js"></script>';
+    echo '<script type="module" src="/static/js/apps/grid-toggle.js"></script>';
   }
 
   $content = ob_get_clean();

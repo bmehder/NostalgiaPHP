@@ -10,7 +10,7 @@ Fetch data from a REST API, and display the results using [Blink](/about/blink).
 
 _Note: State not persisted._
 
-<script type="module" src="/static/js/fetch-todos.js"></script>
+<script type="module" src="/static/js/apps/fetch-todos.js"></script>
 
 <div class="todo-list">
   <menu>

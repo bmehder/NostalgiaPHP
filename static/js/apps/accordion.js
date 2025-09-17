@@ -3,7 +3,7 @@
 // view = blink(state)
 
 // 0. Import blink - a dead simple signals (observables) system
-import { explicit, fx } from './blink.js'
+import { explicit, fx } from '../blink.js'
 
 document.querySelectorAll('[data-scope]').forEach(scope => {
 	// 1. Get the DOM elements
