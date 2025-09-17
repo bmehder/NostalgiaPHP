@@ -591,6 +591,11 @@ footer {
 	/* border: var(--border-size-2) solid var(--gray-200); */
 	box-shadow: var(--shadow-1);
 
+	img {
+		min-height: var(--xs);
+		object-fit: cover;
+	}
+
 	.card-text {
 		padding-block: var(--size-3);
 		padding-inline: var(--size-1-5);

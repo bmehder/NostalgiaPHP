@@ -3,6 +3,7 @@ title: React in a Nutshell
 description: This page shows you most of what you need to know to understand React.
 date: 2025-09-15
 excerpt: This page covers the essentials of React. A React component is simply a function that outputs HTML and manages its own state.
+image: /static/uploads/react.png
 ---
 # React in a Nutshell
 

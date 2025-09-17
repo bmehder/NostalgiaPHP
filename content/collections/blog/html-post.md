@@ -2,6 +2,8 @@
 title: HTML Post
 description: An example of html in a md file.
 date: 2025-09-02
+image: /static/uploads/html.png
+draft: true
 ---
 
 # HTML Section
