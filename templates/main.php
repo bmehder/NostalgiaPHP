@@ -2,8 +2,8 @@
 <html lang="en">
 
 <?php include path('partials') . '/head.php'; ?>
-
-<body class="dark">
+  
+<body>
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
     <main>
