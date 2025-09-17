@@ -1,12 +1,23 @@
 <header>
   <div class="outer">
     <div class="inner spread-apart" data-inner-header>
-      <a class="brand" href="<?= url('/') ?>"><?= htmlspecialchars(site('name')) ?></a>
+      <!-- <a class="brand" href="<?= url('/') ?>"><?= htmlspecialchars(site('name')) ?></a> -->
+
+      <a class="brand flex gap-0-5" href="<?= url('/') ?>">
+        <!-- NostalgiaPHP mark -->
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
+          <!-- Single-stroke 'N' -->
+          <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        </svg>
+        <?= htmlspecialchars(site('name')) ?>
+      </a>
 
       <!-- add this button -->
       <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
         <span class="visually-hidden">Menu</span>
-        <svg viewBox="0 0 24 24" width="40" height="40" fill="white" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--gray-100)" aria-hidden="true">
           <rect x="3" y="6" width="18" height="2" rx="1"></rect>
           <rect x="3" y="11" width="18" height="2" rx="1"></rect>
           <rect x="3" y="16" width="18" height="2" rx="1"></rect>
@@ -16,14 +27,13 @@
       <nav id="site-nav" data-site-nav class="nav spread-apart">
         <?= nav_link('/', 'Home', $path) ?>
         <?= nav_link('/about', 'About', $path) ?>
-        <?= nav_link('/sample', 'Sample', $path) ?>
-        <?= nav_link('/blog', 'Blog', $path) ?>
-        <?= nav_link('/dox', 'Dox', $path) ?>
-        <?= nav_link('/contact', 'Contact', $path) ?>
         <?= nav_link('/about/blink', 'Blink', $path) ?>
         <?= nav_link('/about/fetch', 'Fetch', $path) ?>
-        <?= nav_link('/admin', 'Admin', $path) ?>
+        <?= nav_link('/blog', 'Blog', $path) ?>
+        <?= nav_link('/dox', 'Dox', $path) ?>
         <?= nav_link('/search', 'Search', $path) ?>
+        <?= nav_link('/contact', 'Contact', $path) ?>
+        <?= nav_link('/admin', 'Admin', $path) ?>
         <?= nav_link('/sitemap.xml', 'Sitemap', $path) ?>
         <a href="https://github.com/bmehder/NostalgiaPHP" class="github-link" target="_blank" rel="noopener">
           <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">

@@ -508,13 +508,13 @@ figure {
 header {
 	.outer {
 		background-color: var(--gray-900);
-		color: white;
+		color: var(--gray-100);
 
 		.inner {
 			--inner-padding-block: var(--size-2);
 
 			a {
-				color: white;
+				color: var(--gray-100);
 				text-decoration: none;
 
 				&:hover {

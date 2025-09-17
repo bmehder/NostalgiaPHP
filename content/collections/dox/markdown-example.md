@@ -1,7 +1,7 @@
 ---
 # Core metadata
-title: Sample Page Title
-description: Sample description for meta tags.
+title: Markdown Example
+description: An example of using writing markdown.
 draft: false
 template: main
 
@@ -24,7 +24,7 @@ sitemap: true
 author: John Doe
 ---
 
-# Sample Content
+# Markdown Example
 
 ## Headings
 
