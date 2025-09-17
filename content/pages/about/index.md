@@ -4,7 +4,7 @@ description: This is a sample About page.
 hero_title: About Nostalgia PHP
 hero_subtitle: A subtitle.
 hero_image: /static/uploads/1.jpg
-layout: sidebar
+template: sidebar
 ---
 
 # Why another CMS?

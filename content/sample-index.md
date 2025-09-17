@@ -3,7 +3,7 @@
 title: Example Page Title
 description: Example description for meta tags.
 draft: false
-layout: main
+template: main
 
 # Featured image - for Card thumbnails
 image: /static/uploads/foo.jpg

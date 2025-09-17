@@ -22,5 +22,5 @@ $title = $meta['title'] ?? ucfirst(basename($path));
 
 $content = $page['html'];
 
-$layout = !empty($meta['layout']) ? $meta['layout'] : 'main';
-render($layout, compact('title', 'content', 'path', 'meta'));
+$template = !empty($meta['template']) ? $meta['template'] : 'main';
+render($template, compact('title', 'content', 'path', 'meta'));

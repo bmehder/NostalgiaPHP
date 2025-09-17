@@ -347,7 +347,7 @@ foreach ($cols as $c => $items) {
               <th>Title</th>
               <th>Description</th>
               <th>Date</th>
-              <th>Layout</th>
+              <th>Template</th>
               <th>Draft</th>
               <th>Sitemap</th>
               <th>Last modified</th>
@@ -362,7 +362,7 @@ foreach ($cols as $c => $items) {
                 <td><?= h($m['title'] ?? '') ?></td>
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
-                <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
+                <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
                 <td><?= date('Y-m-d', $p['lastmod']) ?></td>
@@ -386,7 +386,7 @@ foreach ($cols as $c => $items) {
                 <th>Title</th>
                 <th>Description</th>
                 <th>Date</th>
-                <th>Layout</th>
+                <th>Template</th>
                 <th>Draft</th>
                 <th>Sitemap</th>
                 <th>URL</th>
@@ -402,7 +402,7 @@ foreach ($cols as $c => $items) {
                   <td><?= h($m['title'] ?? '') ?></td>
                   <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                   <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
-                  <td><code><?= h(($m['layout'] ?? 'main')) ?></code></td>
+                  <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
                   <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                   <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
                   <td><a href="<?= h(url($it['url'])) ?>"><?= h($it['url']) ?></a></td>

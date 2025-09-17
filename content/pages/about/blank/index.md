@@ -1,8 +1,8 @@
 ---
 title: Blank
-description: An example of a nested page with a blank layout.
+description: An example of a nested page with a blank template.
 sitemap: false
-layout: blank
+template: blank
 ---
 
 # Nested page

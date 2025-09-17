@@ -1,7 +1,7 @@
 ---
 title: Quickstart for Non-Devs
 description: How to do this for people that have no idea.
-layout: main
+template: main
 date: 2025-09-10
 excerpt: Make site. Fast. This is the fun way to edit a website — no scary dashboards, no logins, just files and folders.
 ---

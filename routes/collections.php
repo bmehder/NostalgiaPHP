@@ -29,7 +29,7 @@ if (count($parts) === 1) {
   $title = ucfirst($collection);
   $meta = [];
 
-  // $layout = !empty($meta['layout']) ? $meta['layout'] : 'main';
+  // $template = !empty($meta['template']) ? $meta['template'] : 'main';
   render('blog', compact('title', 'content', 'path', 'meta'));
   return;
 }
@@ -49,5 +49,5 @@ if (!$item) {
   $content = $item['html'];
 }
 
-$layout = !empty($meta['layout']) ? $meta['layout'] : 'main';
-render($layout, compact('title', 'content', 'path', 'meta'));
+$template = !empty($meta['template']) ? $meta['template'] : 'main';
+render($template, compact('title', 'content', 'path', 'meta'));

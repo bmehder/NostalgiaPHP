@@ -4,7 +4,7 @@ description: This is the homepage description.
 hero_title: Welcome to Nostalgia PHP
 hero_subtitle: A caveman-simple file-based CMS
 hero_image: /static/uploads/cave-water.jpg
-layout: full-width
+template: full-width
 ---
 
 <style>
@@ -150,7 +150,7 @@ layout: full-width
         <ol>
           <li><strong>Write content</strong> in <code>content/pages</code> and <code>content/collections/{name}</code>.</li>
           <li><strong>Add front-matter</strong> for <code>title</code>, <code>description</code>, <code>date</code> (optional).</li>
-          <li><strong>Pick a layout</strong> via <code>layout: main</code> (or your own), and ship.</li>
+          <li><strong>Pick a template</strong> via <code>template: main</code> (or your own), and ship.</li>
         </ol>
         <a class="button" href="/dox/">View the Dox</a>
       </div>

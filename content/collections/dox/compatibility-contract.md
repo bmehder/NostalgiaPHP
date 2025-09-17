@@ -10,7 +10,7 @@ date: 2025-09-11
 - content/collections/{name}/{slug}.md → /{name}/{slug}
 - static/ served at /static/...
 - Front-matter keys (optional, don’t break if missing)
-- title, description, date, layout, draft, sitemap
+- title, description, date, template, draft, sitemap
 - Defaults (no surprises)
 - If a key is missing, site still renders (infer title/desc or leave blank)
 - Templates/partials API
