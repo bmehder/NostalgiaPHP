@@ -1,46 +1,52 @@
-// /assets/js/grid-toggle.js
-import { explicit, fx } from '/static/js/blink.js' // adjust path if needed
+// /static/js/grid-toggle.js
+import { explicit, fx } from '/static/js/blink.js'
 
-// 1) Grab view elements
-const view = {
-	btn: document.querySelector('[data-grid-toggle]'),
-	grid: document.querySelector('[data-card-grid]'),
+const logError = console.error
+
+// Utility to read from local storage
+const readInitialMode = () => {
+	try {
+		const stored = localStorage.getItem('grid-list:view')
+		if (stored === 'list' || stored === 'grid') return stored
+	} catch (error) {
+		logError('Read Local Storage Error:', error.message)
+	}
+	return 'grid'
 }
-if (!view.btn || !view.grid) {
-	// Not on a collection page — bail quietly
-	// (Keeps this safe to include site-wide)
-	// No-op.
-} else {
-	// 2) State: 'cards' (default) or 'list'
-	const mode = explicit(readInitialMode())
+
+// 1) State: 'cards' (default) or 'list'
+const mode = explicit(readInitialMode())
+const setMode = newValue => (mode.value = newValue)
+
+// 2) Find the <h1> and insert the button
+const heading = document.querySelector('h1')
+const grid = document.querySelector('[data-card-grid]')
+
+if (heading && grid) {
+	const btn = document.createElement('button')
+	btn.type = 'button'
+	btn.dataset.gridToggle = ''
+	btn.setAttribute('aria-pressed', 'false')
+	btn.style.marginBlockEnd = 'var(--size-3)'
+	btn.textContent = 'List'
+	heading.insertAdjacentElement('afterend', btn)
 
 	// 3) Bind state → DOM
 	fx(() => {
 		const isList = mode.value === 'list'
-
-		// Toggle inline style only; keep your CSS as source of truth.
-		// 'list' => force single column via 'unset'
-		// 'cards' => clear inline style so your CSS rule wins
-		view.grid.style.gridTemplateColumns = isList ? 'unset' : ''
-
-		// Accessible toggle button state + label
-		view.btn.setAttribute('aria-pressed', String(isList))
-		view.btn.textContent = isList ? 'Cards' : 'List'
+		grid.style.gridTemplateColumns = isList ? 'unset' : ''
+		btn.setAttribute('aria-pressed', String(isList))
+		btn.textContent = isList ? 'Grid' : 'List'
 	})
 
-	// 4) Events — just flip state
-	view.btn.onclick = () => {
-		mode.value = mode.value === 'list' ? 'cards' : 'list'
-		try {
-			localStorage.setItem('grid:view', mode.value)
-		} catch (e) {}
-	}
+	// 4) Event - update component state & update local storage
+	btn.onclick = () => {
+		setMode(mode.value === 'list' ? 'grid' : 'list')
 
-	function readInitialMode() {
 		try {
-			const stored = localStorage.getItem('grid:view')
-			if (stored === 'list' || stored === 'cards') return stored
-		} catch (e) {}
-		return 'cards' // default
+			localStorage.setItem('grid-list:view', mode.value)
+		} catch (error) {
+			logError('Set Local Storage Error:', error.message)
+		}
 	}
 }

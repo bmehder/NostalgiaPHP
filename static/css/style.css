@@ -651,3 +651,26 @@ footer {
 		}
 	}
 }
+
+[data-grid-toggle][aria-pressed="true"] + [data-card-grid] {
+	gap: var(--size-1-5);
+
+	.card {
+		background-color: unset;
+		border: unset;
+
+		.card-image {
+			display: none;
+		}
+
+		.card-text {
+			padding: 0;
+		}
+	
+		& :is(.card-excerpt, .card-cta) {
+			display: none;
+		}
+	}
+}
+
+

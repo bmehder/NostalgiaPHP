@@ -14,3 +14,27 @@ Because *modern web development* doesn’t have to be so stupid.
 <a href="/about/blink" class="button">Blink</a>
 <a href="/about/blank" class="button">Blank</a>
 <a href="/about/fetch" class="button">Fetch</a>
+
+## Client-side rendered gallery
+
+```html
+<script type="module" src="/static/js/gallery.js"></script>
+
+<div
+  class="auto-fill"
+  data-gallery
+  data-images="
+    /uploads/1.jpg,
+    /uploads/2.jpg,
+    /uploads/3.jpg,
+    /uploads/4.jpg,
+    /uploads/5.jpg,
+    /uploads/6.jpg
+  "
+></div>
+```
+
+<script type="module" src="/static/js/gallery.js"></script>
+
+<div class="auto-fill" data-gallery data-images="/uploads/1.jpg, /uploads/2.jpg, /uploads/3.jpg, /uploads/4.jpg, /uploads/5.jpg, /uploads/6.jpg"></div>
+

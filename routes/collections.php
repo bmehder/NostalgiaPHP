@@ -13,15 +13,16 @@ if (count($parts) === 1) {
   
   if (!$items) {
     echo '<p>No items yet.</p>';
-  } else { ?>
-    <button data-grid-toggle type="button" aria-pressed="false" style="margin-block-end: var(--size-1-5)">List</button>
-  <?php echo '<div class="cards auto-fill" data-card-grid>';
+  } else { 
+    echo '<div class="cards auto-fill" data-card-grid>';
     foreach ($items as $it) {
       // variables expected by the card partial
       $item = $it;
       include path('partials') . '/card.php';
     }
     echo '</div>';
+    // Add Cards/List toggle button
+    echo '<script type="module" src="/static/js/grid-toggle.js"></script>';
   }
 
   $content = ob_get_clean();

@@ -45,6 +45,7 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <link rel="icon" href="<?= url('/static/favicon.png') ?>" type="image/png">
 
+  <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
 
@@ -53,30 +54,11 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-jsx.min.js"></script>
 
-  <!-- Grid/List toggle -->
-  <script type="module" src="/static/js/grid-toggle.js"></script>
-
+  <!-- Mobile Nav -->
+  <script type="module" src="/static/js/nav.js"></script>
+  
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 
-  <script type="module">
-    const btn = document.querySelector('[data-nav-toggle]');
-    const nav = document.querySelector('[data-site-nav]');
-    const inner = document.querySelector('[data-inner-header]');
-
-    if (btn && nav) {
-      btn.addEventListener('click', () => {
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-        nav.setAttribute('aria-expanded', String(!expanded));
-        inner && inner.classList.toggle('nav-open', !expanded);
-      });
-    }
-  </script>
-
-  <?php
-  // Optional hook: per-page extra head HTML (inline CSS, fonts, etc.)
-  if (!empty($meta['head_html']))
-    echo $meta['head_html'];
-  ?>
+  <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>
