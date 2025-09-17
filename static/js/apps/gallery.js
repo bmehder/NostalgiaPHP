@@ -5,7 +5,10 @@ const createGallery = domTarget => {
 	domTarget.innerHTML = images
 		? images
 				.split(',')
-				.map(image => `<img src="/static/${image.trim()}" loading="lazy" />`)
+				.map(
+					image =>
+						`<img src="/static/${image.trim()}" loading="lazy" />`
+				)
 				.join('')
 		: '<p>No images found</p>'
 }

@@ -91,10 +91,11 @@ picture {
 	shape-margin: var(--size);
 }
 
-svg {
-	max-inline-size: 100%;
-	height: auto;
-	display: block;
+img[src$=".svg"] {
+  inline-size: auto;
+  height: 1em;   /* or whatever size works for icons */
+  display: inline-block;
+  font-style: normal;
 }
 
 input,
