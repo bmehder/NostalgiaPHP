@@ -155,19 +155,21 @@ if ($q !== '') {
 ob_start(); ?>
 <div class="flow">
   <h1>Search</h1>
-  
-  <form method="get" action="<?= $h(url('/search')) ?>" class="search-form" style="margin-block:1rem;">
-    <input type="search" name="q" value="<?= $h($q) ?>" placeholder="Search pages and collections..."
-      style="padding:.5rem .75rem; width: min(40rem, 100%);" aria-label="Search query">
-    <button type="submit" class="btn" style="padding:.5rem .75rem;">Search</button>
-  </form>
-  
+
+  <search>
+    <form method="get" action="<?= $h(url('/search')) ?>" class="search-form" style="margin-block:1rem;">
+      <input type="search" name="q" value="<?= $h($q) ?>" placeholder="Search pages and collections..."
+        style="padding:.5rem .75rem; width: min(40rem, 100%);" aria-label="Search query">
+      <button type="submit" class="btn" style="padding:.5rem .75rem;">Search</button>
+    </form>
+  </search>
+
   <?php if ($q === ''): ?>
     <p class="muted">Type a word or phrase and press Enter.</p>
   <?php else: ?>
     <p><small><?= count($results) ?> result<?= count($results) === 1 ? '' : 's' ?> for
         <strong><?= $h($q) ?></strong></small></p>
-  
+
     <?php foreach ($results as $r): ?>
       <li class="list-style-none" style="border:1px solid #eee; border-radius:8px; padding:1rem;">
         <div style="font-size:.85rem; color:#666; margin-bottom:.25rem;">
