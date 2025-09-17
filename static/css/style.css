@@ -22,6 +22,11 @@
 
 	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
 		sans-serif;
+
+	--focus-h: 0;           /* ring thickness (outline) */
+  --focus-o: 3px;         /* outline-offset, if you use outline */
+  --focus-ring: 0 0 0 4px rgb(59 130 246 / 0.55);   /* blue-500 */
+  --focus-ring-muted: 0 0 0 3px rgb(59 130 246 / 0.35);
 }
 
 /* Resets */
@@ -730,8 +735,9 @@ footer {
   cursor: zoom-in;
 }
 
-.gallery__thumb:focus img {
-  box-shadow: 0 0 0 4px rgb(59 130 246 / 0.5);
+/* Your gallery thumbs (keeps what you liked) */
+.gallery__thumb:focus-visible img {
+  box-shadow: var(--focus-ring);
   border-radius: 6px;
 }
 
@@ -823,4 +829,71 @@ code[class*='language-'] {
 /* Optional: preserve a bit of horizontal scroll if really needed */
 pre[class*='language-'] {
 	overflow-x: auto;
+}
+
+/* A11y */
+/* Remove default outlines on mouse focus, keep for keyboard */
+:where(*):focus { outline: none; }
+:where(*):focus-visible { outline: none; }
+
+/* Generic focus ring utility (apply to anything) */
+.focus-ring:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-radius: .5rem; /* adjust to your component rounding */
+}
+
+/* Links (inline) */
+a:focus:not(:focus-visible) { outline: none; }
+a:focus-visible {
+  box-shadow: var(--focus-ring-muted);
+  border-radius: .125rem; /* tiny rounding for underline edge */
+  text-decoration: none;  /* reduce noise on focus */
+}
+
+/* Buttons (solid, ghost, icon) */
+button:focus:not(:focus-visible) { outline: none; }
+button:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-radius: .5rem;
+}
+
+/* Icon buttons (circle) */
+button[aria-label]:focus-visible,
+.icon-btn:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-radius: 999px;
+}
+
+/* Inputs / textareas / selects */
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) { outline: none; }
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-color: #3b82f6;         /* blue-500 */
+  outline: none;
+}
+
+/* Cards / clickable containers */
+.card:focus:not(:focus-visible) { outline: none; }
+.card:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-radius: .75rem;
+}
+
+/* If a parent has overflow:hidden and clips rings,
+   switch to an inner ring with a pseudo-element: */
+.ring-inside {
+  position: relative;
+}
+.ring-inside:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: 0;                 /* draw inside */
+  border-radius: inherit;
+  box-shadow: var(--focus-ring);
+  pointer-events: none;
 }
