@@ -1,20 +1,20 @@
 ---
 # Core metadata
-title: Example Page Title
-description: Example description for meta tags.
+title: Sample Page Title
+description: Sample description for meta tags.
 draft: false
 template: main
 
 # Featured image - for Card thumbnails
-image: /static/uploads/foo.jpg
+# image: /static/uploads/foo.jpg
 
 # Hero options
-hero_title: Example Hero Title
-hero_subtitle: This is a hero subtitle.
-hero_image: /static/uploads/1.jpg
+# hero_title: Example Hero Title
+# hero_subtitle: This is a hero subtitle.
+# hero_image: /static/uploads/1.jpg
 
 # Collection / item metadata
-date: 2025-09-09
+date: 2025-09-17
 
 # SEO & sitemap
 noindex: false
@@ -24,14 +24,11 @@ sitemap: true
 author: John Doe
 ---
 
-# Page Content
-
-This is the body of the page.  
-You can use normal Markdown here.
+# Sample Content
 
 ## Headings
 
-# H1 Heading
+# H1 Heading (for page titles)
 ## H2 Heading
 ### H3 Heading
 
@@ -58,7 +55,7 @@ This is a normal paragraph. It can contain **bold**, *italic*, and `inline code`
 
 ![Alt text for image](/static/uploads/foo.jpg)
 
-![Another image](/static/uploads/1.jpg)
+![Another image](/static/uploads/2.jpg)
 
 ## Blockquotes
 
@@ -99,5 +96,7 @@ echo "Hello from PHP!";
 ---
 
 ## Final notes
+
+You can also write html in markdown files, but you can't nest markdown inside of html.
 
 This sample page demonstrates the **whole kit and kaboodle** of Markdown features supported in NostalgiaPHP.

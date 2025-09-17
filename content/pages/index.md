@@ -9,7 +9,7 @@ template: full-width
 
 <style>
   section:nth-of-type(even) > .outer {
-    background-color: #f9f9f9;
+    background-color: var(--gray-100);
   }
 </style>
 

@@ -22,6 +22,18 @@
 
 	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
 		sans-serif;
+
+	--gray-100: #f3f4f6;
+	--gray-200: #e5e7eb;
+	--gray-300: #d1d5db;
+	--gray-400: #9ca3af;
+	--gray-500: #6b7280;
+	--gray-600: #4b5563;
+	--gray-700: #374151;
+	--gray-800: #374151;
+	--gray-900: #111827;
+
+	--blue-700: #1d4ed8;
 }
 
 /* Resets */
@@ -380,6 +392,7 @@ sup {
 
 /* Skins & Typography */
 body {
+	color: var(--gray-800);
 	line-height: 1.6;
 }
 
@@ -395,6 +408,7 @@ h1,
 h2,
 .h3,
 h3 {
+	color: var(--gray-800);
 	font-family: var(--heading-font);
 	font-weight: 750; /* slightly heavier if supported */
 	letter-spacing: -0.015em; /* subtle tighten */
@@ -407,7 +421,7 @@ h3 {
 	font-size: 0.8rem;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: #6b7280; /* gray-500 */
+	color: var(--gray-500);
 }
 
 main h2 {
@@ -424,7 +438,7 @@ blockquote {
 	margin: 0;
 	padding-block: var(--size);
 	padding-inline: var(--size-1-5);
-	background-color: #efefef;
+	background-color: var(--gray-100);
 }
 
 .bg-white {
@@ -438,8 +452,8 @@ button,
 	margin-block-start: var(--size-0-2-5);
 	padding: 0.6em 1.2em;
 	appearance: none;
-	background-color: #000;
-	color: #fff;
+	background-color: var(--gray-900);
+	color: white;
 	border: none;
 	font: inherit;
 	line-height: 1.2;
@@ -452,14 +466,14 @@ button,
 
 button:hover,
 .button:hover {
-	background-color: #222;
+	background-color: var(--gray-900);
 }
 
 button:focus-visible,
 .button:focus-visible {
-	outline: 2px solid #000;
+	outline: 2px solid var(--gray-900);
 	outline-offset: 2px;
-	background-color: #333;
+	background-color:var(--gray-800);
 }
 
 button:active,
@@ -470,14 +484,14 @@ button:active,
 /* Disabled state */
 button:disabled,
 .button[aria-disabled='true'] {
-	background-color: #666;
-	color: #ccc;
+	background-color: var(--gray-600);
+	color: var(--gray-300);
 	cursor: not-allowed;
 	opacity: 0.7;
 }
 
 a {
-	color: #1d4ed8;
+	color: var(--blue-700);
 	text-decoration: none;
 
 	&:hover {
@@ -486,7 +500,7 @@ a {
 }
 
 figure img {
-	border: 1px solid #efefef;
+	border: 1px solid var(--gray-200);
 }
 
 /* Header */
@@ -503,7 +517,7 @@ figure img {
 
 header {
 	.outer {
-		background-color: black;
+		background-color: var(--gray-900);
 		color: white;
 
 		.inner {
@@ -528,6 +542,15 @@ header {
 		font-size: var(--size-1-5);
 		font-weight: bold;
 	}
+
+	.github-link {
+		border-radius: 50%;
+		
+		&:hover {
+			background-color: var(--blue-700);
+		}
+	}
+	
 
 	/* --------- Mobile ≤ 48rem --------- */
 	@media (width <= 48rem) {
@@ -563,7 +586,7 @@ header {
 /* Footer */
 footer {
 	.outer {
-		background-color: black;
+		background-color: var(--gray-900);
 		color: white;
 
 		.inner {
@@ -574,7 +597,7 @@ footer {
 
 /* Card */
 .card {
-	border: 1px solid #efefef;
+	border: 1px solid var(--gray-100);
 
 	.card-text {
 		padding-block: var(--size-3);
@@ -610,12 +633,13 @@ footer {
 		display: grid;
 		place-content: center;
 		padding: var(--size-2);
-		color: white;
+		color: var(--gray-100);
 		text-align: center;
 		background: rgba(0, 0, 0, 0.4); /* dark overlay for readability */
 
 		.h1 {
 			margin: 0;
+			color: var(--gray-100);
 			font-size: clamp(1.5rem, 5vw, 3rem);
 		}
 
@@ -640,7 +664,7 @@ footer {
 	input,
 	textarea {
 		padding: var(--size-0-5);
-		border: 1px solid #dedede;
+		border: 1px solid var(--gray-300);
 	}
 }
 

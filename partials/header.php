@@ -16,6 +16,7 @@
       <nav id="site-nav" data-site-nav class="nav spread-apart">
         <?= nav_link('/', 'Home', $path) ?>
         <?= nav_link('/about', 'About', $path) ?>
+        <?= nav_link('/sample', 'Sample', $path) ?>
         <?= nav_link('/blog', 'Blog', $path) ?>
         <?= nav_link('/dox', 'Dox', $path) ?>
         <?= nav_link('/contact', 'Contact', $path) ?>
