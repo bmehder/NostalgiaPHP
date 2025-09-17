@@ -19,7 +19,7 @@
       ?>
       <section id="page-content">
         <div class="outer">
-          <div class="inner" style="--inner-padding-block: var(--size-3);">
+          <div class="inner">
             <div class="content">
               <h1>Contact Us</h1>
               <p>We’d love to hear from you. Fill out the form below:</p>

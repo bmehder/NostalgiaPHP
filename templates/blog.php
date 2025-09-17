@@ -19,7 +19,7 @@
       ?>
       <section id="page-content">
         <div class="outer" style="background-color: var(--gray-100);">
-          <div class="inner" style="--inner-padding-block: var(--size-3);">
+          <div class="inner">
             <div class="content"><?= $content ?></div>
           </div>
         </div>
