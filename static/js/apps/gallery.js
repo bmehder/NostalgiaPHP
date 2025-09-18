@@ -17,19 +17,7 @@
 // document.querySelectorAll('[data-gallery]').forEach(createGallery)
 
 // Utility: normalize to /static/uploads
-const normalizeSrc = raw => {
-	const s = raw.trim()
-	if (!s) return null
-
-	// If it's already pointing inside /static/, keep it
-	if (s.startsWith('/static/')) return s
-
-	// If it's written as /uploads/1.jpg → prepend /static
-	if (s.startsWith('/uploads/')) return '/static' + s
-
-	// If it’s a bare filename → assume /static/uploads/filename
-	return '/static/uploads/' + s
-}
+const normalizeSrc = raw => raw.trim() || null
 
 // Singleton lightbox <dialog>
 let lightbox
@@ -64,7 +52,6 @@ const ensureLightbox = () => {
 
 	// Close on backdrop click
 	lightbox.addEventListener('click', e => {
-		if (e.target === lightbox) lightbox.close()
 		const rect = lightboxImg.getBoundingClientRect()
 		const clickedOutside =
 			e.clientX < rect.left ||
