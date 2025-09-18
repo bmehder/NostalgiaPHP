@@ -6,7 +6,7 @@ template: sidebar
 
 # Why another CMS?
 
-Because *modern web development* doesn’t have to be so stupid.
+Because *modern web development* doesn’t have to be so crazy.
 
 ## Client-side rendered gallery
 
