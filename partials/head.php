@@ -45,6 +45,12 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <link rel="icon" href="<?= url('/static/favicon.png') ?>" type="image/png">
 
+  <!-- Styles -->
+  <link rel="stylesheet" href="<?= url('/static/css/colors.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/utilities.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/components.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
+
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
@@ -56,10 +62,6 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <!-- Mobile Nav -->
   <script type="module" src="/static/js/nav.js"></script>
-  
-  <!-- Styles -->
-  <link rel="stylesheet" href="<?= url('/static/css/colors.css') ?>">
-  <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
 
   <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>

@@ -1,0 +1,226 @@
+/* Utility Layouts */
+.wrapper {
+	min-height: 100dvh;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	align-items: start;
+}
+
+.flow > * + * {
+	--flow-margin-block-start: var(--size-1-5);
+
+	margin-block-start: var(--flow-margin-block-start);
+}
+
+.flow-0-5 > * + * {
+	margin-block-start: var(--size-0-5);
+}
+
+.outer {
+	overflow: hidden;
+}
+
+.inner {
+	--inner-width: var(--size-3);
+	--inner-padding-block: var(--size-6);
+
+	width: min(100% - var(--inner-width), var(--lg));
+	margin-inline: auto;
+	padding-block: var(--inner-padding-block);
+}
+
+.auto-fit {
+	--auto-fit-min: var(--xs);
+	--auto-fit-gap: var(--size-3);
+
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fit,
+		minmax(min(var(--auto-fit-min), 100%), 1fr)
+	);
+	align-items: start;
+	gap: var(--auto-fit-gap);
+}
+
+.auto-fill {
+	--auto-fill-min: var(--xs);
+	--auto-fill-gap: var(--size-3);
+
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(min(var(--auto-fill-min), 100%), 1fr)
+	);
+	align-items: start;
+	gap: var(--auto-fill-gap);
+}
+
+.spread-apart {
+	--spread-apart-gap: var(--size-1-5);
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--spread-apart-gap);
+}
+
+.two-col {
+	display: grid;
+	grid-template-columns: 1fr min(18rem, 30%);
+	gap: var(--size-3);
+}
+
+.float-left {
+	--float-left-margin-inline-end: var(--size-3);
+	--float-left-margin-block-end: var(--size-1-5);
+
+	width: auto;
+	float: inline-start;
+	margin-inline-end: var(--float-left-margin-inline-end);
+	margin-block-end: var(--float-left-margin-block-end);
+}
+
+.float-right {
+	--float-right-margin-inline-end: var(--size-3);
+	--float-right-margin-block-end: var(--size-1-5);
+
+	width: auto;
+	float: inline-end;
+	margin-inline-end: var(--float-right-margin-inline-end);
+	margin-block-end: var(--float-right-margin-block-end);
+}
+
+.image-shape-right {
+	float: right;
+	width: clamp(var(--xs), 40vw, var(--sm));
+	background-position: center;
+	background-size: cover;
+	shape-margin: var(--size-2);
+	/* shape-outside: url('/man.png'); */
+}
+
+/* Utility classes */
+.container {
+	container-type: inline-size;
+}
+
+.visually-hidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
+}
+
+.grid {
+	display: grid;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.align-items-center {
+	align-items: center;
+}
+
+.gap-0-2-5 {
+	gap: var(--size-0-2-5);
+}
+
+.gap-0-5 {
+	gap: var(--size-0-5);
+}
+
+.gap-1 {
+	gap: var(--size);
+}
+
+.gap-1-5 {
+	gap: var(--size-1-2-5);
+}
+
+.gap-2 {
+	gap: var(--size-2);
+}
+
+.gap-3 {
+	gap: var(--size-3);
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.linethrough {
+	text-decoration: line-through;
+}
+
+.list-style-none {
+	list-style: none;
+}
+
+.balance {
+	text-wrap: balance;
+}
+
+.no-balance {
+	text-wrap: initial;
+}
+
+.no-margin {
+	margin: 0;
+}
+
+.no-padding {
+	padding: 0;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.pretty {
+	text-wrap: pretty;
+}
+
+.square {
+	aspect-ratio: 1;
+}
+
+.landscape {
+	aspect-ratio: 4/3;
+}
+
+.portrait {
+	aspect-ratio: 3/4;
+}
+
+.widescreen {
+	aspect-ratio: 16/9;
+}
+
+.ultrawide {
+	aspect-ratio: 18/5;
+}
+
+.golden {
+	aspect-ratio: 1.618/1;
+}
+
+.fit {
+	object-fit: cover;
+}

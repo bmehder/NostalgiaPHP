@@ -1,0 +1,365 @@
+/* Header */
+.skip-link {
+	position: absolute;
+	top: -50px;
+	left: 0;
+	background: #1d4ed8; /* blue-700 */
+	color: #fff;
+	padding: 0.5rem 1rem;
+	z-index: 100;
+	border-radius: 0.25rem;
+	text-decoration: none;
+	transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+	top: 0.5rem;
+}
+
+/* Hamburger: hidden on desktop */
+.nav-toggle {
+	display: none;
+	margin: 0;
+	padding: 0;
+	background: none;
+	line-height: 1;
+	border: 0;
+	cursor: pointer;
+}
+
+header {
+	.outer {
+		background-color: var(--gray-900);
+		color: var(--gray-100);
+
+		.inner {
+			--inner-padding-block: var(--size-2);
+
+			a {
+				color: var(--gray-100);
+				text-decoration: none;
+
+				&:hover {
+					text-decoration: underline;
+				}
+
+				&.active {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.brand {
+		font-size: var(--size-1-5);
+		font-weight: bold;
+	}
+
+	.github-link {
+		border-radius: 50%;
+	}
+
+	.has-submenu .submenu {
+		position: absolute;
+		position-anchor: --about-anchor;
+		top: anchor(bottom); /* align top of submenu to bottom edge of link */
+		left: anchor(start); /* align left edge to link’s start */
+		background: var(--gray-800);
+		padding: var(--size);
+		margin: 0;
+		margin-inline-start: calc(var(--size) * -1);
+		border-radius: var(--size-0-5);
+		box-shadow: var(--shadow-3, 0 6px 10px rgb(0 0 0 / 0.15));
+		display: none; /* hide by default */
+		z-index: 10;
+	}
+
+	/* show on hover or focus */
+	.has-submenu:hover > .submenu,
+	.has-submenu:focus-within > .submenu {
+		display: block;
+	}
+
+	/* --------- Mobile ≤ 48rem --------- */
+	@media (width <= 48rem) {
+		/* show hamburger */
+		.nav-toggle {
+			display: grid;
+			grid-column: 2;
+			grid-row: 1;
+			justify-self: end;
+			align-items: center;
+			gap: var(--size-0-5);
+		}
+
+		/* turn header inner into a 2-col grid (brand | button) */
+		.inner.spread-apart {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			align-items: center;
+		}
+
+		/* nav sits on row 2 and is hidden by default */
+		#site-nav {
+			display: none;
+			/* show stacked menu when expanded */
+			&[aria-expanded='true'] {
+				display: grid;
+				grid-template-columns: 1fr;
+			}
+
+			.has-submenu {
+				position: static; /* let it flow with the nav list */
+			}
+
+			.submenu {
+				position: static; /* no anchor positioning on mobile */
+				display: block; /* collapsed by default */
+				background: transparent; /* match mobile nav */
+				box-shadow: none;
+				padding-block: var(--size) 0;
+				padding-inline: var(--size-1-5);
+				margin: 0;
+			}
+
+			/* when parent link is focused or tapped */
+			.has-submenu:focus-within > .submenu,
+			.has-submenu:hover > .submenu {
+				display: block;
+			}
+		}
+	}
+}
+
+/* Footer */
+footer {
+	.outer {
+		background-color: var(--gray-900);
+		color: white;
+
+		.inner {
+			--inner-padding-block: var(--size-1-5);
+		}
+	}
+}
+
+/* Card */
+.card {
+	/* border: 1px solid var(--gray-100); */
+	/* border: var(--border-size-2) solid var(--gray-200); */
+	box-shadow: var(--shadow-1);
+
+	img {
+		min-height: var(--xs);
+		object-fit: cover;
+	}
+
+	.card-text {
+		padding-block: var(--size-3);
+		padding-inline: var(--size-1-5);
+
+		.card-title {
+			display: flex;
+			align-items: center;
+			gap: var(--size-0-5);
+		}
+
+		.card-title .icon {
+			display: grid;
+			grid-template-columns: auto 1fr;
+		}
+	}
+}
+
+/* Hero */
+.hero {
+	.hero-grid {
+		display: grid;
+	}
+
+	.hero-bg {
+		grid-area: 1 / 1;
+		height: 100%;
+		object-fit: cover; /* crop to fill */
+	}
+
+	.hero-content {
+		grid-area: 1 / 1;
+		display: grid;
+		place-content: center;
+		padding: var(--size-2);
+		color: var(--gray-100);
+		text-align: center;
+		background: rgba(0, 0, 0, 0.4); /* dark overlay for readability */
+
+		.h1 {
+			margin: 0;
+			color: var(--gray-100);
+			font-size: clamp(1.5rem, 5vw, 3rem);
+		}
+
+		.hero-sub {
+			font-size: clamp(1rem, 3vw, 1.5rem);
+			margin-top: 0.5rem;
+		}
+	}
+}
+
+/* Contact Form */
+.contact-form {
+	display: grid;
+	gap: var(--size);
+	max-width: var(--sm);
+
+	label {
+		display: grid;
+		gap: var(--size-0-2-5);
+	}
+
+	input,
+	textarea {
+		padding: var(--size-0-5);
+		border: 1px solid var(--gray-300);
+	}
+}
+
+/* Stack on narrow screens */
+@media (width <= 48rem) {
+	.two-col {
+		grid-template-columns: 1fr;
+	}
+	.sidebar {
+		order: 2; /* put sidebar below content */
+	}
+}
+
+/* Todo List */
+.todo-list {
+	menu {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--size-0-2-5);
+		padding: 0;
+		list-style: none;
+
+		[aria-pressed='true'] {
+			font-weight: bold;
+		}
+	}
+}
+
+[data-grid-toggle][aria-pressed='true'] + [data-card-grid] {
+	gap: var(--size-1-5);
+
+	.card {
+		background-color: unset;
+		border: unset;
+		box-shadow: none;
+
+		.card-image {
+			display: none;
+		}
+
+		.card-text {
+			padding: 0;
+		}
+
+		& :is(.card-excerpt, .card-cta) {
+			display: none;
+		}
+	}
+}
+
+/* Gallery */
+.gallery {
+	margin-block: var(--size-3);
+}
+
+.gallery__thumb {
+	border: none;
+	padding: 0;
+	background: transparent;
+	cursor: zoom-in;
+}
+
+/* Your gallery thumbs (keeps what you liked) */
+.gallery__thumb:focus-visible img {
+	box-shadow: var(--focus-ring);
+	border-radius: 6px;
+}
+
+/* base: no forced display when closed */
+dialog.lightbox {
+	border: 0;
+	padding: 0;
+	background: transparent;
+	max-width: none;
+}
+
+/* only when open do we center & show it */
+dialog.lightbox[open] {
+	display: grid;
+	place-content: center;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: none;
+}
+
+dialog.lightbox::backdrop {
+	background: rgb(0 0 0 / 0.65);
+	backdrop-filter: blur(2px);
+}
+
+.lightbox__frame {
+	margin: 0;
+	max-width: 100%;
+	max-height: 100%;
+	border: 1px solid var(--gray-600);
+}
+
+.lightbox__img {
+	display: block;
+	max-width: 90vw;
+	max-height: 90vh;
+	object-fit: cover;
+	box-shadow: 0 2px 14px rgb(0 0 0 / 0.35);
+}
+.lightbox__btn {
+	width: 10px;
+	/* height: 40px; */
+	display: grid;
+	place-items: center;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: rgb(0 0 0 / 0.5);
+	color: white;
+	font-size: var(--size-1-5);
+	border: 0;
+	border-radius: 999px;
+	cursor: pointer;
+}
+.lightbox__btn:hover {
+	background: rgb(0 0 0 / 0.65);
+}
+.lightbox__prev {
+	left: 12px;
+}
+.lightbox__next {
+	right: 12px;
+}
+.lightbox__close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	border: 0;
+	background: rgb(0 0 0 / 0.5);
+	color: white;
+	width: 36px;
+	height: 36px;
+	border-radius: 999px;
+	cursor: pointer;
+}
