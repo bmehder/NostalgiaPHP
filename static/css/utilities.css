@@ -224,3 +224,7 @@
 .fit {
 	object-fit: cover;
 }
+
+.round {
+	border-radius: 50%;
+}
