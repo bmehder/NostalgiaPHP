@@ -565,13 +565,6 @@ header {
 		border-radius: 50%;
 	}
 
-	header,
-	header .outer,
-	header .inner {
-		position: relative; /* create a stacking context for z-index */
-		overflow: visible; /* <-- important: don't clip the submenu */
-	}
-
 	.has-submenu .submenu {
 		position: absolute;
 		position-anchor: --about-anchor;

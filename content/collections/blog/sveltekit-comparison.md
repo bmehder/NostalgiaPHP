@@ -2,7 +2,7 @@
 title: NostalgiaPHP vs SvelteKit
 description: A comparison between SvelteKit and NostalgiaPHP.
 date: 2025-09-07
-image: static/uploads/svelte.png
+image: static/media/svelte.png
 ---
 
 # NostalgiaPHP vs SvelteKit

@@ -2,7 +2,7 @@
 title: The NostalgiaPHP Manifesto
 description: The NostalgiaPHP Manifesto definded by the creator.
 date: 2025-09-12
-image: /static/uploads/4.jpg
+image: /static/media/4.jpg
 ---
 
 # The NostalgiaPHP Manifesto

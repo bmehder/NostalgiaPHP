@@ -2,7 +2,7 @@
 title: Why NostalgiaPHP?
 description: Why was NostalgiaPHP created?
 date: 2025-09-08
-image: /static/uploads/3.jpg
+image: /static/media/3.jpg
 ---
 
 # Why NostalgiaPHP?

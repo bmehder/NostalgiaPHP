@@ -2,7 +2,7 @@
 title: NostalgiaPHP vs Early WordPress
 description: A comparison of early WordPress and NostalgiaPHP.
 date: 2025-09-06
-image: static/uploads/wordpress.png
+image: static/media/wordpress.png
 ---
 
 # NostalgiaPHP vs Early WordPress

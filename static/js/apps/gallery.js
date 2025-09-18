@@ -16,7 +16,7 @@
 // // Create image elements for each gallery on the page.
 // document.querySelectorAll('[data-gallery]').forEach(createGallery)
 
-// Utility: normalize to /static/uploads
+// Utility: normalize to /static/media
 const normalizeSrc = raw => raw.trim() || null
 
 // Singleton lightbox <dialog>

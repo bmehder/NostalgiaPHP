@@ -2,7 +2,7 @@
 title: NostalgiaPHP vs Astro
 description: A comparison between Aston and NostalgiaPHP.
 date: 2025-09-07
-image: /static/uploads/astro.png
+image: /static/media/astro.png
 ---
 
 # NostalgiaPHP vs Astro

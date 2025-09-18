@@ -3,7 +3,7 @@ title: Welcome to NostalgiaPHP
 description: This is the homepage description.
 hero_title: Welcome to Nostalgia PHP
 hero_subtitle: A caveman-simple file-based CMS
-hero_image: /static/uploads/cave-water.jpg
+hero_image: /static/media/cave-water.jpg
 template: full-width
 ---
 
@@ -30,7 +30,7 @@ template: full-width
         </div>
       </div>
       <figure>
-        <img src="/static/uploads/2.jpg" alt="NostalgiaPHP project structure overview">
+        <img src="/static/media/2.jpg" alt="NostalgiaPHP project structure overview">
         <figcaption class="visually-hidden">Example project structure</figcaption>
       </figure>
     </div>
@@ -155,7 +155,7 @@ template: full-width
         <a class="button" href="/dox/">View the Dox</a>
       </div>
       <figure>
-        <img src="/static/uploads/3.jpg" alt="NostalgiaPHP project structure overview">
+        <img src="/static/media/3.jpg" alt="NostalgiaPHP project structure overview">
         <figcaption class="visually-hidden">Example project structure</figcaption>
       </figure>
     </div>

@@ -6,12 +6,12 @@ draft: false
 template: main
 
 # Featured image - for Card thumbnails
-image: /static/uploads/foo.jpg
+image: /static/media/foo.jpg
 
 # Hero options
 hero_title: Example Hero Title
 hero_subtitle: This is a hero subtitle.
-hero_image: /static/uploads/1.jpg
+hero_image: /static/media/1.jpg
 
 # Collection / item metadata
 date: 2025-09-09
@@ -56,9 +56,9 @@ This is a normal paragraph. It can contain **bold**, *italic*, and `inline code`
 
 ## Images
 
-![Alt text for image](/static/uploads/foo.jpg)
+![Alt text for image](/static/media/foo.jpg)
 
-![Another image](/static/uploads/1.jpg)
+![Another image](/static/media/1.jpg)
 
 ## Blockquotes
 
