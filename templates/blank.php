@@ -3,7 +3,7 @@
 <?php include path('partials') . '/head.php'; ?>
 
 <body class="blank">
-  <main>
+  <main id="main">
     <section class="page-content">
       <div class="outer">
         <div class="inner">

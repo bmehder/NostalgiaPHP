@@ -6,7 +6,7 @@
 <body class="blog">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
-    <main>
+    <section>
       <?php
       // HERO: render if any hero-related keys exist
       $hasHero = !empty($meta['hero_title']) || !empty($meta['hero']) || !empty($meta['hero_image']);
@@ -17,6 +17,8 @@
         include path('partials') . '/hero.php';
       }
       ?>
+    </section>
+    <main id="main">
       <section id="page-content">
         <div class="outer" style="background-color: var(--gray-100);">
           <div class="inner">

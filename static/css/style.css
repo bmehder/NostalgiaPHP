@@ -23,10 +23,10 @@
 	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
 		sans-serif;
 
-	--focus-h: 0;           /* ring thickness (outline) */
-  --focus-o: 3px;         /* outline-offset, if you use outline */
-  --focus-ring: 0 0 0 4px rgb(59 130 246 / 0.55);   /* blue-500 */
-  --focus-ring-muted: 0 0 0 3px rgb(59 130 246 / 0.35);
+	--focus-h: 0; /* ring thickness (outline) */
+	--focus-o: 3px; /* outline-offset, if you use outline */
+	--focus-ring: 0 0 0 4px rgb(59 130 246 / 0.55); /* blue-500 */
+	--focus-ring-muted: 0 0 0 3px rgb(59 130 246 / 0.35);
 
 	--accent: var(--blue-700);
 }
@@ -181,6 +181,10 @@ sup {
 	--flow-margin-block-start: var(--size-1-5);
 
 	margin-block-start: var(--flow-margin-block-start);
+}
+
+.flow-0-5 > * + * {
+	margin-block-start: var(--size-0-5);
 }
 
 .outer {
@@ -501,6 +505,23 @@ figure {
 }
 
 /* Header */
+.skip-link {
+	position: absolute;
+	top: -50px;
+	left: 0;
+	background: #1d4ed8; /* blue-700 */
+	color: #fff;
+	padding: 0.5rem 1rem;
+	z-index: 100;
+	border-radius: 0.25rem;
+	text-decoration: none;
+	transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+	top: 0.5rem;
+}
+
 /* Hamburger: hidden on desktop */
 .nav-toggle {
 	display: none;
@@ -544,6 +565,34 @@ header {
 		border-radius: 50%;
 	}
 
+	header,
+	header .outer,
+	header .inner {
+		position: relative; /* create a stacking context for z-index */
+		overflow: visible; /* <-- important: don't clip the submenu */
+	}
+
+	.has-submenu .submenu {
+		position: absolute;
+		position-anchor: --about-anchor;
+		top: anchor(bottom); /* align top of submenu to bottom edge of link */
+		left: anchor(start); /* align left edge to link’s start */
+		background: var(--gray-800);
+		padding: var(--size);
+		margin: 0;
+		margin-inline-start: calc(var(--size) * -1);
+		border-radius: var(--size-0-5);
+		box-shadow: var(--shadow-3, 0 6px 10px rgb(0 0 0 / 0.15));
+		display: none; /* hide by default */
+		z-index: 10;
+	}
+
+	/* show on hover or focus */
+	.has-submenu:hover > .submenu,
+	.has-submenu:focus-within > .submenu {
+		display: block;
+	}
+
 	/* --------- Mobile ≤ 48rem --------- */
 	@media (width <= 48rem) {
 		/* show hamburger */
@@ -570,6 +619,26 @@ header {
 			&[aria-expanded='true'] {
 				display: grid;
 				grid-template-columns: 1fr;
+			}
+
+			.has-submenu {
+				position: static; /* let it flow with the nav list */
+			}
+
+			.submenu {
+				position: static; /* no anchor positioning on mobile */
+				display: block; /* collapsed by default */
+				background: transparent; /* match mobile nav */
+				box-shadow: none;
+				padding-block: var(--size) 0;
+				padding-inline: var(--size-1-5);
+				margin: 0;
+			}
+
+			/* when parent link is focused or tapped */
+			.has-submenu:focus-within > .submenu,
+			.has-submenu:hover > .submenu {
+				display: block;
 			}
 		}
 	}
@@ -727,16 +796,16 @@ footer {
 }
 
 .gallery__thumb {
-  border: none;
-  padding: 0;
-  background: transparent;
-  cursor: zoom-in;
+	border: none;
+	padding: 0;
+	background: transparent;
+	cursor: zoom-in;
 }
 
 /* Your gallery thumbs (keeps what you liked) */
 .gallery__thumb:focus-visible img {
-  box-shadow: var(--focus-ring);
-  border-radius: 6px;
+	box-shadow: var(--focus-ring);
+	border-radius: 6px;
 }
 
 /* base: no forced display when closed */
@@ -827,73 +896,86 @@ code[class*='language-'] {
 
 /* Optional: preserve a bit of horizontal scroll if really needed */
 pre[class*='language-'] {
+	max-width: 74ch;
 	overflow-x: auto;
 	background: var(--gray-100);
 }
 
 /* A11y */
 /* Remove default outlines on mouse focus, keep for keyboard */
-:where(*):focus { outline: none; }
-:where(*):focus-visible { outline: none; }
+:where(*):focus {
+	outline: none;
+}
+:where(*):focus-visible {
+	outline: none;
+}
 
 /* Generic focus ring utility (apply to anything) */
 .focus-ring:focus-visible {
-  box-shadow: var(--focus-ring);
-  border-radius: .5rem; /* adjust to your component rounding */
+	box-shadow: var(--focus-ring);
+	border-radius: 0.5rem; /* adjust to your component rounding */
 }
 
 /* Links (inline) */
-a:focus:not(:focus-visible) { outline: none; }
+a:focus:not(:focus-visible) {
+	outline: none;
+}
 a:focus-visible {
-  box-shadow: var(--focus-ring-muted);
-  border-radius: .125rem; /* tiny rounding for underline edge */
-  text-decoration: none;  /* reduce noise on focus */
+	box-shadow: var(--focus-ring-muted);
+	border-radius: 0.125rem; /* tiny rounding for underline edge */
+	text-decoration: none; /* reduce noise on focus */
 }
 
 /* Buttons (solid, ghost, icon) */
-button:focus:not(:focus-visible) { outline: none; }
+button:focus:not(:focus-visible) {
+	outline: none;
+}
 button:focus-visible {
-  box-shadow: var(--focus-ring);
-  border-radius: .5rem;
+	box-shadow: var(--focus-ring);
+	border-radius: 0.5rem;
 }
 
 /* Icon buttons (circle) */
 button[aria-label]:focus-visible,
 .icon-btn:focus-visible {
-  box-shadow: var(--focus-ring);
-  border-radius: 999px;
+	box-shadow: var(--focus-ring);
+	border-radius: 999px;
 }
 
 /* Inputs / textareas / selects */
 input:focus:not(:focus-visible),
 textarea:focus:not(:focus-visible),
-select:focus:not(:focus-visible) { outline: none; }
+select:focus:not(:focus-visible) {
+	outline: none;
+}
 
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  box-shadow: var(--focus-ring);
-  border-color: var(--accent);
-  outline: none;
+	box-shadow: var(--focus-ring);
+	border-color: var(--accent);
+	outline: none;
 }
 
 /* Cards / clickable containers */
-.card:focus:not(:focus-visible) { outline: none; }
+.card:focus:not(:focus-visible) {
+	outline: none;
+}
 .card:focus-visible {
-  box-shadow: var(--focus-ring);
-  border-radius: .75rem;
+	box-shadow: var(--focus-ring);
+	border-radius: 0.75rem;
 }
 
 /* If a parent has overflow:hidden and clips rings,
    switch to an inner ring with a pseudo-element: */
 .ring-inside {
-  position: relative;
+	position: relative;
 }
 .ring-inside:focus-visible::after {
-  content: "";
-  position: absolute;
-  inset: 0;                 /* draw inside */
-  border-radius: inherit;
-  box-shadow: var(--focus-ring);
-  pointer-events: none;
+	content: '';
+	position: absolute;
+	inset: 0; /* draw inside */
+	border-radius: inherit;
+	box-shadow: var(--focus-ring);
+	pointer-events: none;
 }

@@ -1,12 +1,17 @@
 ---
 title: About
 description: This is a sample About page.
+hero_title: Example Hero Title
+hero_subtitle: This is a hero subtitle.
+hero_image: /static/uploads/1.jpg
 template: sidebar
 ---
 
 # Why another CMS?
 
-Because *modern web development* doesn’t have to be so crazy.
+Because *modern web development* doesn’t have to be chaos.
+
+NostalgiaPHP gives you the essentials — nothing more, nothing less — so you can just build.
 
 ## Client-side rendered gallery
 

@@ -6,7 +6,7 @@
 <body class="contact">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
-    <main>
+    <section>
       <?php
       // HERO: render if any hero-related keys exist
       $hasHero = !empty($meta['hero_title']) || !empty($meta['hero']) || !empty($meta['hero_image']);
@@ -17,13 +17,18 @@
         include path('partials') . '/hero.php';
       }
       ?>
+    </section>
+    <main id="main">
       <section id="page-content">
         <div class="outer">
           <div class="inner">
-            <div class="content">
-              <h1>Contact Us</h1>
-              <p>We’d love to hear from you. Fill out the form below:</p>
-              <?php include path('partials') . '/contact-form.php'; ?>
+            <div class="two-col">
+              <div class="content">
+                <h1>Contact Us</h1>
+                <p>We’d love to hear from you. Fill out the form below:</p>
+                <?php include path('partials') . '/contact-form.php'; ?>
+              </div>
+              <?php include path('partials') . '/sidebar.php'; ?>
             </div>
           </div>
         </div>
