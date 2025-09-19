@@ -17,6 +17,10 @@ if ($path === '/sitemap.xml') {
   require __DIR__ . '/routes/sitemap.php';
   exit;
 }
+if ($path === '/admin') {
+  require __DIR__ . '/routes/admin.php';
+  exit;
+}
 
 // Home
 if ($path === '/') {

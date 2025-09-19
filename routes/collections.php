@@ -13,24 +13,16 @@ if (count($parts) === 1) {
   
   if (!$items) {
     echo '<p>No items yet.</p>';
-  } else { 
-    echo '<div class="cards auto-fill" style="margin-block-start: var(--size-3)" data-card-grid>';
-    foreach ($items as $it) {
-      // variables expected by the card partial
-      $item = $it;
-      include path('partials') . '/card.php';
-    }
-    echo '</div>';
-    // Add Cards/List toggle button
-    echo '<script type="module" src="/static/js/apps/grid-toggle.js"></script>';
+  } else {
+    include path('partials') . '/cards-grid.php';
   }
 
   $content = ob_get_clean();
   $title = ucfirst($collection);
   $meta = [];
 
-  // $template = !empty($meta['template']) ? $meta['template'] : 'main';
-  render('blog', compact('title', 'content', 'path', 'meta'));
+  $template = !empty($meta['template']) ? $meta['template'] : 'main';
+  render($template, compact('title', 'content', 'path', 'meta'));
   return;
 }
 
