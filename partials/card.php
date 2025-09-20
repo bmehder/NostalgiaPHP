@@ -36,7 +36,7 @@ if (is_string($image) && $image !== '' && $image[0] === '/') {
 ?>
 <article class="card bg-white">
   <?php if ($image): ?>
-    <a href="<?= $href ?>"><img class="card-image" src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= $title ?>" loading="lazy"></a>
+    <a href="<?= $href ?>"><img class="card-image square" src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= $title ?>" loading="lazy"></a>
   <?php endif; ?>
 
   <div class="card-text">

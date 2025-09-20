@@ -2,7 +2,7 @@
 title: HTML Post
 description: An example of html in a md file.
 date: 2025-09-02
-image: /static/media/html.png
+image: /static/media/html.jpg
 draft: true
 ---
 

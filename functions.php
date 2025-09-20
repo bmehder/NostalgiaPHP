@@ -219,11 +219,7 @@ function markdown_to_html($md)
  * Load a page from the content directory.
  *
  * @param string $slug Page slug or relative path.
- * @return array{
- *   content: string,
- *   frontmatter: array<string,mixed>,
- *   raw: string
- * }
+ * @return array|null  Array with keys: type, slug, meta, html — or null if not found.
  */
 function load_page($slug)
 {
@@ -253,11 +249,7 @@ function sanitize_rel_path($p)
  * Load a page by an absolute file path.
  *
  * @param string $file Absolute path to Markdown file.
- * @return array{
- *   content: string,
- *   frontmatter: array<string,mixed>,
- *   raw: string
- * }
+ * @return array|null Array with keys: type, path, slug, meta, html — or null if not found.
  */
 function load_page_path($rel)
 {
@@ -294,11 +286,7 @@ function load_page_path($rel)
  *
  * @param string $collection Collection name.
  * @param string $slug Item slug.
- * @return array{
- *   content: string,
- *   frontmatter: array<string,mixed>,
- *   raw: string
- * }
+ * @return array|null        Array with keys: type, collection, slug, meta, html — or null if not found.
  */
 function load_collection_item($collection, $slug)
 {

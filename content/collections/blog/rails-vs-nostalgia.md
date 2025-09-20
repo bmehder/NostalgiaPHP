@@ -2,7 +2,7 @@
 title: NostalgiaPHP vs Ruby on Rails
 description: A comparison of Ruby on Rails with NostalgiaPHP.
 date: 2025-09-07
-image: /static/media/ruby.png
+image: /static/media/rails.jpg
 ---
 
 # NostalgiaPHP vs Ruby on Rails  

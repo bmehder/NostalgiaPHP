@@ -129,23 +129,6 @@ select:focus-visible {
 	pointer-events: none;
 }
 
-/* Prism */
-/* Wrap code lines */
-pre[class*='language-'],
-code[class*='language-'] {
-	white-space: pre-wrap !important; /* allow wrapping */
-	overflow-wrap: anywhere; /* break long tokens/URLs */
-	word-break: break-word;
-	max-width: 100%;
-}
-
-/* Optional: preserve a bit of horizontal scroll if really needed */
-pre[class*='language-'] {
-	max-width: 74ch;
-	overflow-x: auto;
-	background: var(--gray-100);
-}
-
 html {
 	font-family: system-ui, sans-serif;
 	-moz-text-size-adjust: none;
