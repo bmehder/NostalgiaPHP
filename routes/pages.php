@@ -23,4 +23,19 @@ $title = $meta['title'] ?? ucfirst(basename($path));
 $content = $page['html'];
 
 $template = !empty($meta['template']) ? $meta['template'] : 'main';
-render($template, compact('title', 'content', 'path', 'meta'));
+
+// routes/pages.php — after you’ve loaded the page/front matter and chosen $tpl
+$vars = [
+  'title' => $title,
+  'content' => $content,
+  'meta' => $meta,
+  'path' => $path,
+];
+
+// If this page uses the home template, attach latest blog items
+if (($meta['template'] ?? '') === 'home' && function_exists('list_collection')) {
+  $vars['blog_items'] = array_slice(list_collection('blog') ?? [], 0, 3);
+}
+
+// render('home', $vars);
+render($template, $vars);

@@ -1,11 +1,11 @@
 ---
-title: Overview
-description: An overview of what Nostalia is.
+title: NostalgiaPHP Overview
+description: An overview of NostalgiaPHP.
 date: 2025-09-08
 image: /static/media/cave-water.jpg
 ---
 
-# Overview
+# NostalgiaPHP Overview
 
 ## What is NostalgiaPHP?
 

@@ -1,6 +1,10 @@
 <?php
 // expects: $item (from list_collection), $collection (string)
 
+$collection = $collection ?? ($item['collection'] ?? '');
+$slug = (string) ($item['slug'] ?? '');
+$href = $collection && $slug ? url("/{$collection}/{$slug}") : ($item['url'] ?? '#');
+
 $slug  = (string)($item['slug'] ?? '');
 $href  = url('/' . $collection . '/' . rawurlencode($slug));
 
