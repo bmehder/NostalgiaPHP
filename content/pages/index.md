@@ -30,7 +30,7 @@ template: full-width
         </div>
       </div>
       <figure>
-        <img class="widescreen" src="/static/media/home-1.jpg" alt="NostalgiaPHP project structure overview">
+        <img class="landscape fit" src="/static/media/home-1.jpg" alt="NostalgiaPHP project structure overview">
         <figcaption class="visually-hidden">Example project structure</figcaption>
       </figure>
     </div>
@@ -155,7 +155,7 @@ template: full-width
         <a class="button" href="/dox/">View the Dox</a>
       </div>
       <figure>
-        <img class="widescreen" src="/static/media/home-2.jpg" alt="NostalgiaPHP project structure overview">
+        <img class="landscape fit" src="/static/media/home-2.jpg" alt="NostalgiaPHP project structure overview">
         <figcaption class="visually-hidden">Example project structure</figcaption>
       </figure>
     </div>
