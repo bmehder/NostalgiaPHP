@@ -16,7 +16,7 @@ template: full-width
 <!-- Intro / value prop -->
 <section class="section">
   <div class="outer">
-    <div class="inner auto-fit">
+    <div class="inner auto-fit reverse">
       <div class="flow">
         <h2>Rock, Paper, Markdown</h2>
         <p class="lead">
@@ -30,7 +30,7 @@ template: full-width
         </div>
       </div>
       <figure>
-        <img src="/static/media/2.jpg" alt="NostalgiaPHP project structure overview">
+        <img class="widescreen" src="/static/media/home-1.jpg" alt="NostalgiaPHP project structure overview">
         <figcaption class="visually-hidden">Example project structure</figcaption>
       </figure>
     </div>
@@ -144,7 +144,7 @@ template: full-width
 <!-- How it works (3 steps) -->
 <section class="section">
   <div class="outer">
-    <div class="inner auto-fit">
+    <div class="inner auto-fit reverse">
       <div>
         <h2>How it works</h2>
         <ol>
@@ -155,7 +155,7 @@ template: full-width
         <a class="button" href="/dox/">View the Dox</a>
       </div>
       <figure>
-        <img src="/static/media/3.jpg" alt="NostalgiaPHP project structure overview">
+        <img class="widescreen" src="/static/media/home-2.jpg" alt="NostalgiaPHP project structure overview">
         <figcaption class="visually-hidden">Example project structure</figcaption>
       </figure>
     </div>

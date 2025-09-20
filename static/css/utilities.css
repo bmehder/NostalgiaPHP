@@ -55,6 +55,21 @@
 	gap: var(--auto-fill-gap);
 }
 
+/* modifier class: puts image above text when stacked */
+@media (width <= 48rem) {
+	.auto-fit.reverse > *:first-child {
+		order: 2;
+	}
+	.auto-fit.reverse > *:last-child {
+		order: 1;
+	}
+}
+
+/* reset order on larger screens so they stay left/right */
+.auto-fit.reverse > * {
+	order: 0;
+}
+
 .spread-apart {
 	--spread-apart-gap: var(--size-1-5);
 
