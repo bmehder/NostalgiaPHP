@@ -4,6 +4,7 @@ description: This is a sample About page.
 hero_title: Example Hero Title
 hero_subtitle: This is a hero subtitle.
 hero_image: /static/media/1.jpg
+tags: php
 template: sidebar
 ---
 

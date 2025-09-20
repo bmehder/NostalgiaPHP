@@ -63,7 +63,7 @@ uasort($tags, fn($a, $b) => strnatcasecmp($a['label'], $b['label']));
 // Render tag list with links to /tag/{slug}
 ob_start();
 ?>
-<h2>Tags</h2>
+<h1>Tags</h1>
 <ul class="tags-list">
   <?php if (empty($tags)): ?>
       <li><em>No tags found.</em></li>
