@@ -7,6 +7,12 @@ hero_image: /static/media/1.jpg
 template: sidebar
 ---
 
+<style>
+  pre {
+    max-width: 100% !important;
+  }
+</style>
+
 # Why another CMS?
 
 Because *modern web development* doesn’t have to be chaos.

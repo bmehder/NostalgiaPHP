@@ -17,7 +17,7 @@
         include path('partials') . '/hero.php';
       }
       ?>
-      <section id="page-content">
+      <section id="content">
         <div class="outer">
           <div class="inner">
             <div class="content"><?= $content ?></div>

@@ -27,6 +27,7 @@
 	--focus-o: 3px; /* outline-offset, if you use outline */
 	--focus-ring: 0 0 0 4px rgb(59 130 246 / 0.55); /* blue-500 */
 	--focus-ring-muted: 0 0 0 3px rgb(59 130 246 / 0.35);
+	--focus-ring-muted: 0 0 0 3px rgb(59 130 246 / 0.35);
 
 	--accent: var(--blue-700);
 }
@@ -51,28 +52,16 @@
 }
 
 /* A11y */
-/* Remove default outlines on mouse focus, keep for keyboard */
-:where(*):focus {
-	outline: none;
-}
-:where(*):focus-visible {
-	outline: none;
-}
-
 /* Generic focus ring utility (apply to anything) */
 .focus-ring:focus-visible {
 	box-shadow: var(--focus-ring);
-	border-radius: 0.5rem; /* adjust to your component rounding */
+	border-radius: var(--size-0-5);
 }
 
-/* Links (inline) */
-a:focus:not(:focus-visible) {
-	outline: none;
-}
 a:focus-visible {
 	box-shadow: var(--focus-ring-muted);
-	border-radius: 0.125rem; /* tiny rounding for underline edge */
-	text-decoration: none; /* reduce noise on focus */
+	border-radius: 0.125rem;
+	text-decoration: none;
 }
 
 /* Buttons (solid, ghost, icon) */
@@ -157,9 +146,18 @@ label {
 p,
 li,
 figcaption,
-blockquote {
+blockquote,
+hr {
 	max-width: var(--text-max-width);
 	text-wrap: pretty;
+}
+
+hr {
+	margin-block: var(--size-2);
+	margin-inline-start: 0;
+	margin-inline-end: auto;
+	border: none;
+  border-top: 1px solid var(--gray-300);
 }
 
 .full-width {
@@ -358,7 +356,6 @@ a {
 	}
 }
 
-figure {
+figure img {
 	border: 1px solid var(--gray-200);
-	box-shadow: var(--shadow-4);
 }

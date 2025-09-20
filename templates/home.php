@@ -35,6 +35,8 @@
                 Build real content sites fast with flat files.
                 No framework. No database. Just pages, collections, and a few partials.
               </p>
+              <p>NostalgiaPHP creates clean HTML with zero build step—so you focus on words and layout, not
+                toolchains. Portable by default: zip it, copy it, deploy anywhere PHP runs.</p>
               <div class="flex flex-wrap" style="gap: var(--size-0-5);">
                 <a class="button" href="/dox/getting-started">Get Started</a>
                 <a class="button" href="/blog">View Blog</a>
@@ -43,7 +45,8 @@
               </div>
             </div>
             <figure style="margin-inline: auto;">
-              <img class="landscape fit" src="/static/media/home-1.jpg" alt="NostalgiaPHP project structure overview">
+              <img class="landscape fit" src="/static/media/rock-paper-md.jpg"
+                alt="NostalgiaPHP project structure overview">
               <figcaption class="visually-hidden">Example project structure</figcaption>
             </figure>
           </div>
@@ -172,7 +175,7 @@
         <div class="outer">
           <div class="inner auto-fit reverse">
             <div>
-              <h2>How it works</h2>
+              <h2>How It Works</h2>
               <ol>
                 <li><strong>Write content</strong> in <code>content/pages</code> and
                   <code>content/collections/{name}</code>.
@@ -181,11 +184,14 @@
                   <code>date</code>.
                 </li>
                 <li><strong>Pick a template</strong> via <code>template: main</code> (or your own), and ship.</li>
+                <li><strong>Include partials</strong> for headers, footers, sidebars, or anything you want to reuse across pages.</li>
+                <li><strong>Deploy anywhere PHP runs</strong>—no database, no build step, no lock-in.</li>
               </ol>
               <a class="button" href="/dox/">View the Dox</a>
             </div>
             <figure style="margin-inline: auto;">
-              <img class="landscape fit" src="/static/media/home-2.jpg" alt="NostalgiaPHP project structure overview">
+              <img class="landscape fit" src="/static/media/how-it-works.jpg"
+                alt="NostalgiaPHP project structure overview">
               <figcaption class="visually-hidden">Example project structure</figcaption>
             </figure>
           </div>
@@ -198,7 +204,7 @@
           <div class="inner">
             <?php if (!empty($blog_items)): ?>
               <section class="from-blog flow">
-                <h2>From the blog</h2>
+                <h2>From the Blog</h2>
                 <div class="cards auto-fill" style="--auto-fit-min: 16rem;">
                   <?php
                   $collection = 'blog'; // make card.php aware of the collection
@@ -207,7 +213,6 @@
                   }
                   ?>
                 </div>
-
                 <p><a class="button" href="<?= url('/blog') ?>">See all posts →</a></p>
               </section>
             <?php endif; ?>

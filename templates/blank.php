@@ -4,7 +4,7 @@
 
 <body class="blank">
   <main id="main">
-    <section class="page-content">
+    <section class="content">
       <div class="outer">
         <div class="inner">
           <div class="content"><?= $content ?></div>

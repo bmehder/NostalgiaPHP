@@ -132,6 +132,14 @@
 	white-space: nowrap;
 }
 
+.block {
+	display: block;
+}
+
+.inline {
+	display: inline;
+}
+
 .grid {
 	display: grid;
 }

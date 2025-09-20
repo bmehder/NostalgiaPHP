@@ -21,7 +21,7 @@
       <div class="outer">
         <div class="inner">
           <div class="two-col">
-            <section class="page-content flow">
+            <section class="content flow">
               <?= $content ?>
             </section>
             <?php include path('partials') . '/sidebar.php'; ?>

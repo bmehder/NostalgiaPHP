@@ -53,7 +53,7 @@ export const fx = fn => {
 - `explicit()` creates a reactive value.
 Think of it as a simple signal — `count = explicit(0)` — that notifies subscribers when it changes.
 - `fx()` sets up a reactive effect.
-When you access a signal inside an fx, that effect is re-run whenever the signal changes.
+When you access a signal inside an `fx` function, that effect is re-run whenever the signal changes.
 - `implicit()` is just sugar. It creates a derived signal, automatically re-computing its value whenever its dependencies change.
 
 That’s it. No virtual DOM, no compiler, no JSX. Just getters, setters, and a subscription set.

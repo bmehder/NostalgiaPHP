@@ -9,10 +9,10 @@ code[class*='language-'] {
 }
 
 /* Optional: preserve a bit of horizontal scroll if really needed */
-pre[class*='language-'] {
-	max-width: 74ch;
+.content pre[class*='language-'] {
+	max-width: calc(var(--text-max-width) * 1.05);
 	overflow-x: auto;
-	background: var(--gray-100);
+	background-color: var(--gray-100);
 }
 
 /* Header */
@@ -293,9 +293,9 @@ footer {
 }
 
 .gallery__thumb {
-	border: none;
 	padding: 0;
 	background: transparent;
+	border: none;
 	cursor: zoom-in;
 }
 
@@ -342,6 +342,7 @@ dialog.lightbox::backdrop {
 	max-width: 90vw;
 	max-height: 90vh;
 	object-fit: cover;
+	border: none;
 	box-shadow: 0 2px 14px rgb(0 0 0 / 0.35);
 }
 .lightbox__btn {
