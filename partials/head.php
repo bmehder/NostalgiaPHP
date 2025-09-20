@@ -58,6 +58,8 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <!-- Prism -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.min.css">
   <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markup-templating.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-php.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-jsx.min.js"></script>
 
   <!-- Mobile Nav -->

@@ -3,7 +3,19 @@
 require __DIR__ . '/functions.php';
 date_default_timezone_set(site('timezone') ?: 'UTC');
 
-// Normalized path & parts
+/**
+ * Figure out what part of the site is being requested.
+ *
+ * $path   → the full request path (no domain, no query string),
+ *           e.g. '/', '/blog', '/blog/hello'.
+ *
+ * $parts  → the path split into segments. The home page '/' is treated
+ *           as an empty array []. For '/blog/hello' you get ['blog','hello'].
+ *
+ * $first  → the first segment of the path, or '' if none.
+ *           Used to decide whether this is a collection ('blog'),
+ *           a page ('about'), or the site root ('').
+ */
 $path = request_path();            // e.g. '/', '/blog', '/blog/hello'
 $parts = $path === '/' ? [] : explode('/', ltrim($path, '/'));
 $first = $parts[0] ?? '';
@@ -25,6 +37,17 @@ if ($path === '/admin') {
 // Home
 if ($path === '/') {
   require __DIR__ . '/routes/pages.php';
+  exit;
+}
+
+// Tags
+if ($path === '/tags') {
+  require __DIR__ . '/routes/tags.php';
+  exit;
+}
+
+if ($first === 'tag' && isset($parts[1])) {
+  require __DIR__ . '/routes/tag.php';
   exit;
 }
 

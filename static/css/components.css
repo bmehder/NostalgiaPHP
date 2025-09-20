@@ -363,3 +363,15 @@ dialog.lightbox::backdrop {
 	border-radius: 999px;
 	cursor: pointer;
 }
+
+/* Tags */
+.tags-list {
+  /* list-style: none; */
+  /* padding: 0; */
+  margin: var(--size-0-5) 0 0;
+  display: grid;
+  gap: .25rem .5rem;
+}
+.tags-list a { text-decoration: none; }
+.tags-list a:hover { text-decoration: underline; }
+.tags-list .muted { color: var(--gray-500); }

@@ -21,7 +21,7 @@ if (count($parts) === 1) {
   $title = ucfirst($collection);
   $meta = [];
 
-  $template = !empty($meta['template']) ? $meta['template'] : 'main';
+  $template = !empty($meta['template']) ? $meta['template'] : 'collection';
   render($template, compact('title', 'content', 'path', 'meta'));
   return;
 }

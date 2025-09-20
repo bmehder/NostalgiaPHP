@@ -3,10 +3,10 @@
 
 <?php include path('partials') . '/head.php'; ?>
 
-<body class="contact">
+<body class="collection" style="background-color: var(--gray-100)">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
-    <section>
+    <main id="main">
       <?php
       // HERO: render if any hero-related keys exist
       $hasHero = !empty($meta['hero_title']) || !empty($meta['hero']) || !empty($meta['hero_image']);
@@ -17,16 +17,10 @@
         include path('partials') . '/hero.php';
       }
       ?>
-    </section>
-    <main id="main">
       <section id="page-content">
         <div class="outer">
           <div class="inner">
-            <div class="content">
-              <h1>Contact Us</h1>
-              <p>We’d love to hear from you. Fill out the form below:</p>
-              <?php include path('partials') . '/contact-form.php'; ?>
-            </div>
+            <div class="content"><?= $content ?></div>
           </div>
         </div>
       </section>

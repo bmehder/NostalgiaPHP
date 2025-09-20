@@ -38,6 +38,7 @@
         </div>
         <?= nav_link('/blog', 'Blog', $path) ?>
         <?= nav_link('/dox', 'Dox', $path) ?>
+        <?= nav_link('/tags', 'Tags', $path) ?>
         <?= nav_link('/search', 'Search', $path) ?>
         <?= nav_link('/contact', 'Contact', $path) ?>
         <div class="has-submenu">

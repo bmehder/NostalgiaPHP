@@ -21,6 +21,46 @@ function fmt_date($v)
   return '';
 }
 
+/**
+ * Extract tags from front matter (supports: tags, tag, keywords; CSV or array),
+ * de-dup case-insensitively, and return a comma-separated string.
+ */
+function fm_tags(array $meta): string
+{
+  $collected = [];
+  foreach ($meta as $k => $v) {
+    $lk = strtolower((string) $k);
+    if ($lk !== 'tags' && $lk !== 'tag' && $lk !== 'keywords')
+      continue;
+
+    if (is_string($v)) {
+      foreach (array_map('trim', explode(',', $v)) as $t) {
+        if ($t !== '')
+          $collected[] = $t;
+      }
+    } elseif (is_array($v)) {
+      foreach ($v as $t) {
+        if (is_string($t)) {
+          $t = trim($t);
+          if ($t !== '')
+            $collected[] = $t;
+        }
+      }
+    }
+  }
+  // de-dupe case-insensitively, preserve first-seen casing
+  $seen = [];
+  $out = [];
+  foreach ($collected as $t) {
+    $key = mb_strtolower($t);
+    if (!isset($seen[$key])) {
+      $seen[$key] = true;
+      $out[] = $t;
+    }
+  }
+  return implode(', ', $out);
+}
+
 function collect_pages(): array
 {
   $base = rtrim(path('pages'), '/');
@@ -174,18 +214,18 @@ foreach ($cols as $c => $items) {
 }
 
 ?>
-  <style>
-    :root {
-      --bg: #fff;
-      --ink: #111;
-      --muted: #666;
-      --line: #e5e5e5;
-      --accent: #0a7;
-      --pad: .75rem;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-    }
+<style>
+  :root {
+    --bg: #fff;
+    --ink: #111;
+    --muted: #666;
+    --line: #e5e5e5;
+    --accent: #0a7;
+    --pad: .75rem;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
 
-    .admin {
+  .admin {
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       color: var(--ink);
@@ -272,9 +312,44 @@ foreach ($cols as $c => $items) {
       white-space: pre-wrap;
     }
   }
-  </style>
 
-  <?php include path('partials') . '/head.php'; ?>
+  /* Prevent wide cells from forcing horizontal scroll */
+  .admin table {
+    table-layout: fixed;
+  }
+
+  /* columns share space evenly */
+  .admin th,
+  .admin td {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Make long links/paths wrap instead of stretching the table */
+  .admin td a,
+  .admin td code {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Optional: on narrow screens, hide the heaviest columns */
+  @media (width <=50rem) {
+
+    /* Pages table: hide File column */
+    section:nth-of-type(3) table th:nth-child(10),
+    section:nth-of-type(3) table td:nth-child(10) {
+      display: none;
+    }
+
+    /* Collections tables: hide File column */
+    section:nth-of-type(n+4) table th:nth-last-child(1),
+    section:nth-of-type(n+4) table td:nth-last-child(1) {
+      display: none;
+    }
+  }
+</style>
+
+<?php include path('partials') . '/head.php'; ?>
 
 <body class="admin">
   <div class="wrapper">
@@ -347,6 +422,7 @@ foreach ($cols as $c => $items) {
               <th>Title</th>
               <th>Description</th>
               <th>Date</th>
+              <th>Tags</th>
               <th>Template</th>
               <th>Draft</th>
               <th>Sitemap</th>
@@ -362,6 +438,7 @@ foreach ($cols as $c => $items) {
                 <td><?= h($m['title'] ?? '') ?></td>
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
+                <td><?= h(fm_tags($m)) ?></td>
                 <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
@@ -386,6 +463,7 @@ foreach ($cols as $c => $items) {
                 <th>Title</th>
                 <th>Description</th>
                 <th>Date</th>
+                <th>Tags</th>
                 <th>Template</th>
                 <th>Draft</th>
                 <th>Sitemap</th>
@@ -402,6 +480,7 @@ foreach ($cols as $c => $items) {
                   <td><?= h($m['title'] ?? '') ?></td>
                   <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                   <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
+                  <td><?= h(fm_tags($m)) ?></td>
                   <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
                   <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                   <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>

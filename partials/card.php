@@ -1,43 +1,63 @@
 <?php
 // expects: $item (from list_collection), $collection (string)
-$href = url("/{$collection}/{$item['slug']}");
-$title = htmlspecialchars($item['meta']['title'] ?? $item['slug']);
+
+$slug  = (string)($item['slug'] ?? '');
+$href  = url('/' . $collection . '/' . rawurlencode($slug));
+
+$titleRaw = $item['meta']['title'] ?? $item['frontmatter']['title'] ?? $slug;
+$title    = htmlspecialchars($titleRaw, ENT_QUOTES, 'UTF-8');
+
+// Date (supports DateTime or string)
 $date = '';
-if (!empty($item['meta']['date']) && $item['meta']['date'] instanceof DateTime) {
-  $date = $item['meta']['date']->format('Y-m-d');
-} elseif (!empty($item['meta']['date'])) {
-  $date = htmlspecialchars((string) $item['meta']['date']);
+$fmDate = $item['meta']['date'] ?? $item['frontmatter']['date'] ?? null;
+if ($fmDate instanceof DateTime) {
+  $date = $fmDate->format('Y-m-d');
+} elseif (!empty($fmDate)) {
+  $date = htmlspecialchars((string)$fmDate, ENT_QUOTES, 'UTF-8');
 }
 
-// Safely build excerpt
-$excerpt = $item['meta']['excerpt'] ?? '';
-if (!$excerpt && !empty($item['html'])) {
-  $excerpt = excerpt_from_html($item['html'], 180);
+// Excerpt (front matter or derived from HTML/content)
+$excerpt = $item['meta']['excerpt'] ?? $item['frontmatter']['excerpt'] ?? '';
+if (!$excerpt) {
+  $html = $item['html'] ?? $item['content'] ?? '';
+  if ($html) $excerpt = excerpt_from_html($html, 180);
 }
+$excerptEsc = $excerpt !== '' ? htmlspecialchars($excerpt, ENT_QUOTES, 'UTF-8') : '';
+
+// Tags (normalized to array elsewhere)
+$tags = $item['frontmatter']['tags'] ?? $item['meta']['tags'] ?? [];
 
 // Image
-if (!empty($item['meta']['image'])) {
-  $image = $item['meta']['image'];
-  if ($image[0] === '/') {
-    // treat leading slash as relative to site root
-    $image = url($image);
-  }
-} else {
-  $image = '';
+$image = $item['meta']['image'] ?? $item['frontmatter']['image'] ?? '';
+if (is_string($image) && $image !== '' && $image[0] === '/') {
+  // leading slash → treat as site-rooted path
+  $image = url($image);
 }
 ?>
 <article class="card bg-white">
   <?php if ($image): ?>
-    <a href="<?= $href ?>"><img class="card-image" src="<?= $image ?>" alt="<?= $title ?>" loading="lazy"></a>
+    <a href="<?= $href ?>"><img class="card-image" src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= $title ?>" loading="lazy"></a>
   <?php endif; ?>
+
   <div class="card-text">
     <h3 class="card-title"><a href="<?= $href ?>"><?= $title ?></a></h3>
+
     <?php if ($date): ?>
       <p class="card-meta"><small><?= $date ?></small></p>
     <?php endif; ?>
-    <?php if ($excerpt): ?>
-      <p class="card-excerpt"><?= htmlspecialchars($excerpt) ?></p>
+
+    <?php if ($excerptEsc): ?>
+      <p class="card-excerpt"><?= $excerptEsc ?></p>
     <?php endif; ?>
+
+    <?php if (!empty($tags) && is_array($tags)): ?>
+      <ul class="tags">
+        <?php foreach ($tags as $tag): $t = htmlspecialchars((string)$tag, ENT_QUOTES, 'UTF-8'); ?>
+          <li><a href="<?= url('/tag/' . rawurlencode($tag)) ?>"><?= $t ?></a></li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+
     <p class="card-cta"><a class="btn" href="<?= $href ?>">Read more →</a></p>
   </div>
 </article>
