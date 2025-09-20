@@ -2,7 +2,6 @@
 title: Don't Blink!
 date: 2025-09-20
 tags: js, slank, blink, reactivity
-image: /static/media/blink.jpg
 excerpt: Blink (Slank) is a minimalist reactivity library. It’s not React, it’s not Svelte — just a few lines of code that make small sites feel alive without build tools.
 ---
 
