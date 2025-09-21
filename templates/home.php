@@ -202,24 +202,33 @@
 
       <!-- Recent posts (auto: just link to collection) -->
       <section class="section">
-        <div class="outer">
-          <div class="inner">
-            <?php if (!empty($blog_items)): ?>
-              <section class="from-blog flow">
-                <h2>From the Blog</h2>
-                <div class="cards auto-fill" style="--auto-fit-min: 16rem;">
-                  <?php
-                  foreach ($blog_items as $item) {
-                    include path('partials') . '/card.php';
-                  }
-                  ?>
-                </div>
-                <p><a class="button" href="<?= url('/blog') ?>">See all posts →</a></p>
-              </section>
-            <?php endif; ?>
+  <div class="outer">
+    <div class="inner">
+      <?php
+      if (!isset($blog_items)) {
+        $blog_items = array_slice(list_collection('blog') ?? [], 0, 3);
+      }
+      ?>
+
+      <?php if (!empty($blog_items)): ?>
+        <section class="from-blog flow">
+          <h2>From the Blog</h2>
+          <div class="cards auto-fill" style="--auto-fit-min: 16rem;">
+            <?php
+            foreach ($blog_items as $it) {
+              // card.php expects $item and (for links) $collection
+              $item = $it;
+              $collection = 'blog';
+              include path('partials') . '/card.php';
+            }
+            ?>
           </div>
-        </div>
-      </section>
+          <p><a class="button" href="<?= url('/blog') ?>">See all posts →</a></p>
+        </section>
+      <?php endif; ?>
+    </div>
+  </div>
+</section>
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>

@@ -42,4 +42,5 @@ if (!$item) {
 }
 
 $template = !empty($meta['template']) ? $meta['template'] : 'main';
+
 render($template, compact('title', 'content', 'path', 'meta'));

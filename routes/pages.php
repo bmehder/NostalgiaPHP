@@ -32,10 +32,4 @@ $vars = [
   'path' => $path,
 ];
 
-// If this page uses the home template, attach latest blog items
-if (($meta['template'] ?? '') === 'home' && function_exists('list_collection')) {
-  $vars['blog_items'] = array_slice(list_collection('blog') ?? [], 0, 3);
-}
-
-// render('home', $vars);
 render($template, $vars);
