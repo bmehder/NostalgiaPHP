@@ -207,12 +207,12 @@ footer {
 		padding: var(--size-2);
 		color: var(--gray-100);
 		text-align: center;
-		background: rgba(0, 0, 0, 0.4); /* dark overlay for readability */
+		background: rgba(0, 0, 0, 0.15); /* dark overlay for readability */
 
 		.h1 {
 			margin: 0;
 			color: var(--gray-100);
-			font-size: clamp(1.5rem, 5vw, 3rem);
+			font-size: clamp(2rem, 5vw, 3rem);
 		}
 
 		.hero-sub {

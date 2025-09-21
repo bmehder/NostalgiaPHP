@@ -359,3 +359,8 @@ a {
 figure img {
 	border: 1px solid var(--gray-200);
 }
+
+main :is(ul, ol) li {
+	margin-block-start: calc(var(--size-0-5) * 1.5);
+	line-height: 1.3;
+}

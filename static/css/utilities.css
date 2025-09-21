@@ -56,7 +56,7 @@
 }
 
 /* modifier class: puts image above text when stacked */
-@media (width <= 48rem) {
+@media (width < 38rem) {
 	.auto-fit.reverse > *:first-child {
 		order: 2;
 	}

@@ -347,6 +347,28 @@ foreach ($cols as $c => $items) {
       display: none;
     }
   }
+
+  /* Clickable headers + sort indicators */
+  .admin th.sortable {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .admin th[aria-sort="ascending"]::after {
+    content: "▲";
+    font-size: .75em;
+    margin-inline-start: .25rem;
+  }
+
+  .admin th[aria-sort="descending"]::after {
+    content: "▼";
+    font-size: .75em;
+    margin-inline-start: .25rem;
+  }
+
+  .admin th[aria-sort="none"]::after {
+    content: "";
+  }
 </style>
 
 <?php include path('partials') . '/head.php'; ?>
@@ -496,6 +518,87 @@ foreach ($cols as $c => $items) {
     <?php endforeach; ?>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
+  <script>
+    (() => {
+      // Make all admin tables sortable by clicking their headers.
+      const tables = document.querySelectorAll('.admin table');
+
+      tables.forEach(table => {
+        const head = table.tHead && table.tHead.rows[0];
+        if (!head) return;
+
+        [...head.cells].forEach((th, idx) => {
+          if (th.hasAttribute('data-nosort')) return;
+          th.classList.add('sortable');
+          th.tabIndex = 0;
+          th.setAttribute('role', 'button');
+          th.setAttribute('aria-sort', 'none');
+
+          const activate = (ev) => {
+            if (ev.type === 'keydown' && !(ev.key === 'Enter' || ev.key === ' ')) return;
+            ev.preventDefault();
+            sortBy(table, idx, th);
+          };
+
+          th.addEventListener('click', activate);
+          th.addEventListener('keydown', activate);
+        });
+      });
+
+      function cellText(row, idx) {
+        const cell = row.cells[idx];
+        if (!cell) return '';
+        // Prefer code/link text when present
+        const code = cell.querySelector('code');
+        const a = cell.querySelector('a');
+        const el = code || a || cell;
+        return (el.textContent || '').trim();
+      }
+
+      function typedValue(text) {
+        // YYYY-MM-DD -> date number
+        if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return { t: 'num', v: new Date(text).getTime() };
+        // true/false
+        if (text === 'true' || text === 'false') return { t: 'num', v: text === 'true' ? 1 : 0 };
+        // plain number
+        const cleaned = text.replace(/,/g, '');
+        if (/^[+-]?\d+(\.\d+)?$/.test(cleaned)) return { t: 'num', v: parseFloat(cleaned) };
+        // default: case-insensitive string
+        return { t: 'str', v: text.toLowerCase() };
+      }
+
+      function sortBy(table, colIdx, th) {
+        const tbody = table.tBodies[0];
+        if (!tbody) return;
+
+        // Toggle direction
+        const current = th.getAttribute('aria-sort');
+        const dir = current === 'ascending' ? 'descending' : 'ascending';
+        [...table.tHead.rows[0].cells].forEach(h => h.setAttribute('aria-sort', h === th ? dir : 'none'));
+
+        // Build sortable array
+        const rows = [...tbody.rows].map((row, i) => {
+          const val = typedValue(cellText(row, colIdx));
+          return { row, val, i }; // keep index for stability if needed
+        });
+
+        rows.sort((a, b) => {
+          if (a.val.t === 'num' && b.val.t === 'num') {
+            return a.val.v - b.val.v;
+          }
+          if (a.val.v < b.val.v) return -1;
+          if (a.val.v > b.val.v) return 1;
+          return 0;
+        });
+
+        if (dir === 'descending') rows.reverse();
+
+        const frag = document.createDocumentFragment();
+        rows.forEach(r => frag.appendChild(r.row));
+        tbody.appendChild(frag);
+      }
+    })();
+  </script>
 
 </body>
 

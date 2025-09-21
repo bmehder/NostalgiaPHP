@@ -9,14 +9,14 @@ image: /static/media/astro.jpg
 
 Both are tools for building content-heavy sites.  
 Both lean on **files, not databases**.  
-But one is caveman simple, and the other is modern meta-framework complex.
+But one is caveman simple, and the other is modern meta-framework simple.
 
 ---
 
 ## 🐘 NostalgiaPHP
-- **Markdown + PHP.** That’s it.  
+- **Markdown or HTML + PHP.** That’s it.  
 - **File-based routing.** Pages and collections map directly to the file system.  
-- **Zero build step.** No `npm run build`, no node_modules.  
+- **Zero build step.** No `npm run build`, no `node_modules`.  
 - **Instant deploy.** Upload the folder, site goes live.  
 - **Portable.** Your project folder *is* the site.  
 

@@ -2,7 +2,7 @@
 title: Why NostalgiaPHP?
 description: Why was NostalgiaPHP created?
 date: 2025-09-08
-image: /static/media/3.jpg
+image: /static/media/why-nostalgia-php.jpg
 tags: php, simplicity, retro
 ---
 

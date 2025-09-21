@@ -7,6 +7,7 @@ date: 2025-09-12
 # Getting Started with NostalgiaPHP
 
 NostalgiaPHP is a **caveman-simple, file-based CMS**.  
+
 No database. No build step. No framework. Just drop in some Markdown files, and you’re publishing.
 
 ---
@@ -23,16 +24,16 @@ No database. No build step. No framework. Just drop in some Markdown files, and 
 
 1. Clone or download the project:
 
-   ```bash
-   git clone https://github.com/bmehder/NostalgiaPHP.git
-   cd NostalgiaPHP
-   ```
+```bash
+git clone https://github.com/bmehder/NostalgiaPHP.git
+cd NostalgiaPHP
+```
 
 2. Start PHP’s built-in server:
 
-   ```bash
-   php -S localhost:8000
-   ```
+```bash
+php -S localhost:8000
+```
 
 3. Open [http://localhost:8000](http://localhost:8000) in your browser.
 
@@ -53,7 +54,7 @@ nostalgia-php/
 ├── config.php        # site settings
 ├── functions.php     # helpers
 ├── index.php         # router entry point
-└── sitemap.php       # sitemap generator
+└── ...other files    # htaccess, dockerfile, Parsedown, README
 ```
 
 - **Pages** live in `content/pages/` as `.md`.  
@@ -70,46 +71,48 @@ nostalgia-php/
 
 1. Change the site name in `config.php`:
 
-   ```php
-   'site' => [
-     'name' => 'My First NostalgiaPHP Site',
-     'base_url' => '/',
-     'timezone' => 'America/New_York',
-   ],
-   ```
+```php
+'site' => [
+  'name' => 'My First NostalgiaPHP Site',
+  'base_url' => '/',
+  'timezone' => 'America/New_York',
+],
+```
 
-2. Edit `content/pages/index.md` to change the homepage text.
+2. Edit `content/pages/about/index.md` to change the about text.
 
 3. Add a new page:
 
-   - Create `content/pages/about.md`:
+- Create `content/pages/sample/index.md`:
 
-     ```md
-     ---
-     title: About Us
-     description: Learn more about our team.
-     ---
-     # About Us
+```md
+---
+title: Sample Page
+description: Learn more about our team.
+---
 
-     We’re building simple sites with simple tools.
-     ```
+# Sample Page
 
-   - Visit <http://localhost:8000/about>.
+We’re building simple sites with simple tools.
+```
+
+- Visit <http://localhost:8000/sample>.
 
 4. Add a new collection:  
-   Edit `config.php` and add a block like:
 
-   ```php
-   'collections' => [
-     'blog' => [
-       'permalink' => '/blog/{slug}',
-       'list_url'  => '/blog',
-       'sort'      => ['date', 'desc'],
-     ],
-   ],
-   ```
+Edit `config.php` and add a block like:
 
-   Then add items under `content/collections/blog/`.
+```php
+'collections' => [
+  'team' => [
+    'permalink' => '/team/{slug}',
+    'list_url'  => '/team',
+    'sort'      => ['date', 'desc'],
+  ],
+],
+```
+
+Then add items under `content/collections/team/`.
 
 ---
 

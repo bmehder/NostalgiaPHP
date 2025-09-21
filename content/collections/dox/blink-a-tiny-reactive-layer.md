@@ -2,16 +2,17 @@
 title: Don't Blink!
 date: 2025-09-20
 tags: js, slank, blink, reactivity
-excerpt: Blink (Slank) is a minimalist reactivity library. It’s not React, it’s not Svelte — just a few lines of code that make small sites feel alive without build tools.
+description: Blink is a tiny JavaScript reactivity layer — no framework, no bundler, no virtual DOM. Just signals, effects, and simple state management you can copy-paste into any project.
+excerpt: Blink is a tiny JavaScript reactivity layer — no framework, no bundler, no virtual DOM. Just signals, effects, and simple state management you can copy-paste into any project.
 ---
 
 # Don't Blink!
 
 ## Blink: A Tiny Reactivity Layer
 
-Sometimes you want a little bit of state and reactivity in your project — but you don’t want to bring in a whole framework, a bundler, or a giant runtime. That’s where Blink (published on npm as Slank) comes in.
+Sometimes you want a little bit of state and reactivity in your project — but you don’t want to bring in a whole framework, a bundler, or a giant runtime. That’s where Blink comes in.
 
-Blink is only a few lines of JavaScript. You can copy-paste it into a file, or install it from npm if you like. It gives you three exports: explicit, implicit, and fx.
+Blink is only a few lines of JavaScript. You can copy-paste it into a file, or install it from npm or a cdn if you like. It gives you three exports: explicit, implicit, and fx.
 
 ```js
 let subscriber = null

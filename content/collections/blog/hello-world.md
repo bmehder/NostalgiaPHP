@@ -2,7 +2,7 @@
 title: Hello World
 description: The usual hello world post.
 date: 2025-09-01
-image: /static/media/foo.jpg
+image: /static/media/hello-world.jpg
 ---
 
 # Hello World

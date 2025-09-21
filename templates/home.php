@@ -28,7 +28,7 @@
       <!-- Intro / value prop -->
       <section class="section">
         <div class="outer">
-          <div class="inner auto-fit reverse">
+          <div class="inner auto-fit reverse" style="--auto-fit-gap: var(--size-1-5) var(--size-3)">
             <div class="flow">
               <h2>Rock, Paper, Markdown</h2>
               <p class="lead">
@@ -45,7 +45,7 @@
               </div>
             </div>
             <figure style="margin-inline: auto;">
-              <img class="landscape fit" src="/static/media/rock-paper-md.jpg"
+              <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg"
                 alt="NostalgiaPHP project structure overview">
               <figcaption class="visually-hidden">Example project structure</figcaption>
             </figure>
@@ -57,17 +57,18 @@
       <section class="section">
         <div class="outer">
           <div class="inner">
-            <h2>The Simple Superpowers</h2>
+            <h2>The Nostalgia Core</h2>
             <div class="cards auto-fill" style="margin-block-start: var(--size-3)">
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
                     <span class="icon" aria-hidden="true">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9z" />
-                        <path d="M14 3v6h6" />
-                        <path d="M9 13h6M9 17h6" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <path d="M14 2v6h6" />
+                        <path d="M16 13H8" />
+                        <path d="M16 17H8" />
                       </svg>
                     </span>
                     Files, no faff
@@ -80,11 +81,12 @@
                 <div class="card-text">
                   <h3 class="card-title">
                     <span class="icon" aria-hidden="true">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="4" width="18" height="6" rx="1.5" />
-                        <rect x="3" y="10" width="18" height="6" rx="1.5" />
-                        <rect x="3" y="16" width="18" height="4" rx="1.5" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
                       </svg>
                     </span>
                     Templates &amp; partials
@@ -97,12 +99,13 @@
                 <div class="card-text">
                   <h3 class="card-title">
                     <span class="icon" aria-hidden="true">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7l8-4 8 4-8 4-8-4z" />
-                        <path d="M4 7v6l8 4 8-4V7" />
-                        <path d="M12 11v7" />
-                        <path d="M16 12l4 0-2 2-2-2z" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <path d="M16.5 9.4L7.5 4.2" />
+                        <path
+                          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <path d="M3.3 7l8.7 5v10" />
+                        <path d="M20.7 7l-8.7 5" />
                       </svg>
                     </span>
                     Portable content
@@ -115,12 +118,9 @@
                 <div class="card-text">
                   <h3 class="card-title">
                     <span class="icon" aria-hidden="true">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 7l8-4 8 4-8 4-8-4z" />
-                        <path d="M4 7v6l8 4 8-4V7" />
-                        <path d="M12 11v7" />
-                        <path d="M16 12l4 0-2 2-2-2z" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                       </svg>
                     </span>
                     Zero build step
@@ -134,12 +134,13 @@
                 <div class="card-text">
                   <h3 class="card-title">
                     <span class="icon" aria-hidden="true">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="6" r="2" />
-                        <circle cx="6" cy="18" r="2" />
-                        <circle cx="18" cy="18" r="2" />
-                        <path d="M12 8v4M12 12H6m6 0h6" />
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                        <circle cx="12" cy="12" r="4" />
+                        <line x1="12" y1="2" x2="12" y2="8" />
+                        <line x1="12" y1="16" x2="12" y2="22" />
+                        <line x1="2" y1="12" x2="8" y2="12" />
+                        <line x1="16" y1="12" x2="22" y2="12" />
                       </svg>
                     </span>
                     Instant sitemap
@@ -152,11 +153,11 @@
                 <div class="card-text">
                   <h3 class="card-title">
                     <span class="icon" aria-hidden="true">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" width="32" height="32" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M12 2v20" />
-                        <path d="M5 6h10l2 2-2 2H5z" />
-                        <path d="M19 14H9l-2 2 2 2h10z" />
+                        <path d="M18 8H6l-2-2 2-2h12l2 2-2 2z" />
+                        <path d="M6 16h12l2 2-2 2H6l-2-2 2-2z" />
                       </svg>
                     </span>
                     404, sorted
@@ -173,7 +174,7 @@
       <!-- How it works (3 steps) -->
       <section class="section">
         <div class="outer">
-          <div class="inner auto-fit reverse">
+          <div class="inner auto-fit reverse" style="--auto-fit-gap: var(--size-1-5) var(--size-3)">
             <div>
               <h2>How It Works</h2>
               <ol>
@@ -184,7 +185,8 @@
                   <code>date</code>.
                 </li>
                 <li><strong>Pick a template</strong> via <code>template: main</code> (or your own), and ship.</li>
-                <li><strong>Include partials</strong> for headers, footers, sidebars, or anything you want to reuse across pages.</li>
+                <li><strong>Include partials</strong> for headers, footers, sidebars, or anything you want to reuse
+                  across pages.</li>
                 <li><strong>Deploy anywhere PHP runs</strong>—no database, no build step, no lock-in.</li>
               </ol>
               <a class="button" href="/dox/">View the Dox</a>
@@ -207,7 +209,6 @@
                 <h2>From the Blog</h2>
                 <div class="cards auto-fill" style="--auto-fit-min: 16rem;">
                   <?php
-                  $collection = 'blog'; // make card.php aware of the collection
                   foreach ($blog_items as $item) {
                     include path('partials') . '/card.php';
                   }

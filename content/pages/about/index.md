@@ -1,9 +1,9 @@
 ---
 title: About
 description: This is a sample About page.
-hero_title: Example Hero Title
-hero_subtitle: This is a hero subtitle.
-hero_image: /static/media/1.jpg
+hero_title: About Nostalgia PHP
+hero_subtitle: Files good. Framework bad.
+hero_image: /static/media/about-nostalgia-php.jpg
 template: sidebar
 ---
 
@@ -18,6 +18,10 @@ template: sidebar
 Because *modern web development* doesn’t have to be chaos.
 
 NostalgiaPHP gives you the essentials — nothing more, nothing less — so you can just build.
+
+For example, here’s a simple client-side image gallery with a lightbox. The JavaScript is completely standalone, and the CSS lives in its own file. Together they’re easy to reuse, drop into other projects, and move between sites with zero external dependencies.
+
+<span id="gallery-demo"></span>
 
 ## Client-side rendered gallery
 

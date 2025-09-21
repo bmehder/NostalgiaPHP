@@ -26,6 +26,8 @@ author: John Doe
 
 # Markdown Example
 
+[View the markdown file here.](/content/collections/dox/markdown-example.md)
+
 ## Headings
 
 # H1 Heading (for page titles)
@@ -44,8 +46,8 @@ This is a normal paragraph. It can contain **bold**, *italic*, and `inline code`
 - Unordered item 3
 
 1. Ordered item one
-2. Ordered item two
-3. Ordered item three
+1. Ordered item two
+1. Ordered item three
 
 ## Links
 

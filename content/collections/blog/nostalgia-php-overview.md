@@ -2,7 +2,7 @@
 title: NostalgiaPHP Overview
 description: An overview of NostalgiaPHP.
 date: 2025-09-08
-image: /static/media/cave-water.jpg
+image: /static/media/nostalgia-php-overview.jpg
 ---
 
 # NostalgiaPHP Overview
