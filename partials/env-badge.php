@@ -6,7 +6,7 @@ if ($ENV !== 'prod'): ?>
       position:fixed;
       inset:auto 0 0 auto;
       z-index:9999;
-      background:var(--blue-400);
+      background:var(--red-600);
       color:#fff;
       padding:0.25rem 0.5rem;
       font:12px/1 system-ui;

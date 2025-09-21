@@ -20,7 +20,7 @@ code[class*='language-'] {
 	position: absolute;
 	top: -50px;
 	left: 0;
-	background: #1d4ed8; /* blue-700 */
+	background: var(--red-600);
 	color: #fff;
 	padding: 0.5rem 1rem;
 	z-index: 100;
@@ -46,7 +46,7 @@ code[class*='language-'] {
 
 header {
 	.outer {
-		background-color: var(--gray-900);
+		background-color: var(--stone-900);
 		color: var(--gray-100);
 
 		.inner {
@@ -81,7 +81,7 @@ header {
 		position-anchor: --about-anchor;
 		top: anchor(bottom); /* align top of submenu to bottom edge of link */
 		left: anchor(start); /* align left edge to link’s start */
-		background: var(--gray-800);
+		background: var(--stone-800);
 		padding: var(--size);
 		margin: 0;
 		margin-inline-start: calc(var(--size) * -1);
@@ -151,7 +151,7 @@ header {
 /* Footer */
 footer {
 	.outer {
-		background-color: var(--gray-900);
+		background-color: var(--stone-900);
 		color: white;
 
 		.inner {
