@@ -48,7 +48,7 @@ if ($path === '/admin') {
 }
 ```
 
-These bypass the normal content lookup entirely.
+These bypass the normal content lookup entirely and loads the `admin.php` route.
 
 ---
 
@@ -72,91 +72,35 @@ if ($first === 'tag' && isset($parts[1])) {
   exit;
 }
 ```
-- These run before the collection/page branches.
-- They scan `content/collections/*.md` and `content/pages/*.md`, parse front matter, and match tags (or tag/keywords) case-insensitively.
-- Rendering is intentionally minimal (a simple list), so you can swap it for cards later without touching the router.
+These run before the collection/page branches.
+
+They scan `content/collections/*.md` and `content/pages/*.md`, parse front matter, and match tags (or tag/keywords) case-insensitively.
+
+Rendering is intentionally minimal (a simple list), so you can swap it for cards later without touching the router.
+
+The `tags.php` or `tag.php` route is loaded.
 
 ---
 
 4. Collection routes (`/collection/slug`)
 
 ```php
-if ($first && is_dir(path('content')."/collections/$first")) {
-  // Single item? e.g. /blog/hello-world
-  if (isset($parts[1]) && $parts[1] !== '') {
-    $slug = sanitize_rel_path($parts[1]);
-    $item = load_collection_item($first, $slug);
-
-    if ($item) {
-      render('main', [
-        'title'     => $item['frontmatter']['title'] ?? slug_to_title($slug),
-        'content'   => $item['content'],
-        'path'      => $path,
-        'meta'      => $item['frontmatter'] ?? [],
-        'hero_html' => ''
-      ]);
-      exit;
-    }
-  }
-
-  // Otherwise, render the collection index (cards or list)
-  $items = list_collection($first);
-  $html  = (function() use ($items) {
-    ob_start();
-    include path('partials').'/cards-grid.php'; // or items-list.php
-    return ob_get_clean();
-  })();
-
-  render('main', [
-    'title'   => slug_to_title($first),
-    'content' => $html,
-    'path'    => $path,
-  ]);
+if (is_collection($first)) {
+  require __DIR__ . '/routes/collections.php';
   exit;
 }
 ```
-- If `/blog/:slug` exists → render the item page.
-- Else `/blog` → render the collection index using a partial.
+If `$first` is a collection in the `config.php` file → load the `collections.php` route.
 
 ---
 
-5. Page routes (`/about`)
+5. Page routes (`/`, `/about`, `/about/blink`)
 
 ```php
-if ($first) {
-  $page = load_page($first);
-  if ($page) {
-    render('main', [
-      'title'   => $page['frontmatter']['title'] ?? slug_to_title($first),
-      'content' => $page['content'],
-      'path'    => $path,
-      'meta'    => $page['frontmatter'] ?? [],
-    ]);
-    exit;
-  }
-}
+require __DIR__ . '/routes/pages.php';
 ```
 
-This looks for `content/pages/{slug}.md` and renders it if found.
-
----
-
-6. Home page (`/`)
-
-```php
-if ($path === '/') {
-  $home = load_page('index');
-  if ($home) {
-    render('main', [
-      'title'   => $home['frontmatter']['title'] ?? site('name'),
-      'content' => $home['content'],
-      'path'    => $path,
-    ]);
-    exit;
-  }
-}
-```
-Treat `content/pages/index.md` as the root content.
+If no other routes match, assume it is a page and load the `pages.php` route.
 
 ---
 
@@ -170,7 +114,7 @@ render('main', [
   'path'    => $path,
 ]);
 ```
-A clear, final fallback keeps the router predictable.
+Each route will return a 404 page if the content is not fount.
 
 ---
 
@@ -182,24 +126,13 @@ A clear, final fallback keeps the router predictable.
 
 ---
 
-## Extending the router
-- Add more static routes by mapping `$path` to scripts, just like `sitemap.php`.
-- Support alternate views via query string or front matter:
-
-```php
-$view = ($_GET['view'] ?? 'cards') === 'list' ? 'items-list.php' : 'cards-grid.php';
-```
-
-- Inject hero sections by setting `hero_html` in `render()` vars.
-
----
-
 ## TL;DR
 
 `index.php` is intentionally tiny. It:
 1. Parses the path
-2.	Short-circuits special routes
-3.	Tries collection item → collection index → page → home
-4.	Falls back to 404
+2. Short-circuits special routes
+3. Then tries collection
+4. Then tries home
+5. Falls back to a 404 page
 
 This clarity is the whole point of NostalgiaPHP: a site is just folders and files wired together with a few small functions.

@@ -20,23 +20,23 @@ $path = request_path();            // e.g. '/', '/blog', '/blog/hello'
 $parts = $path === '/' ? [] : explode('/', ltrim($path, '/'));
 $first = $parts[0] ?? '';
 
-// Special files
 if ($path === '/robots.txt') {
   require __DIR__ . '/routes/robots.php';
   exit;
 }
+
 if ($path === '/sitemap.xml') {
   require __DIR__ . '/routes/sitemap.php';
   exit;
 }
+
 if ($path === '/admin') {
   require __DIR__ . '/routes/admin.php';
   exit;
 }
 
-// Home
-if ($path === '/') {
-  require __DIR__ . '/routes/pages.php';
+if ($path === '/search') {
+  require __DIR__ . '/routes/search.php';
   exit;
 }
 
@@ -57,11 +57,4 @@ if (is_collection($first)) {
   exit;
 }
 
-// Search (server-side)
-if ($path === '/search') {
-  require __DIR__ . '/routes/search.php';
-  exit;
-}
-
-// Fallback: nested pages (/about, /guides/install, etc.)
 require __DIR__ . '/routes/pages.php';
