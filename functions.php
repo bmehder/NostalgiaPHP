@@ -1,6 +1,8 @@
 <?php
 // Minimal helpers for routing, loading, front-matter, and markdown
 
+/* ------------------------------ Config & paths ----------------------------- */
+
 /**
  * Normalize a filesystem path to use forward slashes.
  *
@@ -17,8 +19,6 @@ function normalize_path(string $path): string
   return $path;
 }
 
-/* ------------------------------ Config & paths ----------------------------- */
-
 /**
  * Get a configuration value.
  *
@@ -34,7 +34,6 @@ function config()
 
   $user = require __DIR__ . '/config.php';
 
-  // Defaults you don’t want users to worry about
   $defaults = [
     'site' => [
       'name' => 'My Site',
@@ -47,7 +46,6 @@ function config()
       'collections' => __DIR__ . '/content/collections',
       'templates' => __DIR__ . '/templates',
       'partials' => __DIR__ . '/partials',
-      // for URL generation only; file assets still live under project /static
       'static' => '/static',
     ],
   ];
@@ -113,6 +111,8 @@ function request_path(): string
   return normalize_path($uri);
 }
 
+/* ------------------------------ Content Helpers ----------------------------- */
+
 /**
  * Determine if a given path points to a collection.
  *
@@ -131,7 +131,7 @@ function is_collection($segment)
  * @param string $file Path to the file.
  * @return string File contents.
  */
-function read_file($file)
+function read_file($file): ?string
 {
   return is_file($file) ? file_get_contents($file) : null;
 }
@@ -185,14 +185,13 @@ function parse_front_matter($raw)
 /* -------------------------------- Markdown -------------------------------- */
 
 /**
- * Convert Markdown to HTML.
+ * Convert Markdown to HTML using Parsedown if available.
  *
- * @param string $markdown Raw Markdown text.
- * @return string HTML output.
+ * @param string $md
+ * @return string
  */
-function markdown_to_html($md)
+function markdown_to_html(string $md): string
 {
-  // Use Parsedown if available; otherwise return raw (you can use a tiny fallback if you want)
   static $engine = null;
 
   if ($engine === null) {
@@ -203,14 +202,15 @@ function markdown_to_html($md)
         $engine->setSafeMode(false);
       if (method_exists($engine, 'setBreaksEnabled'))
         $engine->setBreaksEnabled(false);
+      if (method_exists($engine, 'setMarkupEscaped'))
+        $engine->setMarkupEscaped(false);
     } else {
       $engine = false;
     }
   }
 
-  $out = $engine ? $engine->text($md) : $md;
-
-  return $out; // (If you want "Parsedown-or-bust", you can error instead of returning $md)
+  // Always return a string
+  return $engine ? (string) $engine->text($md) : (string) $md;
 }
 
 /* --------------------------------- Pages ---------------------------------- */
@@ -358,21 +358,21 @@ function list_collection($collection)
  *
  * @return array<int,array<string,mixed>> Combined list of all items.
  */
-function all_items($only_collection = null)
-{
-  $items = [];
-  $cfg = config();
-  $collections = $only_collection ? [$only_collection] : array_keys($cfg['collections'] ?? []);
+// function all_items($only_collection = null)
+// {
+//   $items = [];
+//   $cfg = config();
+//   $collections = $only_collection ? [$only_collection] : array_keys($cfg['collections'] ?? []);
 
-  foreach ($collections as $c) {
-    foreach (list_collection($c) as $it) {
-      // remember the collection
-      $it['meta']['_collection'] = $c;
-      $items[] = $it;
-    }
-  }
-  return $items;
-}
+//   foreach ($collections as $c) {
+//     foreach (list_collection($c) as $it) {
+//       // remember the collection
+//       $it['meta']['_collection'] = $c;
+//       $items[] = $it;
+//     }
+//   }
+//   return $items;
+// }
 
 /* ------------------------------- Presentation ----------------------------- */
 
@@ -395,7 +395,7 @@ function excerpt_from_html($html, $max = 160)
   return rtrim($cut, " \t\n\r\0\x0B.,;:!?\u{200B}") . '…';
 }
 
-/* -------------------------------- Active Page Helper ------------------------------- */
+/* -------------------------- Active Page Helper ------------------------------- */
 
 /**
  * Build a navigation link <a> element.

@@ -76,15 +76,27 @@ Loads a single item from a collection (e.g. one blog post).
 
 ### `list_collection($collection)`
 
-Lists all items in a collection, sorted and parsed. This powers your blog index.
+Lists all items in a collection, sorted and parsed. This powers your collection index pages.
 
-### `all_items()`
+<!-- ### `all_items()`
 
-Fetches all items across all collections. Useful for things like “Recent Posts” in a sidebar.
+Fetches all items across all collections. Useful for things like “Recent Posts” in a sidebar. -->
 
 ### `excerpt_from_html($html, $length)`
 
 Creates a text excerpt from HTML content, useful for previews on cards or lists.
+
+---
+
+## Templating Helpers
+
+### `nav_link($href, $label, $path)`
+
+Builds a navigation link. Automatically adds an `active` class when the current page matches.
+
+### `render($view, $vars)`
+
+Renders a template from the `templates/` folder. Variables like `$title` and `$content` are extracted for use inside the template.
 
 ---
 
@@ -104,18 +116,6 @@ Internally, the tag pages scan Markdown files and read front matter via `parse_f
 - casing (Tags, TAG, etc.)
 - CSV strings or arrays
 - an optional fallback key: `keywords:`
-
----
-
-## Templating Helpers
-
-### `nav_link($href, $label, $path)`
-
-Builds a navigation link. Automatically adds an `active` class when the current page matches.
-
-### `render($view, $vars)`
-
-Renders a template from the `templates/` folder. Variables like `$title` and `$content` are extracted for use inside the template.
 
 ---
 
