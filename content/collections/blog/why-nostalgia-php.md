@@ -9,13 +9,13 @@ tags: php, simplicity, retro
 # Why NostalgiaPHP?
 
 ## The Problem
-Most ways to build a simple website today are overkill:
+Building a simple website today often comes with a lot of extra baggage:
 
 - **WordPress** → instantly drags in a DB, admin UI, plugins, themes, update cycles, PHP version nags, etc.
 - **Astro / Next / Eleventy** → modern, fast, static-friendly… but need Node, npm, dependencies, configs, build steps.
 - **Jekyll / Hugo** → great static site generators, but you need Ruby or Go, and a build process. Server side rendering has many more advantages.
 
-All of them are fantastic at scale. But what if you just want to make a small website — with a few **pages**, some **collections** (like a blog or portfolio), and a couple of **partials** for your header and footer?
+They’re all fantastic at scale. But what if you just need a small site — a few pages, a blog or portfolio, and a header and footer?
 
 ---
 

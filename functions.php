@@ -422,6 +422,34 @@ function nav_link(string $href, string $label, string $current_path): string
   return '<a href="' . url($href) . '" class="' . $class . '">' . htmlspecialchars($label) . '</a>';
 }
 
+/**
+ * Is a nav href active for the current path?
+ * If $prefix = true, marks /about active for /about/* (but not for /).
+ */
+function is_active(string $href, string $current_path, bool $prefix = false): bool
+{
+  $href_norm = rtrim($href, '/') ?: '/';
+  $path_norm = '/' . trim($current_path, '/');
+  if ($path_norm === '//')
+    $path_norm = '/';
+
+  if (!$prefix) {
+    return $href_norm === $path_norm;
+  }
+
+  // prefix mode: /about is active for /about and /about/*
+  if ($href_norm === '/') {
+    return $path_norm === '/'; // don't make everything active on root
+  }
+  return $path_norm === $href_norm || str_starts_with($path_norm, $href_norm . '/');
+}
+
+/** Convenience: returns 'active' (or custom) if active, else '' */
+function active_class(string $href, string $current_path, bool $prefix = false, string $class = 'active'): string
+{
+  return is_active($href, $current_path, $prefix) ? $class : '';
+}
+
 /* -------------------------------- Rendering ------------------------------- */
 
 /**

@@ -3,7 +3,7 @@
 
 <?php include path('partials') . '/head.php'; ?>
 
-<body class="collection" style="background-color: var(--gray-100)">
+<body class="collection" style="background-color: var(--stone-100)">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
     <main id="main">

@@ -6,7 +6,7 @@
 
       <a class="brand flex align-items-center gap-0-5" href="<?= url('/') ?>">
         <!-- NostalgiaPHP mark -->
-        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-hover)">
           <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
           <!-- Single-stroke 'N' -->
           <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -18,7 +18,7 @@
       <!-- add this button -->
       <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
         <span class="visually-hidden">Menu</span>
-        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--gray-100)" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--stone-100)" aria-hidden="true">
           <rect x="3" y="6" width="18" height="2" rx="1"></rect>
           <rect x="3" y="11" width="18" height="2" rx="1"></rect>
           <rect x="3" y="16" width="18" height="2" rx="1"></rect>
@@ -28,7 +28,8 @@
       <nav id="site-nav" data-site-nav class="nav spread-apart">
         <?= nav_link('/', 'Home', $path) ?>
         <div class="has-submenu">
-          <a href="<?= url('/about') ?>" class="top-link" anchor-name="--about-anchor">
+          <a href="<?= url('/about') ?>" class="top-link <?= active_class('/about', $path, true) ?>"
+            anchor-name="--about-anchor">
             About
           </a>
           <ul class="submenu list-style-none flow-0-5">

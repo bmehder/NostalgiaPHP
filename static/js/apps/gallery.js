@@ -133,7 +133,7 @@ const createGallery = domTarget => {
 	domTarget.innerHTML = list
 		.map(
 			(src, i) =>
-				`<button type="button" class="gallery__thumb" data-index="${i}" style="all:unset; display:block; cursor:zoom-in; border: 1px solid var(--gray-200)">
+				`<button type="button" class="gallery__thumb" data-index="${i}" style="all:unset; display:block; cursor:zoom-in; border: 1px solid var(--stone-200)">
          <img src="${src}" loading="lazy" decoding="async" alt="">
        </button>`
 		)

@@ -5,11 +5,11 @@
 
 <style>
   section:nth-of-type(even)>.outer {
-    background-color: var(--gray-100);
+    background-color: var(--stone-100);
   }
 </style>
 
-<body class="full-width">
+<body class="home full-width">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
     <section>

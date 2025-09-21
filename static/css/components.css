@@ -12,7 +12,7 @@ code[class*='language-'] {
 .content pre[class*='language-'] {
 	max-width: calc(var(--text-max-width) * 1.05);
 	overflow-x: auto;
-	background-color: var(--gray-100);
+	background-color: var(--stone-100);
 }
 
 /* Header */
@@ -47,17 +47,17 @@ code[class*='language-'] {
 header {
 	.outer {
 		background-color: var(--stone-900);
-		color: var(--gray-100);
+		color: var(--stone-100);
 
 		.inner {
 			--inner-padding-block: var(--size-2);
 
 			a {
-				color: var(--gray-100);
+				color: var(--stone-100);
 				text-decoration: none;
 
 				&:hover {
-					text-decoration: underline;
+					color: var(--stone-200);
 				}
 
 				&.active {
@@ -72,16 +72,12 @@ header {
 		font-weight: bold;
 	}
 
-	.github-link {
-		border-radius: 50%;
-	}
-
 	.has-submenu .submenu {
 		position: absolute;
 		position-anchor: --about-anchor;
 		top: anchor(bottom); /* align top of submenu to bottom edge of link */
 		left: anchor(start); /* align left edge to link’s start */
-		background: var(--stone-800);
+		background: var(--stone-900);
 		padding: var(--size);
 		margin: 0;
 		margin-inline-start: calc(var(--size) * -1);
@@ -162,8 +158,8 @@ footer {
 
 /* Card */
 .card {
-	/* border: 1px solid var(--gray-100); */
-	/* border: var(--border-size-2) solid var(--gray-200); */
+	/* border: 1px solid var(--stone-100); */
+	/* border: var(--border-size-2) solid var(--stone-200); */
 	box-shadow: var(--shadow-1);
 
 	img {
@@ -205,21 +201,37 @@ footer {
 		display: grid;
 		place-content: center;
 		padding: var(--size-2);
-		color: var(--gray-100);
+		color: var(--stone-100);
 		text-align: center;
 		background: rgba(0, 0, 0, 0.15); /* dark overlay for readability */
 
 		.h1 {
 			margin: 0;
-			color: var(--gray-100);
+			color: var(--stone-100);
 			font-size: clamp(2rem, 5vw, 3rem);
 		}
 
 		.hero-sub {
 			font-size: clamp(1rem, 3vw, 1.5rem);
-			margin-top: 0.5rem;
+			margin-block-start: var(--size-0-5);
 		}
 	}
+}
+
+.home .hero-sub {
+	display: flex;
+  align-items: center;
+	justify-content: center;
+  gap: var(--size-0-5);
+  color: var(--stone-100);
+}
+
+.home .hero-sub::before {
+  content: '';
+  width: var(--size-1-5);
+  height: var(--size-1-5);
+  border-radius: 50%;
+  background-color: var(--accent);
 }
 
 /* Contact Form */
@@ -236,7 +248,7 @@ footer {
 	input,
 	textarea {
 		padding: var(--size-0-5);
-		border: 1px solid var(--gray-300);
+		border: 1px solid var(--stone-300);
 	}
 }
 
@@ -334,7 +346,7 @@ dialog.lightbox::backdrop {
 	margin: 0;
 	max-width: 100%;
 	max-height: 100%;
-	border: 1px solid var(--gray-600);
+	border: 1px solid var(--stone-600);
 }
 
 .lightbox__img {
@@ -384,12 +396,18 @@ dialog.lightbox::backdrop {
 
 /* Tags */
 .tags-list {
-  /* list-style: none; */
-  /* padding: 0; */
-  margin: var(--size-0-5) 0 0;
-  display: grid;
-  gap: .25rem .5rem;
+	/* list-style: none; */
+	/* padding: 0; */
+	margin: var(--size-0-5) 0 0;
+	display: grid;
+	gap: 0.25rem 0.5rem;
 }
-.tags-list a { text-decoration: none; }
-.tags-list a:hover { text-decoration: underline; }
-.tags-list .muted { color: var(--gray-500); }
+.tags-list a {
+	text-decoration: none;
+}
+.tags-list a:hover {
+	text-decoration: underline;
+}
+.tags-list .muted {
+	color: var(--stone-500);
+}
