@@ -22,71 +22,86 @@ This is the **fun way** to edit a website — no scary dashboards, no logins, ju
 
 ___
 
-## Step 1. Check if Your Mac Already Speaks PHP
+## Step 1. Check if Your Computer Already Speaks PHP
 
-Open **Terminal** (in Applications → Utilities).  
-Type:
+- On **Mac**, open **Terminal** (in Applications → Utilities). Type:
+  ```bash
+  php -v
+  ```
 
-```bash
-php -v
-```
+- On **Windows**, Open **Command Prompt** (press Win + R, type `cmd`, then hit `Enter`). Type:
+  ```bash
+  php -v
+  ```
 
-If you see something like:
+- On **either**:
+  
+  If you see something like: `PHP 8.2.12 (cli) ...`
+  🎉 You’re ready!
+  Skip to Step 3.
 
-```
-PHP 8.2.12 (cli) ...
-```
-
-🎉 You’re ready! Skip to Step 3.  
-If you see “command not found” → continue to Step 2.
+  If you see `command not found` → continue to Step 2.
 
 ---
 
-## Step 2. Teach Your Mac PHP (one-time)
+## Step 2. Teach Your Computer PHP (one-time)
 
-Download this friendly little app:  
+- On **Mac**, download this friendly little app:  
 👉 [https://herd.laravel.com/](https://herd.laravel.com/)
 
-Open the installer, let it finish. Done. Your Mac speaks PHP now.
+  Open the installer, let it finish. Done. Your Mac speaks PHP now.
+
+- On **Windows**, download this friendly little app:  
+👉 [https://laragon.org/download](https://laragon.org/download)
+
+  Open the installer, let it finish. Done. Your PC speaks PHP now.
+
+>ℹ️ You won't be using the app you just installed, it is just the easiest way to install PHP on your computer.
 
 ---
 
 ## Step 3. Enter the Cave
+- **On Mac:** Use Terminal to move into the project folder. Example:
+  ```bash
+  cd ~/Desktop/NostalgiaPHP
+  ```
 
-Use Terminal to move into the project folder. Example:
+  (Change the path if you put the folder somewhere else.)
 
-```bash
-cd ~/Desktop/NostalgiaPHP
-```
+- **On Windows:** Use Command Prompt to move into the project folder. Example:
+  ```bash
+  cd JOHNDOE\Desktop\NostalgiaPHP
+  ```
 
-(Change the path if you put the folder somewhere else.)
+  (Change the path if you put the folder somewhere else, e.g. Documents\NostalgiaPHP.)
 
 ---
 
 ## Step 4. Light the Fire 🔥
 
-Still in Terminal, type:
+- Still in **Terminal** (on Mac), or **Command Prompt** (on Windows), type:
 
-```bash
-php -S localhost:8000
-```
+  ```bash
+  php -S localhost:8000
+  ```
 
-This means “serve this folder at http://localhost:8000”.
+- This means “serve this folder at http://localhost:8000”.
 
 ---
 
 ## Step 5. Open Browser, See Magic ✨
 
-Go to [http://localhost:8000](http://localhost:8000) in Safari or Chrome.  
-That’s your site, live!  
+- Go to [http://localhost:8000](http://localhost:8000) in your favorite browser.  
 
-Now edit any `.md` file in the `content/` folder, save, refresh browser → instant change.
+- That’s your site, live!  
+
+- Now edit any `.md` file in the `content/` folder, save, refresh browser → instant change.
 
 ---
 
 ## Cave Tips
 
-- **Stop the fire** → Press `Ctrl + C` in Terminal.
+- **Stop the fire** → Press `Ctrl + C` in Terminal or Command Prompt.
 - **Edit safely** → Markdown files are just text. Open them in **TextEdit** or **VS Code**.
 - **Don’t panic** → If a page disappears, you probably broke the `--- front matter ---` at the top. Fix it and reload.
 - **Backups** → Copy the folder or put it on GitHub. That’s it.
