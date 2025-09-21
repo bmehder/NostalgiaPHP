@@ -8,15 +8,15 @@
 
 ## Why?  
 
-Back in 2004, WordPress was simple:  
-- A few PHP files.  
-- A database you could actually understand.  
-- A `header.php` and `footer.php` you edited right on the server.  
+Back in 2004, making a site was simple:  
+- A couple of PHP files on a server.
+- Maybe a MySQL table or two.
+- Edit `header.php` and `footer.php` live and hit refresh.
 
 Then the web went sideways:  
 - WordPress themes turned into small operating systems.  
 - JavaScript discovered frameworks… then metaframeworks… then frameworks for those.  
-- Suddenly your “simple site” needed `npm install` and 600MB of dependencies.  
+- Every site suddenly needed `npm install` and a thousand dependencies just to render “Hello World.”  
 
 All you wanted was a website.  
 
