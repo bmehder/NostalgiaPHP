@@ -63,8 +63,5 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-php.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-jsx.min.js"></script>
 
-  <!-- Mobile Nav -->
-  <script type="module" src="/static/js/nav.js"></script>
-
   <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>

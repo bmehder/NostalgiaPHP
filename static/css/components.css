@@ -156,14 +156,53 @@ header {
 	}
 }
 
+/* Visually hide the controlling checkbox */
+.nav-check {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+/* Optional: reflect expanded state for a11y helpers */
+@media (width <= 48rem) {
+  /* default closed on mobile */
+  #site-nav { display: none; }
+
+  /* ✅ when the checkbox is checked, show the nav */
+  .nav-check:checked ~ #site-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  /* Optional: style the label as "expanded" (no JS) */
+  .nav-check:checked + .nav-toggle {
+    /* example: change icon color */
+    opacity: 0.9;
+  }
+}
+
 /* Footer */
 footer {
 	.outer {
 		background-color: var(--stone-900);
-		color: white;
+		color: var(--stone-100);
 
 		.inner {
 			--inner-padding-block: var(--size-1-5);
+
+			a {
+				color: var(--stone-100);
+				
+				&:hover {
+					color: var(--stone-200);
+					text-decoration: none;
+				}
+			}
 		}
 	}
 }

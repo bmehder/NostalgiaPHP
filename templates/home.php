@@ -34,7 +34,7 @@
                 <div class="kicker">Lightweight by design.</div>
                 <h2>Rock, Paper, Markdown</h2>
                 <p class="lead">
-                  Build real content sites fast with flat files.
+                  Build content sites fast with flat files.
                   No framework. No database. Just pages, collections, and a few partials.
                 </p>
                 <p>NostalgiaPHP creates clean HTML with zero build step—so you focus on words and layout, not

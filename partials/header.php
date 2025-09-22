@@ -1,4 +1,5 @@
 <a href="#main" class="skip-link">Skip to main content</a>
+<a id="top"></a>
 <header>
   <div class="outer">
     <div class="inner spread-apart" data-inner-header>
@@ -15,15 +16,18 @@
         <?= htmlspecialchars(site('name')) ?>
       </a>
 
-      <!-- add this button -->
-      <button class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav">
+       <!-- ✅ hidden control for JS-less toggle -->
+      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu">
+
+      <!-- ✅ label becomes the hamburger button -->
+      <label for="nav-check" class="nav-toggle" aria-controls="site-nav" aria-expanded="false">
         <span class="visually-hidden">Menu</span>
         <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--stone-100)" aria-hidden="true">
           <rect x="3" y="6" width="18" height="2" rx="1"></rect>
           <rect x="3" y="11" width="18" height="2" rx="1"></rect>
           <rect x="3" y="16" width="18" height="2" rx="1"></rect>
         </svg>
-      </button>
+      </label>
 
       <nav id="site-nav" data-site-nav class="nav spread-apart">
         <?= nav_link('/', 'Home', $path) ?>

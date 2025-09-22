@@ -15,7 +15,7 @@ template: sidebar
 
 # Why another CMS?
 
-Because *modern web development* doesn’t have to be chaos.
+Because _modern web development_ doesn’t have to be chaos.
 
 NostalgiaPHP gives you the essentials — nothing more, nothing less — so you can just build.
 
@@ -24,6 +24,12 @@ For example, here’s a simple client-side image gallery with a lightbox. The Ja
 <span id="gallery-demo"></span>
 
 ## Client-side rendered gallery
+
+<script type="module" src="/static/js/apps/gallery.js"></script>
+
+<div class="auto-fill" style="--auto-fill-gap: var(--size-1-5)" data-gallery="/static/media/1.jpg, /static/media/2.jpg, /static/media/3.jpg, /static/media/4.jpg, /static/media/5.jpg, /static/media/6.jpg"></div>
+
+### Gallery Code
 
 ```html
 <script type="module" src="/static/js/apps/gallery.js"></script>
@@ -40,9 +46,3 @@ For example, here’s a simple client-side image gallery with a lightbox. The Ja
   "
 ></div>
 ```
-
-<script type="module" src="/static/js/apps/gallery.js"></script>
-
-<div style="padding-block: var(--size)">
-  <div class="auto-fill" data-gallery="/static/media/1.jpg, /static/media/2.jpg, /static/media/3.jpg, /static/media/4.jpg, /static/media/5.jpg, /static/media/6.jpg"></div>
-</div>

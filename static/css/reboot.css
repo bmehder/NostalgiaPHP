@@ -9,6 +9,7 @@
 	--size: 1rem;
 	--size-0-2-5: calc(var(--size) / 4);
 	--size-0-5: calc(var(--size) / 2);
+	--size-0-7-5: calc(var(--size) * 0.75);
 	--size-1-2-5: calc(var(--size) * 1.25);
 	--size-1-5: calc(var(--size) * 1.5);
 	--size-2: calc(var(--size) * 2);
