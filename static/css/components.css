@@ -74,7 +74,7 @@ header {
 
 	.has-submenu .submenu {
 		position: absolute;
-		position-anchor: --about-anchor;
+		position-anchor: --parent-nav-item;
 		top: anchor(bottom); /* align top of submenu to bottom edge of link */
 		left: anchor(start); /* align left edge to link’s start */
 		background: var(--stone-900);
@@ -158,8 +158,6 @@ footer {
 
 /* Card */
 .card {
-	/* border: 1px solid var(--stone-100); */
-	/* border: var(--border-size-2) solid var(--stone-200); */
 	box-shadow: var(--shadow-1);
 
 	img {
@@ -175,6 +173,8 @@ footer {
 			display: flex;
 			align-items: center;
 			gap: var(--size-0-5);
+			font-weight: 600;
+			letter-spacing: unset;
 		}
 
 		.card-title .icon {

@@ -47,9 +47,10 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/colors.css') ?>">
-  <link rel="stylesheet" href="<?= url('/static/css/utilities.css') ?>">
-  <link rel="stylesheet" href="<?= url('/static/css/components.css') ?>">
   <link rel="stylesheet" href="<?= url('/static/css/style.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/utilities.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/skins.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/components.css') ?>">
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

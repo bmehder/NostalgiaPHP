@@ -152,8 +152,20 @@
 	flex-wrap: wrap;
 }
 
+.flex-direction-column {
+	flex-direction: column;
+}
+
+.flex-1 {
+	flex: 1;
+}
+
 .align-items-center {
 	align-items: center;
+}
+
+.align-items-stretch {
+	align-items: stretch;
 }
 
 .gap-0-2-5 {
@@ -212,8 +224,21 @@
 	padding: 0;
 }
 
+.full-width {
+	min-width: unset;
+	width: 100%;
+}
+
+.text-align-left {
+	text-align: left;
+}
+
 .text-align-center {
 	text-align: center;
+}
+
+.text-align-right {
+	text-align: right;
 }
 
 .pretty {

@@ -29,7 +29,7 @@
         <?= nav_link('/', 'Home', $path) ?>
         <div class="has-submenu">
           <a href="<?= url('/about') ?>" class="top-link <?= active_class('/about', $path, true) ?>"
-            anchor-name="--about-anchor">
+            anchor-name="--parent-nav-item">
             About
           </a>
           <ul class="submenu list-style-none flow-0-5">
@@ -43,7 +43,7 @@
         <?= nav_link('/search', 'Search', $path) ?>
         <?= nav_link('/contact', 'Contact', $path) ?>
         <div class="has-submenu">
-          <a href="<?= url('/admin') ?>" class="top-link" anchor-name="--about-anchor">
+          <a href="<?= url('/admin') ?>" class="top-link" anchor-name="--parent-nav-item">
             Admin
           </a>
           <ul class="submenu list-style-none flow-0-5">

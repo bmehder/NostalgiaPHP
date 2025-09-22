@@ -101,10 +101,13 @@ ___
 
 ## Cave Tips
 
-- **Stop the fire** → Press `Ctrl + C` in Terminal or Command Prompt.
-- **Edit safely** → Markdown files are just text. Open them in **TextEdit** or **VS Code**.
+- **Stop the fire** → Press `Ctrl + C` in Terminal or Command Prompt to stop serving your site.
+- **Edit safely** → Markdown files are just text. You can use **TextEdit** (Mac) or **Notepad** (Windows) if you want — they’ll work, but everything looks like plain text.
+
+  >ℹ️ For an easier time, download a free editor like [VS Code](https://code.visualstudio.com/download) (Mac/Windows) or [Notepad++](https://notepad-plus-plus.org/) (Windows). These highlight your code, which makes things easier.
 - **Don’t panic** → If a page disappears, you probably broke the `--- front matter ---` at the top. Fix it and reload.
-- **Backups** → Copy the folder or put it on GitHub. That’s it.
+
+- **Backups** → Copy the folder. That’s it.
 
 ---
 

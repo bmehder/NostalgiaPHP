@@ -28,27 +28,30 @@
       <!-- Intro / value prop -->
       <section class="section">
         <div class="outer">
-          <div class="inner auto-fit reverse" style="--auto-fit-gap: var(--size-1-5) var(--size-3)">
-            <div class="flow">
-              <h2>Rock, Paper, Markdown</h2>
-              <p class="lead">
-                Build real content sites fast with flat files.
-                No framework. No database. Just pages, collections, and a few partials.
-              </p>
-              <p>NostalgiaPHP creates clean HTML with zero build step—so you focus on words and layout, not
-                toolchains. Portable by default: zip it, copy it, deploy anywhere PHP runs.</p>
-              <div class="flex flex-wrap" style="gap: var(--size-0-5);">
-                <a class="button" href="/dox/getting-started">Get Started</a>
-                <a class="button" href="/blog">View Blog</a>
-                <a class="button" href="https://github.com/bmehder/NostalgiaPHP" target="_blank"
-                  rel="noopener">GitHub</a>
+          <div class="inner">
+            <div class="content auto-fit reverse">
+              <div class="flow">
+                <div class="kicker">Lightweight by design.</div>
+                <h2>Rock, Paper, Markdown</h2>
+                <p class="lead">
+                  Build real content sites fast with flat files.
+                  No framework. No database. Just pages, collections, and a few partials.
+                </p>
+                <p>NostalgiaPHP creates clean HTML with zero build step—so you focus on words and layout, not
+                  toolchains. Portable by default: zip it, copy it, deploy anywhere PHP runs.</p>
+                <div class="flex flex-wrap" style="gap: var(--size-0-5);">
+                  <a class="button" href="/dox/getting-started">Get Started</a>
+                  <a class="button" href="/blog">View Blog</a>
+                  <a class="button" href="https://github.com/bmehder/NostalgiaPHP" target="_blank"
+                    rel="noopener">GitHub</a>
+                </div>
               </div>
+              <figure style="margin-inline: auto;">
+                <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg"
+                  alt="NostalgiaPHP project structure overview">
+                <figcaption class="visually-hidden">Example project structure</figcaption>
+              </figure>
             </div>
-            <figure style="margin-inline: auto;">
-              <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg"
-                alt="NostalgiaPHP project structure overview">
-              <figcaption class="visually-hidden">Example project structure</figcaption>
-            </figure>
           </div>
         </div>
       </section>
@@ -57,6 +60,7 @@
       <section class="section">
         <div class="outer">
           <div class="inner">
+            <div class="kicker">Back to basics</div>
             <h2>The Nostalgia Core</h2>
             <div class="cards auto-fill" style="margin-block-start: var(--size-3)">
               <article class="card bg-white">
@@ -174,8 +178,10 @@
       <!-- How it works (3 steps) -->
       <section class="section">
         <div class="outer">
-          <div class="inner auto-fit reverse" style="--auto-fit-gap: var(--size-1-5) var(--size-3)">
-            <div>
+          <div class="inner">
+            <div class="content auto-fit reverse">
+              <div class=" flow">
+              <div class="kicker">Under the hood, there’s barely a hood.</div>
               <h2>How It Works</h2>
               <ol>
                 <li><strong>Write content</strong> in <code>content/pages</code> and
@@ -202,33 +208,29 @@
 
       <!-- Recent posts (auto: just link to collection) -->
       <section class="section">
-  <div class="outer">
-    <div class="inner">
-      <?php
-      if (!isset($blog_items)) {
-        $blog_items = array_slice(list_collection('blog') ?? [], 0, 3);
-      }
-      ?>
-
-      <?php if (!empty($blog_items)): ?>
-        <section class="from-blog flow">
-          <h2>From the Blog</h2>
-          <div class="cards auto-fill" style="--auto-fit-min: 16rem;">
+        <div class="outer">
+          <div class="inner">
             <?php
-            foreach ($blog_items as $it) {
-              // card.php expects $item and (for links) $collection
-              $item = $it;
-              $collection = 'blog';
-              include path('partials') . '/card.php';
+            if (!isset($blog_items)) {
+              $blog_items = array_slice(list_collection('blog') ?? [], 0, 3);
             }
             ?>
+            <?php if (!empty($blog_items)): ?>
+              <section class="from-blog">
+                <div class="kicker">Latest scribbles from the cave wall.</div>
+                <h2>From the Blog</h2>
+                <?php
+                $items = $blog_items;
+                $collection = 'blog';
+                include path('partials') . '/cards-grid.php';
+                ?>
+                <!-- <p class="full-width text-align-right"><a href="<?= url('/blog') ?>">See all posts →</a></p> -->
+                <div class="text-align-right full-width" style="margin-block-start: var(--size-1-5)"><a href="<?= url('/blog') ?>">See all posts →</a></div>
+              </section>
+            <?php endif; ?>
           </div>
-          <p><a class="button" href="<?= url('/blog') ?>">See all posts →</a></p>
-        </section>
-      <?php endif; ?>
-    </div>
-  </div>
-</section>
+        </div>
+      </section>
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
