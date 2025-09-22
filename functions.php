@@ -423,8 +423,13 @@ function nav_link(string $href, string $label, string $current_path): string
 }
 
 /**
- * Is a nav href active for the current path?
- * If $prefix = true, marks /about active for /about/* (but not for /).
+ * Check if a navigation link should be marked "active."
+ *
+ * @param string $href         The target href of the nav link (e.g. "/about").
+ * @param string $current_path The current request path (e.g. "/about/team").
+ * @param bool   $prefix       If true, treat the href as a prefix (so "/about"
+ *                             is active for "/about" and "/about/...").
+ * @return bool True if the link should be considered active, otherwise false.
  */
 function is_active(string $href, string $current_path, bool $prefix = false): bool
 {
@@ -444,7 +449,19 @@ function is_active(string $href, string $current_path, bool $prefix = false): bo
   return $path_norm === $href_norm || str_starts_with($path_norm, $href_norm . '/');
 }
 
-/** Convenience: returns 'active' (or custom) if active, else '' */
+/**
+ * Return a CSS class if a link should be marked "active."
+ *
+ * Wraps `is_active()` to simplify template code:
+ * Instead of writing a full if/else, you just echo this function in `class=""`.
+ *
+ * @param string $href         The target href of the nav link (e.g. "/about").
+ * @param string $current_path The current request path (e.g. "/about/team").
+ * @param bool   $prefix       If true, treat the href as a prefix (so "/about"
+ *                             is active for "/about" and "/about/...").
+ * @param string $class        The CSS class name to return when active (default: "active").
+ * @return string The class name if active, otherwise an empty string.
+ */
 function active_class(string $href, string $current_path, bool $prefix = false, string $class = 'active'): string
 {
   return is_active($href, $current_path, $prefix) ? $class : '';

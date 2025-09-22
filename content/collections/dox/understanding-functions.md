@@ -78,10 +78,6 @@ Loads a single item from a collection (e.g. one blog post).
 
 Lists all items in a collection, sorted and parsed. This powers your collection index pages.
 
-<!-- ### `all_items()`
-
-Fetches all items across all collections. Useful for things like “Recent Posts” in a sidebar. -->
-
 ### `excerpt_from_html($html, $length)`
 
 Creates a text excerpt from HTML content, useful for previews on cards or lists.
@@ -93,6 +89,14 @@ Creates a text excerpt from HTML content, useful for previews on cards or lists.
 ### `nav_link($href, $label, $path)`
 
 Builds a navigation link. Automatically adds an `active` class when the current page matches.
+
+### `is_active($href, $current_path, $prefix)`
+
+Check if a navigation link should be marked "active."
+
+### `active_class($href, $current_path, $prefix, $class)`
+
+Return a CSS class if a link should be marked "active."
 
 ### `render($view, $vars)`
 
