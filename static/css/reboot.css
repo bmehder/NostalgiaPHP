@@ -1,0 +1,249 @@
+:root {
+	--xxs: 8rem;
+	--xs: 16rem;
+	--sm: 32rem;
+	--md: 48rem;
+	--lg: 64rem;
+	--xl: 72rem;
+
+	--size: 1rem;
+	--size-0-2-5: calc(var(--size) / 4);
+	--size-0-5: calc(var(--size) / 2);
+	--size-1-2-5: calc(var(--size) * 1.25);
+	--size-1-5: calc(var(--size) * 1.5);
+	--size-2: calc(var(--size) * 2);
+	--size-2-5: calc(var(--size) * 2.5);
+	--size-3: calc(var(--size) * 3);
+	--size-4: calc(var(--size) * 4);
+	--size-5: calc(var(--size) * 5);
+	--size-6: calc(var(--size) * 6);
+
+	--text-max-width: 65ch;
+
+	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
+		sans-serif;
+
+	--focus-h: 0; /* ring thickness (outline) */
+	--focus-o: 3px; /* outline-offset, if you use outline */
+	--focus-ring: 0 0 0 4px rgb(239 68 68 / 0.55); /* red-500 */
+	--focus-ring-muted: 0 0 0 3px rgb(239 68 68 / 0.35);
+
+	--accent: var(--red-600);
+	--accent-hover: var(--red-700);
+	--muted: var(--stone-500);
+}
+
+/* Resets */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	/* outline: 1px solid red; */
+}
+
+:target {
+	scroll-margin-block: 2rem; /* Firefox fallback */
+	scroll-margin-block: 5rlh;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+/* A11y */
+/* Generic focus ring utility (apply to anything) */
+.focus-ring:focus-visible {
+	box-shadow: var(--focus-ring);
+	border-radius: var(--size-0-5);
+}
+
+a:focus-visible {
+	box-shadow: var(--focus-ring-muted);
+	border-radius: 0.125rem;
+	outline-color: var(--focus-ring-muted);
+	text-decoration: none;
+}
+
+/* Buttons (solid, ghost, icon) */
+button:focus:not(:focus-visible) {
+	outline: none;
+}
+button:focus-visible {
+	box-shadow: var(--focus-ring);
+	border-radius: 0.5rem;
+}
+
+/* Icon buttons (circle) */
+button[aria-label]:focus-visible,
+.icon-btn:focus-visible {
+	box-shadow: var(--focus-ring);
+	border-radius: 999px;
+}
+
+/* Inputs / textareas / selects */
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+select:focus:not(:focus-visible) {
+	outline: none;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	box-shadow: var(--focus-ring);
+	border-color: var(--accent);
+	outline: none;
+}
+
+/* Cards / clickable containers */
+.card:focus:not(:focus-visible) {
+	outline: none;
+}
+.card:focus-visible {
+	box-shadow: var(--focus-ring);
+	border-radius: 0.75rem;
+}
+
+/* If a parent has overflow:hidden and clips rings,
+   switch to an inner ring with a pseudo-element: */
+.ring-inside {
+	position: relative;
+}
+.ring-inside:focus-visible::after {
+	content: '';
+	position: absolute;
+	inset: 0; /* draw inside */
+	border-radius: inherit;
+	box-shadow: var(--focus-ring);
+	pointer-events: none;
+}
+
+html {
+	font-family: system-ui, sans-serif;
+	-moz-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+	interpolate-size: allow-keywords;
+}
+
+body {
+	margin: 0;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+button,
+input,
+label {
+	line-height: 1.2;
+	text-wrap: balance;
+}
+
+p,
+li,
+figcaption,
+blockquote,
+hr {
+	max-width: var(--text-max-width);
+	text-wrap: pretty;
+}
+
+hr {
+	margin-block: var(--size-2);
+	margin-inline-start: 0;
+	margin-inline-end: auto;
+	border: none;
+  border-top: 1px solid var(--stone-300);
+}
+
+.full-width {
+	max-width: initial;
+}
+
+img,
+picture {
+	inline-size: 100%;
+	height: auto;
+	display: block;
+	font-style: italic;
+	background-repeat: no-repeat;
+	background-size: cover;
+	shape-margin: var(--size);
+}
+
+img[src$='.svg'] {
+	inline-size: auto;
+	height: 1em; /* or whatever size works for icons */
+	display: inline-block;
+	font-style: normal;
+}
+
+input,
+button,
+textarea,
+select {
+	min-inline-size: 0;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+input,
+textarea {
+	padding: var(--size-0-5);
+}
+
+textarea:not([rows]) {
+	min-height: 10em;
+}
+
+.details summary::marker {
+	content: '\002b';
+}
+
+.details[open] summary::marker {
+	content: '\2212';
+}
+
+summary {
+	cursor: pointer;
+}
+
+pre,
+code,
+kbd,
+samp {
+	font-family: monospace;
+	font-size: 1em;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+td,
+math,
+time[datetime*=':'] {
+	font-variant-numeric: tabular-nums lining-nums;
+}
+
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sub {
+	bottom: -0.25em;
+}
+
+sup {
+	top: -0.5em;
+}
