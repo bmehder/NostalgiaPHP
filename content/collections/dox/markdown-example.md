@@ -28,8 +28,6 @@ author: John Doe
 
 [View the markdown file here.](/content/collections/dox/markdown-example.md)
 
-## Headings
-
 # H1 Heading (for page titles)
 ## H2 Heading
 ### H3 Heading
