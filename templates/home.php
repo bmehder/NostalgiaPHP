@@ -181,29 +181,38 @@
           <div class="inner">
             <div class="content auto-fit reverse">
               <div class=" flow">
-              <div class="kicker">Under the hood, there’s barely a hood.</div>
-              <h2>How It Works</h2>
-              <ol>
-                <li><strong>Write content</strong> in <code>content/pages</code> and
-                  <code>content/collections/{name}</code>.
-                </li>
-                <li><strong>Add front-matter</strong> like<code> title</code>, <code>description</code>, and
-                  <code>date</code>.
-                </li>
-                <li><strong>Pick a template</strong> via <code>template: main</code> (or your own), and ship.</li>
-                <li><strong>Include partials</strong> for headers, footers, sidebars, or anything you want to reuse
-                  across pages.</li>
-                <li><strong>Deploy anywhere PHP runs</strong>—no database, no build step, no lock-in.</li>
-              </ol>
-              <a class="button" href="/dox/">View the Dox</a>
+                <div class="kicker">Under the hood, there’s barely a hood.</div>
+                <h2>How It Works</h2>
+                <ol>
+                  <li><strong>Write content</strong> in <code>content/pages</code> and
+                    <code>content/collections/{name}</code>.
+                  </li>
+                  <li><strong>Add front-matter</strong> like<code> title</code>, <code>description</code>, and
+                    <code>date</code>.
+                  </li>
+                  <li><strong>Pick a template</strong> via <code>template: main</code> (or your own), and ship.</li>
+                  <li><strong>Include partials</strong> for headers, footers, sidebars, or anything you want to reuse
+                    across pages.</li>
+                  <li><strong>Deploy anywhere PHP runs</strong>—no database, no build step, no lock-in.</li>
+                </ol>
+                <a class="button" href="/dox/">View the Dox</a>
+              </div>
+              <pre><code class="language-yaml">---
+title: About NostalgiaPHP
+description: A tiny, flat-file CMS for sites.
+date: 2025-09-21
+template: main
+tags: intro, php, markdown
+---
+              </code><code class="language-markdown">
+# About NostalgiaPHP
+
+No database. No build step. No framework.
+
+It’s **Markdown in, HTML out**.
+              </code></pre>
             </div>
-            <figure style="margin-inline: auto;">
-              <img class="landscape fit" src="/static/media/how-it-works.jpg"
-                alt="NostalgiaPHP project structure overview">
-              <figcaption class="visually-hidden">Example project structure</figcaption>
-            </figure>
           </div>
-        </div>
       </section>
 
       <!-- Recent posts (auto: just link to collection) -->
@@ -225,7 +234,8 @@
                 include path('partials') . '/cards-grid.php';
                 ?>
                 <!-- <p class="full-width text-align-right"><a href="<?= url('/blog') ?>">See all posts →</a></p> -->
-                <div class="text-align-right full-width" style="margin-block-start: var(--size-1-5)"><a href="<?= url('/blog') ?>">See all posts →</a></div>
+                <div class="text-align-right full-width" style="margin-block-start: var(--size-1-5)"><a
+                    href="<?= url('/blog') ?>">See all posts →</a></div>
               </section>
             <?php endif; ?>
           </div>
