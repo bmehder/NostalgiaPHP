@@ -279,8 +279,8 @@ footer {
 
 .home .hero-sub::before {
 	content: '';
-	width: var(--size-1-5);
-	height: var(--size-1-5);
+	width: var(--size);
+	height: var(--size);
 	border-radius: 50%;
 	background-color: var(--accent);
 }
