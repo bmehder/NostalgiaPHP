@@ -133,6 +133,6 @@ a {
 }
 
 main :is(ul, ol) li {
-	margin-block-start: calc(var(--size-0-5) * 1.5);
+	margin-block-start: var(--size-0-2-5);
 	line-height: 1.3;
 }
