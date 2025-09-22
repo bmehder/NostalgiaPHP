@@ -66,7 +66,7 @@
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
-                    <span class="icon" aria-hidden="true">
+                    <span class="icon accent" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -84,7 +84,7 @@
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
-                    <span class="icon" aria-hidden="true">
+                    <span class="icon accent" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <rect x="3" y="3" width="7" height="7" />
@@ -102,7 +102,7 @@
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
-                    <span class="icon" aria-hidden="true">
+                    <span class="icon accent" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M16.5 9.4L7.5 4.2" />
@@ -121,7 +121,7 @@
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
-                    <span class="icon" aria-hidden="true">
+                    <span class="icon accent" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
@@ -137,7 +137,7 @@
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
-                    <span class="icon" aria-hidden="true">
+                    <span class="icon accent" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <circle cx="12" cy="12" r="4" />
@@ -156,7 +156,7 @@
               <article class="card bg-white">
                 <div class="card-text">
                   <h3 class="card-title">
-                    <span class="icon" aria-hidden="true">
+                    <span class="icon accent" aria-hidden="true">
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
                         <path d="M12 2v20" />
