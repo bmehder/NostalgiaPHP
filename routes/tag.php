@@ -118,7 +118,7 @@ usort($results, fn($a, $b) => $b['ts'] <=> $a['ts']);
 // Render a simple list
 ob_start();
 ?>
-<h2>Tagged: <?= htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') ?></h2>
+<h1>Tagged: <?= htmlspecialchars($tag, ENT_QUOTES, 'UTF-8') ?></h1>
 
 <?php if (empty($results)): ?>
   <p>No items with this tag yet.</p>

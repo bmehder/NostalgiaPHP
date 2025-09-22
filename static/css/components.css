@@ -158,32 +158,34 @@ header {
 
 /* Visually hide the controlling checkbox */
 .nav-check {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	clip: rect(0 0 0 0);
+	overflow: hidden;
 }
 
 /* Optional: reflect expanded state for a11y helpers */
 @media (width <= 48rem) {
-  /* default closed on mobile */
-  #site-nav { display: none; }
+	/* default closed on mobile */
+	#site-nav {
+		display: none;
+	}
 
-  /* ✅ when the checkbox is checked, show the nav */
-  .nav-check:checked ~ #site-nav {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
+	/* ✅ when the checkbox is checked, show the nav */
+	.nav-check:checked ~ #site-nav {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
 
-  /* Optional: style the label as "expanded" (no JS) */
-  .nav-check:checked + .nav-toggle {
-    /* example: change icon color */
-    opacity: 0.9;
-  }
+	/* Optional: style the label as "expanded" (no JS) */
+	.nav-check:checked + .nav-toggle {
+		/* example: change icon color */
+		opacity: 0.9;
+	}
 }
 
 /* Footer */
@@ -197,7 +199,7 @@ footer {
 
 			a {
 				color: var(--stone-100);
-				
+
 				&:hover {
 					color: var(--stone-200);
 					text-decoration: none;
@@ -226,11 +228,42 @@ footer {
 			gap: var(--size-0-5);
 			font-weight: 600;
 			letter-spacing: unset;
+
+			.icon {
+				display: grid;
+				grid-template-columns: auto 1fr;
+			}
 		}
 
-		.card-title .icon {
-			display: grid;
-			grid-template-columns: auto 1fr;
+		.tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: var(--size-0-2-5);
+			margin: 0;
+			margin-block-start: var(--size-0-5);
+			padding: 0;
+			list-style: none;
+			
+			li {
+				margin: 0;
+			}
+			
+			a {
+				display: inline-block;
+				font-size: var(--size-0-7-5);
+				padding: var(--size-0-2-5) var(--size-0-5);
+				border-radius: 999px;
+				background: var(--stone-200);
+				color: var(--stone-700);
+				text-decoration: none;
+				line-height: 1.2;
+				transition: background 0.2s ease, color 0.2s ease;
+			}
+			
+			a:hover {
+				background: var(--accent);
+				color: white;
+			}
 		}
 	}
 }

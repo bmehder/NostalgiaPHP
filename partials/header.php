@@ -1,5 +1,6 @@
-<a href="#main" class="skip-link">Skip to main content</a>
-<a id="top"></a>
+<a class="visually-hidden" href="#main" class="skip-link">Skip to main content</a>
+<a class="visually-hidden" id="top"></a>
+
 <header>
   <div class="outer">
     <div class="inner spread-apart" data-inner-header>

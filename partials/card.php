@@ -45,8 +45,29 @@ if (is_string($image) && $image !== '' && $image[0] === '/') {
         alt="<?= $title ?>" loading="lazy"></a>
   <?php endif; ?>
 
-  <div class="card-text flex flex-direction-column flex-1 gap-0-5">
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
     <div>
+      <?php
+      // Normalize tags to an array (accepts $tags, meta.frontmatter tags|tag|keywords, CSV or array)
+      $tags = $tags ?? null;
+
+      if (!is_array($tags)) {
+        $fm = $item['meta'] ?? ($item['frontmatter'] ?? []);
+        $raw = $tags ?? ($fm['tags'] ?? ($fm['tag'] ?? ($fm['keywords'] ?? [])));
+
+        if (is_string($raw)) {
+          // split CSV like "php, retro, tips"
+          $tags = array_values(array_filter(array_map('trim', preg_split('/\s*,\s*/', $raw))));
+        } elseif (is_array($raw)) {
+          $tags = array_values(array_filter(array_map(
+            fn($t) => is_string($t) ? trim($t) : '',
+            $raw
+          )));
+        } else {
+          $tags = [];
+        }
+      }
+      ?>
       <h3 class="card-title"><a href="<?= $href ?>"><?= $title ?></a></h3>
       <?php if ($date): ?>
         <p class="card-meta muted"><small><?= $date ?></small></p>
