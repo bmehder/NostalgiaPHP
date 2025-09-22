@@ -58,10 +58,18 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <!-- Prism -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
+
+  <!-- Twilight -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-twilight.min.css"> -->
+
   <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-markup-templating.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-php.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-jsx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <script>
+    Prism.plugins.autoloader.languages_path =
+      "https://cdn.jsdelivr.net/npm/prismjs/components/";
+  </script>
 
   <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>

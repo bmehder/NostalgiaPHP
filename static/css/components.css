@@ -12,7 +12,7 @@ code[class*='language-'] {
 .content pre[class*='language-'] {
 	max-width: calc(var(--text-max-width) * 1.05);
 	overflow-x: auto;
-	background-color: var(--stone-100);
+	/* background-color: var(--stone-100); */
 }
 
 /* Header */
