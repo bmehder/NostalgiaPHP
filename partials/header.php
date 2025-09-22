@@ -50,7 +50,7 @@
             <li><?= nav_link('/sitemap.xml', 'Sitemap', $path) ?></li>
           </ul>
         </div>
-        <a href="https://github.com/bmehder/NostalgiaPHP" class="github-link" style="line-height: 0" target="_blank"
+        <a href="https://github.com/bmehder/NostalgiaPHP" class="github-link no-border" style="line-height: 0" target="_blank"
           rel="noopener">
           <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true">
             <path fill="currentColor"

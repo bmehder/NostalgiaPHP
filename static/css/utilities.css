@@ -224,6 +224,14 @@
 	padding: 0;
 }
 
+.no-border {
+	border: none !important;
+	border-top: none !important;
+	border-right: none !important;
+	border-bottom: none !important;
+	border-left: none !important;
+}
+
 .full-width {
 	min-width: unset;
 	width: 100%;
