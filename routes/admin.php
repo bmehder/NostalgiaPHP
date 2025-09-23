@@ -444,7 +444,7 @@ foreach ($cols as $c => $items) {
               <th>Title</th>
               <th>Description</th>
               <th>Date</th>
-              <!-- <th>Tags</th> -->
+              <th>Tags</th>
               <th>Template</th>
               <th>Draft</th>
               <th>Sitemap</th>
@@ -460,7 +460,7 @@ foreach ($cols as $c => $items) {
                 <td><?= h($m['title'] ?? '') ?></td>
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
-                <!-- <td><?= h(fm_tags($m)) ?></td> -->
+                <td><?= h(fm_tags($m)) ?></td>
                 <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>

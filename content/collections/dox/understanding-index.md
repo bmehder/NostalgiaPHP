@@ -1,6 +1,7 @@
 ---
 title: Understanding index.php in NostalgiaPHP
 description: A guided tour of the tiny front controller that routes requests, loads content, and renders templates.
+image: static/media/1.jpg
 date: 2025-09-20
 template: main
 tags: php, simplicity, retro
@@ -11,7 +12,7 @@ In NostalgiaPHP, index.php is the front controller—the single entry point that
 
 ---
 
-1. Normalize the request path
+## 1. Normalize the request path
 
 ```php
 $path  = request_path();  // '/', '/about', '/blog/hello-world'
@@ -26,7 +27,7 @@ $first = $parts[0] ?? '';
 
 ---
 
-2. Handle special routes (system endpoints)
+## 2. Handle special routes (system endpoints)
 
 Examples: `robots.txt`, `sitemap.xml`, `admin`.
 
@@ -52,7 +53,7 @@ These bypass the normal content lookup entirely and loads the `admin.php` route.
 
 ---
 
-3. Tag routes (cross-collection)
+## 3. Tag routes (cross-collection)
 
 Two tiny routes enable a global tag system:
 
@@ -82,7 +83,7 @@ The `tags.php` or `tag.php` route is loaded.
 
 ---
 
-4. Collection routes (`/collection/slug`)
+## 4. Collection routes (/collection/slug)
 
 ```php
 if (is_collection($first)) {
@@ -94,7 +95,7 @@ If `$first` is a collection in the `config.php` file → load the `collections.p
 
 ---
 
-5. Page routes (`/`, `/about`, `/about/blink`)
+## 5. Page routes (/, /about, /about/blink)
 
 ```php
 require __DIR__ . '/routes/pages.php';
@@ -104,7 +105,7 @@ If no other routes match, assume it is a page and load the `pages.php` route.
 
 ---
 
-7. 404 fallback
+## 6. 404 fallback
 
 ```php
 http_response_code(404);

@@ -257,7 +257,7 @@ footer {
 				color: var(--stone-700);
 				text-decoration: none;
 				line-height: 1.2;
-				transition: background 0.2s ease, color 0.2s ease;
+				transition: background 0.1s ease, color 0.1s ease;
 			}
 			
 			a:hover {
