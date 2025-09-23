@@ -46,6 +46,7 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <meta name="base-url" content="<?= htmlspecialchars(rtrim(site('base_url'), '/')) ?>">
 
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <link rel="icon" href="<?= url('/static/favicon.png') ?>" type="image/png">
 
   <!-- Styles -->

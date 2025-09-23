@@ -111,7 +111,7 @@ header {
 	/* =========================================
    Mobile ≤ 48rem
    ========================================= */
-	@media (width <= 48rem) {
+	@media (width <= 60rem) {
 		/* Show hamburger; brand | button grid */
 		.nav-toggle {
 			display: grid;
