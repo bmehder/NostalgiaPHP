@@ -1,6 +1,6 @@
 ---
 title: Hello World
-description: The usual hello world post.
+description: The usual hello world post. Nothing much to see here.
 date: 2025-09-01
 image: /static/media/hello-world.jpg
 ---

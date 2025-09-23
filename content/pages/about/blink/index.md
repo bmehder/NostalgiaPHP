@@ -1,6 +1,6 @@
 ---
 title: Blink Reactivity
-description: Demo of the Blink (Slank) reactivity system.
+description: Blink is a dead-simple reactive signal system for JavaScript — no tooling, no build steps, no opinions.
 date: 2025-09-06
 ---
 

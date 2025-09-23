@@ -1,6 +1,6 @@
 ---
 title: NostalgiaPHP vs SvelteKit
-description: A comparison between SvelteKit and NostalgiaPHP.
+description: A comparison between SvelteKit and NostalgiaPHP–two very different tools with the same nostalgic goal.
 date: 2025-09-07
 image: static/media/svelte.jpg
 ---

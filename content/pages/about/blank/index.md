@@ -1,6 +1,6 @@
 ---
 title: Blank
-description: An example of a nested page with a blank template.
+description: This is an example of a blank page template in NostalgiaPHP.
 sitemap: false
 template: blank
 ---

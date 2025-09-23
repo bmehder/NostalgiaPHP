@@ -1,6 +1,6 @@
 ---
 title: NostalgiaPHP vs Ruby on Rails
-description: A comparison of Ruby on Rails with NostalgiaPHP.
+description: A comparison of Ruby on Rails and NostalgiaPHP. These projects have very different ideas about development.
 date: 2025-09-07
 image: /static/media/rails.jpg
 ---

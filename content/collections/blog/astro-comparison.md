@@ -1,6 +1,6 @@
 ---
 title: NostalgiaPHP vs Astro
-description: A comparison between Aston and NostalgiaPHP.
+description: A comparison between Astro and NostalgiaPHP. Both are tools for building content-heavy sites.
 date: 2025-09-07
 image: /static/media/astro.jpg
 ---

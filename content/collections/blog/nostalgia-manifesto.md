@@ -1,6 +1,6 @@
 ---
 title: The NostalgiaPHP Manifesto
-description: The NostalgiaPHP Manifesto definded by the creator.
+description: The NostalgiaPHP Manifesto is a core set of values to understand the philosphy behing NostalgiaPHP.
 date: 2025-09-12
 image: /static/media/manifesto.jpg
 ---

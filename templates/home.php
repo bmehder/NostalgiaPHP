@@ -1,6 +1,3 @@
-<!-- <!doctype html>
-<html lang="en"> -->
-
 <?php include path('partials') . '/head.php'; ?>
 
 <style>
@@ -233,7 +230,6 @@ It’s **Markdown in, HTML out**.
                 $collection = 'blog';
                 include path('partials') . '/cards-grid.php';
                 ?>
-                <!-- <p class="full-width text-align-right"><a href="<?= url('/blog') ?>">See all posts →</a></p> -->
                 <div class="text-align-right full-width" style="margin-block-start: var(--size-1-5)"><a
                     href="<?= url('/blog') ?>">See all posts →</a></div>
               </section>
@@ -244,6 +240,3 @@ It’s **Markdown in, HTML out**.
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-<!-- </body>
-
-</html> -->

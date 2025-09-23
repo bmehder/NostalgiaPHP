@@ -1,6 +1,6 @@
 ---
 title: NostalgiaPHP Overview
-description: An overview of NostalgiaPHP.
+description: NostalgiaPHP is a lightweight site engine that treats your whole website like a folder.
 date: 2025-09-08
 image: /static/media/nostalgia-php-overview.jpg
 ---

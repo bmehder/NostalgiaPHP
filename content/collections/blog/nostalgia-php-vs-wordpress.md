@@ -1,6 +1,6 @@
 ---
 title: NostalgiaPHP vs Early WordPress
-description: A comparison of early WordPress and NostalgiaPHP.
+description: A comparison of early WordPress and NostalgiaPHP–two content management systems with two different approaches.
 date: 2025-09-06
 image: static/media/wordpress.jpg
 ---

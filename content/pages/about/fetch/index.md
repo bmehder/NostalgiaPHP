@@ -1,6 +1,6 @@
 ---
 title: Fetch Example
-description: Example of fetching and displaying data client-side.
+description: This fetch example uses a client side app to fetch and display from a REST API.
 date: 2025-09-13
 ---
 

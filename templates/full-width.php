@@ -1,6 +1,3 @@
-<!-- <!doctype html>
-<html lang="en"> -->
-
 <?php include path('partials') . '/head.php'; ?>
 
 <body class="full-width">
@@ -23,6 +20,3 @@
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-<!-- </body>
-
-</html> -->

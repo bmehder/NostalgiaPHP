@@ -1,6 +1,3 @@
-<!doctype html>
-<html lang="en">
-
 <?php include path('partials') . '/head.php'; ?>
 
 <body class="contact">
@@ -19,7 +16,7 @@
       ?>
     </section>
     <main id="main">
-      <section id="content">
+      <section>
         <div class="outer">
           <div class="inner">
             <div class="content">
@@ -33,6 +30,3 @@
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-<!-- </body>
-
-</html> -->

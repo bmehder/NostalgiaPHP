@@ -1,6 +1,6 @@
 ---
 title: Why NostalgiaPHP?
-description: Why was NostalgiaPHP created?
+description: Building a simple website today often comes with a lot of extra baggage. But what if you just need a small site?
 date: 2025-09-08
 image: /static/media/why-nostalgia-php.jpg
 tags: php, simplicity, retro
