@@ -26,32 +26,8 @@
 
 	--focus-h: 0; /* ring thickness (outline) */
 	--focus-o: 3px; /* outline-offset, if you use outline */
-	--focus-ring: 0 0 0 4px rgb(239 68 68 / 0.55); /* red-500 */
-	--focus-ring-muted: 0 0 0 3px rgb(239 68 68 / 0.35);
-	
-	/* 🔥 Stone-Red (bold, grounded)  */
-	/* Text */
-  /* --text: var(--stone-800);
-	--text-heading: var(--stone-900);
-  --text-muted: var(--stone-500);
-  --text-inverse: var(--stone-100);
-  --text-inverse-hover: var(--stone-200);
-  --text-disabled: var(--stone-300); */
-
-  /* Backgrounds */
-  /* --bg: #fff;
-  --bg-alt: var(--stone-100);
-  --bg-alt-2: var(--stone-200);
-  --bg-disabled: var(--stone-600);
-  --bg-dark: var(--stone-900); */
-
-  /* Borders */
-  /* --border: var(--stone-300);
-  --border-dark: var(--stone-600); */
-
-  /* Accent */
-  /* --accent: var(--red-600);
-  --accent-hover: var(--red-700); */
+	--focus-ring: 0 0 0 4px rgb(56 189 248 / 0.55);  /* sky-400 */
+  --focus-ring-muted: 0 0 0 3px rgb(56 189 248 / 0.35);
 }
 
 /* Resets */

@@ -75,7 +75,7 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   </script>
 
   <!-- Theme Switcher -->
-  <script type="module" src="/static/js/theme-switcher.js"></script>
+  <script type="module" src="/static/js/apps/theme-switcher.js"></script>
 
   <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>
