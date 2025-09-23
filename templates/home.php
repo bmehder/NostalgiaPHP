@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!-- <!doctype html>
+<html lang="en"> -->
 
 <?php include path('partials') . '/head.php'; ?>
 
@@ -244,6 +244,6 @@ It’s **Markdown in, HTML out**.
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-</body>
+<!-- </body>
 
-</html>
+</html> -->

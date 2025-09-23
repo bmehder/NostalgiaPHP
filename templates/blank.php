@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
 <?php include path('partials') . '/head.php'; ?>
 
 <body class="blank">
@@ -12,6 +12,6 @@
       </div>
     </section>
   </main>
-</body>
+<!-- </body>
 
-</html>
+</html> -->

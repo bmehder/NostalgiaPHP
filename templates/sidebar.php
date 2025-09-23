@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- <!DOCTYPE html>
+<html lang="en"> -->
 <?php include path('partials') . '/head.php'; ?>
 
 <body class="layout-sidebar">
@@ -31,6 +31,6 @@
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-</body>
+<!-- </body>
 
-</html>
+</html> -->

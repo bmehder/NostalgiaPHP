@@ -12,52 +12,68 @@ code[class*='language-'] {
 .content pre[class*='language-'] {
 	max-width: calc(var(--text-max-width) * 1.05);
 	overflow-x: auto;
-	/* background-color: var(--stone-100); */
 }
 
-/* Header */
-.skip-link {
-	position: absolute;
-	top: -50px;
-	left: 0;
-	background: var(--red-600);
-	color: #fff;
-	padding: 0.5rem 1rem;
-	z-index: 100;
-	border-radius: 0.25rem;
-	text-decoration: none;
-	transition: top 0.2s ease;
-}
-
-.skip-link:focus {
-	top: 0.5rem;
-}
-
-/* Hamburger: hidden on desktop */
-.nav-toggle {
-	display: none;
-	margin: 0;
-	padding: 0;
-	background: none;
-	line-height: 1;
-	border: 0;
-	cursor: pointer;
-}
-
+/* =========================================
+   Header Shell (desktop-first)
+   ========================================= */
 header {
+	/* ---------- Access / Utilities ---------- */
+	.skip-link {
+		position: absolute;
+		top: -50px;
+		left: 0;
+		padding-block: var(--size-0-5);
+		padding-inline: var(--size);
+		background: var(--accent);
+		color: var(--text-inverse);
+		text-decoration: none;
+		z-index: 100;
+		border-radius: var(--size-0-2-5);
+		transition: top 0.2s ease;
+
+		&:focus {
+			top: var(--size-0-5);
+		}
+	}
+
+	/* Hidden checkbox for JS-less toggle */
+	.nav-check {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		margin: -1px;
+		padding: 0;
+		border: 0;
+		clip: rect(0 0 0 0);
+		overflow: hidden;
+	}
+
+	/* Hamburger button (hidden on desktop) */
+	.nav-toggle {
+		display: none;
+		margin: 0;
+		padding: 0;
+		background: none;
+		line-height: 1;
+		border: 0;
+		cursor: pointer;
+	}
+
+	/* ---------- Header skins ---------- */
 	.outer {
-		background-color: var(--stone-900);
-		color: var(--stone-100);
+		background-color: var(--bg-dark);
+		color: var(--text-inverse);
 
 		.inner {
 			--inner-padding-block: var(--size-2);
 
 			a {
-				color: var(--stone-100);
+				color: var(--text-inverse);
 				text-decoration: none;
 
 				&:hover {
-					color: var(--stone-200);
+					color: var(--text-inverse-hover);
 				}
 
 				&.active {
@@ -72,30 +88,31 @@ header {
 		font-weight: bold;
 	}
 
+	/* ---------- Desktop submenu (anchor-positioned) ---------- */
 	.has-submenu .submenu {
+		display: none;
 		position: absolute;
 		position-anchor: --parent-nav-item;
-		top: anchor(bottom); /* align top of submenu to bottom edge of link */
-		left: anchor(start); /* align left edge to link’s start */
-		background: var(--stone-900);
-		padding: var(--size);
+		top: anchor(bottom);
+		left: anchor(start);
 		margin: 0;
 		margin-inline-start: calc(var(--size) * -1);
+		padding: var(--size);
+		background: var(--bg-dark);
 		border-radius: var(--size-0-5);
 		box-shadow: var(--shadow-3, 0 6px 10px rgb(0 0 0 / 0.15));
-		display: none; /* hide by default */
 		z-index: 10;
 	}
-
-	/* show on hover or focus */
 	.has-submenu:hover > .submenu,
 	.has-submenu:focus-within > .submenu {
 		display: block;
 	}
 
-	/* --------- Mobile ≤ 48rem --------- */
+	/* =========================================
+   Mobile ≤ 48rem
+   ========================================= */
 	@media (width <= 48rem) {
-		/* show hamburger */
+		/* Show hamburger; brand | button grid */
 		.nav-toggle {
 			display: grid;
 			grid-column: 2;
@@ -105,103 +122,75 @@ header {
 			gap: var(--size-0-5);
 		}
 
-		/* turn header inner into a 2-col grid (brand | button) */
 		.inner.spread-apart {
 			display: grid;
 			grid-template-columns: 1fr auto;
 			align-items: center;
 		}
 
-		/* nav sits on row 2 and is hidden by default */
+		/* Nav hidden by default on mobile */
 		#site-nav {
 			display: none;
 			grid-column: span 2;
-			/* show stacked menu when expanded */
 
+			/* Top-level links get a divider */
 			> a,
 			> div > a {
-				border-bottom: 1px solid var(--muted);
 				padding-block-end: var(--size-0-2-5);
+				border-bottom: 1px solid var(--text-muted);
 			}
 
-			&[aria-expanded='true'] {
-				display: grid;
-				grid-template-columns: 1fr;
-			}
-
+			/* Submenus flow in document on mobile */
 			.has-submenu {
-				position: static; /* let it flow with the nav list */
-
-				a {
-					display: block;
-				}
+				position: static;
+			}
+			.has-submenu > a {
+				display: block;
 			}
 
 			.submenu {
-				position: static; /* no anchor positioning on mobile */
-				display: block; /* collapsed by default */
-				background: transparent; /* match mobile nav */
-				box-shadow: none;
+				position: static;
+				display: block;
+				margin: 0;
 				padding-block: var(--size) 0;
 				padding-inline: var(--size-1-5);
-				margin: 0;
+				background: transparent;
+				box-shadow: none;
 			}
 
-			/* when parent link is focused or tapped */
 			.has-submenu:focus-within > .submenu,
 			.has-submenu:hover > .submenu {
 				display: block;
 			}
 		}
-	}
-}
 
-/* Visually hide the controlling checkbox */
-.nav-check {
-	position: absolute;
-	inline-size: 1px;
-	block-size: 1px;
-	margin: -1px;
-	padding: 0;
-	border: 0;
-	clip: rect(0 0 0 0);
-	overflow: hidden;
-}
+		/* ✅ JS-less toggle: when checkbox is checked, show the nav */
+		.nav-check:checked ~ #site-nav {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
 
-/* Optional: reflect expanded state for a11y helpers */
-@media (width <= 48rem) {
-	/* default closed on mobile */
-	#site-nav {
-		display: none;
-	}
-
-	/* ✅ when the checkbox is checked, show the nav */
-	.nav-check:checked ~ #site-nav {
-		display: grid;
-		grid-template-columns: 1fr;
-	}
-
-	/* Optional: style the label as "expanded" (no JS) */
-	.nav-check:checked + .nav-toggle {
-		/* example: change icon color */
-		opacity: 0.9;
+		/* Optional visual state for the hamburger when expanded */
+		.nav-check:checked + .nav-toggle {
+			opacity: 0.9;
+		}
 	}
 }
 
 /* Footer */
 footer {
 	.outer {
-		background-color: var(--stone-900);
-		color: var(--stone-100);
+		background-color: var(--bg-dark);
+		color: var(--text-inverse);
 
 		.inner {
 			--inner-padding-block: var(--size-1-5);
 
 			a {
-				color: var(--stone-100);
+				color: var(--text-inverse);
 
 				&:hover {
-					color: var(--stone-200);
+					color: var(--text-inverse-hover);
 					text-decoration: none;
 				}
 			}
@@ -243,26 +232,26 @@ footer {
 			margin-block-start: var(--size-0-5);
 			padding: 0;
 			list-style: none;
-			
+
 			li {
 				margin: 0;
 			}
-			
+
 			a {
 				display: inline-block;
 				font-size: var(--size-0-7-5);
 				padding: var(--size-0-2-5) var(--size-0-5);
 				border-radius: 999px;
-				background: var(--stone-200);
-				color: var(--stone-700);
+				background: var(--bg-alt-2);
+				color: var(--text-muted);
 				text-decoration: none;
 				line-height: 1.2;
 				transition: background 0.1s ease, color 0.1s ease;
 			}
-			
+
 			a:hover {
 				background: var(--accent);
-				color: white;
+				color: var(--text-inverse);
 			}
 		}
 	}
@@ -285,13 +274,13 @@ footer {
 		display: grid;
 		place-content: center;
 		padding: var(--size-2);
-		color: var(--stone-100);
+		color: var(--text-inverse);
 		text-align: center;
 		background: rgba(0, 0, 0, 0.15); /* dark overlay for readability */
 
 		.h1 {
 			margin: 0;
-			color: var(--stone-100);
+			color: var(--text-inverse);
 			font-size: clamp(2rem, 5vw, 3rem);
 		}
 
@@ -307,7 +296,7 @@ footer {
 	align-items: center;
 	justify-content: center;
 	gap: var(--size-0-5);
-	color: var(--stone-100);
+	color: var(--text-inverse);
 }
 
 .home .hero-sub::before {
@@ -332,7 +321,7 @@ footer {
 	input,
 	textarea {
 		padding: var(--size-0-5);
-		border: 1px solid var(--stone-300);
+		border: 1px solid var(--border);
 	}
 }
 
@@ -430,7 +419,7 @@ dialog.lightbox::backdrop {
 	margin: 0;
 	max-width: 100%;
 	max-height: 100%;
-	border: 1px solid var(--stone-600);
+	border: 1px solid var(--border-dark);
 }
 
 .lightbox__img {
@@ -443,7 +432,6 @@ dialog.lightbox::backdrop {
 }
 .lightbox__btn {
 	width: 10px;
-	/* height: 40px; */
 	display: grid;
 	place-items: center;
 	position: absolute;
@@ -480,11 +468,9 @@ dialog.lightbox::backdrop {
 
 /* Tags */
 .tags-list {
-	/* list-style: none; */
-	/* padding: 0; */
 	margin: var(--size-0-5) 0 0;
 	display: grid;
-	gap: 0.25rem 0.5rem;
+	gap: var(--size-0-2-5) var(--size-0-5);
 }
 .tags-list a {
 	text-decoration: none;
@@ -493,5 +479,5 @@ dialog.lightbox::backdrop {
 	text-decoration: underline;
 }
 .tags-list .muted {
-	color: var(--stone-500);
+	color: var(--text-muted);
 }

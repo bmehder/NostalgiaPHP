@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!-- <!doctype html>
+<html lang="en"> -->
 
 <?php include path('partials') . '/head.php'; ?>
 
@@ -27,6 +27,6 @@
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-</body>
+<!-- </body>
 
-</html>
+</html> -->

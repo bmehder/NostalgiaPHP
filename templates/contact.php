@@ -33,6 +33,6 @@
     </main>
     <?php include path('partials') . '/footer.php'; ?>
   </div>
-</body>
+<!-- </body>
 
-</html>
+</html> -->

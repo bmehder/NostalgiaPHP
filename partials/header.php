@@ -1,7 +1,7 @@
-<a class="visually-hidden" href="#main" class="skip-link">Skip to main content</a>
 <a class="visually-hidden" id="top"></a>
 
 <header>
+  <a href="#main" class="skip-link">Skip to main content</a>
   <div class="outer">
     <div class="inner spread-apart" data-inner-header>
       <!-- <a class="brand" href="<?= url('/') ?>"><?= htmlspecialchars(site('name')) ?></a> -->
@@ -18,7 +18,7 @@
       </a>
 
        <!-- ✅ hidden control for JS-less toggle -->
-      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu">
+      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu" tabindex="-1">
 
       <!-- ✅ label becomes the hamburger button -->
       <label for="nav-check" class="nav-toggle" aria-controls="site-nav" aria-expanded="false">

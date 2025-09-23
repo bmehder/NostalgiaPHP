@@ -1,6 +1,7 @@
 ---
 title: Compatibility Contract
 description: Compatibility contract in regards to Directory Structure and how to evolve code without breaking sites.
+image: static/media/cave-water.jpg
 date: 2025-09-11
 ---
 

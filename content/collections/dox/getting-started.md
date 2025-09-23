@@ -2,6 +2,7 @@
 title: Getting Started
 description: The updated guide to getting started with NostalgiaPHP.
 date: 2025-09-12
+image: static/media/foo.jpg
 ---
 
 # Getting Started with NostalgiaPHP
