@@ -481,3 +481,83 @@ dialog.lightbox::backdrop {
 .tags-list .muted {
 	color: var(--text-muted);
 }
+
+/* Carousel */
+.carousel {
+	width: 100%;
+	display: flex;
+	gap: 0.5rem;
+	margin: 3rem auto;
+	overflow-x: auto;
+	scroll-behavior: smooth;
+	scroll-snap-type: x mandatory;
+	scroll-marker-group: after;
+	anchor-name: --carousel;
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	&::scroll-button(right),
+	&::scroll-button(left) {
+		width: 3rem;
+		height: 3rem;
+		position: fixed;
+		content: '\203A';
+		padding-block-end: 0.1em;
+		background: var(--accent);
+		font-size: 2rem;
+		color: var(--text-inverse);
+		position-anchor: --carousel;
+		position-area: right center;
+		border: none;
+		border-radius: 50%;
+		translate: -50%;
+		cursor: pointer;
+	}
+
+	&::scroll-button(right):disabled,
+	&::scroll-button(left):disabled {
+		opacity: 0.75;
+		cursor: auto;
+	}
+
+	&::scroll-button(left) {
+		content: '\2039';
+		position-area: left center;
+		translate: 50%;
+	}
+
+	&::scroll-marker-group {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+	}
+
+	.card {
+		flex: 0 0 20rem;
+		aspect-ratio: 5 / 3;
+		background-color: var(--bg-dark);
+		padding: 0rem;
+		border-radius: var(--size-0-5);
+		text-align: center;
+		scroll-snap-align: start;
+		scroll-snap-stop: always;
+
+		@media (width < 32rem) {
+			flex: 0 0 100%;
+		}
+
+		&::scroll-marker {
+			content: '';
+			width: var(--size);
+			height: var(--size);
+			background-color: var(--border);
+			border-radius: 50%;
+		}
+
+		&::scroll-marker:target-current {
+			background-color: var(--accent);
+		}
+	}
+}

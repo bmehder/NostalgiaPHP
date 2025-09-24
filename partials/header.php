@@ -40,6 +40,7 @@
           <ul class="submenu list-style-none flow-0-5">
             <li><?= nav_link('/about/blink', 'Blink', $path) ?></li>
             <li><?= nav_link('/about/fetch', 'Fetch', $path) ?></li>
+            <li><?= nav_link('/about/carousel', 'Carousel', $path) ?></li>
           </ul>
         </div>
         <?= nav_link('/blog', 'Blog', $path) ?>
