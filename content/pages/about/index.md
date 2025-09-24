@@ -3,7 +3,7 @@ title: About
 description: NostalgiaPHP gives you the essentials — nothing more, nothing less — so you can just build.
 hero_title: About Nostalgia PHP
 hero_subtitle: Files good. Framework bad.
-hero_image: /static/media/about-nostalgia-php.jpg
+hero_image: /static/media/about-nostalgia-php.webp
 template: sidebar
 ---
 

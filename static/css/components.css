@@ -541,7 +541,7 @@ dialog.lightbox::backdrop {
 		padding: 0rem;
 		border-radius: var(--size-0-5);
 		text-align: center;
-		scroll-snap-align: start;
+		scroll-snap-align: center;
 		scroll-snap-stop: always;
 
 		@media (width < 32rem) {

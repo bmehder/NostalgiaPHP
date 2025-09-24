@@ -30,6 +30,12 @@ $vars = [
   'content' => $content,
   'meta' => $meta,
   'path' => $path,
+  'hero_html' => '',
 ];
+
+// If template didn't provide hero_html, build it from meta.
+if ($vars['hero_html'] === '' && !empty($vars['meta'])) {
+  $vars['hero_html'] = build_hero_html($vars['meta']);
+}
 
 render($template, $vars);

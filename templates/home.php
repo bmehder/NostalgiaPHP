@@ -9,21 +9,10 @@
 <body class="home full-width">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
-    <section>
-      <?php
-      // HERO: render if any hero-related keys exist
-      $hasHero = !empty($meta['hero_title']) || !empty($meta['hero']) || !empty($meta['hero_image']);
-      if (!empty($meta) && $hasHero) {
-        $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? '');
-        $hero_subtitle = $meta['hero_subtitle'] ?? ($meta['hero'] ?? '');
-        $hero_image = $meta['hero_image'] ?? null;
-        include path('partials') . '/hero.php';
-      }
-      ?>
-    </section>
+    <?= $hero_html ?>
     <main id="main">
       <!-- Intro / value prop -->
-      <section class="section">
+      <section>
         <div class="outer">
           <div class="inner">
             <div class="content auto-fit reverse">

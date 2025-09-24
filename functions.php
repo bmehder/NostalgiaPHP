@@ -470,6 +470,26 @@ function active_class(string $href, string $current_path, bool $prefix = false, 
 /* -------------------------------- Rendering ------------------------------- */
 
 /**
+ * Build the hero HTML from front-matter.
+ * Returns an empty string if no hero fields are present.
+ */
+function build_hero_html(?array $meta): string
+{
+  $meta = $meta ?? [];
+  $hasHero = !empty($meta['hero_title']) || !empty($meta['hero']) || !empty($meta['hero_image']);
+  if (!$hasHero)
+    return '';
+
+  $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? '');
+  $hero_subtitle = $meta['hero_subtitle'] ?? ($meta['hero'] ?? '');
+  $hero_image = $meta['hero_image'] ?? null;
+
+  ob_start();
+  include path('partials') . '/hero.php'; // expects $hero_title, $hero_subtitle, $hero_image
+  return (string) ob_get_clean();
+}
+
+/**
  * Render a template with variables.
  *
  * @param string $view Template name (without .php) under templates/.
