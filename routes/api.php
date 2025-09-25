@@ -2,6 +2,28 @@
 // routes/api.php — super-minimal JSON API (POC)
 require_once __DIR__ . '/../functions.php';
 
+// --- CORS (adjust the allowlist to your needs) ---
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+$allowlist = [
+  'https://svelte.dev',
+  'https://nostalgiaphp.onrender.com', // your own origin
+  // 'http://localhost:5173', // add your local dev origin if needed
+];
+
+if ($origin && in_array($origin, $allowlist, true)) {
+  header("Access-Control-Allow-Origin: $origin");
+  header('Vary: Origin'); // cache friendliness
+  header('Access-Control-Allow-Credentials: false'); // set true only if you plan to use cookies/auth
+  header('Access-Control-Allow-Methods: GET, OPTIONS');
+  header('Access-Control-Allow-Headers: Content-Type');
+}
+
+// Handle CORS preflight (OPTIONS)
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
+  http_response_code(204);
+  exit;
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
