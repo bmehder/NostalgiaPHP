@@ -1,90 +1,114 @@
 /* Skins & Typography */
-/* 🔥 Stone-Red (bold, grounded) */
 html {
-  --text: var(--stone-800);
-  --text-heading: var(--stone-900);
-  --text-muted: var(--stone-500);
-  --text-inverse: var(--stone-100);
-  --text-inverse-hover: var(--stone-200);
-  --text-disabled: var(--stone-300);
+	--xxs: 8rem;
+	--xs: 16rem;
+	--sm: 32rem;
+	--md: 48rem;
+	--lg: 64rem;
+	--xl: 72rem;
 
-  --bg: #fff;
-  --bg-alt: var(--stone-100);
-  --bg-alt-2: var(--stone-200);
-  --bg-disabled: var(--stone-600);
-  --bg-dark: var(--stone-900);
+	--size: 1rem;
+	--size-0-2-5: calc(var(--size) / 4);
+	--size-0-5: calc(var(--size) / 2);
+	--size-0-7-5: calc(var(--size) * 0.75);
+	--size-1-2-5: calc(var(--size) * 1.25);
+	--size-1-5: calc(var(--size) * 1.5);
+	--size-2: calc(var(--size) * 2);
+	--size-2-5: calc(var(--size) * 2.5);
+	--size-3: calc(var(--size) * 3);
+	--size-4: calc(var(--size) * 4);
+	--size-5: calc(var(--size) * 5);
+	--size-6: calc(var(--size) * 6);
 
-  --border: var(--stone-300);
-  --border-dark: var(--stone-600);
+	--text: var(--stone-800);
+	--text-heading: var(--stone-900);
+	--text-muted: var(--stone-500);
+	--text-inverse: var(--stone-100);
+	--text-inverse-hover: var(--stone-200);
+	--text-disabled: var(--stone-300);
+	
+  --text-max-width: 65ch;
 
-  --accent: var(--red-600);
-  --accent-hover: var(--red-700);
+	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
+		sans-serif;
+
+	/* --bg: #fff; */
+	--bg-alt: var(--stone-100);
+	--bg-alt-2: var(--stone-200);
+	--bg-disabled: var(--stone-600);
+	--bg-dark: var(--stone-900);
+
+	--border: var(--stone-300);
+	--border-dark: var(--stone-600);
+
+	--accent: var(--red-600);
+	--accent-hover: var(--red-700);
 }
 
 /* 🌊 Blue-Slate (cool, modern) */
 html.theme-blue {
-  --text: var(--slate-800);
-  --text-heading: var(--slate-900);
-  --text-muted: var(--slate-500);
-  --text-inverse: var(--slate-50);
-  --text-inverse-hover: var(--slate-200);
-  --text-disabled: var(--slate-400);
+	--text: var(--slate-800);
+	--text-heading: var(--slate-900);
+	--text-muted: var(--slate-500);
+	--text-inverse: var(--slate-50);
+	--text-inverse-hover: var(--slate-200);
+	--text-disabled: var(--slate-400);
 
-  --bg: #fff;
-  --bg-alt: var(--slate-100);
-  --bg-alt-2: var(--slate-200);
-  --bg-disabled: var(--slate-600);
-  --bg-dark: var(--slate-900);
+	--bg: #fff;
+	--bg-alt: var(--slate-100);
+	--bg-alt-2: var(--slate-200);
+	--bg-disabled: var(--slate-600);
+	--bg-dark: var(--slate-900);
 
-  --border: var(--slate-300);
-  --border-dark: var(--slate-600);
+	--border: var(--slate-300);
+	--border-dark: var(--slate-600);
 
-  --accent: var(--blue-500);
-  --accent-hover: var(--blue-600);
+	--accent: var(--blue-500);
+	--accent-hover: var(--blue-600);
 }
 
 /* 🌞 Amber-Warm (energetic, welcoming) */
 html.theme-amber {
-  --text: var(--stone-800);
-  --text-heading: var(--stone-900);
-  --text-muted: var(--stone-500);
-  --text-inverse: var(--stone-50);
-  --text-inverse-hover: var(--stone-200);
-  --text-disabled: var(--stone-400);
+	--text: var(--stone-800);
+	--text-heading: var(--stone-900);
+	--text-muted: var(--stone-500);
+	--text-inverse: var(--stone-50);
+	--text-inverse-hover: var(--stone-200);
+	--text-disabled: var(--stone-400);
 
-  --bg: #fff;
-  --bg-alt: var(--amber-50);
-  --bg-alt-2: var(--amber-100);
-  --bg-disabled: var(--stone-600);
-  --bg-dark: var(--stone-900);
+	--bg: #fff;
+	--bg-alt: var(--amber-50);
+	--bg-alt-2: var(--amber-100);
+	--bg-disabled: var(--stone-600);
+	--bg-dark: var(--stone-900);
 
-  --border: var(--amber-200);
-  --border-dark: var(--amber-600);
+	--border: var(--amber-200);
+	--border-dark: var(--amber-600);
 
-  --accent: var(--amber-500);
-  --accent-hover: var(--amber-600);
+	--accent: var(--amber-500);
+	--accent-hover: var(--amber-600);
 }
 
 /* 🌲 Forest-Green (earthy, calm) */
 html.theme-green {
-  --text: var(--zinc-800);
-  --text-heading: var(--zinc-900);
-  --text-muted: var(--zinc-500);
-  --text-inverse: var(--zinc-50);
-  --text-inverse-hover: var(--zinc-200);
-  --text-disabled: var(--zinc-400);
+	--text: var(--zinc-800);
+	--text-heading: var(--zinc-900);
+	--text-muted: var(--zinc-500);
+	--text-inverse: var(--zinc-50);
+	--text-inverse-hover: var(--zinc-200);
+	--text-disabled: var(--zinc-400);
 
-  --bg: #fff;
-  --bg-alt: var(--green-50);
-  --bg-alt-2: var(--green-100);
-  --bg-disabled: var(--zinc-600);
-  --bg-dark: var(--zinc-900);
+	--bg: #fff;
+	--bg-alt: var(--green-50);
+	--bg-alt-2: var(--green-100);
+	--bg-disabled: var(--zinc-600);
+	--bg-dark: var(--zinc-900);
 
-  --border: var(--green-200);
-  --border-dark: var(--green-600);
+	--border: var(--green-200);
+	--border-dark: var(--green-600);
 
-  --accent: var(--green-600);
-  --accent-hover: var(--green-700);
+	--accent: var(--green-600);
+	--accent-hover: var(--green-700);
 }
 
 body {
@@ -206,16 +230,16 @@ a {
 
 .content figure {
 	margin: 0;
-  padding: var(--size-0-7-5);
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: .5rem;
+	padding: var(--size-0-7-5);
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: 0.5rem;
 }
 
 .content figure img {
-  display: block;
-  max-width: 100%;
-  border-radius: var(--size-0-2-5);
+	display: block;
+	max-width: 100%;
+	border-radius: var(--size-0-2-5);
 }
 
 main :is(ul, ol) li {

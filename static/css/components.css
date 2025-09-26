@@ -327,7 +327,7 @@ footer {
 
 /* Stack on narrow screens */
 @media (width <= 48rem) {
-	.two-col {
+	.content-sidebar {
 		grid-template-columns: 1fr;
 	}
 	.sidebar {
@@ -384,9 +384,8 @@ footer {
 	cursor: zoom-in;
 }
 
-/* Your gallery thumbs (keeps what you liked) */
+/* gallery thumbs */
 .gallery__thumb:focus-visible img {
-	box-shadow: var(--focus-ring);
 	border-radius: 6px;
 }
 
