@@ -46,6 +46,7 @@ function config()
       'collections' => __DIR__ . '/content/collections',
       'templates' => __DIR__ . '/templates',
       'partials' => __DIR__ . '/templates/partials',
+      'data' => __DIR__ . '/static/data',
       'static' => '/static',
     ],
   ];

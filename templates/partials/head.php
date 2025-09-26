@@ -46,8 +46,8 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <meta name="base-url" content="<?= htmlspecialchars(rtrim(site('base_url'), '/')) ?>">
 
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  <link rel="icon" href="<?= url('/static/favicon.png') ?>" type="image/png">
+  <!-- <link rel="icon" href="data:;base64,iVBORw0KGgo="> -->
+  <link rel="icon" href="static/favicon.png" type="image/png">
 
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/colors.css') ?>">
@@ -63,9 +63,6 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <!-- Prism -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
-
-  <!-- Twilight -->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-twilight.min.css"> -->
 
   <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
