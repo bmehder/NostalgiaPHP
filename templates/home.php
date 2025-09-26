@@ -1,5 +1,73 @@
 <?php include path('partials') . '/head.php'; ?>
 
+<?php
+$features = [
+  [
+    'title' => 'Files, no faff',
+    'excerpt' => 'Pages and collections are just <code>.md</code> files with front-matter. Rename a file to change a URL.
+                That’s it.',
+    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <path d="M14 2v6h6" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                </svg>',
+  ],
+  [
+    'title' => 'No build step',
+    'excerpt' => 'Forget compiling. Your site renders instantly — just refresh the page.',
+    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>',
+  ],
+  [
+    'title' => 'Files, no faff',
+    'excerpt' => 'Pages and collections are just <code>.md</code> files with front-matter. Rename a file to change a URL.
+                That’s it.',
+    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <path d="M14 2v6h6" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                </svg>',
+  ],
+  [
+    'title' => 'No build step',
+    'excerpt' => 'Forget compiling. Your site renders instantly — just refresh the page.',
+    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>',
+  ],
+  [
+    'title' => 'Files, no faff',
+    'excerpt' => 'Pages and collections are just <code>.md</code> files with front-matter. Rename a file to change a URL.
+                That’s it.',
+    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <path d="M14 2v6h6" />
+                  <path d="M16 13H8" />
+                  <path d="M16 17H8" />
+                </svg>',
+  ],
+  [
+    'title' => 'No build step',
+    'excerpt' => 'Forget compiling. Your site renders instantly — just refresh the page.',
+    'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>',
+  ],
+];
+?>
+
 <style>
   section:nth-of-type(even)>.outer {
     background-color: var(--stone-100);
@@ -48,114 +116,14 @@
           <div class="inner">
             <div class="kicker">Back to basics</div>
             <h2>The Nostalgia Core</h2>
-            <div class="cards auto-fill" style="margin-block-start: var(--size-3)">
-              <article class="card bg-white">
-                <div class="card-text">
-                  <h3 class="card-title">
-                    <span class="icon accent" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <path d="M14 2v6h6" />
-                        <path d="M16 13H8" />
-                        <path d="M16 17H8" />
-                      </svg>
-                    </span>
-                    Files, no faff
-                  </h3>
-                  <p class="card-excerpt">Pages and collections are just <code>.md</code> files with front-matter.
-                    Rename a file to change a URL. That’s it.</p>
-                </div>
-              </article>
-              <article class="card bg-white">
-                <div class="card-text">
-                  <h3 class="card-title">
-                    <span class="icon accent" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                        <rect x="3" y="3" width="7" height="7" />
-                        <rect x="14" y="3" width="7" height="7" />
-                        <rect x="14" y="14" width="7" height="7" />
-                        <rect x="3" y="14" width="7" height="7" />
-                      </svg>
-                    </span>
-                    Templates &amp; partials
-                  </h3>
-                  <p class="card-excerpt">Choose your template. Wrap your content; partials handle header, footer, hero,
-                    etc.</p>
-                </div>
-              </article>
-              <article class="card bg-white">
-                <div class="card-text">
-                  <h3 class="card-title">
-                    <span class="icon accent" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                        <path d="M16.5 9.4L7.5 4.2" />
-                        <path
-                          d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                        <path d="M3.3 7l8.7 5v10" />
-                        <path d="M20.7 7l-8.7 5" />
-                      </svg>
-                    </span>
-                    Portable content
-                  </h3>
-                  <p class="card-excerpt">Your “CMS” is Markdown. Move it anywhere—PHP today, something else tomorrow—no
-                    export dance.</p>
-                </div>
-              </article>
-              <article class="card bg-white">
-                <div class="card-text">
-                  <h3 class="card-title">
-                    <span class="icon accent" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-                      </svg>
-                    </span>
-                    Zero build step
-                  </h3>
-                  <p class="card-excerpt">No Node, no bundlers. Drop on a PHP host or run
-                    <code>php -S localhost:8000</code> and you’re live.
-                  </p>
-                </div>
-              </article>
-              <article class="card bg-white">
-                <div class="card-text">
-                  <h3 class="card-title">
-                    <span class="icon accent" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                        <circle cx="12" cy="12" r="4" />
-                        <line x1="12" y1="2" x2="12" y2="8" />
-                        <line x1="12" y1="16" x2="12" y2="22" />
-                        <line x1="2" y1="12" x2="8" y2="12" />
-                        <line x1="16" y1="12" x2="22" y2="12" />
-                      </svg>
-                    </span>
-                    Instant sitemap
-                  </h3>
-                  <p class="card-excerpt"><code>sitemap.xml</code> is built automatically from your content—no plugins
-                    needed.</p>
-                </div>
-              </article>
-              <article class="card bg-white">
-                <div class="card-text">
-                  <h3 class="card-title">
-                    <span class="icon accent" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon">
-                        <path d="M12 2v20" />
-                        <path d="M18 8H6l-2-2 2-2h12l2 2-2 2z" />
-                        <path d="M6 16h12l2 2-2 2H6l-2-2 2-2z" />
-                      </svg>
-                    </span>
-                    404, sorted
-                  </h3>
-                  <p class="card-excerpt">Bad links happen. A built-in <code>404.php</code> route is ready out of the
-                    box—or tweak it to fit your site.</p>
-                </div>
-              </article>
+            <div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)">
+              <?php
+              foreach ($features as $feature):
+                $title = $feature['title'];
+                $excerpt = $feature['excerpt'];
+                $icon = $feature['icon'];
+                include path('partials') . '/feature-card.php';
+              endforeach; ?>
             </div>
           </div>
         </div>
