@@ -7,7 +7,7 @@
       <main id="main">
       <div class="outer">
         <div class="inner">
-          <div class="two-col">
+          <div class="content-sidebar">
             <section class="content flow">
               <?= $content ?>
             </section>

@@ -71,9 +71,4 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
     Prism.plugins.autoloader.languages_path =
       "https://cdn.jsdelivr.net/npm/prismjs/components/";
   </script>
-
-  <!-- Theme Switcher -->
-  <script type="module" src="/static/js/apps/theme-switcher.js"></script>
-
-  <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>
