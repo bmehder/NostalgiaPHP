@@ -51,6 +51,12 @@ if ($first === 'tag' && isset($parts[1])) {
   exit;
 }
 
+// API: anything under /api/*
+if (str_starts_with($path, '/api')) {
+  require __DIR__ . '/routes/api.php';
+  exit;
+}
+
 // Collections: /blog  or  /blog/slug
 if (is_collection($first)) {
   require __DIR__ . '/routes/collections.php';
