@@ -11,6 +11,9 @@
       <?php if (!empty($hero_subtitle)): ?>
         <p class="hero-sub"><?= htmlspecialchars($hero_subtitle) ?></p>
       <?php endif; ?>
+      <?php if (!empty($hero_button_text)): ?>
+        <div class="hero-button"><a href="<?= $hero_button_link ?? '#' ?>" class="button"><?= $hero_button_text ?></a></div>
+      <?php endif; ?>
     </div>
   </div>
 </section>
