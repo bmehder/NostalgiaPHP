@@ -149,18 +149,16 @@ if ($first === 'items') {
       $collections[] = basename($d);
   }
 
-  $rows = [];
   foreach ($collections as $c) {
     foreach (glob($root . '/' . $c . '/*.md') as $mdFile) {
       $slug = basename($mdFile, '.md');
+
       [$fm, $md] = parse_front_matter(read_file($mdFile) ?? '');
       $html = markdown_to_html($md);
-      $tags = $extractTags((array) $fm);
-      if (!$matchesTagFilter($tags, $filterTags, $matchMode))
-        continue;
 
       $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
-      $dateS = $fmtDate($fm['date'] ?? null);
+      $date = $fm['date'] ?? null;
+      $dateS = $date instanceof DateTime ? $date->format('Y-m-d') : (is_string($date) ? $date : null);
 
       $rows[] = [
         'collection' => $c,
@@ -168,8 +166,9 @@ if ($first === 'items') {
         'url' => url("/{$c}/{$slug}"),
         'title' => $title,
         'date' => $dateS,
-        'tags' => $tags,  // ← include tags
-        'html' => $html,  // rendered HTML
+        'image' => $fm['image'] ?? null,  // ← add the image field
+        'tags' => $fm['tags'] ?? [],     // ← and tags while we’re here
+        'html' => $html,
       ];
     }
   }
