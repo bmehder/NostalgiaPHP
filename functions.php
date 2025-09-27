@@ -49,6 +49,10 @@ function config()
       'data' => __DIR__ . '/static/data',
       'static' => '/static',
     ],
+    'api' => [
+      'enabled' => true,
+      'cors_allowlist' => [], // e.g. ['https://example.com']
+    ],
   ];
 
   // Merge (user wins)

@@ -48,17 +48,16 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 
   <meta name="base-url" content="<?= htmlspecialchars(rtrim(site('base_url'), '/')) ?>">
 
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  <link rel="icon" href="/static/media/favicon.png" type="image/png">
-
   <!-- Apply saved theme class before CSS loads to prevent flash of default skin -->
   <script>
-    !function () {
+    (function () {
       try {
-        var t = localStorage.getItem('nostalgia:theme');
-        if (t) { document.documentElement.classList.add(t); }
-      } catch (e) { }
-    }();
+        const theme = localStorage.getItem('nostalgia:theme')
+        theme && document.documentElement.classList.add(theme)
+      } catch (error) {
+        console.error(error)
+      }
+    })();
   </script>
 
   <!-- Styles -->

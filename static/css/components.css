@@ -273,10 +273,15 @@ footer {
 		grid-area: 1 / 1;
 		display: grid;
 		place-content: center;
-		padding: var(--size-2);
+		padding-block: var(--size-2);
+		padding-inline: var(--size-2);
 		color: var(--text-inverse);
 		text-align: center;
 		background: rgba(0, 0, 0, 0.15); /* dark overlay for readability */
+
+		@media (width < 38rem) {
+			padding-block: var(--size-5);
+		}
 
 		.h1 {
 			margin: 0;
@@ -291,7 +296,7 @@ footer {
 
 		.button {
 			background-color: var(--accent);
-			font-size: clamp(var(--size), 2.5vw, var(--size-1-2-5));
+			font-size: clamp(var(--size), 2.5vw, calc(var(--size) * 1.1));
 			box-shadow: var(--shadow-4);
 
 			&:hover {
