@@ -291,6 +291,11 @@ footer {
 
 		.button {
 			background-color: var(--accent);
+			box-shadow: var(--shadow-4);
+
+			&:hover {
+				background-color: var(--accent-hover);
+			}
 		}
 	}
 }

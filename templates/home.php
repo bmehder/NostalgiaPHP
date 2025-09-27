@@ -67,7 +67,7 @@
         <div class="outer">
           <div class="inner">
             <div class="content auto-fit reverse">
-              <div class=" flow">
+              <div class="flow">
                 <div class="kicker">Under the hood, there’s barely a hood.</div>
                 <h2>How It Works</h2>
                 <ol>
@@ -100,6 +100,7 @@ It’s **Markdown in, HTML out**.
               </code></pre>
             </div>
           </div>
+        </div>
       </section>
 
       <!-- Recent posts (auto: just link to collection) -->
