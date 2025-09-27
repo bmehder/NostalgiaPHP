@@ -1,43 +1,52 @@
-(() => {
-  if (window.__themeMounted) return;
-  window.__themeMounted = true;
+;(() => {
+	if (window.__themeMounted) return
+	window.__themeMounted = true
 
-  const THEMES = [
+	const THEMES = [
 		{ name: 'theme-red', label: 'Red', swatch: 'var(--red-600)' },
 		{ name: 'theme-blue', label: 'Blue', swatch: 'var(--blue-600)' },
 		{ name: 'theme-green', label: 'Green', swatch: 'var(--green-600)' },
 		{ name: 'theme-amber', label: 'Amber', swatch: 'var(--amber-600)' },
 	]
-  const STORAGE_KEY = 'nostalgia:theme';
+	const STORAGE_KEY = 'nostalgia:theme'
 
-  const root = document.documentElement;
-  const body = document.body;
+	const root = document.documentElement
+	const body = document.body
 
-  const getThemeClasses = el => Array.from(el.classList).filter(c => c.startsWith('theme-'));
-  const clearThemes = () => {
-    getThemeClasses(root).forEach(c => root.classList.remove(c));
-    getThemeClasses(body).forEach(c => body.classList.remove(c));
-  };
+	const getThemeClasses = el =>
+		Array.from(el.classList).filter(c => c.startsWith('theme-'))
+	const clearThemes = () => {
+		getThemeClasses(root).forEach(c => root.classList.remove(c))
+		getThemeClasses(body).forEach(c => body.classList.remove(c)) // legacy cleanup
+	}
 
-  const applyTheme = (theme) => {
-    clearThemes();
-    if (theme) root.classList.add(theme);
-    localStorage.setItem(STORAGE_KEY, theme || '');
-    document.querySelectorAll('#theme-switcher [data-theme]').forEach(btn => {
-      btn.setAttribute('aria-pressed', btn.dataset.theme === theme ? 'true' : 'false');
-    });
-  };
+	const applyTheme = theme => {
+		// If it's already set (e.g., by the inline <head> script), skip churn
+		if (getThemeClasses(root)[0] === theme) {
+			localStorage.setItem(STORAGE_KEY, theme || '')
+		} else {
+			clearThemes()
+			if (theme) root.classList.add(theme)
+			localStorage.setItem(STORAGE_KEY, theme || '')
+		}
 
-  const saved   = localStorage.getItem(STORAGE_KEY);
-  const initial = THEMES.some(t => t.name === saved) ? saved : THEMES[0].name;
-  applyTheme(initial);
+		// update pressed states
+		document.querySelectorAll('#theme-switcher [data-theme]').forEach(btn => {
+			btn.setAttribute(
+				'aria-pressed',
+				btn.dataset.theme === theme ? 'true' : 'false'
+			)
+		})
+	}
 
-  // Inject styles
-  const style = document.createElement('style');
-  style.textContent = `
-    #theme-switcher{
-      display:flex; gap:.4rem; align-items:center;
-    }
+	const saved = localStorage.getItem(STORAGE_KEY)
+	const initial = THEMES.some(t => t.name === saved) ? saved : THEMES[0].name
+	applyTheme(initial)
+
+	// Inject styles
+	const style = document.createElement('style')
+	style.textContent = `
+    #theme-switcher{ display:flex; gap:.4rem; align-items:center; }
     #theme-switcher button{
       appearance:none; border:0; background:none; margin:0; padding:0;
       inline-size:20px; block-size:20px; display:grid; place-items:center;
@@ -58,39 +67,36 @@
     #theme-switcher .sr-only{
       position:absolute; clip:rect(0 0 0 0); inline-size:1px; block-size:1px; margin:-1px; overflow:hidden;
     }
-  `;
-  document.head.appendChild(style);
+  `
+	document.head.appendChild(style)
 
-  // Build switcher inside nav
-  const wrap = document.createElement('div');
-  wrap.id = 'theme-switcher';
-  wrap.setAttribute('role', 'group');
-  wrap.setAttribute('aria-label', 'Color theme');
+	// Build switcher inside nav
+	const wrap = document.createElement('div')
+	wrap.id = 'theme-switcher'
+	wrap.setAttribute('role', 'group')
+	wrap.setAttribute('aria-label', 'Color theme')
 
-  THEMES.forEach(t => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.dataset.theme = t.name;
-    btn.setAttribute('aria-pressed', t.name === initial ? 'true' : 'false');
-    btn.title = `Switch to ${t.label} theme`;
+	THEMES.forEach(t => {
+		const btn = document.createElement('button')
+		btn.type = 'button'
+		btn.dataset.theme = t.name
+		btn.setAttribute('aria-pressed', t.name === initial ? 'true' : 'false')
+		btn.title = `Switch to ${t.label} theme`
 
-    const dot = document.createElement('span');
-    dot.className = 'dot';
-    dot.style.background = t.swatch;
-    btn.appendChild(dot);
+		const dot = document.createElement('span')
+		dot.className = 'dot'
+		dot.style.background = t.swatch
+		btn.appendChild(dot)
 
-    const sr = document.createElement('span');
-    sr.className = 'sr-only';
-    sr.textContent = t.label;
-    btn.appendChild(sr);
+		const sr = document.createElement('span')
+		sr.className = 'sr-only'
+		sr.textContent = t.label
+		btn.appendChild(sr)
 
-    btn.addEventListener('click', () => applyTheme(t.name));
+		btn.addEventListener('click', () => applyTheme(t.name))
+		wrap.appendChild(btn)
+	})
 
-    wrap.appendChild(btn);
-  });
-
-  const nav = document.getElementById('site-nav');
-  if (nav) nav.appendChild(wrap);
-
-  applyTheme(initial);
-})();
+	const nav = document.getElementById('site-nav')
+	if (nav) nav.appendChild(wrap)
+})()
