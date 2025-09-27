@@ -4,6 +4,8 @@ description: NostalgiaPHP gives you the essentials — nothing more, nothing les
 hero_title: About Nostalgia PHP
 hero_subtitle: Files good. Framework bad.
 hero_image: /static/media/about-nostalgia-php.webp
+hero_button_text: View Dox
+hero_button_link: /dox
 template: sidebar
 ---
 
