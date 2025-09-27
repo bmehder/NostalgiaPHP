@@ -288,23 +288,11 @@ footer {
 			font-size: clamp(1rem, 3vw, 1.5rem);
 			margin-block-start: var(--size-0-5);
 		}
+
+		.button {
+			background-color: var(--accent);
+		}
 	}
-}
-
-.home .hero-sub {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: var(--size-0-5);
-	color: var(--text-inverse);
-}
-
-.home .hero-sub::before {
-	content: '';
-	width: var(--size);
-	height: var(--size);
-	border-radius: 50%;
-	background-color: var(--accent);
 }
 
 /* Contact Form */
@@ -355,7 +343,7 @@ footer {
 	background: transparent;
 	border: none;
 	cursor: zoom-in;
-	
+
 	&:focus-visible img {
 		border-radius: 6px;
 	}
@@ -367,7 +355,7 @@ dialog.lightbox {
 	padding: 0;
 	background: transparent;
 	max-width: none;
-	
+
 	/* only when open do we center & show it */
 	&[open] {
 		display: grid;
@@ -379,18 +367,18 @@ dialog.lightbox {
 		background: transparent;
 		border: none;
 	}
-	
+
 	&::backdrop {
 		background: rgb(0 0 0 / 0.65);
 		backdrop-filter: blur(2px);
 	}
-	
+
 	.lightbox__frame {
 		margin: 0;
 		max-width: 100%;
 		max-height: 100%;
 		border: 1px solid var(--border-dark);
-		
+
 		.lightbox__img {
 			display: block;
 			max-width: 90vw;
@@ -399,7 +387,7 @@ dialog.lightbox {
 			border: none;
 			box-shadow: 0 2px 14px rgb(0 0 0 / 0.35);
 		}
-		
+
 		.lightbox__btn {
 			width: 10px;
 			display: grid;
@@ -413,7 +401,7 @@ dialog.lightbox {
 			border: 0;
 			border-radius: 999px;
 			cursor: pointer;
-			
+
 			&:hover {
 				background: rgb(0 0 0 / 0.65);
 			}
@@ -444,15 +432,18 @@ dialog.lightbox {
 	margin: var(--size-0-5) 0 0;
 	display: grid;
 	gap: var(--size-0-2-5) var(--size-0-5);
-}
-.tags-list a {
-	text-decoration: none;
-}
-.tags-list a:hover {
-	text-decoration: underline;
-}
-.tags-list .muted {
-	color: var(--text-muted);
+
+	a {
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.muted {
+		color: var(--text-muted);
+	}
 }
 
 /* Carousel */

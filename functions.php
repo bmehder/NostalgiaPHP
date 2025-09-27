@@ -484,6 +484,8 @@ function build_hero_html(?array $meta): string
   $hero_title = $meta['hero_title'] ?? ($meta['title'] ?? '');
   $hero_subtitle = $meta['hero_subtitle'] ?? ($meta['hero'] ?? '');
   $hero_image = $meta['hero_image'] ?? null;
+  $hero_button_text = $meta['hero_button_text'] ?? null;
+  $hero_button_link = $meta['hero_button_link'] ?? null;
 
   ob_start();
   include path('partials') . '/hero.php'; // expects $hero_title, $hero_subtitle, $hero_image
