@@ -448,7 +448,7 @@ dialog.lightbox {
 
 /* Carousel */
 .carousel {
-	width: 100%;
+	inline-size: 100%;
 	display: flex;
 	gap: 0.5rem;
 	margin: 3rem auto;
