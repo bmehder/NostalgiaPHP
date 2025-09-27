@@ -15,7 +15,6 @@ hero_image: /static/media/1.jpg
 hero_image: /static/media/home.webp
 hero_button_text: GitHub Repo
 hero_button_link: https://github.com/bmehder/NostalgiaPHP
-hero_button_icon: github   # options: github | external | arrow-right (add more as needed)
 
 # Collection / item metadata
 date: 2025-09-09

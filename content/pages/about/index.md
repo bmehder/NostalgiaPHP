@@ -4,9 +4,8 @@ description: NostalgiaPHP gives you the essentials — nothing more, nothing les
 hero_title: About Nostalgia PHP
 hero_subtitle: Files good. Framework bad.
 hero_image: /static/media/about-nostalgia-php.webp
-hero_button_text: View Dox
+hero_button_text: <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> View Dox
 hero_button_link: /dox
-hero_button_icon: file
 template: sidebar
 ---
 
