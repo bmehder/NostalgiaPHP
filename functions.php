@@ -523,3 +523,50 @@ function render($view, $vars = [])
   extract($vars);
   include $tpl;
 }
+
+/**
+ * Return a small inline SVG icon by name.
+ * @param string $name   e.g. 'github', 'external', 'arrow-right'
+ * @param string $class  extra CSS class for styling
+ * @param int    $size   width/height in px
+ * @return string        SVG markup (or empty string if unknown)
+ */
+function icon_svg(string $name, string $class = 'icon', int $size = 18): string
+{
+  $w = $h = (int) $size;
+  $cls = htmlspecialchars($class, ENT_QUOTES, 'UTF-8');
+  switch (strtolower($name)) {
+    case 'github':
+      return <<<SVG
+<svg class="$cls" aria-hidden="true" viewBox="0 0 16 16" width="$w" height="$h" fill="currentColor">
+  <path d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/>
+</svg>
+SVG;
+    case 'external':
+      return <<<SVG
+<svg class="$cls" aria-hidden="true" viewBox="0 0 24 24" width="$w" height="$h" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+  <path d="M15 3h6v6"/>
+  <path d="M10 14 21 3"/>
+</svg>
+SVG;
+    case 'file':
+      return <<<SVG
+<svg class="$cls" aria-hidden="true" viewBox="0 0 24 24" width="$w" height="$h" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+  <path d="M14 2v6h6"/>
+  <path d="M16 13H8"/>
+  <path d="M16 17H8"/>
+  <path d="M10 9H8"/>
+</svg>
+SVG;
+    case 'arrow-right':
+      return <<<SVG
+<svg class="$cls" aria-hidden="true" viewBox="0 0 24 24" width="$w" height="$h" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+</svg>
+SVG;
+    default:
+      return '';
+  }
+}

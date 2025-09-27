@@ -6,6 +6,7 @@ hero_subtitle: A caveman-simple file-based CMS
 hero_image: /static/media/home.webp
 hero_button_text: GitHub Repo
 hero_button_link: https://github.com/bmehder/NostalgiaPHP
+hero_button_icon: github
 template: home
 tags: nostalgia
 ---

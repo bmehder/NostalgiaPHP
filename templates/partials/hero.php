@@ -12,7 +12,15 @@
         <p class="hero-sub"><?= htmlspecialchars($hero_subtitle) ?></p>
       <?php endif; ?>
       <?php if (!empty($hero_button_text)): ?>
-        <div class="hero-button"><a href="<?= $hero_button_link ?? '#' ?>" class="button"><?= $hero_button_text ?></a></div>
+        <?php $hero_button_icon = $meta['hero_button_icon'] ?? null; ?>
+        <div class="hero-button">
+          <a href="<?= $hero_button_link ?? '#' ?>" class="button">
+            <?php if ($hero_button_icon): ?>
+              <?= icon_svg($hero_button_icon, 'icon icon--btn', 18) ?>
+            <?php endif; ?>
+            <span><?= htmlspecialchars($hero_button_text, ENT_QUOTES, 'UTF-8') ?></span>
+          </a>
+        </div>
       <?php endif; ?>
     </div>
   </div>
