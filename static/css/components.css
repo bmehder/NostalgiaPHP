@@ -291,7 +291,8 @@ footer {
 
 		.button {
 			background-color: var(--accent);
-			font-size: var(--size-1-2-5);
+			/* font-size: var(--size-1-2-5); */
+			font-size: clamp(var(--size), 2.5vw, var(--size-1-2-5));
 			box-shadow: var(--shadow-4);
 
 			&:hover {
