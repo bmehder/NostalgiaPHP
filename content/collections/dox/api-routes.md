@@ -1,12 +1,12 @@
 ---
-title: Introducing the NostalgiaPHP JSON API
+title: Introducing the NostalgiaPHP REST API
 description: A minimal REST-style API for your flat-file content.
 date: 2025-09-27
 image: static/media/rest.jpg
 tags: api, json, rest, nostalgia
 ---
 
-# Introducing the NostalgiaPHP JSON API
+# Introducing the NostalgiaPHP REST API
 
 NostalgiaPHP has always been about simplicity: flat files, partial templates, and portable sites. Now there’s a new way to consume your content — a minimal **JSON API** that makes your data available for JavaScript frontends, React components, mobile apps, or anything else that speaks HTTP.
 
@@ -14,10 +14,11 @@ NostalgiaPHP has always been about simplicity: flat files, partial templates, an
 
 The API lives under `/api`. Here are the routes currently available:
 
+* **`/api`** – overview of the available routes.
 * **`/api/health`** – quick check that the API is alive.
 * **`/api/items`** – list items from all collections.
 * **`/api/items/blog`** – list items from a specific collection.
-* **`/api/pages`** – list all top-level pages.
+* **`/api/pages`** – list all pages.
 * **`/api/pages/{slug}`** – get a single page by slug.
 * **`/api/tags`** – list all tags across collections.
 * **`/api/tags/{tag}`** – list all items filtered by a tag.
@@ -40,6 +41,37 @@ Responses are JSON, sorted by date (newest first when applicable), and include:
     }
   ]
 }
+```
+
+## Filtering with Query Parameters
+
+The API also supports simple query parameters for finer control:
+
+### By collection
+
+Instead of /api/items/blog, you can request:
+
+`/api/items?collection=blog`
+
+### By tag
+To fetch only items with a certain tag:
+
+`/api/items?tag=php`
+
+### Combine filters
+You can mix collection and tag filters:
+
+`/api/items?collection=blog&tag=nostalgia`
+
+This makes it easy to pull exactly what you need, whether you’re building a blog feed, a tag cloud, or a project showcase.
+
+
+```js
+// Example: Fetching by tag in JavaScript
+
+fetch('/api/items?tag=php')
+  .then(res => res.json())
+  .then(data => console.log(data.items));
 ```
 
 ## CORS Allowlist
