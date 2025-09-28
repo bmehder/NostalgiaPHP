@@ -126,29 +126,83 @@ $matchesTagFilter = function (array $itemTags, array $filterTags, string $mode) 
   return false;
 };
 
-// ---- /api/items (optional: /api/items/{collection}) ----
+// GET /api/items (optional ?collection=blog or /api/items/blog; optional ?tag=php)
 if ($first === 'items') {
-  $param = $_GET['collection'] ?? null;
+  // optional filters
+  $paramCollection = $_GET['collection'] ?? null;
   $fromPath = $parts[1] ?? null;
-  $collectionFilter = $param ?: $fromPath;
+  $collectionFilter = $paramCollection ?: $fromPath;   // support both styles
 
-  [$filterTags, $matchMode] = $getTagFilters();
+  // tag filter (supports ?tag=php or ?tag=php,markdown)
+  $tagParam = trim((string) ($_GET['tag'] ?? ''));
+  $tagNeedles = [];
+  if ($tagParam !== '') {
+    $tagNeedles = array_values(array_filter(array_map(
+      fn($t) => strtolower(trim($t)),
+      explode(',', $tagParam)
+    )));
+  }
+
+  // helper: extract tags (tags|tag|keywords; csv or array) -> ['php','retro',...]
+  $extractTags = function (array $fm): array {
+    $candidates = [];
+    foreach ($fm as $k => $v) {
+      $lk = strtolower((string) $k);
+      if ($lk === 'tags' || $lk === 'tag' || $lk === 'keywords') {
+        $candidates[] = $v;
+      }
+    }
+    if (!$candidates)
+      return [];
+
+    $out = [];
+    foreach ($candidates as $raw) {
+      if (is_string($raw)) {
+        foreach (array_map('trim', explode(',', $raw)) as $t) {
+          if ($t !== '')
+            $out[] = $t;
+        }
+      } elseif (is_array($raw)) {
+        foreach ($raw as $t) {
+          if (is_string($t)) {
+            $t = trim($t);
+            if ($t !== '')
+              $out[] = $t;
+          }
+        }
+      }
+    }
+    // de-dupe case-insensitively, keep first-seen casing for display
+    $seen = [];
+    $display = [];
+    foreach ($out as $t) {
+      $key = strtolower($t);
+      if (!isset($seen[$key])) {
+        $seen[$key] = true;
+        $display[] = $t;
+      }
+    }
+    return $display;
+  };
 
   $root = rtrim(path('collections'), '/');
-  if (!is_dir($root))
+  if (!is_dir($root)) {
     $send(['ok' => true, 'count' => 0, 'items' => []]);
+  }
 
-  // which collections?
+  // which collections to scan?
   $collections = [];
   if ($collectionFilter) {
     $dir = $root . '/' . $collectionFilter;
     if (is_dir($dir))
       $collections = [$collectionFilter];
   } else {
-    foreach (glob($root . '/*', GLOB_ONLYDIR) as $d)
+    foreach (glob($root . '/*', GLOB_ONLYDIR) as $d) {
       $collections[] = basename($d);
+    }
   }
 
+  $rows = [];
   foreach ($collections as $c) {
     foreach (glob($root . '/' . $c . '/*.md') as $mdFile) {
       $slug = basename($mdFile, '.md');
@@ -156,9 +210,33 @@ if ($first === 'items') {
       [$fm, $md] = parse_front_matter(read_file($mdFile) ?? '');
       $html = markdown_to_html($md);
 
+      // tags (both display + lowercase for filtering)
+      $tagsDisplay = $extractTags((array) $fm);
+      $tagsLower = array_map('strtolower', $tagsDisplay);
+
+      // apply tag filter (match ANY of the requested tags)
+      if ($tagNeedles) {
+        $match = false;
+        foreach ($tagNeedles as $needle) {
+          if (in_array($needle, $tagsLower, true)) {
+            $match = true;
+            break;
+          }
+        }
+        if (!$match)
+          continue;
+      }
+
       $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
       $date = $fm['date'] ?? null;
-      $dateS = $date instanceof DateTime ? $date->format('Y-m-d') : (is_string($date) ? $date : null);
+      $dateS = $date instanceof DateTime ? $date->format('Y-m-d')
+        : (is_string($date) ? $date : null);
+
+      // optional image passthrough (if you want thumbnails)
+      $image = $fm['image'] ?? null;
+      if (is_string($image) && $image !== '' && $image[0] === '/') {
+        $image = url($image);
+      }
 
       $rows[] = [
         'collection' => $c,
@@ -166,20 +244,25 @@ if ($first === 'items') {
         'url' => url("/{$c}/{$slug}"),
         'title' => $title,
         'date' => $dateS,
-        'image' => $fm['image'] ?? null,  // ← add the image field
-        'tags' => $fm['tags'] ?? [],     // ← and tags while we’re here
+        'tags' => $tagsDisplay, // keep original casing for UI
         'html' => $html,
+        'image' => $image,
       ];
     }
   }
 
+  // newest first by date if present
   usort($rows, function ($a, $b) {
     $ta = $a['date'] ? @strtotime((string) $a['date']) : 0;
     $tb = $b['date'] ? @strtotime((string) $b['date']) : 0;
     return $tb <=> $ta;
   });
 
-  $send(['ok' => true, 'count' => count($rows), 'items' => $rows]);
+  $send([
+    'ok' => true,
+    'count' => count($rows),
+    'items' => $rows
+  ]);
 }
 
 // ---- /api/pages  (list or /api/pages/{nested/slug}) ----
