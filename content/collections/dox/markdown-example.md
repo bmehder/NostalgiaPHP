@@ -2,7 +2,7 @@
 # Core metadata
 title: Markdown Example
 description: An example of using writing markdown.
-image: static/media/5.jpg
+image: static/media/markdown-example.jpg
 draft: false
 template: main
 

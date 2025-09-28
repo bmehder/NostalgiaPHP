@@ -1,8 +1,8 @@
 ---
 title: Don't Blink!
 description: Blink is a tiny JavaScript reactivity layer — no framework, no bundler, no virtual DOM. Just signals, effects, and simple state management you can copy-paste into any project.
-image: static/media/3.jpg
-date: 2025-09-20
+image: static/media/blink.jpg
+date: 2025-09-18
 excerpt: Blink is a tiny JavaScript reactivity layer — no framework, no bundler, no virtual DOM. Just signals, effects, and simple state management you can copy-paste into any project.
 tags: js, slank, blink, reactivity
 ---

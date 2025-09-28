@@ -1,7 +1,7 @@
 ---
 title: Understanding index.php in NostalgiaPHP
 description: A guided tour of the tiny front controller that routes requests, loads content, and renders templates.
-image: static/media/1.jpg
+image: static/media/understanding-index.jpg
 date: 2025-09-20
 template: main
 tags: php, simplicity, retro

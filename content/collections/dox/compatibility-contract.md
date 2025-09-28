@@ -1,17 +1,17 @@
 ---
 title: Compatibility Contract
 description: Compatibility contract in regards to Directory Structure and how to evolve code without breaking sites.
-image: static/media/cave-water.jpg
+image: static/media/compatibility-contract.jpg
 date: 2025-09-11
 ---
 
-# Compatibility Contract (keep these stable)
+# Compatibility Contract
+
 ## Directory Structure
 - content/pages/{slug}.md → /slug (or / for index.md)
 - content/collections/{name}/{slug}.md → /{name}/{slug}
 - static/ served at /static/...
 - Front-matter keys (optional, don’t break if missing)
-- title, description, date, template, draft, sitemap
 - Defaults (no surprises)
 - If a key is missing, site still renders (infer title/desc or leave blank)
 - Templates/partials API

@@ -2,7 +2,7 @@
 title: Markdown Crash Course
 description: How to write markdown.
 date: 2025-09-14
-image: static/media/4.jpg
+image: static/media/markdown-crash-course.jpg
 excerpt: Markdown is easy. You can learn it in minutes. It's great for taking notes, making simple Wiki sites, blogs, etc. Let's learn the basics of Markdown.
 ---
 
