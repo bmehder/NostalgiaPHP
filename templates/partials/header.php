@@ -21,7 +21,7 @@
       <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu" tabindex="-1">
 
       <!-- ✅ label becomes the hamburger button -->
-      <label for="nav-check" class="nav-toggle" aria-controls="site-nav" aria-expanded="false">
+      <label for="nav-check" class="nav-toggle" aria-controls="site-nav">
         <span class="visually-hidden">Menu</span>
         <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--stone-100)" aria-hidden="true">
           <rect x="3" y="6" width="18" height="2" rx="1"></rect>

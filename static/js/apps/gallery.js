@@ -104,30 +104,47 @@ const openLightbox = (list, startIndex = 0) => {
 }
 
 // Build each gallery on the page
+// Build each gallery on the page
 const createGallery = domTarget => {
 	const raw = domTarget.getAttribute('data-gallery') || ''
 	const list = raw.split(',').map(normalizeSrc).filter(Boolean)
+
+	// Optional: comma-separated captions (same order/length as images)
+	const rawCaps = domTarget.getAttribute('data-captions') || ''
+	const caps = rawCaps.split(',').map(s => (s || '').trim())
+
+	// Helper: make a decent label from a caption or the filename
+	const labelFor = (src, i) => {
+		const cap = caps[i] || ''
+		if (cap) return `Open image: ${cap}`
+		const file = src.split('/').pop() || 'image'
+		return `Open image: ${file.replace(/\.[a-z0-9]+$/i, '').replace(/[-_]+/g, ' ')}`
+	}
 
 	if (!list.length) {
 		domTarget.innerHTML = '<p>No images found</p>'
 		return
 	}
 
-	// Render thumbnails (or full images) – keep your existing grid classes
 	domTarget.innerHTML = list
-		.map(
-			(src, i) =>
-				`<button type="button" class="gallery__thumb" data-index="${i}" style="all:unset; display:block; cursor:zoom-in; border: 1px solid var(--stone-200)">
-         <img src="${src}" loading="lazy" decoding="async" alt="">
-       </button>`
-		)
+		.map((src, i) => {
+			const label = labelFor(src, i)
+			const imgAlt = caps[i] || '' // if you have a caption, use it as alt text
+			return `
+      <button type="button"
+              class="gallery__thumb"
+              data-index="${i}"
+              aria-label="${label}"
+              style="all:unset; display:block; cursor:zoom-in; border:1px solid var(--stone-200)">
+        <img src="${src}" loading="lazy" decoding="async" alt="${imgAlt}">
+      </button>`
+		})
 		.join('')
 
-	// Wire click → open lightbox starting at clicked index
 	domTarget.querySelectorAll('.gallery__thumb').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const index = parseInt(btn.getAttribute('data-index') || '0', 10)
-			openLightbox(list, index)
+			openLightbox(list, index, caps)
 		})
 	})
 }

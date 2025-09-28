@@ -18,11 +18,14 @@ return [
       'permalink' => '/blog/{slug}',
       'list_url' => '/blog',
       'sort' => ['date', 'desc'],
+      'per_page' => 6,
+      'description' => 'Notes, updates, and long-form posts from the NostalgiaPHP project.',
     ],
     'dox' => [
       'permalink' => '/dox/{slug}',
       'list_url' => '/dox',
       'sort' => ['date', 'desc'],
+      'description' => 'Guides and documentation for getting the most out of NostalgiaPHP.',
     ],
   ],
 ];
