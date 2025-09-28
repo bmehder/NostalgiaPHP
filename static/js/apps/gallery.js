@@ -1,4 +1,4 @@
-// // gallery.js
+// gallery.js (drop-in)
 
 // Utility: normalize to /static/media
 const normalizeSrc = raw => raw.trim() || null
@@ -12,6 +12,7 @@ let nextBtn
 
 // State for current gallery/session
 let activeList = []
+let activeCaptions = []
 let activeIndex = 0
 
 const ensureLightbox = () => {
@@ -19,6 +20,9 @@ const ensureLightbox = () => {
 
 	lightbox = document.createElement('dialog')
 	lightbox.className = 'lightbox'
+	// Give the dialog an accessible name
+	lightbox.setAttribute('aria-label', 'Image viewer')
+
 	lightbox.innerHTML = `
     <figure class="lightbox__frame">
       <img style="width: var(--lg)" class="lightbox__img" alt="">
@@ -61,7 +65,6 @@ const ensureLightbox = () => {
 
 	// Keyboard: Esc, ← →
 	lightbox.addEventListener('cancel', e => {
-		// Prevent default to avoid form behavior; close() is fine
 		e.preventDefault()
 		lightbox.close()
 	})
@@ -92,18 +95,20 @@ const showAt = idx => {
 	activeIndex = (idx + activeList.length) % activeList.length
 	const src = activeList[activeIndex]
 	lightboxImg.src = src
+	// keep alt in sync for SRs (safe even if no captions)
+	lightboxImg.alt = activeCaptions[activeIndex] || ''
 }
 
-const openLightbox = (list, startIndex = 0) => {
+const openLightbox = (list, startIndex = 0, captions = []) => {
 	ensureLightbox()
 	activeList = list
+	activeCaptions = Array.isArray(captions) ? captions : []
 	showAt(startIndex)
 	lightbox.showModal()
 	// move focus into dialog for keyboard nav
 	nextBtn.focus()
 }
 
-// Build each gallery on the page
 // Build each gallery on the page
 const createGallery = domTarget => {
 	const raw = domTarget.getAttribute('data-gallery') || ''
@@ -117,8 +122,10 @@ const createGallery = domTarget => {
 	const labelFor = (src, i) => {
 		const cap = caps[i] || ''
 		if (cap) return `Open image: ${cap}`
-		const file = src.split('/').pop() || 'image'
-		return `Open image: ${file.replace(/\.[a-z0-9]+$/i, '').replace(/[-_]+/g, ' ')}`
+		const file = (src.split('/').pop() || 'image')
+			.replace(/\.[a-z0-9]+$/i, '')
+			.replace(/[-_]+/g, ' ')
+		return `Open image: ${file}`
 	}
 
 	if (!list.length) {
@@ -131,16 +138,17 @@ const createGallery = domTarget => {
 			const label = labelFor(src, i)
 			const imgAlt = caps[i] || '' // if you have a caption, use it as alt text
 			return `
-      <button type="button"
-              class="gallery__thumb"
-              data-index="${i}"
-              aria-label="${label}"
-              style="all:unset; display:block; cursor:zoom-in; border:1px solid var(--stone-200)">
-        <img src="${src}" loading="lazy" decoding="async" alt="${imgAlt}">
-      </button>`
+        <button type="button"
+                class="gallery__thumb"
+                data-index="${i}"
+                aria-label="${label}"
+                style="all:unset; display:block; cursor:zoom-in; border:1px solid var(--stone-200)">
+          <img src="${src}" loading="lazy" decoding="async" alt="${imgAlt}">
+        </button>`
 		})
 		.join('')
 
+	// Wire click → open lightbox starting at clicked index
 	domTarget.querySelectorAll('.gallery__thumb').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const index = parseInt(btn.getAttribute('data-index') || '0', 10)
