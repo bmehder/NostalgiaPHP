@@ -1,0 +1,196 @@
+#!/usr/bin/env php
+<?php
+// nphp — NostalgiaPHP tiny CLI
+// Usage:
+//   php nphp make:post <collection> <slug> [--title="Custom Title"] [--draft] [--template=main] [--date=YYYY-MM-DD] [--force]
+//   php nphp make:page <slug> [--title="Custom Title"] [--draft] [--template=main] [--date=YYYY-MM-DD] [--force]
+// Notes: place this file at the project root (next to functions.php).
+
+// ---------- helpers ----------
+function exit_help($code = 0)
+{
+  $help = <<<TXT
+NostalgiaPHP CLI
+
+USAGE
+  php nphp make:post <collection> <slug> [options]
+  php nphp make:page <slug> [options]
+
+OPTIONS
+  --title="Custom Title"   Set a title (defaults to slug → Title Case)
+  --template=main          Front-matter template (default: main)
+  --date=YYYY-MM-DD        Front-matter date (default: today in site timezone)
+  --draft                  Add draft: true
+  --force                  Overwrite existing file
+
+EXAMPLES
+  php nphp make:post blog hello-world
+  php nphp make:post dox api-design --title="API Design Notes" --template=main
+  php nphp make:page about --title="About Us"
+
+TXT;
+  fwrite(STDOUT, $help);
+  exit($code);
+}
+
+function parse_opts(array $argv): array
+{
+  $opts = ['title' => null, 'template' => 'main', 'date' => null, 'draft' => false, 'force' => false];
+  foreach ($argv as $arg) {
+    if ($arg === '--draft') {
+      $opts['draft'] = true;
+      continue;
+    }
+    if ($arg === '--force') {
+      $opts['force'] = true;
+      continue;
+    }
+    if (strpos($arg, '--title=') === 0) {
+      $opts['title'] = substr($arg, 8);
+      continue;
+    }
+    if (strpos($arg, '--template=') === 0) {
+      $opts['template'] = substr($arg, 11);
+      continue;
+    }
+    if (strpos($arg, '--date=') === 0) {
+      $opts['date'] = substr($arg, 7);
+      continue;
+    }
+  }
+  return $opts;
+}
+
+function title_from_slug(string $slug): string
+{
+  $t = preg_replace('/[-_]+/', ' ', $slug);
+  $t = preg_replace('/\s+/', ' ', trim($t));
+  return $t === '' ? 'Untitled' : ucwords($t);
+}
+
+function load_config(): array
+{
+  $cfgFile = __DIR__ . '/config.php';
+  if (is_file($cfgFile)) {
+    $cfg = require $cfgFile;
+    return is_array($cfg) ? $cfg : [];
+  }
+  return [];
+}
+
+function site_tz(array $cfg): string
+{
+  $tz = $cfg['site']['timezone'] ?? 'UTC';
+  return $tz ?: 'UTC';
+}
+
+function today_ymd(string $tz): string
+{
+  try {
+    $dt = new DateTime('now', new DateTimeZone($tz));
+  } catch (Throwable $e) {
+    $dt = new DateTime('now');
+  }
+  return $dt->format('Y-m-d');
+}
+
+function ensure_dir(string $dir): void
+{
+  if (!is_dir($dir) && !mkdir($dir, 0775, true) && !is_dir($dir)) {
+    fwrite(STDERR, "Failed to create directory: $dir\n");
+    exit(1);
+  }
+}
+
+function write_file(string $path, string $content, bool $force): void
+{
+  if (is_file($path) && !$force) {
+    fwrite(STDERR, "Refusing to overwrite existing file: $path (use --force)\n");
+    exit(1);
+  }
+  if (file_put_contents($path, $content) === false) {
+    fwrite(STDERR, "Failed to write file: $path\n");
+    exit(1);
+  }
+}
+
+// ---------- entry ----------
+array_shift($argv); // drop script name
+$cmd = $argv[0] ?? '';
+if ($cmd === '' || $cmd === 'help' || $cmd === '-h' || $cmd === '--help')
+  exit_help(0);
+
+$cfg = load_config();
+date_default_timezone_set(site_tz($cfg));
+
+// Commands
+if ($cmd === 'make:post') {
+  if (count($argv) < 3)
+    exit_help(1);
+  $collection = $argv[1];
+  $slug = $argv[2];
+
+  // collect options from remaining args
+  $opts = parse_opts(array_slice($argv, 3));
+  $title = $opts['title'] ?: title_from_slug($slug);
+  $template = $opts['template'] ?: 'main';
+  $date = $opts['date'] ?: today_ymd(site_tz($cfg));
+  $draft = $opts['draft'];
+  $force = $opts['force'];
+
+  $collectionsPath = $cfg['paths']['collections'] ?? (__DIR__ . '/content/collections');
+  $targetDir = rtrim($collectionsPath, '/\\') . '/' . $collection;
+  ensure_dir($targetDir);
+  $file = $targetDir . '/' . $slug . '.md';
+
+  $front = "---\n"
+    . "title: " . $title . "\n"
+    . "description: \n"
+    . "date: " . $date . "\n"
+    . "template: " . $template . "\n"
+    . "tags: \n"
+    . ($draft ? "draft: true\n" : '')
+    . "---\n\n"
+    . "# " . $title . "\n\n"
+    . "Write something great.\n";
+
+  write_file($file, $front, $force);
+  fwrite(STDOUT, "Created: $file\n");
+  exit(0);
+}
+
+if ($cmd === 'make:page') {
+  if (count($argv) < 2)
+    exit_help(1);
+  $slug = $argv[1];
+
+  $opts = parse_opts(array_slice($argv, 2));
+  $title = $opts['title'] ?: title_from_slug($slug);
+  $template = $opts['template'] ?: 'main';
+  $date = $opts['date'] ?: today_ymd(site_tz($cfg));
+  $draft = $opts['draft'];
+  $force = $opts['force'];
+
+  $pagesPath = $cfg['paths']['pages'] ?? (__DIR__ . '/content/pages');
+  $targetDir = rtrim($pagesPath, '/\\') . '/' . $slug;
+  ensure_dir($targetDir);
+  $file = $targetDir . '/index.md';
+
+  $front = "---\n"
+    . "title: " . $title . "\n"
+    . "description: \n"
+    . "date: " . $date . "\n"
+    . "template: " . $template . "\n"
+    . ($draft ? "draft: true\n" : '')
+    . "---\n\n"
+    . "# " . $title . "\n\n"
+    . "Content goes here.\n";
+
+  write_file($file, $front, $force);
+  fwrite(STDOUT, "Created: $file\n");
+  exit(0);
+}
+
+// Unknown
+fwrite(STDERR, "Unknown command: $cmd\n\n");
+exit_help(1);
