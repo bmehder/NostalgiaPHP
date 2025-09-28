@@ -27,11 +27,25 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <?php endif; ?>
 
   <?php
-  $canon = $path === '' || $path === '/'
-    ? url('/')
-    : url('/' . trim($path, '/'));
+  $cfgBase = trim((string) (config()['site']['base_url'] ?? ''), '/');
+
+  // Detect scheme (proxy-safe)
+  $scheme =
+    (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) ? $_SERVER['HTTP_X_FORWARDED_PROTO']
+      : ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http'));
+
+  $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+  if (preg_match('~^https?://~i', (string) (config()['site']['base_url'] ?? ''))) {
+    $absBase = rtrim((string) config()['site']['base_url'], '/');
+  } else {
+    $absBase = rtrim($scheme . '://' . $host . ($cfgBase ? '/' . $cfgBase : ''), '/');
+  }
+
+  // Current path
+  $path = request_path();
   ?>
-  <link rel="canonical" href="<?= $canon ?>">
+  <link rel="canonical" href="<?= $absBase . $path ?>">
 
   <!-- Open Graph (basic) -->
   <meta property="og:type" content="website">
