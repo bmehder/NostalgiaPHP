@@ -24,10 +24,5 @@ return [
       'list_url' => '/dox',
       'sort' => ['date', 'desc'],
     ],
-    'projects' => [
-      'permalink' => '/projects/{slug}',
-      'list_url' => '/projects',
-      'sort' => ['date', 'desc'],
-    ],
   ],
 ];

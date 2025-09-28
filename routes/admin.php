@@ -220,7 +220,6 @@ foreach ($cols as $c => $items) {
     --ink: #111;
     --muted: #666;
     --line: #e5e5e5;
-    --accent: #0a7;
     --pad: .75rem;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   }
@@ -301,7 +300,7 @@ foreach ($cols as $c => $items) {
     }
 
     .problem {
-      color: #a00;
+      color: var(--red-600);
     }
 
     .ok {
