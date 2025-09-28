@@ -54,9 +54,37 @@ draft: true
 ---
 ```
 
+## Backups
+
+You can back up your entire project with the `backup` command.  
+
+By default, backups are saved to your home directory under `~/nosty_backups/<project>/`.
+
+```bash
+php nphp backup
+```
+
+This will create a zip archive like:
+`~/nosty_backups/MyProject/MyProject-2025-09-28-143000.zip`
+
+### Custom location
+
+You can also specify a different target directory with `--to`:
+
+```bash
+php nphp backup --to=/path/to/backups
+```
+
+### Notes
+
+- Backups include your whole project folder.
+- Common directories like .git and node_modules are excluded automatically.
+- Old backups are not deleted. Manage them yourself by removing old archives.
+- Requires the PHP zip extension.
+
 ## Why It Matters
 
-Consistency, speed, and fewer typos.  
+Consistency, speed, and fewer typos.
 
-Let Nosty handle the boilerplate, and you can focus on writing.
+Embrace lazy. Let Nosty handle the boilerplate, and you can focus on writing.
 

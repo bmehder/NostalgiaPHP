@@ -4,6 +4,7 @@
 // Usage:
 //   php nphp make:post <collection> <slug> [--title="Custom Title"] [--draft] [--template=main] [--date=YYYY-MM-DD] [--force]
 //   php nphp make:page <slug> [--title="Custom Title"] [--draft] [--template=main] [--date=YYYY-MM-DD] [--force]
+//   php nphp backup [--to=/absolute/path]
 // Notes: place this file at the project root (next to functions.php).
 
 // ---------- helpers ----------
@@ -15,6 +16,7 @@ NostalgiaPHP CLI
 USAGE
   php nphp make:post <collection> <slug> [options]
   php nphp make:page <slug> [options]
+  php nphp backup [--to=/absolute/path]
 
 OPTIONS
   --title="Custom Title"   Set a title (defaults to slug → Title Case)
@@ -22,11 +24,13 @@ OPTIONS
   --date=YYYY-MM-DD        Front-matter date (default: today in site timezone)
   --draft                  Add draft: true
   --force                  Overwrite existing file
+  --to=/path               (backup) Destination directory for zip files
 
 EXAMPLES
   php nphp make:post blog hello-world
   php nphp make:post dox api-design --title="API Design Notes" --template=main
   php nphp make:page about --title="About Us"
+  php nphp backup --to="\$HOME/Dropbox/nosty_backups"
 
 TXT;
   fwrite(STDOUT, $help);
@@ -114,6 +118,106 @@ function write_file(string $path, string $content, bool $force): void
   }
 }
 
+// ---------- backup command ----------
+function parse_backup_to(array $args): ?string
+{
+  foreach ($args as $a) {
+    if (strpos($a, '--to=') === 0) {
+      return rtrim(substr($a, 5), "/\\");
+    }
+  }
+  return null;
+}
+
+function cmd_backup(array $args): int
+{
+  $root = realpath(getcwd()) ?: __DIR__;
+  $project = basename($root);
+
+  // destination base
+  $destBase = parse_backup_to($args);
+  if (!$destBase) {
+    $home = getenv('HOME');
+    if (!$home && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+      $home = rtrim(getenv('HOMEDRIVE') . getenv('HOMEPATH'), "/\\");
+    }
+    if (!$home)
+      $home = dirname($root);
+    $destBase = $home . DIRECTORY_SEPARATOR . 'nosty_backups';
+  }
+  $destDir = $destBase . DIRECTORY_SEPARATOR . $project;
+
+  ensure_dir($destDir);
+
+  if (!class_exists('ZipArchive')) {
+    fwrite(STDERR, "❌ PHP ZipArchive extension is required.\n");
+    return 1;
+  }
+
+  $stamp = date('Y-m-d_His');
+  $zipPath = $destDir . DIRECTORY_SEPARATOR . "{$project}_{$stamp}.zip";
+
+  $zip = new ZipArchive();
+  if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::EXCL) !== true) {
+    fwrite(STDERR, "❌ Could not open zip for writing: $zipPath\n");
+    return 1;
+  }
+
+  // exclude some noisy or generated dirs at the project root
+  $exclude = [
+    '.git',
+    '.github',
+    '.idea',
+    '.vscode',
+    'node_modules',
+    'vendor',
+    'dist',
+    'build',
+    'tmp',
+    'cache',
+    'storage',
+  ];
+
+  $addPath = function (string $path) use (&$addPath, $zip, $root, $exclude) {
+    $path = rtrim($path, "/\\");
+    $rel = ltrim(substr($path, strlen($root)), "/\\"); // '' at root
+
+    if ($rel !== '') {
+      foreach ($exclude as $ex) {
+        if ($rel === $ex || strpos($rel, $ex . DIRECTORY_SEPARATOR) === 0) {
+          return;
+        }
+      }
+    }
+
+    if (is_dir($path)) {
+      if ($rel !== '')
+        $zip->addEmptyDir(str_replace(DIRECTORY_SEPARATOR, '/', $rel));
+      $dh = opendir($path);
+      if ($dh) {
+        while (($file = readdir($dh)) !== false) {
+          if ($file === '.' || $file === '..')
+            continue;
+          $addPath($path . DIRECTORY_SEPARATOR . $file);
+        }
+        closedir($dh);
+      }
+    } elseif (is_file($path)) {
+      $local = $rel !== '' ? $rel : basename($path);
+      $zip->addFile($path, str_replace(DIRECTORY_SEPARATOR, '/', $local));
+    }
+  };
+
+  $addPath($root);
+
+  // tiny manifest
+  $zip->addFromString('__nosty_manifest.txt', "project: $project\ncreated: " . date('c') . "\nroot: $root\n");
+  $zip->close();
+
+  fwrite(STDOUT, "✅ Backup created: $zipPath\n");
+  return 0;
+}
+
 // ---------- entry ----------
 array_shift($argv); // drop script name
 $cmd = $argv[0] ?? '';
@@ -189,6 +293,11 @@ if ($cmd === 'make:page') {
   write_file($file, $front, $force);
   fwrite(STDOUT, "Created: $file\n");
   exit(0);
+}
+
+if ($cmd === 'backup') {
+  $args = array_slice($argv, 1);
+  exit(cmd_backup($args));
 }
 
 // Unknown
