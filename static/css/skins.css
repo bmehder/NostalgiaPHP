@@ -2,7 +2,8 @@
 @font-face {
   font-family: 'Inter Tight';
   font-style: normal;
-  font-weight: 100 900; /* works if you have a variable TTF */
+  font-weight: 1
+	00 900; /* works if you have a variable TTF */
   src: url('/static/fonts/InterTight-VariableFont_wght.ttf') format('truetype');
   font-display: swap;
 }
@@ -50,7 +51,7 @@ html {
 	--border-dark: var(--stone-600);
 
 	--accent: var(--red-600);
-	--accent-hover: var(--red-700);
+	--accent-strong: var(--red-700);
 }
 
 /* 🌊 Blue-Slate (cool, modern) */
@@ -72,7 +73,7 @@ html.theme-blue {
 	--border-dark: var(--slate-600);
 
 	--accent: var(--blue-500);
-	--accent-hover: var(--blue-600);
+	--accent-strong: var(--blue-600);
 }
 
 /* 🌞 Amber-Warm (energetic, welcoming) */
@@ -94,7 +95,7 @@ html.theme-amber {
 	--border-dark: var(--amber-600);
 
 	--accent: var(--amber-500);
-	--accent-hover: var(--amber-600);
+	--accent-strong: var(--amber-600);
 }
 
 /* 🌲 Forest-Green (earthy, calm) */
@@ -116,7 +117,7 @@ html.theme-green {
 	--border-dark: var(--green-600);
 
 	--accent: var(--green-600);
-	--accent-hover: var(--green-700);
+	--accent-strong: var(--green-700);
 }
 
 body {
@@ -174,7 +175,7 @@ blockquote {
 	margin: 0;
 	padding-block: var(--size);
 	padding-inline: var(--size-1-5);
-	background-color: var(--text-inverse);
+	background-color: var(--bg-alt);
 }
 
 .bg-white {
@@ -248,7 +249,7 @@ a {
 
 .content figure img {
 	display: block;
-	max-width: 100%;
+	max-inline-size: 100%;
 	border-radius: var(--size-0-2-5);
 }
 

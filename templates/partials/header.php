@@ -8,7 +8,7 @@
 
       <a class="brand flex align-items-center gap-0-5" href="<?= url('/') ?>">
         <!-- NostalgiaPHP mark -->
-        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-hover)">
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-strong)">
           <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
           <!-- Single-stroke 'N' -->
           <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
@@ -40,7 +40,7 @@
           <ul class="submenu list-style-none flow-0-5">
             <li><?= nav_link('/about/blink', 'Blink', $path) ?></li>
             <li><?= nav_link('/about/fetch', 'Fetch', $path) ?></li>
-            <li><?= nav_link('/about/carousel', 'Carousel', $path) ?></li>
+            <li><?= nav_link('/about/css-only-ui-components', 'Components', $path) ?></li>
           </ul>
         </div>
         <?= nav_link('/blog', 'Blog', $path) ?>

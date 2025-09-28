@@ -5,12 +5,12 @@ code[class*='language-'] {
 	white-space: pre-wrap !important; /* allow wrapping */
 	overflow-wrap: anywhere; /* break long tokens/URLs */
 	word-break: break-word;
-	max-width: 100%;
+	max-inline-size: 100%;
 }
 
 /* Optional: preserve a bit of horizontal scroll if really needed */
 .content pre[class*='language-'] {
-	max-width: calc(var(--text-max-width) * 1.05);
+	max-inline-size: calc(var(--text-max-width) * 1.05);
 	overflow-x: auto;
 }
 
@@ -203,7 +203,7 @@ footer {
 	box-shadow: var(--shadow-1);
 
 	img {
-		min-height: var(--xs);
+		min-block-size: var(--xs);
 		object-fit: cover;
 	}
 
@@ -265,7 +265,7 @@ footer {
 
 	.hero-bg {
 		grid-area: 1 / 1;
-		height: 100%;
+		block-size: 100%;
 		object-fit: cover; /* crop to fill */
 	}
 
@@ -300,7 +300,7 @@ footer {
 			box-shadow: var(--shadow-4);
 
 			&:hover {
-				background-color: var(--accent-hover);
+				background-color: var(--accent-strong);
 			}
 		}
 	}
@@ -310,7 +310,7 @@ footer {
 .contact-form {
 	display: grid;
 	gap: var(--size);
-	max-width: var(--sm);
+	max-inline-size: var(--sm);
 
 	label {
 		display: grid;
@@ -365,14 +365,14 @@ dialog.lightbox {
 	border: 0;
 	padding: 0;
 	background: transparent;
-	max-width: none;
+	max-inline-size: none;
 
 	/* only when open do we center & show it */
 	&[open] {
+		block-size: 100vh;
+		inline-size: 100vw;
 		display: grid;
 		place-content: center;
-		width: 100vw;
-		height: 100vh;
 		margin: 0;
 		padding: 0;
 		background: transparent;
@@ -386,21 +386,21 @@ dialog.lightbox {
 
 	.lightbox__frame {
 		margin: 0;
-		max-width: 100%;
-		max-height: 100%;
+		max-inline-size: 100%;
+		max-block-size: 100%;
 		border: 1px solid var(--border-dark);
 
 		.lightbox__img {
 			display: block;
-			max-width: 90vw;
-			max-height: 90vh;
+			max-inline-size: 90vw;
+			max-block-size: 90vh;
 			object-fit: cover;
 			border: none;
 			box-shadow: 0 2px 14px rgb(0 0 0 / 0.35);
 		}
 
 		.lightbox__btn {
-			width: 10px;
+			inline-size: 10px;
 			display: grid;
 			place-items: center;
 			position: absolute;
@@ -430,8 +430,8 @@ dialog.lightbox {
 			border: 0;
 			background: rgb(0 0 0 / 0.5);
 			color: white;
-			width: 36px;
-			height: 36px;
+			inline-size: 36px;
+			block-size: 36px;
 			border-radius: 999px;
 			cursor: pointer;
 		}
@@ -475,8 +475,8 @@ dialog.lightbox {
 
 	&::scroll-button(right),
 	&::scroll-button(left) {
-		width: 3rem;
-		height: 3rem;
+		inline-size: 3rem;
+		block-size: 3rem;
 		position: fixed;
 		content: '\203A';
 		padding-block-end: 0.1em;
@@ -525,8 +525,8 @@ dialog.lightbox {
 
 		&::scroll-marker {
 			content: '';
-			width: var(--size);
-			height: var(--size);
+			inline-size: var(--size);
+			block-size: var(--size);
 			background-color: var(--border);
 			border-radius: 50%;
 		}
@@ -534,5 +534,46 @@ dialog.lightbox {
 		&::scroll-marker:target-current {
 			background-color: var(--accent);
 		}
+	}
+}
+
+/* FAQs */
+.faqs {
+	background: var(--bg-alt);
+	border: 1px solid var(--border);
+	border-radius: var(--size-0-5);
+	box-shadow: var(--shadow-1);
+	overflow: hidden;
+
+	details + details {
+		border-top: 1px solid var(--border);
+	}
+
+	summary {
+		padding-block: var(--size-0-7-5);
+		padding-inline: var(--size);
+		color: var(--accent-strong);
+		list-style: none; /* removes default triangle in some browsers */
+		font-weight: 600;
+		cursor: pointer;
+
+		&::-webkit-details-marker {
+			display: none; /* removes triangle in WebKit */
+		}
+
+		&:is(:hover, :focus) {
+			background: var(--accent-hover, #e0e7ff);
+		}
+	}
+
+	details[open] summary {
+		background: var(--accent);
+		color: var(--text-inverse);
+	}
+
+	details div {
+		padding-block: var(--size-0-7-5);
+		padding-inline: var(--size);
+		background: var(--bg);
 	}
 }

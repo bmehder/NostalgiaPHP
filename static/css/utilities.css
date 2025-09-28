@@ -8,7 +8,7 @@ completeness and consistency.
 
 /* Utility Layouts */
 .wrapper {
-	min-height: 100dvh;
+	min-block-size: 100dvh;
 	display: grid;
 	grid-template-rows: auto 1fr auto;
 	align-items: start;
@@ -28,7 +28,7 @@ completeness and consistency.
 	--inner-width: var(--size-3);
 	--inner-padding-block: var(--size-6);
 
-	width: min(100% - var(--inner-width), var(--lg));
+	inline-size: min(100% - var(--inner-width), var(--lg));
 	margin-inline: auto;
 	padding-block: var(--inner-padding-block);
 }
@@ -94,7 +94,7 @@ completeness and consistency.
 	--float-left-margin-inline-end: var(--size-3);
 	--float-left-margin-block-end: var(--size-1-5);
 
-	width: auto;
+	inline-size: auto;
 	float: inline-start;
 	margin-inline-end: var(--float-left-margin-inline-end);
 	margin-block-end: var(--float-left-margin-block-end);
@@ -104,7 +104,7 @@ completeness and consistency.
 	--float-right-margin-inline-end: var(--size-3);
 	--float-right-margin-block-end: var(--size-1-5);
 
-	width: auto;
+	inline-size: auto;
 	float: inline-end;
 	margin-inline-end: var(--float-right-margin-inline-end);
 	margin-block-end: var(--float-right-margin-block-end);
@@ -112,7 +112,7 @@ completeness and consistency.
 
 .image-shape-right {
 	float: right;
-	width: clamp(var(--xs), 40vw, var(--sm));
+	inline-size: clamp(var(--xs), 40vw, var(--sm));
 	background-position: center;
 	background-size: cover;
 	shape-margin: var(--size-2);
@@ -127,12 +127,12 @@ completeness and consistency.
 .visually-hidden {
 	border: 0;
 	clip: rect(0 0 0 0);
-	height: auto;
+	block-size: auto;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
 	position: absolute;
-	width: 1px;
+	inline-size: 1px;
 	white-space: nowrap;
 }
 
@@ -237,8 +237,8 @@ completeness and consistency.
 }
 
 .full-width {
-	min-width: unset;
-	width: 100%;
+	min-inline-size: unset;
+	inline-size: 100%;
 }
 
 .text-align-left {

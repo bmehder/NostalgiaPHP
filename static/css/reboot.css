@@ -47,7 +47,7 @@ li,
 figcaption,
 blockquote,
 hr {
-	max-width: var(--text-max-width);
+	max-inline-size: var(--text-max-width);
 	text-wrap: pretty;
 }
 
@@ -60,13 +60,13 @@ hr {
 }
 
 .full-width {
-	max-width: initial;
+	max-inline-size: initial;
 }
 
 img,
 picture {
 	inline-size: 100%;
-	height: auto;
+	block-size: auto;
 	display: block;
 	font-style: italic;
 	background-repeat: no-repeat;
@@ -76,7 +76,7 @@ picture {
 
 img[src$='.svg'] {
 	inline-size: auto;
-	height: 1em;
+	block-size: 1em;
 	display: inline-block;
 	font-style: normal;
 }
@@ -96,7 +96,7 @@ textarea {
 }
 
 textarea:not([rows]) {
-	min-height: 10em;
+	min-block-size: 10em;
 }
 
 .details summary::marker {
