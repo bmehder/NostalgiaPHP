@@ -18,8 +18,6 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
 <!doctype html>
 <html lang="en">
 
-</html>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -71,20 +69,22 @@ $og_image = $meta['og_image'] ?? null; // set in front matter if you have one
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
 
-  <!-- Prism -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <!-- Prism (non-blocking) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css" media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
+  </noscript>
 
   <script>
-    Prism.plugins.autoloader.languages_path =
-      "https://cdn.jsdelivr.net/npm/prismjs/components/";
+    // configure autoloader path before the plugin loads
+    window.Prism = window.Prism || {};
+    Prism.plugins = Prism.plugins || {};
+    Prism.plugins.autoloader = { languages_path: "https://cdn.jsdelivr.net/npm/prismjs/components/" };
   </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
 
   <!-- Theme Switcher -->
   <script type="module" src="/static/js/apps/theme-switcher.js"></script>
-
-  <!-- TODO: hook per-page extra head HTML (inline CSS, fonts, etc.) -->
 </head>

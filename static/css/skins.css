@@ -1,4 +1,12 @@
 /* Skins & Typography */
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 100 900; /* works if you have a variable TTF */
+  src: url('/static/fonts/InterTight-VariableFont_wght.ttf') format('truetype');
+  font-display: swap;
+}
+
 html {
 	--xxs: 8rem;
 	--xs: 16rem;
