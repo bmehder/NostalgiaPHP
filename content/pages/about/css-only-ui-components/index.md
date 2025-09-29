@@ -10,7 +10,7 @@ template: main
   }
 </style>
 
-<h1>CSS-only UI Components</h1>
+<h1>CSS-only* UI Components</h1>
 
 UI components that once seemed to require JavaScript—often built with frameworks like React—are now possible with nothing more than HTML and CSS.
 
@@ -126,5 +126,54 @@ This means you don’t need to wire up ARIA attributes, focus trapping, or overl
 <div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
   <div>
     <button onclick="modal.showModal()">Show Modal</button>
+  </div>
+</div>
+
+## Before/After Comparison
+
+Another classic UI pattern that used to almost always rely on heavy JavaScript libraries is the before–after slider. In this version, CSS handles the actual reveal effect using `clip-path` and a custom property. JavaScript plays only a minimal role: wiring up the range input so its value updates the CSS variable.
+
+It’s a much lighter approach than older libraries — most of the work is done natively in CSS, while JS just provides the bridge between user input and styling.
+
+<script type="module" src="/static/js/apps/comparison.js"></script>
+
+<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
+  <div class="comparison" data-comparison>
+    <img class="before" src="https://picsum.photos/id/1015/960/640" alt="Before">
+    <img class="after" src="https://picsum.photos/id/1016/960/640" alt="After">
+    <input type="range" min="0" max="100" value="50" aria-label="Image comparison slider">
+  </div>
+</div>
+
+## Tabs
+
+Tabs let you organize related content into panels where only one is visible at a time. Traditionally, this required JavaScript to toggle states and hide/show panels. But with plain HTML and CSS, we can achieve the same behavior using radio inputs and labels.
+
+Each tab is backed by a hidden radio input (so only one can be active at a time), and the labels act as the clickable tab headers. CSS then uses the `:checked` state to display the correct panel.
+
+This approach is accessible by default (since radios are part of the native form controls), keyboard-friendly, and requires no scripting. It’s also easy to style so the tabs look like the traditional UI pattern users expect.
+
+<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
+  <div class="tabs" role="tablist" aria-label="Demo tabs">
+    <input type="radio" name="tabset" id="tab-1" checked>
+    <label for="tab-1" role="tab" aria-controls="panel-1">Overview</label>
+    <input type="radio" name="tabset" id="tab-2">
+    <label for="tab-2" role="tab" aria-controls="panel-2">Features</label>
+    <input type="radio" name="tabset" id="tab-3">
+    <label for="tab-3" role="tab" aria-controls="panel-3">Pricing</label>
+    <div class="tab-panels">
+      <section id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+        <h3>Overview</h3>
+        <p>This is the overview panel.</p>
+      </section>
+      <section id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+        <h3>Features</h3>
+        <p>This is the features panel.</p>
+      </section>
+      <section id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+        <h3>Pricing</h3>
+        <p>This is the pricing panel.</p>
+      </section>
+    </div>
   </div>
 </div>

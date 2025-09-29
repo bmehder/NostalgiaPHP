@@ -577,3 +577,119 @@ dialog.lightbox {
 		background: var(--bg);
 	}
 }
+
+/* Before/After comparison */
+.comparison {
+	--pos: 50;
+	display: grid;
+	position: relative;
+	max-inline-size: var(--md);
+	border-radius: var(--size-0-5);
+	overflow: hidden;
+
+	img {
+		grid-area: 1 / 1;
+	}
+
+	/* Top image is clipped to the slider position */
+	.after {
+		clip-path: inset(0 calc(100% - (var(--pos) * 1%)) 0 0);
+		will-change: clip-path;
+	}
+
+	/* A vertical divider line at the split */
+	&::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: linear-gradient(
+			to right,
+			transparent calc((var(--pos) * 1%) - 1px),
+			rgba(255, 255, 255, 0.9) calc((var(--pos) * 1%) - 1px)
+				calc((var(--pos) * 1%) + 1px),
+			transparent calc((var(--pos) * 1%) + 1px)
+		);
+	}
+
+	/* Slider pinned inside the box */
+	input[type='range'] {
+		position: absolute;
+		left: 50%;
+		bottom: 12px;
+		transform: translateX(-50%);
+		width: min(90%, 520px);
+		z-index: 2;
+		background: transparent;
+		margin: 0;
+	}
+}
+
+/* Tabs */
+.tabs {
+	--tab-bg: var(--bg);
+	--tab-fg: var(--text);
+	--tab-muted: var(--border);
+	--tab-accent: var(--bg-alt-2);
+	--tab-radius: var(--size-0-5);
+
+	max-inline-size: var(--sm);
+
+	/* hide radios */
+	& > input[type='radio'] {
+		position: absolute;
+		left: -9999px; /* off screen */
+	}
+
+	/* tab strip */
+	& > label {
+		display: inline-block;
+		padding-block: var(--size-0-7-5);
+		padding-inline: var(--size);
+		border: 1px solid var(--tab-muted);
+		border-bottom: none;
+		background: color-mix(in oklab, var(--tab-bg) 92%, black 0%);
+		cursor: pointer;
+		user-select: none;
+		border-top-left-radius: var(--tab-radius);
+		border-top-right-radius: var(--tab-radius);
+
+		&:focus-visible {
+			outline: none;
+			box-shadow: 0 0 0 3px color-mix(in oklab, var(--tab-accent) 55%, transparent),
+				0 0 0 5px var(--tab-bg);
+			border-color: var(--tab-accent);
+		}
+	}
+
+	/* panels */
+	.tab-panels {
+		/* border: 1px solid var(--tab-muted); */
+		border-radius: 0 0 var(--tab-radius) var(--tab-radius);
+		padding: var(--size);
+		background: var(--tab-accent);
+
+		& > section {
+			/* show only the checked panel */
+			display: none;
+		}
+	}
+
+	#tab-1:checked ~ .tab-panels > section:nth-child(1) {
+		display: block;
+	}
+	#tab-2:checked ~ .tab-panels > section:nth-child(2) {
+		display: block;
+	}
+	#tab-3:checked ~ .tab-panels > section:nth-child(3) {
+		display: block;
+	}
+
+	/* active tab */
+	#tab-1:checked + label,
+	#tab-2:checked + label,
+	#tab-3:checked + label {
+		background: var(--tab-accent);
+		font-weight: 600;
+	}
+}
