@@ -1,11 +1,10 @@
 /* Skins & Typography */
 @font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 1
-	00 900; /* works if you have a variable TTF */
-  src: url('/static/fonts/InterTight-VariableFont_wght.ttf') format('truetype');
-  font-display: swap;
+	font-family: 'Inter Tight';
+	font-style: normal;
+	font-weight: 1 00 900; /* works if you have a variable TTF */
+	src: url('/static/fonts/InterTight-VariableFont_wght.ttf') format('truetype');
+	font-display: swap;
 }
 
 html {
@@ -35,8 +34,8 @@ html {
 	--text-inverse: var(--stone-100);
 	--text-inverse-hover: var(--stone-200);
 	--text-disabled: var(--stone-300);
-	
-  --text-max-width: 65ch;
+
+	--text-max-width: 65ch;
 
 	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
 		sans-serif;
@@ -180,6 +179,12 @@ blockquote {
 
 .bg-white {
 	background-color: white;
+}
+
+input,
+textarea {
+	padding: var(--size-0-5);
+	border: 1px solid var(--gray-300);
 }
 
 button,

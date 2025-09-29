@@ -320,12 +320,6 @@ footer {
 		display: grid;
 		gap: var(--size-0-2-5);
 	}
-
-	input,
-	textarea {
-		padding: var(--size-0-5);
-		border: 1px solid var(--gray-300);
-	}
 }
 
 /* Stack on narrow screens */
@@ -693,6 +687,7 @@ dialog.lightbox {
 		& > section {
 			display: none;
 			padding: var(--size);
+			padding-block-start: var(--size-1-5);
 			background-color: var(--bg-alt);
 			border: 1px solid var(--border);
 		}
