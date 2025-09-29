@@ -651,10 +651,9 @@ dialog.lightbox {
 }
 
 /* Tabs */
-
 .tabs {
-	max-inline-size: var(--sm);
-	
+	max-inline-size: var(--text-max-width);
+
 	/* Visually hide but keep radios focusable */
 	input[type='radio'] {
 		position: absolute;
@@ -666,13 +665,6 @@ dialog.lightbox {
 		clip: rect(0 0 0 0);
 		clip-path: inset(50%); /* modern */
 		overflow: hidden;
-
-		/* Focus ring when the RADIO (not label) is focused */
-		&:focus-visible + label {
-			outline: 2px solid transparent; /* for high-contrast */
-			box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 45%, white 0%);
-			border-color: var(--bg-alt);
-		}
 
 		/* Active tab label */
 		&:checked + label {
