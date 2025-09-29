@@ -630,7 +630,7 @@ dialog.lightbox {
 	--tab-bg: var(--bg);
 	--tab-fg: var(--text);
 	--tab-muted: var(--border);
-	--tab-accent: var(--bg-alt-2);
+	--tab-accent: var(--bg-alt);
 	--tab-radius: var(--size-0-5);
 
 	max-inline-size: var(--sm);
