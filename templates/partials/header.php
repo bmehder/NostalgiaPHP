@@ -38,9 +38,9 @@
             About
           </a>
           <ul class="submenu list-style-none flow-0-5">
+            <li><?= nav_link('/about/css-only-ui-components', 'Components', $path) ?></li>
             <li><?= nav_link('/about/blink', 'Blink', $path) ?></li>
             <li><?= nav_link('/about/fetch', 'Fetch', $path) ?></li>
-            <li><?= nav_link('/about/css-only-ui-components', 'Components', $path) ?></li>
           </ul>
         </div>
         <?= nav_link('/blog', 'Blog', $path) ?>

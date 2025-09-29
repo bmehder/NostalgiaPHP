@@ -51,6 +51,10 @@ hr {
 	text-wrap: pretty;
 }
 
+ul {
+	margin: 0;
+}
+
 hr {
 	margin-block: var(--size-2);
 	margin-inline-start: 0;

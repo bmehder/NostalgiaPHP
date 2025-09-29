@@ -590,6 +590,10 @@ dialog.lightbox {
 		padding: var(--size-3);
 	}
 
+	h3 {
+		margin: 0;
+	}
+
 	&::backdrop {
 		background-color: rgba(0, 0, 0, 0.8);
 	}
