@@ -653,6 +653,8 @@ dialog.lightbox {
 /* Tabs */
 
 .tabs {
+	max-inline-size: var(--sm);
+	
 	/* Visually hide but keep radios focusable */
 	input[type='radio'] {
 		position: absolute;
