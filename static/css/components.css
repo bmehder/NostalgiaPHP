@@ -156,6 +156,10 @@ header {
 				padding-inline: var(--size-1-5);
 				background: transparent;
 				box-shadow: none;
+
+				a {
+					display: block;
+				}
 			}
 
 			.has-submenu:focus-within > .submenu,
@@ -635,82 +639,80 @@ dialog.lightbox {
 
 	/* Slider pinned inside the box */
 	input[type='range'] {
+		inline-size: calc(100% - var(--size-3));
 		position: absolute;
 		left: 50%;
-		bottom: 12px;
-		transform: translateX(-50%);
-		width: min(90%, 520px);
-		z-index: 2;
-		background: transparent;
+		bottom: var(--size);
 		margin: 0;
+		transform: translateX(-50%);
+		background: transparent;
+		z-index: 2;
 	}
 }
 
 /* Tabs */
+
 .tabs {
-	--tab-bg: var(--bg);
-	--tab-fg: var(--text);
-	--tab-muted: var(--border);
-	--tab-accent: var(--bg-alt);
-	--tab-radius: var(--size-0-5);
-
-	max-inline-size: var(--sm);
-
-	/* hide radios */
-	& > input[type='radio'] {
+	/* Visually hide but keep radios focusable */
+	input[type='radio'] {
 		position: absolute;
-		left: -9999px; /* off screen */
+		inline-size: 1px;
+		block-size: 1px;
+		margin: -1px;
+		padding: 0;
+		border: 0;
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%); /* modern */
+		overflow: hidden;
+
+		/* Focus ring when the RADIO (not label) is focused */
+		&:focus-visible + label {
+			outline: 2px solid transparent; /* for high-contrast */
+			box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 45%, white 0%);
+			border-color: var(--bg-alt);
+		}
+
+		/* Active tab label */
+		&:checked + label {
+			background: var(--bg-alt);
+			font-weight: 600;
+		}
 	}
 
-	/* tab strip */
-	& > label {
+	/* Tab labels look like tabs */
+	label {
 		display: inline-block;
-		padding-block: var(--size-0-7-5);
-		padding-inline: var(--size);
-		border: 1px solid var(--tab-muted);
+		margin-block-end: -2px;
+		margin-inline-start: 1px;
+		padding: 0.5rem 0.9rem;
+		border: 1px solid var(--border);
 		border-bottom: none;
-		background: color-mix(in oklab, var(--tab-bg) 92%, black 0%);
+		border-radius: 0.5rem 0.5rem 0 0;
+		background: var(--bg);
 		cursor: pointer;
-		user-select: none;
-		border-top-left-radius: var(--tab-radius);
-		border-top-right-radius: var(--tab-radius);
-
-		&:focus-visible {
-			outline: none;
-			box-shadow: 0 0 0 3px color-mix(in oklab, var(--tab-accent) 55%, transparent),
-				0 0 0 5px var(--tab-bg);
-			border-color: var(--tab-accent);
-		}
 	}
 
-	/* panels */
 	.tab-panels {
-		/* border: 1px solid var(--tab-muted); */
-		border-radius: 0 0 var(--tab-radius) var(--tab-radius);
-		padding: var(--size);
-		background: var(--tab-accent);
+		border: 1px solid var(--bg-alt);
 
+		/* Panels: hidden by default */
 		& > section {
-			/* show only the checked panel */
 			display: none;
+			padding: var(--size);
+			background-color: var(--bg-alt);
+			border: 1px solid var(--border);
 		}
 	}
-
-	#tab-1:checked ~ .tab-panels > section:nth-child(1) {
+	
+	/* Show the active panel */
+	#tab-1:checked ~ .tab-panels #panel-1 {
 		display: block;
 	}
-	#tab-2:checked ~ .tab-panels > section:nth-child(2) {
+	#tab-2:checked ~ .tab-panels #panel-2 {
 		display: block;
 	}
-	#tab-3:checked ~ .tab-panels > section:nth-child(3) {
+	#tab-3:checked ~ .tab-panels #panel-3 {
 		display: block;
-	}
-
-	/* active tab */
-	#tab-1:checked + label,
-	#tab-2:checked + label,
-	#tab-3:checked + label {
-		background: var(--tab-accent);
-		font-weight: 600;
 	}
 }
+	

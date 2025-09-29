@@ -53,7 +53,7 @@ In short: the browser’s layout and scrolling engine is doing all the work. We�
 This accordion is JS-free, built with native `<details>` and a shared name to ensure only one section is open at a time.
 
 - **Semantic HTML:** `<details>` / `<summary>` communicates “disclosure” to browsers, screen readers, and keyboards.
-- **Built-in UX:** Space/Enter toggles; Arrow keys move focus between summaries (browser-dependent).
+- **Built-in UX:** Space/Enter toggles; the tab key moves focus between summaries (browser-dependent).
 - **Mutual exclusivity:** Giving all `<details>` the same `name` attribute turns them into a group—opening one closes the others.
 
 <div class="inner full-width flow" style="--inner-padding-block: var(--size-2); max-inline-size: 65ch; margin-inline: 0">
@@ -142,11 +142,11 @@ This approach is accessible by default (since radios are part of the native form
 <div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
   <div class="tabs" role="tablist" aria-label="Demo tabs">
     <input type="radio" name="tabset" id="tab-1" checked>
-    <label for="tab-1" role="tab" aria-controls="panel-1">Overview</label>
+    <label for="tab-1">Overview</label>
     <input type="radio" name="tabset" id="tab-2">
-    <label for="tab-2" role="tab" aria-controls="panel-2">Features</label>
+    <label for="tab-2">Features</label>
     <input type="radio" name="tabset" id="tab-3">
-    <label for="tab-3" role="tab" aria-controls="panel-3">Pricing</label>
+    <label for="tab-3">Pricing</label>
     <div class="tab-panels">
       <section id="panel-1" role="tabpanel" aria-labelledby="tab-1">
         <h3>Overview</h3>
