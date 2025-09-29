@@ -50,7 +50,7 @@ In short: the browser’s layout and scrolling engine is doing all the work. We�
 
 ## Accordion
 
-Here’s a clean, JS-free accordion using native `<details>` with a shared name so only one section can be open at a time.
+This accordion is JS-free, built with native `<details>` and a shared name to ensure only one section is open at a time.
 
 - **Semantic HTML:** `<details>` / `<summary>` communicates “disclosure” to browsers, screen readers, and keyboards.
 - **Built-in UX:** Space/Enter toggles; Arrow keys move focus between summaries (browser-dependent).
@@ -91,22 +91,8 @@ Here’s a clean, JS-free accordion using native `<details>` with a shared name 
   </div>
 </div>
 
-<style>
-	dialog {
-		width: min(100% - 3rem, var(--sm));
-		padding: 0;
-
-    .inner {
-      display: grid;
-      gap: var(--size-1-5);
-      align-items: center;
-      padding: var(--size-3);
-    }
-  }
-</style>
-
-<dialog	id="modal">
-  <div class="inner flow">
+<dialog	id="modal" class="modal">
+  <div class="inner">
     <h3>I am a modal</h3>
     <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat nulla ad nemo.</div>
     <form method="dialog">
@@ -121,7 +107,7 @@ The `<dialog>` element gives you a built-in way to create modals without JavaScr
 
 This means you don’t need to wire up ARIA attributes, focus trapping, or overlay click handling yourself — it’s all provided by the platform. You can still style the dialog and its backdrop to fit your design.
 
->**Note:** Backdrop styling (`::backdrop`) is still inconsistent across browsers. Some support blur and custom colors, while others are limited. In this example, there is no styling added to the `::backdrop` psuedo-element.
+>**Note:** Backdrop styling (via `::backdrop`) is still inconsistent across browsers. Some support blur and custom colors, while others are limited.
 
 <div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
   <div>

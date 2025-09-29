@@ -578,6 +578,23 @@ dialog.lightbox {
 	}
 }
 
+/* Modal */
+.modal {
+	width: min(100% - 3rem, var(--sm));
+	padding: 0;
+
+	.inner {
+		display: grid;
+		gap: var(--size-1-5);
+		align-items: center;
+		padding: var(--size-3);
+	}
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.8);
+	}
+}
+
 /* Before/After comparison */
 .comparison {
 	--pos: 50;
