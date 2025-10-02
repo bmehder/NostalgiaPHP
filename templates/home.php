@@ -6,8 +6,6 @@
   }
 </style>
 
-<script defer src="/static/js/apps/reveal.js"></script>
-
 <body class="home full-width">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
@@ -18,7 +16,7 @@
         <div class="outer">
           <div class="inner">
             <div class="content auto-fit reverse">
-              <div class="flow reveal reveal-right">
+              <div class="flow appear appear-right">
                 <div class="kicker">Lightweight by design.</div>
                 <h2>Rock, Paper, Markdown</h2>
                 <p class="lead">
@@ -34,7 +32,7 @@
                     rel="noopener">GitHub</a>
                 </div>
               </div>
-              <figure class="reveal reveal-left" style="margin-inline: auto;">
+              <figure class="appear appear-left" style="margin-inline: auto;">
                 <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg"
                   alt="NostalgiaPHP project structure overview">
                 <figcaption class="visually-hidden">Example project structure</figcaption>
@@ -51,7 +49,7 @@
             <div class="kicker">Back to basics</div>
             <h2>The Nostalgia Core</h2>
             <div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)"
-              data-reveal-children data-stagger="80">
+              data-appear-children data-stagger="80">
               <?php
               include path('data') . '/features.php';
               foreach ($features as $feature):
@@ -70,7 +68,7 @@
         <div class="outer">
           <div class="inner">
             <div class="content auto-fit reverse">
-              <div class="flow reveal reveal-right">
+              <div class="flow appear appear-right">
                 <div class="kicker">Under the hood, there’s barely a hood.</div>
                 <h2>How It Works</h2>
                 <ol>
@@ -87,7 +85,7 @@
                 </ol>
                 <a class="button" href="/dox/">View the Dox</a>
               </div>
-                <div class="reveal reveal-left">
+                <div class="appear appear-left">
                   <pre>
                     <code class="language-yaml">
 ---
