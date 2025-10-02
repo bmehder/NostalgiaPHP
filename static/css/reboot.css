@@ -103,6 +103,8 @@ textarea:not([rows]) {
 	min-block-size: 10em;
 }
 
+/* This is our of place,
+but a convenient place to put it. */
 .details summary::marker {
 	content: '\002b';
 }
@@ -110,6 +112,7 @@ textarea:not([rows]) {
 .details[open] summary::marker {
 	content: '\2212';
 }
+/* ______________________________ */
 
 summary {
 	cursor: pointer;

@@ -14,14 +14,14 @@ NostalgiaPHP has always been about simplicity: flat files, partial templates, an
 
 The API lives under `/api`. Here are the routes currently available:
 
-* **`/api`** – overview of the available routes.
-* **`/api/health`** – quick check that the API is alive.
-* **`/api/items`** – list items from all collections.
-* **`/api/items/blog`** – list items from a specific collection.
-* **`/api/pages`** – list all pages.
-* **`/api/pages/{slug}`** – get a single page by slug.
-* **`/api/tags`** – list all tags across collections.
-* **`/api/tags/{tag}`** – list all items filtered by a tag.
+- **`/api`** – overview of the available routes.
+- **`/api/health`** – quick check that the API is alive.
+- **`/api/items`** – list items from all collections.
+- **`/api/items/blog`** – list items from a specific collection.
+- **`/api/pages`** – list all pages.
+- **`/api/pages/{slug}`** – get a single page by slug.
+- **`/api/tags`** – list all tags across collections.
+- **`/api/tags/{tag}`** – list all items filtered by a tag.
 
 Responses are JSON, sorted by date (newest first when applicable), and include:
 

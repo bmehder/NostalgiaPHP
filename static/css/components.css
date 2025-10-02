@@ -322,6 +322,7 @@ footer {
 	}
 }
 
+/* Sidebar template */
 /* Stack on narrow screens */
 @media (width <= 48rem) {
 	.content-sidebar {
@@ -705,3 +706,49 @@ dialog.lightbox {
 	}
 }
 	
+/* Animations */
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  [data-reveal-children] > * {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Base reveal state */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
+  will-change: opacity, transform;
+}
+
+/* Visible */
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Variants */
+.reveal-up    { transform: translateY(48px); }
+.reveal-down  { transform: translateY(-48px); }
+.reveal-left  { transform: translateX(48px); }
+.reveal-right { transform: translateX(-48px); }
+.reveal-scale { transform: scale(.95); }
+
+/* Optional: stagger children of a container */
+[data-reveal-children] > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 360ms ease,
+    transform 360ms ease;
+}
+[data-reveal-children].is-visible > * {
+  opacity: 1;
+  transform: none;
+}

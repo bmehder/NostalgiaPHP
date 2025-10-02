@@ -1,6 +1,6 @@
 <?php
 // expects $items and $collection
-echo '<div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)">';
+echo '<div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)" data-reveal-children data-stagger="80">';
 foreach ($items as $item) {
   // your existing card partial expects $item
   include path('partials') . '/card.php';

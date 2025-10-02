@@ -1,12 +1,4 @@
 /* Skins & Typography */
-@font-face {
-	font-family: 'Inter Tight';
-	font-style: normal;
-	font-weight: 1 00 900; /* works if you have a variable TTF */
-	src: url('/static/fonts/InterTight-VariableFont_wght.ttf') format('truetype');
-	font-display: swap;
-}
-
 html {
 	--xxs: 8rem;
 	--xs: 16rem;
@@ -40,7 +32,7 @@ html {
 	--heading-font: 'Inter Tight', system-ui, -apple-system, Segoe UI, Roboto,
 		sans-serif;
 
-	/* --bg: #fff; */
+	--bg-white: #fff;
 	--bg-alt: var(--stone-100);
 	--bg-alt-2: var(--stone-200);
 	--bg-disabled: var(--stone-600);
@@ -62,7 +54,7 @@ html.theme-blue {
 	--text-inverse-hover: var(--slate-200);
 	--text-disabled: var(--slate-400);
 
-	--bg: #fff;
+	--bg-white: #fff;
 	--bg-alt: var(--slate-100);
 	--bg-alt-2: var(--slate-200);
 	--bg-disabled: var(--slate-600);
@@ -84,7 +76,7 @@ html.theme-amber {
 	--text-inverse-hover: var(--stone-200);
 	--text-disabled: var(--stone-400);
 
-	--bg: #fff;
+	--bg-white: #fff;
 	--bg-alt: var(--amber-50);
 	--bg-alt-2: var(--amber-100);
 	--bg-disabled: var(--stone-600);
@@ -106,7 +98,7 @@ html.theme-green {
 	--text-inverse-hover: var(--zinc-200);
 	--text-disabled: var(--zinc-400);
 
-	--bg: #fff;
+	--bg-white: #fff;
 	--bg-alt: var(--green-50);
 	--bg-alt-2: var(--green-100);
 	--bg-disabled: var(--zinc-600);
@@ -142,7 +134,8 @@ h3 {
 	letter-spacing: -0.015em;
 	line-height: 1.2;
 	text-wrap: balance;
-	margin: 0 0 0.5em;
+	margin: 0;
+	margin-block-end: var(--size-0-5);
 }
 
 .kicker {
@@ -162,6 +155,11 @@ h3 {
 
 main h2 {
 	margin-block-start: var(--size-1-5);
+	margin-block-end: var(--size-0-2-5);
+}
+
+main .content h2 {
+	margin-block-end: var(--size);
 }
 
 button,
@@ -178,13 +176,13 @@ blockquote {
 }
 
 .bg-white {
-	background-color: white;
+	background-color: var(--bg-white);
 }
 
 input,
 textarea {
 	padding: var(--size-0-5);
-	border: 1px solid var(--gray-300);
+	border: 1px solid var(--stone-300);
 }
 
 button,

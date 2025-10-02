@@ -122,6 +122,7 @@ $pathOnly = parse_url($reqUri, PHP_URL_PATH) ?? '/';
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/toolbar/prism-toolbar.css" media="print" onload="this.media='all'">
 
   <!-- Theme Switcher -->
   <script type="module" src="/static/js/apps/theme-switcher.js"></script>

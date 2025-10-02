@@ -21,7 +21,7 @@ Cleans up filesystem paths so they always use forward slashes. This makes things
 
 ### `config($key, $default)`
 
-Fetches a configuration value from your global settings. Handy for site‑wide options like `site.name` or `base_url`.
+Fetches a configuration value from your global settings. Handy for site‑wide options like the site `name` or `base_url`.
 
 ### `site($key, $default)`
 
