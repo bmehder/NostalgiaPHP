@@ -24,7 +24,7 @@
 	}
 
 	const makeObserver = el => {
-		const threshold = parseFloat(el.getAttribute('data-threshold') || '0.1')
+		const threshold = parseFloat(el.getAttribute('data-threshold') || '0')
 		const rootMargin = el.getAttribute('data-root-margin') || '0px 0px -10% 0px'
 		return new IntersectionObserver(
 			entries => {
