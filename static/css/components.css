@@ -738,3 +738,41 @@ dialog.lightbox {
 .appear-scale {
 	transform: scale(0.95);
 }
+
+/* Pagination */
+.pager {
+  display:flex;
+  gap:.5rem;
+  align-items:center;
+  justify-content:center;
+  margin-block-start:var(--size-2);
+	
+	.page-btn {
+		padding:.45rem .75rem;
+		border:1px solid var(--border);
+		border-radius:.5rem;
+		background: var(--bg-alt-2);   /* subtle chip look */
+		color: var(--text, #111);
+		text-decoration:none;
+		line-height:1;
+		transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+		
+		&:hover,
+		&:focus-visible {
+			background: var(--bg-alt);
+			border-color: var(--border-dark);
+			outline: none;
+			box-shadow: var(--focus-ring, 0 0 0 3px rgb(56 189 248 / .35));
+		}
+		
+		/* Disabled look */
+		&.is-disabled {
+			opacity:.45;
+			cursor: default;
+			pointer-events:none;
+			background: var(--bg-alt);
+			border-style: dashed; /* light hint it's inactive */
+			box-shadow:none;
+		}
+	}
+}

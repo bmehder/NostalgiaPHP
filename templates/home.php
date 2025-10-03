@@ -119,7 +119,7 @@ It’s **Markdown in, HTML out**.
             }
             ?>
             <?php if (!empty($blog_items)): ?>
-              <section class="from-blog appear appear-left">
+              <section class="from-blog">
                 <div class="kicker">Latest scribbles from the cave wall.</div>
                 <h2>From the Blog</h2>
                 <?php

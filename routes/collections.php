@@ -45,20 +45,25 @@ if (count($parts) === 1) {
     include path('partials') . '/cards-grid.php';
 
     if ($pages > 1) {
-      echo '<nav class="pager" style="display:flex;gap:.5rem;align-items:center;justify-content:center;margin-block-start:var(--size-2)">';
-      if ($page > 1) {
-        echo '<a class="button" href="' . htmlspecialchars($buildPageHref($page - 1), ENT_QUOTES, 'UTF-8') . '">← Prev</a>';
+      echo '<nav class="pager" role="navigation" aria-label="Pagination">';
+
+      $prevHref = $page > 1 ? $buildPageHref($page - 1) : null;
+      $nextHref = $page < $pages ? $buildPageHref($page + 1) : null;
+
+      if ($prevHref) {
+        echo '<a class="page-btn" rel="prev" href="' . htmlspecialchars($prevHref, ENT_QUOTES, 'UTF-8') . '">← Prev</a>';
       } else {
-        echo '<span class="button" aria-disabled="true" style="opacity:.5;pointer-events:none">← Prev</span>';
+        echo '<span class="page-btn is-disabled" aria-disabled="true" tabindex="-1">← Prev</span>';
       }
 
       echo '<span class="muted" style="padding:.25rem .5rem">Page ' . $page . ' of ' . $pages . '</span>';
 
-      if ($page < $pages) {
-        echo '<a class="button" href="' . htmlspecialchars($buildPageHref($page + 1), ENT_QUOTES, 'UTF-8') . '">Next →</a>';
+      if ($nextHref) {
+        echo '<a class="page-btn" rel="next" href="' . htmlspecialchars($nextHref, ENT_QUOTES, 'UTF-8') . '">Next →</a>';
       } else {
-        echo '<span class="button" aria-disabled="true" style="opacity:.5;pointer-events:none">Next →</span>';
+        echo '<span class="page-btn is-disabled" aria-disabled="true" tabindex="-1">Next →</span>';
       }
+
       echo '</nav>';
     }
   }

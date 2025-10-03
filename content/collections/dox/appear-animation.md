@@ -1,112 +1,128 @@
 ---
 title: Appear Animations
-description: A lightweight, JS-assisted approach to scroll-based reveal animations using IntersectionObserver and CSS transitions.
+description: A lightweight scroll-based reveal animation technique using IntersectionObserver and CSS transitions.
 date: 2025-10-02
 image: static/media/appear.jpg
 template: main
-tags: css, animation, intersectionobserver, progressive-enhancement
+tags: css, animation, intersectionobserver
 ---
 
 # Appear Animations
 
-Subtle scroll-based animations are a nice way to make a page feel alive without pulling in a large library like GSAP. We can build a lightweight **“appear” helper** by combining:
+Scroll-based animations can add a subtle sense of depth and polish to a site.  
+Instead of reaching for a full animation library like GSAP, we can achieve a **lightweight “appear” effect** by combining:
 
-- **IntersectionObserver** → detect when elements enter the viewport.
-- **CSS transitions** → handle the actual fade/slide/scale animations.
-- **A simple `.is-visible` toggle** → added once, no reflows.
+- **IntersectionObserver** → detect when elements enter the viewport.  
+- **CSS transitions** → fade, slide, or scale into place.  
+- **A simple `.is-visible` toggle** → applied only once.  
 
-This balances performance and user experience while respecting `prefers-reduced-motion`.
+This keeps things small, performant, and easy to extend.
 
 ---
 
 ## CSS
 
-Here’s the minimal CSS that defines hidden and visible states:
+We start with a base hidden state and a visible state:
 
 ```css
-@media (prefers-reduced-motion: reduce) {
-  .appear,
-  [data-appear-children] > * {
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
+/* Base hidden state */
+.appear {
+	--appear-translate: 128px;
+
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+	will-change: opacity, transform;
+
+	/* appeared */
+	&.is-visible {
+		opacity: 1;
+		transform: none;
+	}
 }
 
-.appear,
-[data-appear-children] > * {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .45s ease, transform .45s ease;
-  will-change: opacity, transform;
+/* Variants override the baseline transform */
+.appear-up {
+	transform: translateY(var(--appear-translate));
 }
-
-.is-visible,
-[data-appear-children].is-visible > * {
-  opacity: 1;
-  transform: none;
+.appear-down {
+	transform: translateY(calc(var(--appear-translate) * -1));
+}
+.appear-left {
+	transform: translateX(var(--appear-translate));
+}
+.appear-right {
+	transform: translateX(calc(var(--appear-translate) * -1));
+}
+.appear-scale {
+	transform: scale(0.95);
 }
 ```
 
-- Single elements: add the .appear class.
-- Containers: add data-appear-children to stagger-fade their children.
+- Add .appear for a simple fade+slide.
+- Add a variant (e.g. .appear-left) to change the motion.
 
 ---
 
 ## JavaScript
 
-A single script observes targets and applies .is-visible when needed:
+A small script observes .appear elements and reveals them on scroll:
 
 ```js
 ;(() => {
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (prefersReduced) return
-
-  const STAGGER_DEFAULT = 70 // ms per child
-
-  const onEnter = el => {
-    if (el.hasAttribute('data-appear-children')) {
-      const step = parseInt(el.getAttribute('data-stagger') || STAGGER_DEFAULT, 10)
-      ;[...el.children].forEach((child, i) => {
-        child.style.transitionDelay = `${i * step}ms`
-      })
-    }
-    el.classList.add('is-visible')
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.appear')
+      .forEach(el => el.classList.add('is-visible'))
+    return
   }
 
-  const io = new IntersectionObserver(entries => {
+  const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        onEnter(entry.target)
+        entry.target.classList.add('is-visible')
         io.unobserve(entry.target)
       }
     })
   }, { threshold: 0.2 })
 
-  document.querySelectorAll('.appear, [data-appear-children]').forEach(el => io.observe(el))
+  document.querySelectorAll('.appear').forEach(el => io.observe(el))
 })()
 ```
+
 ---
 
 ## Usage
 
 ```html
 <h2 class="appear">Fade In Heading</h2>
-
-<div data-appear-children data-stagger="120">
-  <p>First item</p>
-  <p>Second item</p>
-  <p>Third item</p>
-</div>
+<p class="appear appear-left">Slide In from Left</p>
+<p class="appear appear-scale">Subtle Scale-Up</p>
 ```
+
+---
+
+## ⚠️ A Note on JavaScript Requirement
+
+This technique **requires JavaScript**.
+
+If the script is removed or fails to load, elements with `.appear` will remain invisible because their CSS starts in a hidden state.
+
+If you want a more robust, progressive enhancement pattern (where the content always shows, even without JS), you’d need to invert the approach—for example by showing elements by default and only hiding them after JS confirms it’s available.
+
+Right now, this is just a proof of concept.
+
 ---
 
 ## Why not GSAP?
 
-GSAP is powerful, but often overkill for small sites. This approach is progressive enhancement:
-- No JS → content still loads, just without animation.
-- With JS → smooth, performant scroll-based reveals.
+GSAP is fantastic for complex timelines, physics, or highly choreographed sequences.
+
+But for simple “elements fade/slide into view” effects, this vanilla approach is:
+
+- Tiny → no dependencies.
+- Performant → IntersectionObserver is native and efficient.
+- Flexible → extendable with just a few extra CSS rules.
 
 ---
 
-✨ That’s all it takes: a sprinkle of CSS + IntersectionObserver.
+✨ That’s it: a sprinkle of CSS + a tiny script gives you clean, reusable appear animations.
