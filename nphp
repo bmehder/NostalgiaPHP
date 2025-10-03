@@ -560,6 +560,39 @@ function build_collection_list(string $outDir, string $collection)
   }
 }
 
+// --- SSG: robots.txt ---
+function build_robots_txt(string $outDir)
+{
+  // Prefer absolute base_url from config; otherwise allow an env override.
+  // Fallback to http://localhost:8000 as a last resort (avoids a blank/relative URL).
+  $cfg = config();
+  $baseUrl = (string) ($cfg['site']['base_url'] ?? '');
+  if (!preg_match('~^https?://~i', $baseUrl)) {
+    $env = getenv('NOSTY_BASE_URL') ?: getenv('SITE_ORIGIN') ?: '';
+    $baseUrl = $env && preg_match('~^https?://~i', $env) ? $env : 'http://localhost:8000';
+  }
+  $absBase = rtrim($baseUrl, '/');
+
+  $lines = [
+    'User-agent: *',
+    'Disallow: /*.md$',
+    // Uncomment the next line if you don’t want crawlers to index asset files:
+    // 'Disallow: /static/',
+    '',
+    "Sitemap: {$absBase}/sitemap.xml",
+    '',
+  ];
+  $out = rtrim($outDir, "/\\") . '/robots.txt';
+  if (!is_dir(dirname($out))) {
+    mkdir(dirname($out), 0775, true);
+  }
+  if (file_put_contents($out, implode("\n", $lines)) === false) {
+    fwrite(STDERR, "Failed to write robots.txt → $out\n");
+    exit(1);
+  }
+  fwrite(STDOUT, "✓ wrote robots.txt → $out\n");
+}
+
 // ---------- Command: build ----------
 if ($cmd === 'build') {
   // Options: --out=dist --clean
@@ -595,10 +628,13 @@ if ($cmd === 'build') {
   copy_dir_recursive($staticSrc, $staticDst);
   fwrite(STDOUT, "✓ copied /static → $staticDst\n");
 
+  // 1.5) write robots.txt
+  build_robots_txt($outDir);
+
   // 2) render pages
   build_pages($outDir);
 
-  // 3) render collections (lists + items)
+  // 3) render collections
   $cfg = config();
   foreach (array_keys($cfg['collections'] ?? []) as $collection) {
     build_collection_list($outDir, $collection);

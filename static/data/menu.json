@@ -22,7 +22,7 @@
 	{
 		"label": "Admin",
 		"href": "/admin",
-		"submenu": [{ "label": "Sitemap", "href": "/sitemap.xml" }]
+		"submenu": [{ "label": "Sitemap", "href": "/sitemap.xml" }, { "label": "Robots", "href": "/robots.txt" }]
 	},
 	{
 		"label": "GitHub",
