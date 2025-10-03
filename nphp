@@ -5,6 +5,7 @@
 //   php nphp make:post <collection> <slug> [--title="Custom Title"] [--draft] [--template=main] [--date=YYYY-MM-DD] [--force]
 //   php nphp make:page <slug> [--title="Custom Title"] [--draft] [--template=main] [--date=YYYY-MM-DD] [--force]
 //   php nphp backup [--to=/absolute/path]
+//   php nphp build [--out=dist] [--clean]
 // Notes: place this file at the project root (next to functions.php).
 
 // ---------- helpers ----------
@@ -17,6 +18,7 @@ USAGE
   php nphp make:post <collection> <slug> [options]
   php nphp make:page <slug> [options]
   php nphp backup [--to=/absolute/path]
+  php nphp build [--out=dist] [--clean]
 
 OPTIONS
   --title="Custom Title"   Set a title (defaults to slug → Title Case)
@@ -25,12 +27,15 @@ OPTIONS
   --draft                  Add draft: true
   --force                  Overwrite existing file
   --to=/path               (backup) Destination directory for zip files
+  --out=dist               (build) Output directory (default: dist)
+  --clean                  (build) Remove output directory before building
 
 EXAMPLES
   php nphp make:post blog hello-world
   php nphp make:post dox api-design --title="API Design Notes" --template=main
   php nphp make:page about --title="About Us"
-  php nphp backup --to="\$HOME/Dropbox/nosty_backups"
+  php nphp backup --to="/Dropbox/nosty_backups"
+  php nphp build --out=public --clean
 
 TXT;
   fwrite(STDOUT, $help);
@@ -218,6 +223,66 @@ function cmd_backup(array $args): int
   return 0;
 }
 
+// ---------- asset fix helper ----------
+function fix_relative_assets(string $html): string
+{
+  // Fix src/href
+  $html = preg_replace_callback(
+    '~\b(src|href)=([\'"])([^\'"]+)\\2~i',
+    function ($m) {
+      [$full, $attr, $q, $url] = $m;
+
+      // leave absolute/data/#/rooted
+      if (preg_match('~^(https?:|data:|/|#)~i', $url)) {
+        return $full;
+      }
+
+      // normalize
+      if (strpos($url, 'static/') === 0) {
+        $url = '/' . $url;
+      } elseif (strpos($url, './static/') === 0) {
+        $url = '/' . substr($url, 2);
+      } elseif (strpos($url, '../static/') === 0) {
+        $url = '/' . preg_replace('~^(\.\./)+~', '', $url);
+      }
+
+      return $attr . '=' . $q . $url . $q;
+    },
+    $html
+  );
+
+  // Fix srcset
+  $html = preg_replace_callback(
+    '~\bsrcset=([\'"])([^\'"]+)\\1~i',
+    function ($m) {
+      $q = $m[1];
+      $candidates = array_map('trim', explode(',', $m[2]));
+      $fixed = [];
+
+      foreach ($candidates as $cand) {
+        if ($cand === '')
+          continue;
+        [$u, $d] = array_pad(preg_split('/\s+/', $cand, 2), 2, '');
+        if (!preg_match('~^(https?:|data:|/|#)~i', $u)) {
+          if (strpos($u, 'static/') === 0) {
+            $u = '/' . $u;
+          } elseif (strpos($u, './static/') === 0) {
+            $u = '/' . substr($u, 2);
+          } elseif (strpos($u, '../static/') === 0) {
+            $u = '/' . preg_replace('~^(\.\./)+~', '', $u);
+          }
+        }
+        $fixed[] = trim($u . ($d ? " $d" : ''));
+      }
+
+      return 'srcset=' . $q . implode(', ', $fixed) . $q;
+    },
+    $html
+  );
+
+  return $html;
+}
+
 // ---------- entry ----------
 array_shift($argv); // drop script name
 $cmd = $argv[0] ?? '';
@@ -300,6 +365,250 @@ if ($cmd === 'backup') {
   exit(cmd_backup($args));
 }
 
-// Unknown
+// ---------- SSG helpers ----------
+function render_to_string(callable $fn)
+{
+  ob_start();
+  $fn();
+  return ob_get_clean();
+}
+
+function write_html_pretty(string $outDir, string $path, string $html)
+{
+  // Map URL path → disk path (pretty URLs)
+  // "/"           -> dist/index.html
+  // "/about"      -> dist/about/index.html
+  // "/blog/slug"  -> dist/blog/slug/index.html
+  $path = '/' . ltrim($path, '/');
+  $target = rtrim($outDir, '/\\');
+
+  if ($path === '/' || $path === '') {
+    $file = $target . '/index.html';
+  } else {
+    $file = $target . rtrim($path, '/') . '/index.html';
+  }
+
+  $dir = dirname($file);
+  if (!is_dir($dir)) {
+    mkdir($dir, 0775, true);
+  }
+  if (file_put_contents($file, $html) === false) {
+    fwrite(STDERR, "Failed to write: $file\n");
+    exit(1);
+  }
+  fwrite(STDOUT, "✓ $path  ->  $file\n");
+}
+
+function copy_dir_recursive($src, $dst)
+{
+  if (!is_dir($src))
+    return;
+  if (!is_dir($dst))
+    mkdir($dst, 0775, true);
+  $it = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($src, FilesystemIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+  );
+  foreach ($it as $file) {
+    $rel = substr($file->getPathname(), strlen($src));
+    $to = rtrim($dst, '/\\') . $rel;
+    if ($file->isDir()) {
+      if (!is_dir($to))
+        mkdir($to, 0775, true);
+    } else {
+      copy($file->getPathname(), $to);
+    }
+  }
+}
+
+function build_pages(string $outDir)
+{
+  require_once __DIR__ . '/functions.php';
+  $pagesPath = path('pages');
+  $base = $pagesPath;
+
+  $rii = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($base, FilesystemIterator::SKIP_DOTS)
+  );
+
+  foreach ($rii as $f) {
+    if (!$f->isFile())
+      continue;
+    if (strtolower($f->getFilename()) !== 'index.md')
+      continue;
+
+    $rel = trim(str_replace($base, '', $f->getPath()), '/\\');
+    $urlPath = '/' . $rel;
+
+    $raw = read_file($f->getPathname()) ?? '';
+    [$fm, $md] = parse_front_matter($raw);
+    $html = markdown_to_html($md);
+
+    $title = $fm['title'] ?? ($rel === '' ? 'Home' : ucwords(str_replace(['-', '_', '/'], ' ', $rel)));
+    $meta = $fm;
+    $content = $html;
+    $template = !empty($meta['template']) ? $meta['template'] : 'main';
+
+    // ✅ Add hero_html
+    $hero_html = function_exists('build_hero_html') ? build_hero_html($meta) : '';
+
+    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html) {
+      $path = $_SERVER['REQUEST_URI'] ?? '/';
+      render($template, compact('title', 'content', 'path', 'meta', 'hero_html'));
+    });
+
+    $out = fix_relative_assets($out);
+    write_html_pretty($outDir, $urlPath === '//' ? '/' : $urlPath, $out);
+  }
+}
+
+function build_collection_items(string $outDir, string $collection)
+{
+  require_once __DIR__ . '/functions.php';
+  $root = rtrim(path('collections'), '/');
+  $dir = $root . '/' . $collection;
+  if (!is_dir($dir))
+    return;
+
+  foreach (glob($dir . '/*.md') as $mdFile) {
+    $slug = basename($mdFile, '.md');
+    $item = load_collection_item($collection, $slug);
+    if (!$item)
+      continue;
+
+    $title = $item['meta']['title'] ?? $slug;
+    $meta = $item['meta'] ?? [];
+    $content = $item['html'];
+    $template = !empty($meta['template']) ? $meta['template'] : 'main';
+    $urlPath = url("/{$collection}/{$slug}");
+
+    // ✅ Add hero_html
+    $hero_html = function_exists('build_hero_html') ? build_hero_html($meta) : '';
+
+    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html) {
+      $path = $_SERVER['REQUEST_URI'] ?? '/';
+      render($template, compact('title', 'content', 'path', 'meta', 'hero_html'));
+    });
+
+    $out = fix_relative_assets($out);
+    write_html_pretty($outDir, $urlPath, $out);
+  }
+}
+
+function build_collection_list(string $outDir, string $collection)
+{
+  require_once __DIR__ . '/functions.php';
+
+  // This mirrors your /routes/collections.php list logic (pagination included)
+  $all = list_collection($collection) ?? [];
+  $cfg = config();
+  $perPage = $cfg['collections'][$collection]['per_page'] ?? 9;
+
+  $total = count($all);
+  $pages = max(1, (int) ceil($total / $perPage));
+
+  for ($page = 1; $page <= $pages; $page++) {
+    $offset = ($page - 1) * $perPage;
+    $itemsPage = array_slice($all, $offset, $perPage);
+
+    ob_start();
+    echo '<h1>' . htmlspecialchars(ucfirst($collection), ENT_QUOTES, 'UTF-8') . '</h1>';
+    if (!$itemsPage) {
+      echo '<p>No items yet.</p>';
+    } else {
+      $items = $itemsPage;
+      include path('partials') . '/cards-grid.php';
+      // simple pager UI (static in build output)
+      echo '<nav class="pager" style="display:flex;gap:.5rem;align-items:center;justify-content:center;margin-block-start:var(--size-2)">';
+      echo '<span class="button" aria-disabled="true" style="opacity:.5;pointer-events:none">← Prev</span>';
+      echo '<span class="muted" style="padding:.25rem .5rem">Page ' . $page . ' of ' . $pages . '</span>';
+      echo '<span class="button" aria-disabled="true" style="opacity:.5;pointer-events:none">Next →</span>';
+      echo '</nav>';
+    }
+    $contentInner = ob_get_clean();
+
+    // pump through your template renderer
+    $title = ucfirst($collection);
+    $meta = ['pagination' => ['page' => $page, 'pages' => $pages]];
+    $template = 'collection';
+    $path = $_SERVER['REQUEST_URI'] ?? '/';
+    $content = render_to_string(function () use ($template, $title, $contentInner, $meta) {
+      render($template, [
+        'title' => $title,
+        'content' => $contentInner,
+        'path' => $_SERVER['REQUEST_URI'] ?? '/',
+        'meta' => $meta
+      ]);
+    });
+    $content = fix_relative_assets($content);
+
+    // Write page 1 to /{collection}/index.html
+    // Additional pages to /{collection}/page/{n}/index.html
+    $urlPath = $page === 1
+      ? '/' . $collection
+      : '/' . $collection . '/page/' . $page;
+
+    $hero_html = function_exists('build_hero_html') ? build_hero_html($meta) : '';
+
+    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html) {
+      $path = $_SERVER['REQUEST_URI'] ?? '/';
+      render($template, compact('title', 'content', 'path', 'meta', 'hero_html'));
+    });
+
+    $out = fix_relative_assets($out);
+    write_html_pretty($outDir, $urlPath, $out);
+  }
+}
+
+// ---------- Command: build ----------
+if ($cmd === 'build') {
+  // Options: --out=dist --clean
+  $outDir = 'dist';
+  $clean = false;
+  foreach (array_slice($argv, 1) as $a) {
+    if (strpos($a, '--out=') === 0)
+      $outDir = substr($a, 6);
+    if ($a === '--clean')
+      $clean = true;
+  }
+
+  $outDir = rtrim($outDir, '/\\');
+  if ($clean && is_dir($outDir)) {
+    // careful delete
+    $it = new RecursiveIteratorIterator(
+      new RecursiveDirectoryIterator($outDir, FilesystemIterator::SKIP_DOTS),
+      RecursiveIteratorIterator::CHILD_FIRST
+    );
+    foreach ($it as $f) {
+      $f->isDir() ? rmdir($f->getPathname()) : unlink($f->getPathname());
+    }
+    rmdir($outDir);
+  }
+  if (!is_dir($outDir))
+    mkdir($outDir, 0775, true);
+
+  require_once __DIR__ . '/functions.php';
+
+  // 1) copy static assets
+  $staticSrc = __DIR__ . '/static';
+  $staticDst = $outDir . '/static';
+  copy_dir_recursive($staticSrc, $staticDst);
+  fwrite(STDOUT, "✓ copied /static → $staticDst\n");
+
+  // 2) render pages
+  build_pages($outDir);
+
+  // 3) render collections (lists + items)
+  $cfg = config();
+  foreach (array_keys($cfg['collections'] ?? []) as $collection) {
+    build_collection_list($outDir, $collection);
+    build_collection_items($outDir, $collection);
+  }
+
+  fwrite(STDOUT, "Build complete → $outDir\n");
+  exit(0);
+}
+
+// ---------- fallback ----------
 fwrite(STDERR, "Unknown command: $cmd\n\n");
 exit_help(1);
