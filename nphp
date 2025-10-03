@@ -421,6 +421,129 @@ function copy_dir_recursive($src, $dst)
   }
 }
 
+// ---------- SSG: sitemap ----------
+function build_sitemap(string $outDir, bool $includeCollectionIndexes = false): void
+{
+  require_once __DIR__ . '/functions.php';
+
+  // Require an absolute base_url for correct <loc> values during SSG
+  $base = (string) (config()['site']['base_url'] ?? '');
+  $isAbs = (bool) preg_match('~^https?://~i', $base);
+  if (!$isAbs) {
+    // Fallback: trim to avoid accidental '//' joins; this will still create absolute-looking locs
+    // but you really should set an absolute base_url in config for production sitemaps.
+    $base = rtrim($base, '/');
+  } else {
+    $base = rtrim($base, '/');
+  }
+
+  $xmlEsc = static fn(string $s) =>
+    htmlspecialchars($s, ENT_QUOTES | ENT_XML1, 'UTF-8');
+
+  $abs = fn(string $path): string => $base . '/' . ltrim($path, '/');
+
+  $entries = [];
+
+  // ---- Pages (supports nested folders with index.md) ----
+  $pagesRoot = rtrim(path('pages'), '/');
+  if (is_dir($pagesRoot)) {
+    $it = new RecursiveIteratorIterator(
+      new RecursiveDirectoryIterator($pagesRoot, FilesystemIterator::SKIP_DOTS)
+    );
+    $seen = [];
+    foreach ($it as $f) {
+      if (!$f->isFile())
+        continue;
+      if (strtolower($f->getExtension()) !== 'md')
+        continue;
+
+      $full = $f->getPathname();
+      $rel = trim(str_replace($pagesRoot, '', $full), '/'); // e.g. "about/index.md" or "index.md"
+      $rel = preg_replace('/\.md$/i', '', $rel);
+
+      // map .../index -> ...
+      if ($rel === 'index')
+        $rel = '';
+      if (substr($rel, -6) === '/index')
+        $rel = substr($rel, 0, -6);
+
+      // de-dupe
+      if (isset($seen[$rel]))
+        continue;
+      $seen[$rel] = true;
+
+      // Figure actual file path for this URL
+      $file = ($rel === '')
+        ? $pagesRoot . '/index.md'
+        : (is_file($pagesRoot . '/' . $rel . '.md')
+          ? $pagesRoot . '/' . $rel . '.md'
+          : $pagesRoot . '/' . $rel . '/index.md');
+
+      if (!is_file($file))
+        continue;
+
+      [$fm] = parse_front_matter(read_file($file) ?? '');
+      if (!empty($fm['draft']))
+        continue;
+      if (array_key_exists('sitemap', $fm) && $fm['sitemap'] === false)
+        continue;
+
+      $loc = $rel === '' ? $abs('/') : $abs('/' . $rel);
+      $lastmod = gmdate('c', filemtime($file) ?: time());
+      $entries[] = ['loc' => $loc, 'lastmod' => $lastmod];
+    }
+  }
+
+  // ---- Collections (items; optional list indexes) ----
+  foreach (array_keys(config()['collections'] ?? []) as $c) {
+    if ($includeCollectionIndexes) {
+      $entries[] = ['loc' => $abs('/' . $c), 'lastmod' => null];
+    }
+
+    $items = list_collection($c) ?? [];
+    foreach ($items as $it) {
+      $m = $it['meta'] ?? [];
+      if (!empty($m['draft']))
+        continue;
+      if (array_key_exists('sitemap', $m) && $m['sitemap'] === false)
+        continue;
+
+      $file = path('collections') . "/$c/{$it['slug']}.md";
+      $loc = $abs("/$c/{$it['slug']}");
+      $lastmod = is_file($file) ? gmdate('c', filemtime($file)) : null;
+
+      $entries[] = ['loc' => $loc, 'lastmod' => $lastmod];
+    }
+  }
+
+  // De-dupe & sort
+  $byLoc = [];
+  foreach ($entries as $e)
+    $byLoc[$e['loc']] = $e;
+  $entries = array_values($byLoc);
+  usort($entries, fn($a, $b) => strcmp($a['loc'], $b['loc']));
+
+  // Build XML
+  $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+  $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+  foreach ($entries as $e) {
+    $xml .= "  <url>\n";
+    $xml .= "    <loc>{$xmlEsc($e['loc'])}</loc>\n";
+    if (!empty($e['lastmod'])) {
+      $xml .= "    <lastmod>{$xmlEsc($e['lastmod'])}</lastmod>\n";
+    }
+    $xml .= "  </url>\n";
+  }
+  $xml .= "</urlset>\n";
+
+  // Write to dist/sitemap.xml
+  $target = rtrim($outDir, '/\\') . '/sitemap.xml';
+  if (!is_dir(dirname($target)))
+    mkdir(dirname($target), 0775, true);
+  file_put_contents($target, $xml);
+  fwrite(STDOUT, "✓ sitemap.xml\n");
+}
+
 function build_pages(string $outDir)
 {
   require_once __DIR__ . '/functions.php';
@@ -572,6 +695,402 @@ function build_collection_list(string $outDir, string $collection)
     write_html_pretty($outDir, $urlPath, $out);
   }
 }
+// --- SSG: tags ---
+function build_tags(string $outDir)
+{
+  require_once __DIR__ . '/functions.php';
+
+  // --- helpers (same logic as the SSR route) ---
+  $normalizeTags = function ($raw): array {
+    if (is_string($raw)) {
+      $arr = array_map('trim', explode(',', $raw));
+    } elseif (is_array($raw)) {
+      $arr = array_map(fn($t) => is_string($t) ? trim($t) : '', $raw);
+    } else {
+      $arr = [];
+    }
+    $unique = [];
+    foreach ($arr as $t) {
+      if ($t === '')
+        continue;
+      $key = mb_strtolower($t);
+      // keep the first-seen casing for display
+      $unique[$key] = $unique[$key] ?? $t;
+    }
+    return array_values($unique);
+  };
+
+  $addFromFile = function (string $file, array &$tags) use ($normalizeTags) {
+    $raw = @file_get_contents($file);
+    if ($raw === false)
+      return;
+    [$fm] = parse_front_matter($raw);
+    $list = $normalizeTags($fm['tags'] ?? []);
+    foreach ($list as $t) {
+      $key = mb_strtolower($t);
+      $tags[$key]['label'] = $tags[$key]['label'] ?? $t;
+      $tags[$key]['count'] = ($tags[$key]['count'] ?? 0) + 1;
+    }
+  };
+
+  // --- collect tags from content ---
+  $tags = [];
+
+  // Collections: content/collections/*/*.md
+  $collRoot = rtrim(path('collections'), '/');
+  if (is_dir($collRoot)) {
+    foreach (glob($collRoot . '/*', GLOB_ONLYDIR) as $dir) {
+      foreach (glob($dir . '/*.md') as $md) {
+        $addFromFile($md, $tags);
+      }
+    }
+  }
+
+  // Pages: content/pages/*.md  (same scope as your SSR route)
+  $pagesDir = rtrim(path('pages'), '/');
+  if (is_dir($pagesDir)) {
+    foreach (glob($pagesDir . '/*.md') as $md) {
+      $addFromFile($md, $tags);
+    }
+  }
+
+  // Sort natural, case-insensitive by display label
+  uasort($tags, fn($a, $b) => strnatcasecmp($a['label'], $b['label']));
+
+  // --- render the same markup as the route ---
+  $contentInner = render_to_string(function () use ($tags) {
+    ob_start(); ?>
+          <h1>Tags</h1>
+          <ul class="tags-list">
+            <?php if (empty($tags)): ?>
+                <li><em>No tags found.</em></li>
+            <?php else: ?>
+                <?php foreach ($tags as $slug => $info): ?>
+                    <li>
+                      <a href="<?= url('/tag/' . urlencode($slug)) ?>">
+                        <?= htmlspecialchars($info['label'], ENT_QUOTES, 'UTF-8') ?>
+                      </a>
+                      <small class="muted">(<?= (int) ($info['count'] ?? 0) ?>)</small>
+                    </li>
+                <?php endforeach; ?>
+            <?php endif; ?>
+          </ul>
+        <?php
+        echo ob_get_clean();
+  });
+
+  // Pump through your normal template renderer
+  $title = 'Tags';
+  $meta = [];
+  $template = 'main';
+
+  $out = render_to_string(function () use ($template, $title, $contentInner, $meta) {
+    $path = '/tags';
+    render($template, compact('title', 'path', 'meta') + ['content' => $contentInner]);
+  });
+
+  if (function_exists('fix_relative_assets')) {
+    $out = fix_relative_assets($out);
+  }
+
+  write_html_pretty($outDir, '/tags', $out);
+}
+
+// --- SSG: tag ---
+function build_tag_pages(string $outDir)
+{
+  require_once __DIR__ . '/functions.php';
+
+  // --- helpers (mirrors your SSR route) ---
+  $getTags = function (array $fm): array {
+    $candidates = [];
+    foreach ($fm as $key => $val) {
+      $lk = strtolower((string) $key);
+      if ($lk === 'tags' || $lk === 'tag' || $lk === 'keywords') {
+        $candidates[] = $val;
+      }
+    }
+    if (!$candidates)
+      return [];
+
+    $collected = [];
+    foreach ($candidates as $raw) {
+      if (is_string($raw)) {
+        foreach (array_map('trim', explode(',', $raw)) as $p) {
+          if ($p !== '')
+            $collected[] = $p;
+        }
+      } elseif (is_array($raw)) {
+        foreach ($raw as $p) {
+          if (is_string($p)) {
+            $p = trim($p);
+            if ($p !== '')
+              $collected[] = $p;
+          }
+        }
+      }
+    }
+    // de-dupe case-insensitively, keep first-seen casing
+    $seen = [];
+    foreach ($collected as $t)
+      $seen[strtolower($t)] = $t;
+    return array_values($seen);
+  };
+
+  $slugToTitle = fn($s) => ucwords(str_replace(['-', '_'], ' ', $s));
+
+  // tag_slug => [
+  //   'label' => 'PHP',
+  //   'items' => [ ['url'=>..., 'title'=>..., 'date'=>..., 'ts'=>...], ... ]
+  // ]
+  $tagsIndex = [];
+
+  $pushItem = function (string $tSlug, string $tLabel, array $row) use (&$tagsIndex) {
+    if (!isset($tagsIndex[$tSlug])) {
+      $tagsIndex[$tSlug] = ['label' => $tLabel, 'items' => []];
+    }
+    $tagsIndex[$tSlug]['items'][] = $row;
+  };
+
+  // --- scan collections: content/collections/*/*.md ---
+  $collRoot = rtrim(path('collections'), '/');
+  if (is_dir($collRoot)) {
+    foreach (glob($collRoot . '/*', GLOB_ONLYDIR) as $dir) {
+      $collection = basename($dir);
+      foreach (glob($dir . '/*.md') as $md) {
+        $raw = @file_get_contents($md);
+        if ($raw === false)
+          continue;
+        [$fm] = parse_front_matter($raw);
+        $tags = $getTags($fm);
+        if (!$tags)
+          continue;
+
+        $slug = basename($md, '.md');
+        $url = url('/' . $collection . '/' . $slug);
+        $title = $fm['title'] ?? $slugToTitle($slug);
+        $date = $fm['date'] ?? null;
+        $ts = $date instanceof DateTime ? $date->getTimestamp()
+          : ($date ? @strtotime((string) $date) : 0);
+
+        foreach ($tags as $t) {
+          $tSlug = strtolower($t);
+          $pushItem($tSlug, $t, ['url' => $url, 'title' => $title, 'date' => $date, 'ts' => $ts]);
+        }
+      }
+    }
+  }
+
+  // --- scan top-level pages: content/pages/*.md (same scope as SSR route) ---
+  $pagesDir = rtrim(path('pages'), '/');
+  if (is_dir($pagesDir)) {
+    foreach (glob($pagesDir . '/*.md') as $md) {
+      $raw = @file_get_contents($md);
+      if ($raw === false)
+        continue;
+      [$fm] = parse_front_matter($raw);
+      $tags = $getTags($fm);
+      if (!$tags)
+        continue;
+
+      $slug = basename($md, '.md'); // "index" -> homepage
+      $url = url('/' . ($slug === 'index' ? '' : $slug));
+      $title = $fm['title'] ?? $slugToTitle($slug);
+      $date = $fm['date'] ?? null;
+      $ts = $date instanceof DateTime ? $date->getTimestamp()
+        : ($date ? @strtotime((string) $date) : 0);
+
+      foreach ($tags as $t) {
+        $tSlug = strtolower($t);
+        $pushItem($tSlug, $t, ['url' => $url, 'title' => $title, 'date' => $date, 'ts' => $ts]);
+      }
+    }
+  }
+
+  // --- write one page per tag: /tag/{slug}/index.html ---
+  foreach ($tagsIndex as $tSlug => $info) {
+    $label = $info['label'];
+    $rows = $info['items'] ?? [];
+    // newest first
+    usort($rows, fn($a, $b) => ($b['ts'] ?? 0) <=> ($a['ts'] ?? 0));
+
+    $contentInner = render_to_string(function () use ($tSlug, $rows) {
+      ob_start(); ?>
+              <h1>Tagged: <?= htmlspecialchars($tSlug, ENT_QUOTES, 'UTF-8') ?></h1>
+
+              <?php if (empty($rows)): ?>
+                  <p>No items with this tag yet.</p>
+              <?php else: ?>
+                  <ul class="item-list flow-0-5" style="margin-block-start: var(--size-3)">
+                    <?php foreach ($rows as $row): ?>
+                        <li class="item-list-row">
+                          <a class="item-list-link" href="<?= htmlspecialchars($row['url'], ENT_QUOTES, 'UTF-8') ?>">
+                            <?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>
+                          </a>
+                          <?php
+                          $d = $row['date'] ?? null;
+                          $dateStr = $d instanceof DateTime ? $d->format('Y-m-d') : (is_string($d) ? $d : '');
+                          ?>
+                          <?php if ($dateStr): ?>
+                              <small class="item-list-date muted"><?= htmlspecialchars($dateStr, ENT_QUOTES, 'UTF-8') ?></small>
+                          <?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
+                  </ul>
+              <?php endif; ?>
+            <?php
+            echo ob_get_clean();
+    });
+
+    $title = 'Tagged: ' . $label;
+    $meta = []; // you could add meta description if desired
+    $template = 'main';
+
+    $out = render_to_string(function () use ($template, $title, $contentInner, $meta) {
+      $path = $_SERVER['REQUEST_URI'] ?? '/';
+      render($template, compact('title', 'meta') + ['content' => $contentInner, 'path' => $path]);
+    });
+
+    if (function_exists('fix_relative_assets')) {
+      $out = fix_relative_assets($out);
+    }
+
+    write_html_pretty($outDir, '/tag/' . urlencode($tSlug), $out);
+  }
+}
+
+// --- SSG: search ---
+function build_search_shell(string $outDir)
+{
+  require_once __DIR__ . '/functions.php';
+
+  // Same markup skeleton that SSR route uses (form + containers)
+  $shell = <<<HTML
+<div class="flow">
+  <h1>Search</h1>
+
+  <search>
+    <form id="site-search" method="get" action="/search" class="search-form" style="margin-block:1rem;" role="search">
+      <label for="q" class="visually-hidden">Search query</label>
+      <input id="q" type="search" name="q" placeholder="Search pages and collections…" style="padding:.5rem .75rem; width:min(40rem,100%);" aria-label="Search query">
+      <select id="in" name="in" aria-label="Scope">
+        <option value="all" selected>All</option>
+        <option value="pages">Pages</option>
+        <option value="items">Collections</option>
+      </select>
+      <button type="submit" class="btn" style="padding:.5rem .75rem;">Search</button>
+    </form>
+  </search>
+
+  <noscript><p><em>Search results require JavaScript.</em></p></noscript>
+
+  <p id="search-status" class="muted" aria-live="polite" style="margin-block:.5rem 1rem;"></p>
+  <ul id="search-results" class="item-list flow-0-5" style="margin-block-start: var(--size-3)"></ul>
+
+  <script type="module" src="/static/js/apps/search.js"></script>
+</div>
+HTML;
+
+  $title = 'Search';
+  $meta = ['description' => 'Search pages and collections'];
+  $template = 'main';
+
+  $out = render_to_string(function () use ($template, $title, $shell, $meta) {
+    $path = '/search';
+    render($template, ['title' => $title, 'content' => $shell, 'path' => $path, 'meta' => $meta]);
+  });
+
+  $out = fix_relative_assets($out);
+  write_html_pretty($outDir, '/search', $out);
+}
+
+function build_search_index(string $outDir)
+{
+  require_once __DIR__ . '/functions.php';
+
+  $items = [];
+
+  // PAGES
+  $pagesDir = rtrim(path('pages'), '/');
+  if (is_dir($pagesDir)) {
+    $it = new RecursiveIteratorIterator(
+      new RecursiveDirectoryIterator($pagesDir, FilesystemIterator::SKIP_DOTS)
+    );
+    foreach ($it as $f) {
+      if (!$f->isFile() || strtolower($f->getExtension()) !== 'md')
+        continue;
+      $abs = $f->getPathname();
+      $rel = trim(str_replace($pagesDir, '', $abs), '/');
+      $rel = preg_replace('/\.md$/i', '', $rel);
+
+      // URL rules: index → '/', foo/index → '/foo', else '/{rel}'
+      if ($rel === 'index')
+        $url = '/';
+      elseif (substr($rel, -6) === '/index')
+        $url = '/' . substr($rel, 0, -6);
+      else
+        $url = '/' . $rel;
+
+      [$fm, $md] = parse_front_matter(read_file($abs) ?? '');
+      if (!empty($fm['draft']))
+        continue;
+
+      $html = markdown_to_html($md);
+      $text = trim(preg_replace('/\s+/', ' ', strip_tags($html)));
+
+      $title = (string) ($fm['title'] ?? basename($rel));
+      $desc = (string) ($fm['description'] ?? '');
+      $date = $fm['date'] ?? null;
+      $dateS = $date instanceof DateTime ? $date->format('Y-m-d') : (is_string($date) ? $date : null);
+
+      $items[] = [
+        'type' => 'page',
+        'url' => $url,
+        'title' => $title,
+        'desc' => $desc,
+        'text' => $text,
+        'date' => $dateS,
+      ];
+    }
+  }
+
+  // COLLECTION ITEMS
+  foreach (array_keys(config()['collections'] ?? []) as $c) {
+    foreach (list_collection($c) as $it) {
+      $slug = $it['slug'];
+      $file = path('collections') . "/$c/$slug.md";
+
+      [$fm, $md] = parse_front_matter(read_file($file) ?? '');
+      if (!empty($fm['draft']))
+        continue;
+
+      $html = markdown_to_html($md);
+      $text = trim(preg_replace('/\s+/', ' ', strip_tags($html)));
+
+      $title = (string) ($fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug)));
+      $desc = (string) ($fm['description'] ?? '');
+      $date = $fm['date'] ?? null;
+      $dateS = $date instanceof DateTime ? $date->format('Y-m-d') : (is_string($date) ? $date : null);
+
+      $items[] = [
+        'type' => $c,
+        'url' => "/$c/$slug",
+        'title' => $title,
+        'desc' => $desc,
+        'text' => $text,
+        'date' => $dateS,
+      ];
+    }
+  }
+
+  // Write JSON
+  $destDir = rtrim($outDir, '/\\') . '/static/data';
+  if (!is_dir($destDir))
+    mkdir($destDir, 0775, true);
+  $json = json_encode(['items' => $items], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+  file_put_contents($destDir . '/search-index.json', $json);
+  fwrite(STDOUT, "✓ built /static/data/search-index.json (" . strlen($json) . " bytes)\n");
+}
 
 // --- SSG: robots.txt ---
 function build_robots_txt(string $outDir)
@@ -653,6 +1172,21 @@ if ($cmd === 'build') {
     build_collection_list($outDir, $collection);
     build_collection_items($outDir, $collection);
   }
+
+  // 4) render static search shell
+  build_search_shell($outDir);
+  
+  // 5) render static search index
+  build_search_index($outDir);
+
+  // 6) render tags page
+  build_tags($outDir);
+  
+  // 7) render tag pages
+  build_tag_pages($outDir);
+
+  // 8) sitemap
+  build_sitemap($outDir, /* include collection indexes? */ false);
 
   fwrite(STDOUT, "Build complete → $outDir\n");
   exit(0);

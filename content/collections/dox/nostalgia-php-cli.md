@@ -6,85 +6,126 @@ image: static/media/nosty-cli.jpg
 template: main
 ---
 
-# Nosty CLI — Your New Best Friend
+# NostalgiaPHP CLI
 
-Meet **Nosty CLI**, a tiny helper script included with NostalgiaPHP.
+A tiny command-line helper for working with NostalgiaPHP sites.
 
-With it, you can scaffold new blog posts or pages right from the command line — no more copy‑pasting front‑matter by hand.
-
-## Usage
-
-The CLI lives in the project root. Run it like so:
+The CLI lives in the project root (`nphp`). Run it with PHP:
 
 ```bash
-php nphp make:post blog hello-world
-php nphp make:page about/contact
+php nphp <command> [args]
 ```
 
-- `make:post` creates `content/collections/{collection}/{slug}.md`
-- `make:page` creates `content/pages/{slug}/index.md` (foldered pages for easy assets).
-
-Both commands accept the same options:
-
-- `--title="Custom Title"` (defaults to a titleized slug)
-- `--template=main` (choose your template)
-- `--date=YYYY-MM-DD` (defaults to today in your site timezone)
-- `--draft` (adds `draft: true`)
-- `--force` (overwrite if the file exists)
-
-## Examples
-
-```bash
-# Blog post
-php nphp make:post blog hello-world --title="Hello, World" --template=main --draft
-
-# Docs page (folder + index.md)
-php nphp make:page getting-started --title="Getting Started" --template=main
-```
-
-That yields front-matter like:
-
-```yaml
 ---
-title: Hello, World
-description:
-date: 2025-09-28
-template: main
-draft: true
+
+## Commands
+
+### `make:post`
+
+Scaffold a new post in a collection.
+
+```bash
+php nphp make:post <collection> <slug> [options]
+```
+
+Options:
+- `--title="Custom Title"` → Override default title
+- `--template=main` → Which front‑matter template (default: `main`)
+- `--date=YYYY-MM-DD` → Override date (default: today in site timezone)
+- `--draft` → Add `draft: true` to front matter
+- `--force` → Overwrite if file already exists
+
+Example:
+
+```bash
+php nphp make:post blog hello-world --title="Hello World" --draft
+```
+
 ---
-```
 
-## Backups
+### `make:page`
 
-You can back up your entire project with the `backup` command.  
-
-By default, backups are saved to your home directory under `~/nosty_backups/<project>/`.
+Scaffold a new standalone page.
 
 ```bash
-php nphp backup
+php nphp make:page <slug> [options]
 ```
 
-This will create a zip archive like:
-`~/nosty_backups/MyProject/MyProject-2025-09-28-143000.zip`
+Same options as `make:post`.
 
-### Custom location
-
-You can also specify a different target directory with `--to`:
+Example:
 
 ```bash
-php nphp backup --to=/path/to/backups
+php nphp make:page about --title="About Us"
 ```
 
-### Notes
+---
 
-- Backups include your whole project folder.
-- Common directories like .git and node_modules are excluded automatically.
-- Old backups are not deleted. Manage them yourself by removing old archives.
-- Requires the PHP zip extension.
+### `backup`
+
+Zip up your entire project into a timestamped archive.
+
+```bash
+php nphp backup [--to=/absolute/path]
+```
+
+If no `--to` is provided, backups go to `~/nosty_backups/<project>`.
+
+Example:
+
+```bash
+php nphp backup --to="$HOME/Dropbox/nosty_backups"
+```
+
+---
+
+### Build (SSG)
+
+Pre-render your site into static HTML (Static Site Generation).
+
+This command:
+- Copies static/ into the output directory
+- Each page is written to disk as {dir}/index.html so that users see clean URLs like /about instead of /about.html.
+- Renders all collections (lists + individual items, with pagination)
+- Fixes relative asset paths for portability
+- Pre-renders dynamic routes like:
+  - /tags (list of all tags)
+  - /tag/{slug} (all items/pages for a tag)
+  - /sitemap.xml (auto-generated sitemap for search engines)
+  - /robots.txt (with a link to the sitemap)
+
+<div style="min-height: var(--size-1-5)"></div>
+
+>**⚠️ Limitations:** Some pages cannot be safely pre-rendered. For example, the Contact page contains a live form that posts back to the same PHP route. Pre-rendering would freeze it into a static file, breaking submissions. To support forms on static hosting, you’d need to switch to a client-side submission method (JavaScript + API endpoint or a service like Netlify Forms).
+
+<div style="min-height: var(--size-1-5)"></div>
+
+```bash
+php nphp build [--out=dist] [--clean]
+```
+
+Options:
+- `--out=dist` → Output directory (default: `dist`)
+- `--clean` → Remove existing output directory before building
+
+Examples:
+
+```bash
+# Build into /dist
+php nphp build
+
+# Clean old build and output to /public
+php nphp build --out=public --clean
+```
+
+---
 
 ## Why It Matters
 
-Consistency, speed, and fewer typos.
+The CLI helps you:
 
-Embrace lazy. Let Nosty handle the boilerplate, and you can focus on writing.
+- Scaffold content quickly (posts, pages)
+- Back up your entire project
+- Pre-render your site for **static hosting**
 
+With `build`, you can host your NostalgiaPHP site anywhere — Netlify, GitHub Pages, Vercel, S3 — no PHP server required.

@@ -487,6 +487,158 @@ if ($first === 'tags') {
   $send(['ok' => true, 'count' => count($results), 'tag' => $wanted, 'results' => $results]);
 }
 
+// ---- /api/search?q=term[&in=title|tags|body|all][&limit=20] ----
+if ($first === 'search') {
+  $qRaw = (string) ($_GET['q'] ?? '');
+  $q = trim($qRaw);
+  if ($q === '') {
+    $send(['ok' => true, 'count' => 0, 'results' => []]);
+  }
+
+  // where to search
+  $in = strtolower((string) ($_GET['in'] ?? 'all')); // title|tags|body|all
+  $allowed = ['title', 'tags', 'body', 'all'];
+  if (!in_array($in, $allowed, true))
+    $in = 'all';
+
+  // allow unlimited by default; support ?limit=all or ?limit=200
+  $limitParam = $_GET['limit'] ?? null;
+  $limit = null; // null = unlimited
+  if ($limitParam !== null) {
+    if ($limitParam === 'all') {
+      $limit = null;
+    } else {
+      $n = (int) $limitParam;
+      if ($n > 0)
+        $limit = min($n, 1000); // soft safety cap
+    }
+  }
+  $needle = mb_strtolower($q);
+
+  $matches = function (array $row) use ($needle, $in): bool {
+    // row has: title, tags (array), html (string)
+    $hitTitle = $hitTags = $hitBody = false;
+
+    if ($in === 'title' || $in === 'all') {
+      $hitTitle = (mb_stripos($row['title'] ?? '', $needle) !== false);
+    }
+    if ($in === 'tags' || $in === 'all') {
+      foreach (($row['tags'] ?? []) as $t) {
+        if (mb_stripos($t, $needle) !== false) {
+          $hitTags = true;
+          break;
+        }
+      }
+    }
+    if ($in === 'body' || $in === 'all') {
+      // strip tags to avoid matching html noise too much
+      $plain = mb_strtolower(trim(strip_tags($row['html'] ?? '')));
+      // cheap guard to keep it light
+      if ($plain !== '' && mb_stripos($plain, $needle) !== false)
+        $hitBody = true;
+    }
+
+    return $in === 'title' ? $hitTitle
+      : ($in === 'tags' ? $hitTags
+        : ($in === 'body' ? $hitBody
+          : ($hitTitle || $hitTags || $hitBody)));
+  };
+
+  $rows = [];
+
+  // ---- scan collections ----
+  $root = rtrim(path('collections'), '/');
+  if (is_dir($root)) {
+    foreach (glob($root . '/*', GLOB_ONLYDIR) as $dir) {
+      $collection = basename($dir);
+      foreach (glob($dir . '/*.md') as $mdFile) {
+        $slug = basename($mdFile, '.md');
+        [$fm, $md] = parse_front_matter(read_file($mdFile) ?? '');
+        $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
+        $tags = $extractTags((array) $fm);
+        $html = markdown_to_html($md);
+        $dateS = $fmtDate($fm['date'] ?? null);
+
+        $row = [
+          'type' => 'item',
+          'collection' => $collection,
+          'slug' => $slug,
+          'url' => url("/{$collection}/{$slug}"),
+          'title' => $title,
+          'date' => $dateS,
+          'tags' => $tags,
+          'html' => $html,
+        ];
+        if ($matches($row))
+          $rows[] = $row;
+      }
+    }
+  }
+
+  // ---- scan pages (recursive) ----
+  $pagesDir = rtrim(path('pages'), '/');
+  if (is_dir($pagesDir)) {
+    $it = new RecursiveIteratorIterator(
+      new RecursiveDirectoryIterator($pagesDir, FilesystemIterator::SKIP_DOTS)
+    );
+    foreach ($it as $f) {
+      if (!$f->isFile() || strtolower($f->getExtension()) !== 'md')
+        continue;
+
+      $abs = $f->getPathname();
+      $rel = trim(str_replace($pagesDir, '', $abs), '/');     // "about.md" or "guides/install.md" or ".../index.md"
+      $rel = preg_replace('/\.md$/i', '', $rel);
+
+      [$fm, $mdBody] = parse_front_matter(read_file($abs) ?? '');
+      $tags = $extractTags((array) $fm);
+      $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', basename($rel)));
+      $dateS = $fmtDate($fm['date'] ?? null);
+
+      // map to URL
+      if ($rel === 'index')
+        $url = '/';
+      elseif (substr($rel, -6) === '/index')
+        $url = '/' . substr($rel, 0, -6);
+      else
+        $url = '/' . $rel;
+
+      $row = [
+        'type' => 'page',
+        'slug' => $rel,
+        'url' => url($url),
+        'title' => $title,
+        'date' => $dateS,
+        'tags' => $tags,
+        'html' => markdown_to_html($mdBody),
+      ];
+      if ($matches($row))
+        $rows[] = $row;
+    }
+  }
+
+  // sort: newest first if date exists, then title asc
+  usort($rows, function ($a, $b) {
+    $ta = $a['date'] ? @strtotime((string) $a['date']) : 0;
+    $tb = $b['date'] ? @strtotime((string) $b['date']) : 0;
+    if ($tb !== $ta)
+      return $tb <=> $ta;
+    return strcmp($a['title'] ?? '', $b['title'] ?? '');
+  });
+
+  if ($limit !== null && count($rows) > $limit) {
+    $rows = array_slice($rows, 0, $limit);
+  }
+
+  $send([
+    'ok' => true,
+    'query' => $q,
+    'scope' => $in,
+    'limit' => $limit === null ? 'all' : $limit,
+    'count' => count($rows),
+    'results' => $rows,
+  ]);
+}
+
 // GET /api or /api/
 if ($first === '' || $first === null) {
   $collections = array_keys(config()['collections'] ?? []);
@@ -496,6 +648,7 @@ if ($first === '' || $first === null) {
     '/api/pages' => 'List all pages',
     '/api/pages/{slug}' => 'Fetch a specific page (supports nested slugs)',
     '/api/tags' => 'List all tags',
+    '/api/search' => 'Search pages & items (?q=&in=&limit=)',
   ];
 
   // Add collection-specific routes dynamically
