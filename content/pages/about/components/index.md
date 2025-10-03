@@ -1,5 +1,5 @@
 ---
-title: CSS-only UI Components
+title: Browser Components
 description: Demo of some css-only versions of UI elements that used to require JavaScript.
 template: main
 ---
@@ -10,7 +10,7 @@ template: main
   }
 </style>
 
-<h1>CSS-only* UI Components</h1>
+<h1>CSS-only* Browser Components</h1>
 
 UI components that once seemed to require JavaScript—often built with frameworks like React—are now possible with nothing more than HTML and CSS.
 
@@ -91,46 +91,6 @@ This accordion is JS-free, built with native `<details>` and a shared name to en
   </div>
 </div>
 
-<dialog	id="modal" class="modal">
-  <div class="inner">
-    <h3>I am a modal</h3>
-    <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat nulla ad nemo.</div>
-    <form method="dialog">
-      <button>Close</button>
-    </form>
-  </div>
-</dialog>
-
-## CSS Dialogs
-
-The `<dialog>` element gives you a built-in way to create modals without JavaScript. Opening and closing is handled natively with `.showModal()` and `.close()` *(so, a little JS, but let's move on)*, and the browser automatically adds a dimmed backdrop behind the dialog.
-
-This means you don’t need to wire up ARIA attributes, focus trapping, or overlay click handling yourself — it’s all provided by the platform. You can still style the dialog and its backdrop to fit your design.
-
->**Note:** Backdrop styling (via `::backdrop`) is still inconsistent across browsers. Some support blur and custom colors, while others are limited.
-
-<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
-  <div>
-    <button onclick="modal.showModal()">Show Modal</button>
-  </div>
-</div>
-
-## Before/After Comparison
-
-Another classic UI pattern that used to almost always rely on heavy JavaScript libraries is the before–after slider. In this version, CSS handles the actual reveal effect using `clip-path` and a custom property. JavaScript plays only a minimal role: wiring up the range input so its value updates the CSS variable.
-
-It’s a much lighter approach than older libraries — most of the work is done natively in CSS, while JS just provides the bridge between user input and styling.
-
-<script type="module" src="/static/js/apps/comparison.js"></script>
-
-<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
-  <div class="comparison" data-comparison>
-    <img class="before" src="https://picsum.photos/id/1015/960/640" alt="Before">
-    <img class="after" src="https://picsum.photos/id/1016/960/640" alt="After">
-    <input type="range" min="0" max="100" value="50" aria-label="Image comparison slider">
-  </div>
-</div>
-
 ## Tabs
 
 Tabs let you organize related content into panels where only one is visible at a time. Traditionally, this required JavaScript to toggle states and hide/show panels. But with plain HTML and CSS, we can achieve the same behavior using radio inputs and labels.
@@ -161,5 +121,46 @@ This approach is accessible by default (since radios are part of the native form
         <p>This is the pricing panel.</p>
       </section>
     </div>
+  </div>
+</div>
+
+## CSS Dialogs
+
+<dialog	id="modal" class="modal">
+  <div class="inner">
+    <h3>I am a modal</h3>
+    <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat nulla ad nemo.</div>
+    <form method="dialog">
+      <button>Close</button>
+    </form>
+  </div>
+</dialog>
+
+The `<dialog>` element gives you a built-in way to create modals without JavaScript. Opening and closing is handled natively with `.showModal()` and `.close()` *(so, a little JS, but let's move on)*, and the browser automatically adds a dimmed backdrop behind the dialog.
+
+This means you don’t need to wire up ARIA attributes, focus trapping, or overlay click handling yourself — it’s all provided by the platform. You can still style the dialog and its backdrop to fit your design.
+
+>**Note:** Backdrop styling (via `::backdrop`) is still inconsistent across browsers. Some support blur and custom colors, while others are limited.
+>Not progressively enhanced.
+
+<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
+  <div>
+    <button onclick="modal.showModal()">Show Modal</button>
+  </div>
+</div>
+
+## Before/After Comparison
+
+Another classic UI pattern that used to almost always rely on heavy JavaScript libraries is the before–after slider. In this version, CSS handles the actual reveal effect using `clip-path` and a custom property. JavaScript plays only a minimal role: wiring up the range input so its value updates the CSS variable. So, it is not progressively enhanced.
+
+It’s a much lighter approach than older libraries — most of the work is done natively in CSS, while JS just provides the bridge between user input and styling.
+
+<script type="module" src="/static/js/apps/comparison.js"></script>
+
+<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
+  <div class="comparison" data-comparison>
+    <img class="before" src="https://picsum.photos/id/1015/960/640" alt="Before">
+    <img class="after" src="https://picsum.photos/id/1016/960/640" alt="After">
+    <input type="range" min="0" max="100" value="50" aria-label="Image comparison slider">
   </div>
 </div>

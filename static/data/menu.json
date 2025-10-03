@@ -9,7 +9,7 @@
 		"href": "/about",
 		"activeRoot": "/about",
 		"submenu": [
-			{ "label": "Components", "href": "/about/css-only-ui-components" },
+			{ "label": "Components", "href": "/about/components" },
 			{ "label": "Blink", "href": "/about/blink" },
 			{ "label": "Fetch", "href": "/about/fetch" }
 		]

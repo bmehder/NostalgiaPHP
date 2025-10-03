@@ -18,7 +18,7 @@ return [
       'permalink' => '/blog/{slug}',
       'list_url' => '/blog',
       'sort' => ['date', 'desc'],
-      'per_page' => 6,
+      'per_page' => 9,
       'description' => 'Notes, updates, and long-form posts from the NostalgiaPHP project.',
     ],
     'dox' => [
