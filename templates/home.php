@@ -48,8 +48,7 @@
           <div class="inner">
             <div class="kicker">Back to basics</div>
             <h2>The Nostalgia Core</h2>
-            <div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)"
-              data-appear-children data-stagger="120">
+            <div class="cards auto-fill align-items-stretch appear appear-scale" style="margin-block-start: var(--size-3)">
               <?php
               include path('data') . '/features.php';
               foreach ($features as $feature):
@@ -68,7 +67,7 @@
         <div class="outer">
           <div class="inner">
             <div class="content auto-fit reverse">
-              <div class="flow appear-right">
+              <div class="flow appear appear-right">
                 <div class="kicker">Under the hood, there’s barely a hood.</div>
                 <h2>How It Works</h2>
                 <ol>
@@ -85,7 +84,7 @@
                 </ol>
                 <a class="button" href="/dox/">View the Dox</a>
               </div>
-              <div class="appear-up">
+              <div class="appear appear-up">
                 <pre>
                   <code class="language-yaml">
 ---
@@ -120,7 +119,7 @@ It’s **Markdown in, HTML out**.
             }
             ?>
             <?php if (!empty($blog_items)): ?>
-              <section class="from-blog">
+              <section class="from-blog appear appear-left">
                 <div class="kicker">Latest scribbles from the cave wall.</div>
                 <h2>From the Blog</h2>
                 <?php

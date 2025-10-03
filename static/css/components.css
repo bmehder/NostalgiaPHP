@@ -693,7 +693,7 @@ dialog.lightbox {
 			border: 1px solid var(--border);
 		}
 	}
-	
+
 	/* Show the active panel */
 	#tab-1:checked ~ .tab-panels #panel-1 {
 		display: block;
@@ -705,46 +705,36 @@ dialog.lightbox {
 		display: block;
 	}
 }
-	
-/* Animations: shared defaults for any appear-* */
-[class^="appear"],
-[class*=" appear-"] {
-  --appear-translate: 256px;
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .appear,
-  [class^="appear"],
-  [class*=" appear-"],
-  [data-appear-children] > * {
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-  }
-}
 
 /* Base hidden state */
-[class^="appear"],
-[class*=" appear-"],
-[data-appear-children] > * {
-  opacity: 0;
-  transform: translateY(10px);             /* baseline fade-up */
-  transition: opacity .45s ease, transform .45s ease;
-  will-change: opacity, transform;
-}
+.appear {
+	--appear-translate: 128px;
 
-/* Revealed state (include variants) */
-[class^="appear"].is-visible,
-[class*=" appear-"].is-visible,
-[data-appear-children].is-visible > * {
-  opacity: 1;
-  transform: none;
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.5s ease, transform 0.5s ease;
+	will-change: opacity, transform;
+
+	/* appeared */
+	&.is-visible {
+		opacity: 1;
+		transform: none;
+	}
 }
 
 /* Variants override the baseline transform */
-.appear-up    { transform: translateY(var(--appear-translate)); }
-.appear-down  { transform: translateY(calc(var(--appear-translate) * -1)); }
-.appear-left  { transform: translateX(var(--appear-translate)); }
-.appear-right { transform: translateX(calc(var(--appear-translate) * -1)); }
-.appear-scale { transform: scale(.95); }
+.appear-up {
+	transform: translateY(var(--appear-translate));
+}
+.appear-down {
+	transform: translateY(calc(var(--appear-translate) * -1));
+}
+.appear-left {
+	transform: translateX(var(--appear-translate));
+}
+.appear-right {
+	transform: translateX(calc(var(--appear-translate) * -1));
+}
+.appear-scale {
+	transform: scale(0.95);
+}

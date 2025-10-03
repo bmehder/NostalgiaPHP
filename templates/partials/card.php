@@ -39,7 +39,7 @@ if (is_string($image) && $image !== '' && $image[0] === '/') {
   $image = url($image);
 }
 ?>
-<article class="card flex flex-direction-column bg-white">
+<article class="card flex flex-direction-column bg-white appear appear-scale">
   <?php if ($image): ?>
     <a href="<?= $href ?>"><img class="card-image landscape fit" src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>"
         alt="<?= $title ?>" loading="lazy"></a>
