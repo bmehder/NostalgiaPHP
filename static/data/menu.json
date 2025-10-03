@@ -1,0 +1,33 @@
+[
+	{
+		"label": "Home",
+		"href": "/",
+		"activeRoot": "/",
+		"submenu": [{ "label": "Home (appear.js)", "href": "/appear" }]
+	},
+	{
+		"label": "About",
+		"href": "/about",
+		"activeRoot": "/about",
+		"submenu": [
+			{ "label": "Components", "href": "/about/css-only-ui-components" },
+			{ "label": "Blink", "href": "/about/blink" },
+			{ "label": "Fetch", "href": "/about/fetch" }
+		]
+	},
+	{ "label": "Blog", "href": "/blog" },
+	{ "label": "Dox", "href": "/dox" },
+	{ "label": "Tags", "href": "/tags" },
+	{ "label": "Search", "href": "/search" },
+	{ "label": "Contact", "href": "/contact" },
+	{
+		"label": "Admin",
+		"href": "/admin",
+		"submenu": [{ "label": "Sitemap", "href": "/sitemap.xml" }]
+	},
+	{
+		"label": "GitHub",
+		"href": "https://github.com/bmehder/NostalgiaPHP",
+		"external": true
+	}
+]

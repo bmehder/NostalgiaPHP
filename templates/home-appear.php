@@ -53,13 +53,20 @@
             <h2>The Nostalgia Core</h2>
             <div class="cards auto-fill align-items-stretch appear appear-scale" style="margin-block-start: var(--size-3)">
               <?php
-              include path('data') . '/features.php';
+              $features = [];
+              $file = path('data') . '/features.json';
+              if (is_file($file)) {
+                $raw = file_get_contents($file);
+                $features = json_decode($raw, true) ?? [];
+              }
+
               foreach ($features as $feature):
                 $title = $feature['title'];
                 $excerpt = $feature['excerpt'];
                 $icon = $feature['icon'];
                 include path('partials') . '/feature-card.php';
-              endforeach; ?>
+              endforeach;
+              ?>
             </div>
           </div>
         </div>
