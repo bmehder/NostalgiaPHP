@@ -49,7 +49,7 @@
             <div class="kicker">Back to basics</div>
             <h2>The Nostalgia Core</h2>
             <div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)"
-              data-appear-children data-stagger="80">
+              data-appear-children data-stagger="120">
               <?php
               include path('data') . '/features.php';
               foreach ($features as $feature):
@@ -68,7 +68,7 @@
         <div class="outer">
           <div class="inner">
             <div class="content auto-fit reverse">
-              <div class="flow appear appear-right">
+              <div class="flow appear-right">
                 <div class="kicker">Under the hood, there’s barely a hood.</div>
                 <h2>How It Works</h2>
                 <ol>
@@ -85,9 +85,9 @@
                 </ol>
                 <a class="button" href="/dox/">View the Dox</a>
               </div>
-                <div class="appear appear-left">
-                  <pre>
-                    <code class="language-yaml">
+              <div class="appear-up">
+                <pre>
+                  <code class="language-yaml">
 ---
 title: About NostalgiaPHP
 description: A tiny, flat-file CMS for sites.
@@ -95,16 +95,16 @@ date: 2025-09-21
 template: main
 tags: intro, php, markdown
 ---
-                    </code>
-                    <code class="language-markdown">
+                  </code>
+                  <code class="language-markdown">
 # About NostalgiaPHP
 
 No database. No build step. No framework.
 
 It’s **Markdown in, HTML out**.
-                    </code>
-                  </pre>
-                </div>
+                  </code>
+                </pre>
+              </div>
             </div>
           </div>
         </div>

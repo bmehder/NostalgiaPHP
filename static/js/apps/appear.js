@@ -1,10 +1,13 @@
+const APPEAR_SELECTOR =
+	'.appear, [class^="appear-"], [class*=" appear-"], [data-appear-children]'
+
 ;(() => {
 	const prefersReduced = () =>
 		window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 	// If no IO or reduce motion, just reveal immediately and bail
 	if (!('IntersectionObserver' in window) || prefersReduced()) {
-		document.querySelectorAll('.appear, [data-appear-children]').forEach(el => {
+		document.querySelectorAll(APPEAR_SELECTOR).forEach(el => {
 			if (el.hasAttribute('data-appear-children')) {
 				;[...el.children].forEach(c => (c.style.transitionDelay = ''))
 			}
@@ -15,6 +18,7 @@
 
 	const reveal = el => {
 		const stagger = parseInt(el.getAttribute('data-stagger') || '70', 10)
+		console.log(stagger)
 		if (el.hasAttribute('data-appear-children')) {
 			;[...el.children].forEach((child, i) => {
 				child.style.transitionDelay = `${i * stagger}ms`
@@ -54,7 +58,7 @@
 		el.__io.observe(el)
 	}
 
-	document.querySelectorAll('.appear, [data-appear-children]').forEach(observe)
+	document.querySelectorAll(APPEAR_SELECTOR).forEach(observe)
 
 	// Optional: auto-observe nodes added later
 	if ('MutationObserver' in window) {
@@ -62,8 +66,8 @@
 			muts.forEach(m => {
 				m.addedNodes.forEach(n => {
 					if (!(n instanceof Element)) return
-					if (n.matches?.('.appear, [data-appear-children]')) observe(n)
-					n.querySelectorAll?.('.appear, [data-appear-children]').forEach(observe)
+					if (n.matches?.(APPEAR_SELECTOR)) observe(n)
+					n.querySelectorAll?.(APPEAR_SELECTOR).forEach(observe)
 				})
 			})
 		}).observe(document.documentElement, { childList: true, subtree: true })

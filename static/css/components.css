@@ -706,11 +706,17 @@ dialog.lightbox {
 	}
 }
 	
-/* Animations */
-/* Respect reduced motion */
+/* Animations: shared defaults for any appear-* */
+[class^="appear"],
+[class*=" appear-"] {
+  --appear-translate: 256px;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .appear,
+  [class^="appear"],
+  [class*=" appear-"],
   [data-appear-children] > * {
     transition: none !important;
     transform: none !important;
@@ -719,24 +725,26 @@ dialog.lightbox {
 }
 
 /* Base hidden state */
-.appear,
+[class^="appear"],
+[class*=" appear-"],
 [data-appear-children] > * {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(10px);             /* baseline fade-up */
   transition: opacity .45s ease, transform .45s ease;
   will-change: opacity, transform;
 }
 
-/* Revealed state */
-.appear.is-visible,
+/* Revealed state (include variants) */
+[class^="appear"].is-visible,
+[class*=" appear-"].is-visible,
 [data-appear-children].is-visible > * {
   opacity: 1;
   transform: none;
 }
 
-/* Variants */
-.appear-up    { transform: translateY(48px); }
-.appear-down  { transform: translateY(-48px); }
-.appear-left  { transform: translateX(48px); }
-.appear-right { transform: translateX(-48px); }
+/* Variants override the baseline transform */
+.appear-up    { transform: translateY(var(--appear-translate)); }
+.appear-down  { transform: translateY(calc(var(--appear-translate) * -1)); }
+.appear-left  { transform: translateX(var(--appear-translate)); }
+.appear-right { transform: translateX(calc(var(--appear-translate) * -1)); }
 .appear-scale { transform: scale(.95); }
