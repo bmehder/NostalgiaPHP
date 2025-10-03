@@ -707,6 +707,8 @@ dialog.lightbox {
 }
 
 /* Base hidden state */
+/* WARNING - The script must load or your elements
+	will be invisible. */
 .appear {
 	--appear-translate: 128px;
 

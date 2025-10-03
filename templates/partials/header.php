@@ -31,7 +31,15 @@
       </label>
 
       <nav id="site-nav" data-site-nav class="nav spread-apart">
-        <?= nav_link('/', 'Home', $path) ?>
+        <div class="has-submenu">
+          <a href="<?= url('/') ?>" class="top-link <?= active_class('/', $path, true) ?>"
+            anchor-name="--parent-nav-item">
+            Home
+          </a>
+          <ul class="submenu list-style-none flow-0-5">
+            <li><?= nav_link('/appear', 'Home (appear.js)', $path) ?></li>
+          </ul>
+        </div>
         <div class="has-submenu">
           <a href="<?= url('/about') ?>" class="top-link <?= active_class('/about', $path, true) ?>"
             anchor-name="--parent-nav-item">
