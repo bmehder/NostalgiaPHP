@@ -138,4 +138,7 @@ $pathOnly = parse_url($reqUri, PHP_URL_PATH) ?? '/';
 
   <!-- Theme Switcher -->
   <script type="module" src="/static/js/apps/theme-switcher.js"></script>
+
+  <!-- Appear.js -->
+  <script defer src="/static/js/apps/appear.js"></script>
 </head>

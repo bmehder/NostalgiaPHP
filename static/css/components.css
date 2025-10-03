@@ -706,41 +706,6 @@ dialog.lightbox {
 	}
 }
 
-/* Base hidden state */
-/* WARNING - The script must load or your elements
-	will be invisible. */
-.appear {
-	--appear-translate: 128px;
-
-	opacity: 0;
-	transform: translateY(20px);
-	transition: opacity 0.5s ease, transform 0.5s ease;
-	will-change: opacity, transform;
-
-	/* appeared */
-	&.is-visible {
-		opacity: 1;
-		transform: none;
-	}
-}
-
-/* Variants override the baseline transform */
-.appear-up {
-	transform: translateY(var(--appear-translate));
-}
-.appear-down {
-	transform: translateY(calc(var(--appear-translate) * -1));
-}
-.appear-left {
-	transform: translateX(var(--appear-translate));
-}
-.appear-right {
-	transform: translateX(calc(var(--appear-translate) * -1));
-}
-.appear-scale {
-	transform: scale(0.95);
-}
-
 /* Pagination */
 .pager {
   display:flex;

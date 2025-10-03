@@ -2,8 +2,7 @@
 	{
 		"label": "Home",
 		"href": "/",
-		"activeRoot": "/",
-		"submenu": [{ "label": "Home (appear.js)", "href": "/appear" }]
+		"activeRoot": "/"
 	},
 	{
 		"label": "About",
