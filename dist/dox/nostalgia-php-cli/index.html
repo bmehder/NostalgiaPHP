@@ -115,63 +115,98 @@
       <section>
         <div class="outer">
           <div class="inner">
-            <div class="content"><h1>Nosty CLI — Your New Best Friend</h1>
-<p>Meet <strong>Nosty CLI</strong>, a tiny helper script included with NostalgiaPHP.</p>
-<p>With it, you can scaffold new blog posts or pages right from the command line — no more copy‑pasting front‑matter by hand.</p>
-<h2>Usage</h2>
-<p>The CLI lives in the project root. Run it like so:</p>
-<pre><code class="language-bash">php nphp make:post blog hello-world
-php nphp make:page about/contact</code></pre>
+            <div class="content"><h1>NostalgiaPHP CLI</h1>
+<p>A tiny command-line helper for working with NostalgiaPHP sites.</p>
+<p>The CLI lives in the project root (<code>nphp</code>). Run it with PHP:</p>
+<pre><code class="language-bash">php nphp &lt;command&gt; [args]</code></pre>
+<hr />
+<h2>Commands</h2>
+<h3><code>make:post</code></h3>
+<p>Scaffold a new post in a collection.</p>
+<pre><code class="language-bash">php nphp make:post &lt;collection&gt; &lt;slug&gt; [options]</code></pre>
+<p>Options:</p>
 <ul>
-<li><code>make:post</code> creates <code>content/collections/{collection}/{slug}.md</code></li>
-<li><code>make:page</code> creates <code>content/pages/{slug}/index.md</code> (foldered pages for easy assets).</li>
+<li><code>--title="Custom Title"</code> → Override default title</li>
+<li><code>--template=main</code> → Which front‑matter template (default: <code>main</code>)</li>
+<li><code>--date=YYYY-MM-DD</code> → Override date (default: today in site timezone)</li>
+<li><code>--draft</code> → Add <code>draft: true</code> to front matter</li>
+<li><code>--force</code> → Overwrite if file already exists</li>
 </ul>
-<p>Both commands accept the same options:</p>
+<p>Example:</p>
+<pre><code class="language-bash">php nphp make:post blog hello-world --title="Hello World" --draft</code></pre>
+<hr />
+<h3><code>make:page</code></h3>
+<p>Scaffold a new standalone page.</p>
+<pre><code class="language-bash">php nphp make:page &lt;slug&gt; [options]</code></pre>
+<p>Same options as <code>make:post</code>.</p>
+<p>Example:</p>
+<pre><code class="language-bash">php nphp make:page about --title="About Us"</code></pre>
+<hr />
+<h3><code>backup</code></h3>
+<p>Zip up your entire project into a timestamped archive.</p>
+<pre><code class="language-bash">php nphp backup [--to=/absolute/path]</code></pre>
+<p>If no <code>--to</code> is provided, backups go to <code>~/nosty_backups/&lt;project&gt;</code>.</p>
+<p>Example:</p>
+<pre><code class="language-bash">php nphp backup --to="$HOME/Dropbox/nosty_backups"</code></pre>
+<hr />
+<h3>Build (SSG)</h3>
+<p>Pre-render your site into static HTML (Static Site Generation).</p>
+<p>This command:</p>
 <ul>
-<li><code>--title="Custom Title"</code> (defaults to a titleized slug)</li>
-<li><code>--template=main</code> (choose your template)</li>
-<li><code>--date=YYYY-MM-DD</code> (defaults to today in your site timezone)</li>
-<li><code>--draft</code> (adds <code>draft: true</code>)</li>
-<li><code>--force</code> (overwrite if the file exists)</li>
+<li>Copies static/ into the output directory</li>
+<li>Each page is written to disk as {dir}/index.html so that users see clean URLs like /about instead of /about.html.</li>
+<li>Renders all collections (lists + individual items, with pagination)</li>
+<li>Fixes relative asset paths for portability</li>
+<li>Pre-renders dynamic routes like:<ul>
+<li>/tags (list of all tags)</li>
+<li>/tag/{slug} (all items/pages for a tag)</li>
+<li>/sitemap.xml (auto-generated sitemap for search engines)</li>
+<li>/robots.txt (with a link to the sitemap)</li>
 </ul>
-<h2>Examples</h2>
-<pre><code class="language-bash"># Blog post
-php nphp make:post blog hello-world --title="Hello, World" --template=main --draft
+</li>
+</ul>
+<div style="min-height: var(--size-1-5)"></div>
+<blockquote>
+<p><strong>⚠️ Limitations:</strong> Some pages cannot be safely pre-rendered. For example, the Contact page contains a live form that posts back to the same PHP route. Pre-rendering would freeze it into a static file, breaking submissions. To support forms on static hosting, you’d need to switch to a client-side submission method (JavaScript + API endpoint or a service like Netlify Forms).</p>
+</blockquote>
+<div style="min-height: var(--size-1-5)"></div>
+<pre><code class="language-bash">php nphp build [--out=dist] [--clean]</code></pre>
+<p>Options:</p>
+<ul>
+<li><code>--out=dist</code> → Output directory (default: <code>dist</code>)</li>
+<li><code>--clean</code> → Remove existing output directory before building</li>
+</ul>
+<p>Examples:</p>
+<pre><code class="language-bash"># Build into /dist
+php nphp build
 
-# Docs page (folder + index.md)
-php nphp make:page getting-started --title="Getting Started" --template=main</code></pre>
-<p>That yields front-matter like:</p>
-<pre><code class="language-yaml">---
-title: Hello, World
-description:
-date: 2025-09-28
-template: main
-draft: true
----</code></pre>
-<h2>Backups</h2>
-<p>You can back up your entire project with the <code>backup</code> command.  </p>
-<p>By default, backups are saved to your home directory under <code>~/nosty_backups/&lt;project&gt;/</code>.</p>
-<pre><code class="language-bash">php nphp backup</code></pre>
-<p>This will create a zip archive like:
-<code>~/nosty_backups/MyProject/MyProject-2025-09-28-143000.zip</code></p>
-<h3>Custom location</h3>
-<p>You can also specify a different target directory with <code>--to</code>:</p>
-<pre><code class="language-bash">php nphp backup --to=/path/to/backups</code></pre>
-<h3>Notes</h3>
-<ul>
-<li>Backups include your whole project folder.</li>
-<li>Common directories like .git and node_modules are excluded automatically.</li>
-<li>Old backups are not deleted. Manage them yourself by removing old archives.</li>
-<li>Requires the PHP zip extension.</li>
-</ul>
+# Clean old build and output to /public
+php nphp build --out=public --clean</code></pre>
+<hr />
 <h2>Why It Matters</h2>
-<p>Consistency, speed, and fewer typos.</p>
-<p>Embrace lazy. Let Nosty handle the boilerplate, and you can focus on writing.</p></div>
+<p>The CLI helps you:</p>
+<ul>
+<li>Scaffold content quickly (posts, pages)</li>
+<li>Back up your entire project</li>
+<li>Pre-render your site for <strong>static hosting</strong></li>
+</ul>
+<p>With <code>build</code>, you can host your NostalgiaPHP site anywhere — Netlify, GitHub Pages, Vercel, S3 — no PHP server required.</p></div>
           </div>
         </div>
       </section>
     </main>
-    <footer>
+      <div style="
+      position: fixed;
+      inset: auto 0 0 auto;
+      z-index: 9999;
+      background: var(--accent);
+      color: #fff;
+      padding-block: var(--size-0-2-5);
+      padding-inline: var(--size-0-5);
+      font: 12px/1 system-ui;
+      border-top-left-radius: var(--size-0-5);">
+    DEV  </div>
+<footer>
   <div class="outer">
     <div class="inner">
       <div class="content spread-apart">

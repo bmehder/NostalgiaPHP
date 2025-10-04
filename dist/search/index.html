@@ -119,15 +119,15 @@
   <h1>Search</h1>
 
   <search>
-    <form id="site-search" method="get" action="/search" class="search-form" style="margin-block:1rem;" role="search">
+    <form id="site-search" method="get" action="/search" class="search-form flex flex-wrap gap-0-2-5" style="margin-block:1rem;" role="search">
       <label for="q" class="visually-hidden">Search query</label>
       <input id="q" type="search" name="q" placeholder="Search pages and collections…" style="padding:.5rem .75rem; width:min(40rem,100%);" aria-label="Search query">
-      <select id="in" name="in" aria-label="Scope">
+      <button type="submit" class="btn" style="margin-block-start:0; padding:.5rem .75rem;">Search</button>
+      <select id="in" name="in" style="padding:.5rem .75rem;" aria-label="Scope">
         <option value="all" selected>All</option>
         <option value="pages">Pages</option>
         <option value="items">Collections</option>
       </select>
-      <button type="submit" class="btn" style="padding:.5rem .75rem;">Search</button>
     </form>
   </search>
 
@@ -136,13 +136,24 @@
   <p id="search-status" class="muted" aria-live="polite" style="margin-block:.5rem 1rem;"></p>
   <ul id="search-results" class="item-list flow-0-5" style="margin-block-start: var(--size-3)"></ul>
 
-  <script type="module" src="/static/js/apps/search.js"></script>
+  <script type="module" src="/static/js/search.js"></script>
 </div></div>
           </div>
         </div>
       </section>
     </main>
-    <footer>
+      <div style="
+      position: fixed;
+      inset: auto 0 0 auto;
+      z-index: 9999;
+      background: var(--accent);
+      color: #fff;
+      padding-block: var(--size-0-2-5);
+      padding-inline: var(--size-0-5);
+      font: 12px/1 system-ui;
+      border-top-left-radius: var(--size-0-5);">
+    DEV  </div>
+<footer>
   <div class="outer">
     <div class="inner">
       <div class="content spread-apart">

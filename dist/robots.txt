@@ -1,4 +1,2 @@
 User-agent: *
-Disallow: /*.md$
-
-Sitemap: http://localhost:8000/sitemap.xml
+Disallow: /

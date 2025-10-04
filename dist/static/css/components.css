@@ -205,10 +205,11 @@ footer {
 /* Card */
 .card {
 	box-shadow: var(--shadow-1);
+	overflow: hidden;
 
 	img {
-		min-block-size: var(--xs);
 		object-fit: cover;
+		transition: all 0.1s ease;
 	}
 
 	.card-text {

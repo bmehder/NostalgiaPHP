@@ -111,6 +111,27 @@ function ensure_dir(string $dir): void
   }
 }
 
+function write_static_robots(string $outDir, string $policy, ?string $absBase): void
+{
+  $lines = [
+    'User-agent: *',
+  ];
+
+  if ($policy === 'disallow') {
+    $lines[] = 'Disallow: /';
+    // no sitemap line when disallowed
+  } else {
+    // normal allow
+    $lines[] = 'Disallow: /*.md$';
+    $lines[] = '';
+    if ($absBase && preg_match('~^https?://~i', $absBase)) {
+      $lines[] = "Sitemap: {$absBase}/sitemap.xml";
+    }
+  }
+  $txt = implode("\n", $lines) . "\n";
+  file_put_contents(rtrim($outDir, '/\\') . '/robots.txt', $txt);
+}
+
 function write_file(string $path, string $content, bool $force): void
 {
   if (is_file($path) && !$force) {
@@ -970,15 +991,15 @@ function build_search_shell(string $outDir)
   <h1>Search</h1>
 
   <search>
-    <form id="site-search" method="get" action="/search" class="search-form" style="margin-block:1rem;" role="search">
+    <form id="site-search" method="get" action="/search" class="search-form flex flex-wrap gap-0-2-5" style="margin-block:1rem;" role="search">
       <label for="q" class="visually-hidden">Search query</label>
       <input id="q" type="search" name="q" placeholder="Search pages and collections…" style="padding:.5rem .75rem; width:min(40rem,100%);" aria-label="Search query">
-      <select id="in" name="in" aria-label="Scope">
+      <button type="submit" class="btn" style="margin-block-start:0; padding:.5rem .75rem;">Search</button>
+      <select id="in" name="in" style="padding:.5rem .75rem;" aria-label="Scope">
         <option value="all" selected>All</option>
         <option value="pages">Pages</option>
         <option value="items">Collections</option>
       </select>
-      <button type="submit" class="btn" style="padding:.5rem .75rem;">Search</button>
     </form>
   </search>
 
@@ -987,7 +1008,7 @@ function build_search_shell(string $outDir)
   <p id="search-status" class="muted" aria-live="polite" style="margin-block:.5rem 1rem;"></p>
   <ul id="search-results" class="item-list flow-0-5" style="margin-block-start: var(--size-3)"></ul>
 
-  <script type="module" src="/static/js/apps/search.js"></script>
+  <script type="module" src="/static/js/search.js"></script>
 </div>
 HTML;
 
@@ -1127,19 +1148,30 @@ function build_robots_txt(string $outDir)
 
 // ---------- Command: build ----------
 if ($cmd === 'build') {
-  // Options: --out=dist --clean
+  // Options: --out=dist --clean --robots=allow|disallow --base=https://site.example
   $outDir = 'dist';
   $clean = false;
+  $robotsPolicy = 'allow'; // default
+  $cliBase = null;
+
   foreach (array_slice($argv, 1) as $a) {
     if (strpos($a, '--out=') === 0)
       $outDir = substr($a, 6);
     if ($a === '--clean')
       $clean = true;
+    if (strpos($a, '--robots=') === 0) {
+      $v = strtolower(substr($a, 9));
+      if (in_array($v, ['allow', 'disallow'], true))
+        $robotsPolicy = $v;
+    }
+    if (strpos($a, '--base=') === 0) {
+      $cliBase = rtrim(substr($a, 7), '/');
+    }
   }
 
   $outDir = rtrim($outDir, '/\\');
+
   if ($clean && is_dir($outDir)) {
-    // careful delete
     $it = new RecursiveIteratorIterator(
       new RecursiveDirectoryIterator($outDir, FilesystemIterator::SKIP_DOTS),
       RecursiveIteratorIterator::CHILD_FIRST
@@ -1154,38 +1186,59 @@ if ($cmd === 'build') {
 
   require_once __DIR__ . '/functions.php';
 
+  // robots policy can be overridden by env (e.g. Netlify UI)
+  $envRobots = getenv('NOSTY_ROBOTS');
+  if ($envRobots && in_array(strtolower($envRobots), ['allow', 'disallow'], true)) {
+    $robotsPolicy = strtolower($envRobots);
+  }
+
+  // Compute absolute base for sitemap/robots
+  // Priority: --base => NOSTY_BASE_URL => Netlify URL => config.site.base_url (if absolute)
+  $absBase = null;
+
+  if ($cliBase) {
+    $absBase = $cliBase;
+  } elseif ($v = getenv('NOSTY_BASE_URL')) {
+    $absBase = rtrim($v, '/');
+  } elseif ($v = getenv('URL')) { // Netlify
+    $absBase = rtrim($v, '/');
+  } else {
+    $cfgBase = trim((string) (config()['site']['base_url'] ?? ''), '/');
+    if (preg_match('~^https?://~i', (string) (config()['site']['base_url'] ?? ''))) {
+      $absBase = rtrim((string) config()['site']['base_url'], '/');
+    }
+  }
+  // If still not absolute, leave $absBase as null → we'll skip the sitemap line in robots.
+
+  // Write robots.txt (single call; remove any older build_robots_txt call)
+  write_static_robots($outDir, $robotsPolicy, $absBase);
+  fwrite(STDOUT, "✓ robots.txt ({$robotsPolicy})\n");
+
   // 1) copy static assets
   $staticSrc = __DIR__ . '/static';
   $staticDst = $outDir . '/static';
   copy_dir_recursive($staticSrc, $staticDst);
   fwrite(STDOUT, "✓ copied /static → $staticDst\n");
 
-  // 1.5) write robots.txt
-  build_robots_txt($outDir);
-
   // 2) render pages
   build_pages($outDir);
 
-  // 3) render collections
+  // 3) render collections (lists + items)
   $cfg = config();
   foreach (array_keys($cfg['collections'] ?? []) as $collection) {
     build_collection_list($outDir, $collection);
     build_collection_items($outDir, $collection);
   }
 
-  // 4) render static search shell
+  // 4) search shell + index
   build_search_shell($outDir);
-  
-  // 5) render static search index
   build_search_index($outDir);
 
-  // 6) render tags page
+  // 5) tags
   build_tags($outDir);
-  
-  // 7) render tag pages
   build_tag_pages($outDir);
 
-  // 8) sitemap
+  // 6) sitemap (pass $absBase if your function accepts it; otherwise ensure it computes the same way)
   build_sitemap($outDir, /* include collection indexes? */ false);
 
   fwrite(STDOUT, "Build complete → $outDir\n");
