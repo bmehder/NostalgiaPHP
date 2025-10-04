@@ -205,7 +205,7 @@ footer {
 /* Card */
 .card {
 	border-radius: var(--size-0-5);
-	box-shadow: var(--shadow-2);
+	box-shadow: var(--shadow-1);
 	overflow: hidden;
 
 	img {

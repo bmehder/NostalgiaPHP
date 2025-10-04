@@ -581,9 +581,13 @@ function build_pages(string $outDir)
     if (strtolower($f->getFilename()) !== 'index.md')
       continue;
 
-    $rel = trim(str_replace($base, '', $f->getPath()), '/\\');
-    $urlPath = '/' . $rel;
+    // URL path derived from folder (pretty URL)
+    $rel = trim(str_replace($base, '', $f->getPath()), '/\\'); // e.g. "" or "about" or "guides/install"
+    $urlPath = '/' . $rel;                                     // "" -> "/", others "/about", "/guides/install"
+    if ($urlPath === '//')
+      $urlPath = '/';                     // normalize just in case
 
+    // Load & render markdown
     $raw = read_file($f->getPathname()) ?? '';
     [$fm, $md] = parse_front_matter($raw);
     $html = markdown_to_html($md);
@@ -593,16 +597,17 @@ function build_pages(string $outDir)
     $content = $html;
     $template = !empty($meta['template']) ? $meta['template'] : 'main';
 
-    // ✅ Add hero_html
+    // Optional hero support (unchanged)
     $hero_html = function_exists('build_hero_html') ? build_hero_html($meta) : '';
 
-    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html) {
-      $path = $_SERVER['REQUEST_URI'] ?? '/';
+    // ❗️IMPORTANT: pass the target URL path to the template so active links work in SSG
+    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html, $urlPath) {
+      $path = $urlPath; // this is what active_class() should compare against
       render($template, compact('title', 'content', 'path', 'meta', 'hero_html'));
     });
 
     $out = fix_relative_assets($out);
-    write_html_pretty($outDir, $urlPath === '//' ? '/' : $urlPath, $out);
+    write_html_pretty($outDir, $urlPath, $out);
   }
 }
 
@@ -629,8 +634,10 @@ function build_collection_items(string $outDir, string $collection)
     // ✅ Add hero_html
     $hero_html = function_exists('build_hero_html') ? build_hero_html($meta) : '';
 
-    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html) {
-      $path = $_SERVER['REQUEST_URI'] ?? '/';
+    $pathForTemplate = "/{$collection}/{$slug}";
+
+    $out = render_to_string(function () use ($template, $title, $content, $meta, $hero_html, $pathForTemplate) {
+      $path = $pathForTemplate; // critical for active_class()
       render($template, compact('title', 'content', 'path', 'meta', 'hero_html'));
     });
 
@@ -712,7 +719,22 @@ function build_collection_list(string $outDir, string $collection)
 
     // Page 1 → /{collection}/index.html
     // Others → /{collection}/page/{n}/index.html
+    // Page 1 → /{collection}/index.html
+// Others → /{collection}/page/{n}/index.html
     $urlPath = $hrefFor($page);
+
+    $out = render_to_string(function () use ($template, $title, $contentInner, $meta, $urlPath) {
+      $path = $urlPath; // critical for active_class()
+      render($template, [
+        'title' => $title,
+        'content' => $contentInner,
+        'path' => $path,
+        'meta' => $meta,
+      ]);
+    });
+
+    // Fix asset paths for SSG output
+    $out = fix_relative_assets($out);
     write_html_pretty($outDir, $urlPath, $out);
   }
 }
@@ -781,23 +803,23 @@ function build_tags(string $outDir)
   // --- render the same markup as the route ---
   $contentInner = render_to_string(function () use ($tags) {
     ob_start(); ?>
-          <h1>Tags</h1>
-          <ul class="tags-list">
-            <?php if (empty($tags)): ?>
-                <li><em>No tags found.</em></li>
-            <?php else: ?>
-                <?php foreach ($tags as $slug => $info): ?>
-                    <li>
-                      <a href="<?= url('/tag/' . urlencode($slug)) ?>">
-                        <?= htmlspecialchars($info['label'], ENT_QUOTES, 'UTF-8') ?>
-                      </a>
-                      <small class="muted">(<?= (int) ($info['count'] ?? 0) ?>)</small>
-                    </li>
-                <?php endforeach; ?>
-            <?php endif; ?>
-          </ul>
-        <?php
-        echo ob_get_clean();
+    <h1>Tags</h1>
+    <ul class="tags-list">
+      <?php if (empty($tags)): ?>
+        <li><em>No tags found.</em></li>
+      <?php else: ?>
+        <?php foreach ($tags as $slug => $info): ?>
+          <li>
+            <a href="<?= url('/tag/' . urlencode($slug)) ?>">
+              <?= htmlspecialchars($info['label'], ENT_QUOTES, 'UTF-8') ?>
+            </a>
+            <small class="muted">(<?= (int) ($info['count'] ?? 0) ?>)</small>
+          </li>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </ul>
+    <?php
+    echo ob_get_clean();
   });
 
   // Pump through your normal template renderer
@@ -937,30 +959,30 @@ function build_tag_pages(string $outDir)
 
     $contentInner = render_to_string(function () use ($tSlug, $rows) {
       ob_start(); ?>
-              <h1>Tagged: <?= htmlspecialchars($tSlug, ENT_QUOTES, 'UTF-8') ?></h1>
+      <h1>Tagged: <?= htmlspecialchars($tSlug, ENT_QUOTES, 'UTF-8') ?></h1>
 
-              <?php if (empty($rows)): ?>
-                  <p>No items with this tag yet.</p>
-              <?php else: ?>
-                  <ul class="item-list flow-0-5" style="margin-block-start: var(--size-3)">
-                    <?php foreach ($rows as $row): ?>
-                        <li class="item-list-row">
-                          <a class="item-list-link" href="<?= htmlspecialchars($row['url'], ENT_QUOTES, 'UTF-8') ?>">
-                            <?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>
-                          </a>
-                          <?php
-                          $d = $row['date'] ?? null;
-                          $dateStr = $d instanceof DateTime ? $d->format('Y-m-d') : (is_string($d) ? $d : '');
-                          ?>
-                          <?php if ($dateStr): ?>
-                              <small class="item-list-date muted"><?= htmlspecialchars($dateStr, ENT_QUOTES, 'UTF-8') ?></small>
-                          <?php endif; ?>
-                        </li>
-                    <?php endforeach; ?>
-                  </ul>
+      <?php if (empty($rows)): ?>
+        <p>No items with this tag yet.</p>
+      <?php else: ?>
+        <ul class="item-list flow-0-5" style="margin-block-start: var(--size-3)">
+          <?php foreach ($rows as $row): ?>
+            <li class="item-list-row">
+              <a class="item-list-link" href="<?= htmlspecialchars($row['url'], ENT_QUOTES, 'UTF-8') ?>">
+                <?= htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8') ?>
+              </a>
+              <?php
+              $d = $row['date'] ?? null;
+              $dateStr = $d instanceof DateTime ? $d->format('Y-m-d') : (is_string($d) ? $d : '');
+              ?>
+              <?php if ($dateStr): ?>
+                <small class="item-list-date muted"><?= htmlspecialchars($dateStr, ENT_QUOTES, 'UTF-8') ?></small>
               <?php endif; ?>
-            <?php
-            echo ob_get_clean();
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      <?php endif; ?>
+      <?php
+      echo ob_get_clean();
     });
 
     $title = 'Tagged: ' . $label;

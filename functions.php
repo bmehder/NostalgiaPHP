@@ -474,6 +474,15 @@ function active_class(string $href, string $current_path, bool $prefix = false, 
 
 /* -------------------------------- Rendering ------------------------------- */
 
+function render_for_build(string $template, string $title, string $content, array $meta, string $urlPath): string
+{
+  return render_to_string(function () use ($template, $title, $content, $meta, $urlPath) {
+    // Ensure templates/partials receive the correct current path
+    $path = $urlPath;
+    render($template, compact('title', 'content', 'path', 'meta'));
+  });
+}
+
 /**
  * Build the hero HTML from front-matter.
  * Returns an empty string if no hero fields are present.
