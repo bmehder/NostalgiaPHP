@@ -2,7 +2,7 @@
 
 <style>
   section:nth-of-type(even)>.outer {
-    background-color: var(--stone-100);
+    background-color: var(--bg-alt-2);
   }
 </style>
 
