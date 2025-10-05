@@ -25,5 +25,5 @@ _Note: State not persisted in this example._
     <li><button type="button" data-filter="completed" aria-pressed="false">Completed</button></li>
   </menu>
   
-  <ul class="todos no-padding list-style-none" data-todos></ul>
+  <ul class="todos padding-0 list-style-none" data-todos></ul>
 </div>

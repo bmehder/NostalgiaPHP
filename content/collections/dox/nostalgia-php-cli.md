@@ -94,8 +94,6 @@ This command:
   - /sitemap.xml (auto-generated sitemap for search engines)
   - /robots.txt (with a link to the sitemap)
 
-<div style="min-height: var(--size-1-5)"></div>
-
 >**⚠️ Limitations:** Some pages cannot be safely pre-rendered. For example, the Contact page contains a live form that posts back to the same PHP route. Pre-rendering would freeze it into a static file, breaking submissions. To support forms on static hosting, you’d need to switch to a client-side submission method (JavaScript + API endpoint or a service like Netlify Forms).
 
 <div style="min-height: var(--size-1-5)"></div>

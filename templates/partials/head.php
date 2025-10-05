@@ -38,7 +38,7 @@ $canonical = $absBase . $canonPath;
 $pathOnly = parse_url($reqUri, PHP_URL_PATH) ?? '/';
 ?>
 <!doctype html>
-<html lang="en" class="theme-dark">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
@@ -140,5 +140,5 @@ $pathOnly = parse_url($reqUri, PHP_URL_PATH) ?? '/';
   <script type="module" src="/static/js/apps/theme-switcher.js"></script>
 
   <!-- Appear.js -->
-  <script defer src="/static/js/apps/appear.js"></script>
+  <script type="module" src="/static/js/apps/appear.js"></script>
 </head>

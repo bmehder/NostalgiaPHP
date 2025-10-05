@@ -19,6 +19,6 @@ $h = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
     <label class="visually-hidden" for="q">Search</label>
     <input id="q" class="flex" type="search" name="q" value="<?= $h($q) ?>" placeholder="<?= $h($placeholder) ?>"
       autocomplete="off" />
-    <button type="submit" class="no-margin">Search</button>
+    <button type="submit" class="margin-0">Search</button>
   </form>
 </search>

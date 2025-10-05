@@ -155,8 +155,14 @@ main h2 {
 	margin-block-end: var(--size-0-2-5);
 }
 
-main .content h2 {
-	margin-block-end: var(--size);
+main .content {
+	h2 {
+		margin-block-end: var(--size);
+	}
+
+	ul, ol {
+		margin-block: var(--size);
+	}
 }
 
 button,

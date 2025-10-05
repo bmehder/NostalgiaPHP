@@ -1,153 +1,161 @@
-/* Resets */
+/* ---------- Base reset ---------- */
 *,
 *::before,
 *::after {
-	box-sizing: border-box;
-	/* outline: 1px solid red; */
+  box-sizing: border-box;
 }
 
-:target {
-	scroll-margin-block: 2rem; /* Firefox fallback */
-	scroll-margin-block: 5rlh;
+:root {
+  /* Opt-in UA theming while staying agnostic about actual colors */
+  /* color-scheme: light dark; */
 }
 
+/* Smooth scroll only for users who allow motion */
 @media (prefers-reduced-motion: no-preference) {
-	html {
-		scroll-behavior: smooth;
-	}
+  html { scroll-behavior: smooth; }
+}
+
+/* Respect anchors */
+:target {
+  /* Firefox fallback then modern rlh */
+  scroll-margin-block: 2rem;
+  scroll-margin-block: 5rlh;
 }
 
 html {
-	font-family: system-ui, sans-serif;
-	-moz-text-size-adjust: none;
-	-webkit-text-size-adjust: none;
-	text-size-adjust: none;
-	interpolate-size: allow-keywords;
+  font-family: system-ui, sans-serif;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  interpolate-size: allow-keywords;
 }
 
-body {
-	margin: 0;
+body { margin: 0; }
+
+/* ---------- Typography ---------- */
+:where(h1, h2, h3, h4, h5, h6,
+       p, ul, ol, dl, blockquote, pre) {
+  margin: 0;
 }
 
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3,
-button,
-input,
-label {
-	line-height: 1.2;
-	text-wrap: balance;
+:where(h1, .h1, h2, .h2, h3, .h3,
+       button, input, label) {
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
-p,
-li,
-figcaption,
-blockquote,
-hr {
-	max-inline-size: var(--text-max-width);
-	text-wrap: pretty;
+:where(p, li, figcaption, blockquote, hr) {
+  max-inline-size: var(--text-max-width);
+  text-wrap: pretty;
 }
 
-ul {
-	margin: 0;
-}
+ul { padding-inline-start: 1em; } /* keep bullets by default */
 
 hr {
-	margin-block: var(--size-2);
-	margin-inline-start: 0;
-	margin-inline-end: auto;
-	border: none;
+  margin-block: var(--size-2);
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+  border: none;
   border-top: 1px solid var(--border);
 }
 
-.full-width {
-	max-inline-size: initial;
-}
-
+/* ---------- Media ---------- */
 img,
 picture {
-	inline-size: 100%;
-	block-size: auto;
-	display: block;
-	font-style: italic;
-	background-repeat: no-repeat;
-	background-size: cover;
-	shape-margin: var(--size);
+  /* logical + physical fallbacks */
+  inline-size: 100%;
+  width: 100%;
+  block-size: auto;
+  height: auto;
+
+  display: block;
+  font-style: italic; /* alt text hint */
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: var(--size);
 }
 
-img[src$='.svg'] {
-	inline-size: auto;
-	block-size: 1em;
-	display: inline-block;
-	font-style: normal;
+/* Inline icon pattern: scope to a class instead of all SVG images */
+img.icon,
+svg.icon {
+  inline-size: 1em;
+  block-size: 1em;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-style: normal;
+  vertical-align: -0.125em; /* optical alignment for text */
 }
 
+/* ---------- Forms ---------- */
 input,
 button,
 textarea,
 select {
-	min-inline-size: 0;
-	font-family: inherit;
-	font-size: inherit;
+  min-inline-size: 0;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
 }
 
 input,
-textarea {
-	padding: var(--size-0-5);
+textarea { padding: var(--size-0-5); }
+
+/* Reasonable default rows without trapping height */
+textarea:not([rows]) { min-block-size: 10em; }
+
+/* Remove default button background in Safari/iOS */
+button {
+  background: none;
+  border: none;
 }
 
-textarea:not([rows]) {
-	min-block-size: 10em;
-}
-
-/* This is our of place,
-but a convenient place to put it. */
-.details summary::marker {
-	content: '\002b';
-}
-
-.details[open] summary::marker {
-	content: '\2212';
-}
-/* ______________________________ */
-
-summary {
-	cursor: pointer;
-}
-
+/* ---------- Code / Tables ---------- */
 pre,
 code,
 kbd,
 samp {
-	font-family: monospace;
-	font-size: 1em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 1em;
+}
+
+pre {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
-	border-collapse: collapse;
+  border-collapse: collapse;
+  inline-size: 100%;
 }
 
 td,
 math,
-time[datetime*=':'] {
-	font-variant-numeric: tabular-nums lining-nums;
+time[datetime*=":"] {
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-sub,
-sup {
-	font-size: 75%;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
+/* ---------- Sub/Sup ---------- */
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub { bottom: -0.25em; }
+sup { top: -0.5em; }
+
+summary { cursor: pointer; }
+
+/* Respect reduced motion users globally */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-sub {
-	bottom: -0.25em;
-}
-
-sup {
-	top: -0.5em;
-}
+/* Utilities */
+[hidden] { display: none !important; }

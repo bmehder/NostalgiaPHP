@@ -111,7 +111,7 @@ completeness and consistency.
 }
 
 .image-shape-right {
-	float: right;
+	float: inline-end;
 	inline-size: clamp(var(--xs), 40vw, var(--sm));
 	background-position: center;
 	background-size: cover;
@@ -125,15 +125,27 @@ completeness and consistency.
 }
 
 .visually-hidden {
-	border: 0;
-	clip: rect(0 0 0 0);
-	block-size: auto;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	inline-size: 1px;
-	white-space: nowrap;
+	position: absolute !important;
+	inline-size: 1px !important;
+	block-size: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+	clip-path: inset(50%) !important; /* modern replacement for clip */
+}
+
+/* If you ever need to unhide on focus (e.g., “Skip to content” links): */
+.visually-hidden.focusable:active,
+.visually-hidden.focusable:focus {
+	position: static !important;
+	inline-size: auto !important;
+	block-size: auto !important;
+	margin: 0 !important;
+	overflow: visible !important;
+	white-space: normal !important;
+	clip-path: none !important;
 }
 
 .block {
@@ -220,15 +232,19 @@ completeness and consistency.
 	text-wrap: initial;
 }
 
-.no-margin {
+.pretty {
+	text-wrap: pretty;
+}
+
+.margin-0 {
 	margin: 0;
 }
 
-.no-padding {
+.padding-0 {
 	padding: 0;
 }
 
-.no-border {
+.border-none {
 	border: none !important;
 	border-top: none !important;
 	border-right: none !important;
@@ -237,8 +253,8 @@ completeness and consistency.
 }
 
 .full-width {
-	min-inline-size: unset;
 	inline-size: 100%;
+	min-inline-size: 0; /* allow shrinking in flex/grid */
 }
 
 .text-align-left {
@@ -251,10 +267,6 @@ completeness and consistency.
 
 .text-align-right {
 	text-align: right;
-}
-
-.pretty {
-	text-wrap: pretty;
 }
 
 .square {

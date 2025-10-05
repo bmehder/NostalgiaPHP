@@ -523,6 +523,7 @@ dialog.lightbox {
 	}
 
 	.card {
+		container-type: inline-size;
 		flex: 0 0 20rem;
 		aspect-ratio: 5 / 3;
 		background-color: var(--bg-dark);
@@ -558,11 +559,11 @@ dialog.lightbox {
 	box-shadow: var(--shadow-1);
 	overflow: hidden;
 
-	details + details {
+	:where(details + details) {
 		border-top: 1px solid var(--border);
 	}
 
-	summary {
+	:where(summary) {
 		padding-block: var(--size-0-7-5);
 		padding-inline: var(--size);
 		color: var(--accent-strong);
@@ -584,7 +585,7 @@ dialog.lightbox {
 		color: var(--text-inverse);
 	}
 
-	details div {
+	details :where(div) {
 		padding-block: var(--size-0-7-5);
 		padding-inline: var(--size);
 		background: var(--bg);

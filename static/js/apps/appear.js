@@ -40,38 +40,38 @@ const revealAllNow = () => {
 	}
 }
 
-// Respect reduced motion → don't inject the hiding CSS; just reveal.
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-	revealAllNow()
-} else if (!('IntersectionObserver' in window)) {
-	// No IO support → reveal immediately (again: no hiding CSS injected).
-	revealAllNow()
-} else {
-	// JS present → inject CSS (so elements can start hidden) and observe
-	injectCSS()
-
-	const onIntersect = entries => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add('is-visible')
-				io.unobserve(entry.target)
-			}
-		})
-	}
-
-	const io = new IntersectionObserver(onIntersect, {
-		threshold: 0.2,
-	})
-
-	const start = () => {
-		const targets = document.querySelectorAll('.appear')
-		if (!targets.length) return
-		targets.forEach(el => io.observe(el))
-	}
-
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', start, { once: true })
+	// Respect reduced motion → don't inject the hiding CSS; just reveal.
+	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		revealAllNow()
+	} else if (!('IntersectionObserver' in window)) {
+		// No IO support → reveal immediately (again: no hiding CSS injected).
+		revealAllNow()
 	} else {
-		start()
+		// JS present → inject CSS (so elements can start hidden) and observe
+		injectCSS()
+
+		const onIntersect = entries => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-visible')
+					io.unobserve(entry.target)
+				}
+			})
+		}
+
+		const io = new IntersectionObserver(onIntersect, {
+			threshold: 0.2,
+		})
+
+		const start = () => {
+			const targets = document.querySelectorAll('.appear')
+			if (!targets.length) return
+			targets.forEach(el => io.observe(el))
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', start, { once: true })
+		} else {
+			start()
+		}
 	}
-}
