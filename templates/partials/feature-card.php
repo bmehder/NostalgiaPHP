@@ -1,4 +1,4 @@
-<article class="card bg-white">
+<article class="card">
   <div class="card-text">
     <h3 class="card-title">
       <span class="icon accent" aria-hidden="true">

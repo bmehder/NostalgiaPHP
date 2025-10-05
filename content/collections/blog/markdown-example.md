@@ -27,7 +27,7 @@ author: John Doe
 
 # Markdown Example
 
-[View the markdown file here.](/content/collections/dox/markdown-example.md)
+[View the markdown file here.](/content/collections/blog/markdown-example.md)
 
 # H1 Heading (for page titles)
 ## H2 Heading

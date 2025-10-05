@@ -38,7 +38,7 @@ $canonical = $absBase . $canonPath;
 $pathOnly = parse_url($reqUri, PHP_URL_PATH) ?? '/';
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="en" class="theme-dark">
 
 <head>
   <meta charset="UTF-8">

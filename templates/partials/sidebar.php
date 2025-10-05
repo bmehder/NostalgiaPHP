@@ -66,7 +66,7 @@ $recent = array_slice($items, 0, $recent_limit);
       foreach ($recent as $it): ?>
         <li>
           <a href="<?= htmlspecialchars($it['url']) ?>"><?= htmlspecialchars($it['title']) ?></a><br />
-          <small class="muted"><?= htmlspecialchars($it['date']) ?></small>
+          <small><?= htmlspecialchars($it['date']) ?></small>
         </li>
       <?php endforeach; else: ?>
       <li><em>No items yet.</em></li>
@@ -133,7 +133,7 @@ $recent = array_slice($items, 0, $recent_limit);
   <section class="sidebar-section">
     <h3 class="sidebar-heading">Tags</h3>
     <?php if (empty($__tags)): ?>
-      <p class="muted">No tags yet.</p>
+      <p>No tags yet.</p>
     <?php else: ?>
       <ul class="tags-list">
         <?php foreach ($__tags as $slug => $info): ?>
@@ -141,7 +141,7 @@ $recent = array_slice($items, 0, $recent_limit);
             <a href="<?= url('/tag/' . urlencode($slug)) ?>">
               <?= htmlspecialchars($info['label'] ?? $slug, ENT_QUOTES, 'UTF-8') ?>
             </a>
-            <small class="muted">(<?= (int) ($info['count'] ?? 0) ?>)</small>
+            <small>(<?= (int) ($info['count'] ?? 0) ?>)</small>
           </li>
         <?php endforeach; ?>
       </ul>

@@ -204,6 +204,7 @@ footer {
 
 /* Card */
 .card {
+	background-color: var(--bg-white);
 	border-radius: var(--size-0-5);
 	box-shadow: var(--shadow-1);
 	overflow: hidden;
@@ -216,6 +217,10 @@ footer {
 	.card-text {
 		padding-block: var(--size-3);
 		padding-inline: var(--size-1-5);
+
+		.card-meta {
+			color: var(--text-muted);
+		}
 
 		.card-title {
 			display: flex;
@@ -326,12 +331,19 @@ footer {
 
 /* Sidebar template */
 /* Stack on narrow screens */
+.sidebar {
+	& :is(p, small) {
+		color: var(--text-muted);
+	}
+}
+
 @media (width <= 48rem) {
 	.content-sidebar {
 		grid-template-columns: 1fr;
 	}
 	.sidebar {
-		order: 2; /* put sidebar below content */
+		/* put sidebar below content */
+		order: 2;
 	}
 }
 

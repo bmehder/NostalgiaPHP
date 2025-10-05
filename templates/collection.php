@@ -1,6 +1,6 @@
 <?php include path('partials') . '/head.php'; ?>
 
-<body class="collection" style="background-color: var(--bg-alt-2)">
+<body class="collection">
   <div class="wrapper">
     <?php include path('partials') . '/header.php'; ?>
     <?= $hero_html ?>

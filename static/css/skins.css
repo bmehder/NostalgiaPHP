@@ -54,7 +54,6 @@ html.theme-blue {
 	--text-inverse-hover: var(--slate-200);
 	--text-disabled: var(--slate-400);
 
-	--bg-white: #fff;
 	--bg-alt: var(--slate-100);
 	--bg-alt-2: var(--slate-200);
 	--bg-disabled: var(--slate-600);
@@ -76,7 +75,6 @@ html.theme-amber {
 	--text-inverse-hover: var(--stone-200);
 	--text-disabled: var(--stone-400);
 
-	--bg-white: #fff;
 	--bg-alt: var(--amber-50);
 	--bg-alt-2: var(--amber-100);
 	--bg-disabled: var(--stone-600);
@@ -98,7 +96,6 @@ html.theme-green {
 	--text-inverse-hover: var(--zinc-200);
 	--text-disabled: var(--zinc-400);
 
-	--bg-white: #fff;
 	--bg-alt: var(--green-50);
 	--bg-alt-2: var(--green-100);
 	--bg-disabled: var(--zinc-600);
@@ -258,4 +255,8 @@ a {
 main :is(ul, ol) li {
 	margin-block-start: var(--size-0-5);
 	line-height: 1.3;
+}
+
+.collection {
+	background-color: var(--bg-alt-2);
 }

@@ -32,18 +32,18 @@ In short: the browser’s layout and scrolling engine is doing all the work. We�
 > **Note:** If your browser doesn’t support newer CSS features like `::scroll-button` and `::scroll-marker`, you may not see the carousel controls or indicators. That’s okay — the content is still fully accessible as a scrollable strip. This is an example of _progressive enhancement_, where modern browsers get the upgraded experience, while older ones still get a usable fallback.
 
 <div class="carousel">
-  <div class="card"><img src="https://picsum.photos/500/300?random=1" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=2" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=3" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=4" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=5" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=6" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=7" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=8" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=9" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=10" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=11" alt /></div>
-  <div class="card"><img src="https://picsum.photos/500/300?random=12" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=1" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=2" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=3" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=4" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=5" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=6" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=7" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=8" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=9" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=10" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=11" width="500" height="300" alt /></div>
+  <div class="card"><img src="https://picsum.photos/500/300?random=12" width="500" height="300" alt /></div>
 </div>
 
 <div style="height: var(--size-3)"></div>
@@ -159,8 +159,8 @@ It’s a much lighter approach than older libraries — most of the work is done
 
 <div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
   <div class="comparison" data-comparison>
-    <img class="before" src="https://picsum.photos/id/1015/960/640" alt="Before">
-    <img class="after" src="https://picsum.photos/id/1016/960/640" alt="After">
+    <img class="before" src="https://picsum.photos/id/1015/960/640" width="960" height="640" alt="Before">
+    <img class="after" src="https://picsum.photos/id/1016/960/640"  width="960" height="640"alt="After">
     <input type="range" min="0" max="100" value="50" aria-label="Image comparison slider">
   </div>
 </div>

@@ -33,7 +33,7 @@
                 </div>
               </div>
               <figure class="appear appear-left" style="margin-inline: auto;">
-                <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg"
+                <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg" width="600" height="400"
                   alt="NostalgiaPHP project structure overview">
                 <figcaption class="visually-hidden">Example project structure</figcaption>
               </figure>
