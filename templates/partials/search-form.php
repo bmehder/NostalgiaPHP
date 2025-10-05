@@ -14,9 +14,11 @@ $compact = !empty($compact);
 
 $h = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 ?>
-<form class="search-form flex flex-wrap" method="get" action="<?= $h($action) ?>"
-  role="search">
-  <label class="visually-hidden" for="q">Search</label>
-  <search><input id="q" class="flex" type="search" name="q" value="<?= $h($q) ?>" placeholder="<?= $h($placeholder) ?>" autocomplete="off" /></search>
-  <button type="submit" class="no-margin">Search</button>
-</form>
+<search>
+  <form class="search-form flex" method="get" action="<?= $h($action) ?>" role="search">
+    <label class="visually-hidden" for="q">Search</label>
+    <input id="q" class="flex" type="search" name="q" value="<?= $h($q) ?>" placeholder="<?= $h($placeholder) ?>"
+      autocomplete="off" />
+    <button type="submit" class="no-margin">Search</button>
+  </form>
+</search>

@@ -59,7 +59,9 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 		})
 	}
 
-	const io = new IntersectionObserver(onIntersect, { threshold: 0.2 })
+	const io = new IntersectionObserver(onIntersect, {
+		threshold: 0.2,
+	})
 
 	const start = () => {
 		const targets = document.querySelectorAll('.appear')
