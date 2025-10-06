@@ -15,7 +15,7 @@
       <section>
         <div class="outer">
           <div class="inner">
-            <div class="content auto-fit reverse">
+            <div class="content auto-fit align-items-center reverse">
               <div class="flow appear appear-right">
                 <div class="kicker">Lightweight by design.</div>
                 <h2>Rock, Paper, Markdown</h2>
@@ -74,7 +74,7 @@
       <section class="section">
         <div class="outer">
           <div class="inner">
-            <div class="content auto-fit reverse">
+            <div class="content auto-fit align-items-center reverse">
               <div class="flow appear appear-right">
                 <div class="kicker">Under the hood, there’s barely a hood.</div>
                 <h2>How It Works</h2>

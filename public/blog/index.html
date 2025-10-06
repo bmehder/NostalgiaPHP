@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Blog — NostalgiaPHP</title>
+
+  
+  <link rel="canonical" href="http://localhost/">
+
+  <!-- Favicon core -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#000000">
+  <link rel="shortcut icon" href="/static/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-config" content="/static/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#000000">
+
+    
+  <!-- Open Graph (basic) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog">
+    <meta property="og:url" content="http://localhost/">
+  
+  <!-- Useful for client scripts that need the base URL -->
+  <meta name="base-url" content="">
+
+  <!-- Apply saved theme class before CSS loads to prevent flash of default skin -->
+  <script>
+    (function () {
+      try {
+        const theme = localStorage.getItem('nostalgia:theme');
+        if (theme) document.documentElement.classList.add(theme);
+      } catch (_) { }
+    })();
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/colors.css">
+  <link rel="stylesheet" href="/static/css/reboot.css">
+  <link rel="stylesheet" href="/static/css/skins.css">
+  <link rel="stylesheet" href="/static/css/utilities.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+
+  <!-- Google Font (consider self-hosting for perf/privacy) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
+
+  <!-- Prism (non-blocking) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css" media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
+  </noscript>
+
+  <script>
+    // Configure autoloader path before plugin loads
+    window.Prism = window.Prism || {};
+    Prism.plugins = Prism.plugins || {};
+    Prism.plugins.autoloader = { languages_path: "https://cdn.jsdelivr.net/npm/prismjs/components/" };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/toolbar/prism-toolbar.css" media="print"
+    onload="this.media='all'">
+
+  <!-- Theme Switcher -->
+  <script type="module" src="/static/js/apps/theme-switcher.js"></script>
+
+  <!-- Appear.js -->
+  <script type="module" src="/static/js/apps/appear.js"></script>
+</head>
+<body class="collection">
+  <div class="wrapper">
+    <a class="visually-hidden" id="top"></a>
+
+<header>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <div class="outer">
+    <div class="inner spread-apart" data-inner-header>
+      <!-- <a class="brand" href="/">NostalgiaPHP</a> -->
+
+      <a class="brand flex align-items-center gap-0-5" href="/">
+        <!-- NostalgiaPHP mark -->
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-strong)">
+          <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
+          <!-- Single-stroke 'N' -->
+          <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        NostalgiaPHP      </a>
+
+      <!-- ✅ hidden control for JS-less toggle -->
+      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu" tabindex="-1">
+
+      <!-- ✅ label becomes the hamburger button -->
+      <label for="nav-check" class="nav-toggle" aria-controls="site-nav">
+        <span class="visually-hidden">Menu</span>
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--text-inverse)" aria-hidden="true">
+          <rect x="3" y="6" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="11" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="16" width="18" height="2" rx="1"></rect>
+        </svg>
+      </label>
+
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li></ul></div><a href="/blog" class="active">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+  </div>
+</header>        <main id="main">
+      <section>
+        <div class="outer">
+          <div class="inner">
+            <div class="content"><h1>Blog</h1><div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)"><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/appear-animations"><img class="card-image landscape fit" src="/static/media/appear.jpg"
+        alt="Appear Animations" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/appear-animations">Appear Animations</a></h3>
+              <p class="card-meta"><small>2025-10-02</small></p>
+                    <p class="card-excerpt">Appear Animations Subtle scroll-based animations can make a page feel alive without pulling in a large library like GSAP. We can build a lightweight “appear” helper by combining…</p>
+                    <ul class="tags">
+                      <li><a href="/tag/css">css</a></li>
+                      <li><a href="/tag/animation">animation</a></li>
+                      <li><a href="/tag/intersectionobserver">intersectionobserver</a></li>
+                  </ul>
+          </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/appear-animations">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/blink-a-tiny-reactive-layer"><img class="card-image landscape fit" src="/static/media/blink.jpg"
+        alt="Don&#039;t Blink!" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/blink-a-tiny-reactive-layer">Don&#039;t Blink!</a></h3>
+              <p class="card-meta"><small>2025-09-18</small></p>
+                    <p class="card-excerpt">Blink is a tiny JavaScript reactivity layer — no framework, no bundler, no virtual DOM. Just signals, effects, and simple state management you can copy-paste into any project.</p>
+                    <ul class="tags">
+                      <li><a href="/tag/js">js</a></li>
+                      <li><a href="/tag/slank">slank</a></li>
+                      <li><a href="/tag/blink">blink</a></li>
+                      <li><a href="/tag/reactivity">reactivity</a></li>
+                  </ul>
+          </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/blink-a-tiny-reactive-layer">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/markdown-example"><img class="card-image landscape fit" src="/static/media/markdown-example.jpg"
+        alt="Markdown Example" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/markdown-example">Markdown Example</a></h3>
+              <p class="card-meta"><small>2025-09-17</small></p>
+                    <p class="card-excerpt">Markdown Example View the markdown file here. H1 Heading (for page titles) H2 Heading H3 Heading Paragraphs This is a normal paragraph. It can contain bold, italic, and inline…</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/markdown-example">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/markdown-crash-course"><img class="card-image landscape fit" src="/static/media/markdown-crash-course.jpg"
+        alt="Markdown Crash Course" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/markdown-crash-course">Markdown Crash Course</a></h3>
+              <p class="card-meta"><small>2025-09-14</small></p>
+                    <p class="card-excerpt">Markdown is easy. You can learn it in minutes. It&#039;s great for taking notes, making simple Wiki sites, blogs, etc. Let&#039;s learn the basics of Markdown.</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/markdown-crash-course">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/nostalgia-manifesto"><img class="card-image landscape fit" src="/static/media/manifesto.jpg"
+        alt="The NostalgiaPHP Manifesto" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/nostalgia-manifesto">The NostalgiaPHP Manifesto</a></h3>
+              <p class="card-meta"><small>2025-09-12</small></p>
+                    <p class="card-excerpt">The NostalgiaPHP Manifesto Keep it simple. If all you need is to show content and sprinkle in a little JavaScript, this is the easiest way I know to publish a site. Essentials…</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/nostalgia-manifesto">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/nostalgia-php-overview"><img class="card-image landscape fit" src="/static/media/nostalgia-php-overview.jpg"
+        alt="NostalgiaPHP Overview" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/nostalgia-php-overview">NostalgiaPHP Overview</a></h3>
+              <p class="card-meta"><small>2025-09-08</small></p>
+                    <p class="card-excerpt">NostalgiaPHP Overview What is NostalgiaPHP? NostalgiaPHP is a lightweight site engine that treats your whole website like a folder. Portable → your entire site is just files; zip…</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/nostalgia-php-overview">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/why-nostalgia-php"><img class="card-image landscape fit" src="/static/media/why-nostalgia-php.jpg"
+        alt="Why NostalgiaPHP?" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/why-nostalgia-php">Why NostalgiaPHP?</a></h3>
+              <p class="card-meta"><small>2025-09-08</small></p>
+                    <p class="card-excerpt">Why NostalgiaPHP? The Problem Building a simple website today often comes with a lot of extra baggage: WordPress → instantly drags in a DB, admin UI, plugins, themes, update…</p>
+                    <ul class="tags">
+                      <li><a href="/tag/php">php</a></li>
+                      <li><a href="/tag/simplicity">simplicity</a></li>
+                      <li><a href="/tag/retro">retro</a></li>
+                  </ul>
+          </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/why-nostalgia-php">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/astro-comparison"><img class="card-image landscape fit" src="/static/media/astro.jpg"
+        alt="NostalgiaPHP vs Astro" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/astro-comparison">NostalgiaPHP vs Astro</a></h3>
+              <p class="card-meta"><small>2025-09-07</small></p>
+                    <p class="card-excerpt">NostalgiaPHP vs Astro Both are tools for building content-heavy sites. Both lean on files, not databases. But one is caveman simple, and the other is modern meta-framework simple…</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/astro-comparison">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/rails-vs-nostalgia"><img class="card-image landscape fit" src="/static/media/rails.jpg"
+        alt="NostalgiaPHP vs Ruby on Rails" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/rails-vs-nostalgia">NostalgiaPHP vs Ruby on Rails</a></h3>
+              <p class="card-meta"><small>2025-09-07</small></p>
+                    <p class="card-excerpt">NostalgiaPHP vs Ruby on Rails Framework heavyweight meets folder of files. Rails in a Nutshell Rails popularized the modern web framework: MVC, migrations, scaffolding, ORM…</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/rails-vs-nostalgia">Read more →</a>
+    </p>
+  </div>
+</article></div><nav class="pager" style="display:flex;gap:.5rem;align-items:center;justify-content:center;margin-block-start:var(--size-2)"><span class="button" aria-disabled="true" style="opacity:.5;pointer-events:none">← Prev</span><span class="muted" style="padding:.25rem .5rem">Page 1 of 2</span><a class="button" href="/blog/page/2">Next →</a></nav></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+  <div class="outer">
+    <div class="inner">
+      <div class="content spread-apart">
+        &copy; 2025 NostalgiaPHP. All rights reserved.
+        <a href="#top" data-back-to-top>⬆ Back to Top</a>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+
+            document.querySelector('[data-back-to-top]').addEventListener('click', e => {
+              e.preventDefault()
+              window.scrollTo({ top: 0 })
+            })
+          })
+        </script>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>  </div>

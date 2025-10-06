@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Appear Example — NostalgiaPHP</title>
+
+      <meta name="description" content="Build content sites fast with flat files. No framework. No database. Just pages, collections, and a few partials.">
+  
+  <link rel="canonical" href="http://localhost/">
+
+  <!-- Favicon core -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#000000">
+  <link rel="shortcut icon" href="/static/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-config" content="/static/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#000000">
+
+  
+  <!-- Open Graph (basic) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Appear Example">
+      <meta property="og:description" content="Build content sites fast with flat files. No framework. No database. Just pages, collections, and a few partials.">
+    <meta property="og:url" content="http://localhost/">
+  
+  <!-- Useful for client scripts that need the base URL -->
+  <meta name="base-url" content="">
+
+  <!-- Apply saved theme class before CSS loads to prevent flash of default skin -->
+  <script>
+    (function () {
+      try {
+        const theme = localStorage.getItem('nostalgia:theme');
+        if (theme) document.documentElement.classList.add(theme);
+      } catch (_) { }
+    })();
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/colors.css">
+  <link rel="stylesheet" href="/static/css/reboot.css">
+  <link rel="stylesheet" href="/static/css/skins.css">
+  <link rel="stylesheet" href="/static/css/utilities.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+
+  <!-- Google Font (consider self-hosting for perf/privacy) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
+
+  <!-- Prism (non-blocking) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css" media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
+  </noscript>
+
+  <script>
+    // Configure autoloader path before plugin loads
+    window.Prism = window.Prism || {};
+    Prism.plugins = Prism.plugins || {};
+    Prism.plugins.autoloader = { languages_path: "https://cdn.jsdelivr.net/npm/prismjs/components/" };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/toolbar/prism-toolbar.css" media="print"
+    onload="this.media='all'">
+
+  <!-- Theme Switcher -->
+  <script type="module" src="/static/js/apps/theme-switcher.js"></script>
+
+  <!-- Appear.js -->
+  <script type="module" src="/static/js/apps/appear.js"></script>
+</head>
+<style>
+  section:nth-of-type(even)>.outer {
+    background-color: var(--bg-alt-2);
+  }
+</style>
+
+<body class="home full-width">
+  <div class="wrapper">
+    <a class="visually-hidden" id="top"></a>
+
+<header>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <div class="outer">
+    <div class="inner spread-apart" data-inner-header>
+      <!-- <a class="brand" href="/">NostalgiaPHP</a> -->
+
+      <a class="brand flex align-items-center gap-0-5" href="/">
+        <!-- NostalgiaPHP mark -->
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-strong)">
+          <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
+          <!-- Single-stroke 'N' -->
+          <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        NostalgiaPHP      </a>
+
+      <!-- ✅ hidden control for JS-less toggle -->
+      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu" tabindex="-1">
+
+      <!-- ✅ label becomes the hamburger button -->
+      <label for="nav-check" class="nav-toggle" aria-controls="site-nav">
+        <span class="visually-hidden">Menu</span>
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--text-inverse)" aria-hidden="true">
+          <rect x="3" y="6" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="11" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="16" width="18" height="2" rx="1"></rect>
+        </svg>
+      </label>
+
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+  </div>
+</header>    
+<section class="hero">
+  <div class="hero-grid">
+          <img class="hero-bg widescreen" src="/static/media/home.webp" width="1536" height="1024" alt="">
+        <div class="hero-content">
+      <div class="h1">Welcome to Nostalgia PHP</div>
+              <p class="hero-sub">A caveman-simple file-based CMS</p>
+                                      <div class="hero-button">
+            <a href="https://github.com/bmehder/NostalgiaPHP" class="button"><svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg> GitHub Repo</a>
+          </div>
+                  </div>
+  </div>
+</section>    <main id="main">
+      <!-- Intro / value prop -->
+      <section>
+        <div class="outer">
+          <div class="inner">
+            <div class="content auto-fit reverse">
+              <div class="flow appear appear-right">
+                <div class="kicker">Lightweight by design.</div>
+                <h2>Rock, Paper, Markdown</h2>
+                <p class="lead">
+                  Build content sites fast with flat files.
+                  No framework. No database. Just pages, collections, and a few partials.
+                </p>
+                <p>NostalgiaPHP creates clean HTML with zero build step—so you focus on words and layout, not
+                  toolchains. Portable by default: zip it, copy it, deploy anywhere PHP runs.</p>
+                <div class="flex flex-wrap" style="gap: var(--size-0-5);">
+                  <a class="button" href="/dox/getting-started">Get Started</a>
+                  <a class="button" href="/blog">View Blog</a>
+                  <a class="button" href="https://github.com/bmehder/NostalgiaPHP" target="_blank"
+                    rel="noopener">GitHub</a>
+                </div>
+              </div>
+              <figure class="appear appear-left" style="margin-inline: auto;">
+                <img class="landscape fit" src="/static/media/rock-paper-markdown.jpg" width="600" height="400"
+                  alt="NostalgiaPHP project structure overview">
+                <figcaption class="visually-hidden">Example project structure</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Highlights / features -->
+      <section class="section">
+        <div class="outer">
+          <div class="inner">
+            <div class="kicker">Back to basics</div>
+            <h2>The Nostalgia Core</h2>
+            <div class="cards auto-fill align-items-stretch appear appear-scale" style="margin-block-start: var(--size-3)">
+              <article class="card">
+  <div class="card-text">
+    <h3 class="card-title">
+      <span class="icon accent" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M16 13H8" /><path d="M16 17H8" /></svg>      </span>
+      Files, no faff    </h3>
+    <p class="card-excerpt">Pages and collections are just <code>.md</code> files with front-matter. Rename a file to change a URL. That’s it.</p>
+  </div>
+</article><article class="card">
+  <div class="card-text">
+    <h3 class="card-title">
+      <span class="icon accent" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /></svg>      </span>
+      Templates &amp; partials    </h3>
+    <p class="card-excerpt">Choose your template. Wrap your content; partials handle header, footer, hero, etc.</p>
+  </div>
+</article><article class="card">
+  <div class="card-text">
+    <h3 class="card-title">
+      <span class="icon accent" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M16.5 9.4L7.5 4.2" /><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><path d="M3.3 7l8.7 5v10" /><path d="M20.7 7l-8.7 5" /></svg>      </span>
+      Portable content    </h3>
+    <p class="card-excerpt">Your “CMS” is Markdown. Move it anywhere—PHP today, something else tomorrow—no export dance.</p>
+  </div>
+</article><article class="card">
+  <div class="card-text">
+    <h3 class="card-title">
+      <span class="icon accent" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>      </span>
+      Zero build step    </h3>
+    <p class="card-excerpt">No Node, no bundlers. Drop on a PHP host or run <code>php -S localhost:8000</code> and you’re live.</p>
+  </div>
+</article><article class="card">
+  <div class="card-text">
+    <h3 class="card-title">
+      <span class="icon accent" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="4" /><line x1="12" y1="2" x2="12" y2="8" /><line x1="12" y1="16" x2="12" y2="22" /><line x1="2" y1="12" x2="8" y2="12" /><line x1="16" y1="12" x2="22" y2="12" /></svg>      </span>
+      Instant sitemap    </h3>
+    <p class="card-excerpt"><code>sitemap.xml</code> is built automatically from your content—no plugins needed.</p>
+  </div>
+</article><article class="card">
+  <div class="card-text">
+    <h3 class="card-title">
+      <span class="icon accent" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 2v20" /><path d="M18 8H6l-2-2 2-2h12l2 2-2 2z" /><path d="M6 16h12l2 2-2 2H6l-2-2 2-2z" /></svg>      </span>
+      404, sorted    </h3>
+    <p class="card-excerpt">Bad links happen. A built-in <code>404.php</code> route is ready out of the box—or tweak it to fit your site.</p>
+  </div>
+</article>            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works (3 steps) -->
+      <section class="section">
+        <div class="outer">
+          <div class="inner">
+            <div class="content auto-fit reverse">
+              <div class="flow appear appear-right">
+                <div class="kicker">Under the hood, there’s barely a hood.</div>
+                <h2>How It Works</h2>
+                <ol>
+                  <li><strong>Write content</strong> in <code>content/pages</code> and
+                    <code>content/collections/{name}</code>.
+                  </li>
+                  <li><strong>Add front-matter</strong> like<code> title</code>, <code>description</code>, and
+                    <code>date</code>.
+                  </li>
+                  <li><strong>Pick a template</strong> via <code>template: main</code> (or your own), and ship.</li>
+                  <li><strong>Include partials</strong> for headers, footers, sidebars, or anything you want to reuse
+                    across pages.</li>
+                  <li><strong>Deploy anywhere PHP runs</strong>—no database, no build step, no lock-in.</li>
+                </ol>
+                <a class="button" href="/dox/">View the Dox</a>
+              </div>
+              <div class="appear appear-up">
+                <pre>
+                  <code class="language-yaml">
+---
+title: About NostalgiaPHP
+description: A tiny, flat-file CMS for sites.
+date: 2025-09-21
+template: main
+tags: intro, php, markdown
+---
+                  </code>
+                  <code class="language-markdown">
+# About NostalgiaPHP
+
+No database. No build step. No framework.
+
+It’s **Markdown in, HTML out**.
+                  </code>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent posts (auto: just link to collection) -->
+      <section class="section">
+        <div class="outer">
+          <div class="inner">
+                                      <section class="from-blog appear appear-scale">
+                <div class="kicker">Latest scribbles from the cave wall.</div>
+                <h2>From the Blog</h2>
+                <div class="cards auto-fill align-items-stretch" style="margin-block-start: var(--size-3)"><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/appear-animations"><img class="card-image landscape fit" src="/static/media/appear.jpg"
+        alt="Appear Animations" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/appear-animations">Appear Animations</a></h3>
+              <p class="card-meta"><small>2025-10-02</small></p>
+                    <p class="card-excerpt">Appear Animations Subtle scroll-based animations can make a page feel alive without pulling in a large library like GSAP. We can build a lightweight “appear” helper by combining…</p>
+                    <ul class="tags">
+                      <li><a href="/tag/css">css</a></li>
+                      <li><a href="/tag/animation">animation</a></li>
+                      <li><a href="/tag/intersectionobserver">intersectionobserver</a></li>
+                  </ul>
+          </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/appear-animations">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/blink-a-tiny-reactive-layer"><img class="card-image landscape fit" src="/static/media/blink.jpg"
+        alt="Don&#039;t Blink!" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/blink-a-tiny-reactive-layer">Don&#039;t Blink!</a></h3>
+              <p class="card-meta"><small>2025-09-18</small></p>
+                    <p class="card-excerpt">Blink is a tiny JavaScript reactivity layer — no framework, no bundler, no virtual DOM. Just signals, effects, and simple state management you can copy-paste into any project.</p>
+                    <ul class="tags">
+                      <li><a href="/tag/js">js</a></li>
+                      <li><a href="/tag/slank">slank</a></li>
+                      <li><a href="/tag/blink">blink</a></li>
+                      <li><a href="/tag/reactivity">reactivity</a></li>
+                  </ul>
+          </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/blink-a-tiny-reactive-layer">Read more →</a>
+    </p>
+  </div>
+</article><article class="card flex flex-direction-column appear appear-scale">
+      <a href="/blog/markdown-example"><img class="card-image landscape fit" src="/static/media/markdown-example.jpg"
+        alt="Markdown Example" loading="lazy"></a>
+  
+  <div class="card-text flex flex-direction-column flex-1 gap-1-5">
+    <div>
+            <h3 class="card-title"><a href="/blog/markdown-example">Markdown Example</a></h3>
+              <p class="card-meta"><small>2025-09-17</small></p>
+                    <p class="card-excerpt">Markdown Example View the markdown file here. H1 Heading (for page titles) H2 Heading H3 Heading Paragraphs This is a normal paragraph. It can contain bold, italic, and inline…</p>
+                </div>
+
+    <p class="card-cta" style="margin-block-start: auto;">
+      <a class="button" href="/blog/markdown-example">Read more →</a>
+    </p>
+  </div>
+</article></div>                <div class="text-align-right full-width" style="margin-block-start: var(--size-1-5)"><a
+                    href="/blog">See all posts →</a></div>
+              </section>
+                      </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+  <div class="outer">
+    <div class="inner">
+      <div class="content spread-apart">
+        &copy; 2025 NostalgiaPHP. All rights reserved.
+        <a href="#top" data-back-to-top>⬆ Back to Top</a>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+
+            document.querySelector('[data-back-to-top]').addEventListener('click', e => {
+              e.preventDefault()
+              window.scrollTo({ top: 0 })
+            })
+          })
+        </script>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>  </div>

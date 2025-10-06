@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quickstart for Non-Devs — NostalgiaPHP</title>
+
+      <meta name="description" content="How to do this for people that have no idea.">
+  
+  <link rel="canonical" href="http://localhost/">
+
+  <!-- Favicon core -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#000000">
+  <link rel="shortcut icon" href="/static/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-config" content="/static/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#000000">
+
+  
+  <!-- Open Graph (basic) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Quickstart for Non-Devs">
+      <meta property="og:description" content="How to do this for people that have no idea.">
+    <meta property="og:url" content="http://localhost/">
+  
+  <!-- Useful for client scripts that need the base URL -->
+  <meta name="base-url" content="">
+
+  <!-- Apply saved theme class before CSS loads to prevent flash of default skin -->
+  <script>
+    (function () {
+      try {
+        const theme = localStorage.getItem('nostalgia:theme');
+        if (theme) document.documentElement.classList.add(theme);
+      } catch (_) { }
+    })();
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/colors.css">
+  <link rel="stylesheet" href="/static/css/reboot.css">
+  <link rel="stylesheet" href="/static/css/skins.css">
+  <link rel="stylesheet" href="/static/css/utilities.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+
+  <!-- Google Font (consider self-hosting for perf/privacy) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
+
+  <!-- Prism (non-blocking) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css" media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
+  </noscript>
+
+  <script>
+    // Configure autoloader path before plugin loads
+    window.Prism = window.Prism || {};
+    Prism.plugins = Prism.plugins || {};
+    Prism.plugins.autoloader = { languages_path: "https://cdn.jsdelivr.net/npm/prismjs/components/" };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/toolbar/prism-toolbar.css" media="print"
+    onload="this.media='all'">
+
+  <!-- Theme Switcher -->
+  <script type="module" src="/static/js/apps/theme-switcher.js"></script>
+
+  <!-- Appear.js -->
+  <script type="module" src="/static/js/apps/appear.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <a class="visually-hidden" id="top"></a>
+
+<header>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <div class="outer">
+    <div class="inner spread-apart" data-inner-header>
+      <!-- <a class="brand" href="/">NostalgiaPHP</a> -->
+
+      <a class="brand flex align-items-center gap-0-5" href="/">
+        <!-- NostalgiaPHP mark -->
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-strong)">
+          <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
+          <!-- Single-stroke 'N' -->
+          <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        NostalgiaPHP      </a>
+
+      <!-- ✅ hidden control for JS-less toggle -->
+      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu" tabindex="-1">
+
+      <!-- ✅ label becomes the hamburger button -->
+      <label for="nav-check" class="nav-toggle" aria-controls="site-nav">
+        <span class="visually-hidden">Menu</span>
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--text-inverse)" aria-hidden="true">
+          <rect x="3" y="6" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="11" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="16" width="18" height="2" rx="1"></rect>
+        </svg>
+      </label>
+
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+  </div>
+</header>        <main id="main">
+      <section>
+        <div class="outer">
+          <div class="inner">
+            <div class="content"><h1>🪨 NostalgiaPHP Quickstart for Non-Devs</h1>
+<p><em>Make site. Fast. Files good. Framework bad.</em></p>
+<p>This is the <strong>fun way</strong> to edit a website — no scary dashboards, no logins, just files and folders.</p>
+<hr />
+<h2>Step 0. Get the Website Files</h2>
+<ol>
+<li>Go to the project on GitHub: 👉 <a href="https://github.com/bmehder/NostalgiaPHP">https://github.com/bmehder/NostalgiaPHP</a></li>
+<li>Click the green Code button, then click Download ZIP.</li>
+<li>When it finishes downloading, unzip it (double-click the .zip file). You’ll now have a folder called NostalgiaPHP-main.</li>
+<li>Move this folder somewhere easy to find, like your Desktop or Documents.</li>
+</ol>
+<hr />
+<h2>Step 1. Check if Your Computer Already Speaks PHP</h2>
+<ul>
+<li>
+<p>On <strong>Mac</strong>, open <strong>Terminal</strong> (in Applications → Utilities). Type:</p>
+<pre><code class="language-bash">php -v</code></pre>
+</li>
+<li>
+<p>On <strong>Windows</strong>, Open <strong>Command Prompt</strong> (press Win + R, type <code>cmd</code>, then hit <code>Enter</code>). Type:</p>
+<pre><code class="language-bash">php -v</code></pre>
+</li>
+<li>
+<p>On <strong>either</strong>:</p>
+<p>If you see something like: <code>PHP 8.2.12 (cli) ...</code>
+🎉 You’re ready!
+Skip to Step 3.</p>
+<p>If you see <code>command not found</code> → continue to Step 2.</p>
+</li>
+</ul>
+<hr />
+<h2>Step 2. Teach Your Computer PHP (one-time)</h2>
+<ul>
+<li>
+<p>On <strong>Mac</strong>, download this friendly little app:<br />
+👉 <a href="https://herd.laravel.com/">https://herd.laravel.com/</a></p>
+<p>Open the installer, let it finish. Done. Your Mac speaks PHP now.</p>
+</li>
+<li>
+<p>On <strong>Windows</strong>, download this friendly little app:<br />
+👉 <a href="https://laragon.org/download">https://laragon.org/download</a></p>
+<p>Open the installer, let it finish. Done. Your PC speaks PHP now.</p>
+</li>
+</ul>
+<blockquote>
+<p>ℹ️ You won't be using the app you just installed, it is just the easiest way to install PHP on your computer.</p>
+</blockquote>
+<hr />
+<h2>Step 3. Enter the Cave</h2>
+<ul>
+<li>
+<p><strong>On Mac:</strong> Use Terminal to move into the project folder. Example:</p>
+<pre><code class="language-bash">cd ~/Desktop/NostalgiaPHP</code></pre>
+<p>(Change the path if you put the folder somewhere else.)</p>
+</li>
+<li>
+<p><strong>On Windows:</strong> Use Command Prompt to move into the project folder. Example:</p>
+<pre><code class="language-bash">cd JOHNDOE\Desktop\NostalgiaPHP</code></pre>
+<p>(Change the path if you put the folder somewhere else, e.g. Documents\NostalgiaPHP.)</p>
+</li>
+</ul>
+<hr />
+<h2>Step 4. Light the Fire 🔥</h2>
+<ul>
+<li>
+<p>Still in <strong>Terminal</strong> (on Mac), or <strong>Command Prompt</strong> (on Windows), type:</p>
+<pre><code class="language-bash">php -S localhost:8000</code></pre>
+</li>
+<li>
+<p>This means “serve this folder at <a href="http://localhost:8000">http://localhost:8000</a>”.</p>
+</li>
+</ul>
+<hr />
+<h2>Step 5. Open Browser, See Magic ✨</h2>
+<ul>
+<li>
+<p>Go to <a href="http://localhost:8000">http://localhost:8000</a> in your favorite browser.  </p>
+</li>
+<li>
+<p>That’s your site, live!  </p>
+</li>
+<li>
+<p>Now edit any <code>.md</code> file in the <code>content/</code> folder, save, refresh browser → instant change.</p>
+</li>
+</ul>
+<hr />
+<h2>Cave Tips</h2>
+<ul>
+<li>
+<p><strong>Stop the fire</strong> → Press <code>Ctrl + C</code> in Terminal or Command Prompt to stop serving your site.</p>
+</li>
+<li>
+<p><strong>Edit safely</strong> → Markdown files are just text. You can use <strong>TextEdit</strong> (Mac) or <strong>Notepad</strong> (Windows) if you want — they’ll work, but everything looks like plain text.</p>
+<blockquote>
+<p>ℹ️ For an easier time, download a free editor like <a href="https://code.visualstudio.com/download">VS Code</a> (Mac/Windows) or <a href="https://notepad-plus-plus.org/">Notepad++</a> (Windows). These highlight your code, which makes things easier.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Don’t panic</strong> → If a page disappears, you probably broke the <code>--- front matter ---</code> at the top. Fix it and reload.</p>
+</li>
+<li>
+<p><strong>Backups</strong> → Copy the folder. That’s it.</p>
+</li>
+</ul>
+<hr />
+<p>📝 That’s all!<br />
+<strong>Make site. Fast. Files good. Framework bad.</strong></p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+  <div class="outer">
+    <div class="inner">
+      <div class="content spread-apart">
+        &copy; 2025 NostalgiaPHP. All rights reserved.
+        <a href="#top" data-back-to-top>⬆ Back to Top</a>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+
+            document.querySelector('[data-back-to-top]').addEventListener('click', e => {
+              e.preventDefault()
+              window.scrollTo({ top: 0 })
+            })
+          })
+        </script>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>  </div>
+</body>

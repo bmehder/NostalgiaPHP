@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Appear Animations — NostalgiaPHP</title>
+
+      <meta name="description" content="A lightweight, JS-assisted approach to scroll-based reveal animations using IntersectionObserver and CSS transitions.">
+  
+  <link rel="canonical" href="http://localhost/">
+
+  <!-- Favicon core -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png">
+  <link rel="manifest" href="/static/favicons/site.webmanifest">
+  <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#000000">
+  <link rel="shortcut icon" href="/static/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-config" content="/static/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#000000">
+
+  
+  <!-- Open Graph (basic) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Appear Animations">
+      <meta property="og:description" content="A lightweight, JS-assisted approach to scroll-based reveal animations using IntersectionObserver and CSS transitions.">
+    <meta property="og:url" content="http://localhost/">
+  
+  <!-- Useful for client scripts that need the base URL -->
+  <meta name="base-url" content="">
+
+  <!-- Apply saved theme class before CSS loads to prevent flash of default skin -->
+  <script>
+    (function () {
+      try {
+        const theme = localStorage.getItem('nostalgia:theme');
+        if (theme) document.documentElement.classList.add(theme);
+      } catch (_) { }
+    })();
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/css/colors.css">
+  <link rel="stylesheet" href="/static/css/reboot.css">
+  <link rel="stylesheet" href="/static/css/skins.css">
+  <link rel="stylesheet" href="/static/css/utilities.css">
+  <link rel="stylesheet" href="/static/css/components.css">
+
+  <!-- Google Font (consider self-hosting for perf/privacy) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600..900&display=swap" rel="stylesheet">
+
+  <!-- Prism (non-blocking) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css" media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-okaidia.min.css">
+  </noscript>
+
+  <script>
+    // Configure autoloader path before plugin loads
+    window.Prism = window.Prism || {};
+    Prism.plugins = Prism.plugins || {};
+    Prism.plugins.autoloader = { languages_path: "https://cdn.jsdelivr.net/npm/prismjs/components/" };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs/plugins/autoloader/prism-autoloader.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/plugins/toolbar/prism-toolbar.css" media="print"
+    onload="this.media='all'">
+
+  <!-- Theme Switcher -->
+  <script type="module" src="/static/js/apps/theme-switcher.js"></script>
+
+  <!-- Appear.js -->
+  <script type="module" src="/static/js/apps/appear.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <a class="visually-hidden" id="top"></a>
+
+<header>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <div class="outer">
+    <div class="inner spread-apart" data-inner-header>
+      <!-- <a class="brand" href="/">NostalgiaPHP</a> -->
+
+      <a class="brand flex align-items-center gap-0-5" href="/">
+        <!-- NostalgiaPHP mark -->
+        <svg aria-label="NostalgiaPHP" width="28" height="28" viewBox="0 0 24 24" fill="var(--accent-strong)">
+          <rect x="2.25" y="2.25" width="19.5" height="19.5" rx="6" stroke="currentColor" stroke-width="1.5" />
+          <!-- Single-stroke 'N' -->
+          <path d="M7 16V8L17 16V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        NostalgiaPHP      </a>
+
+      <!-- ✅ hidden control for JS-less toggle -->
+      <input type="checkbox" id="nav-check" class="nav-check" aria-label="Toggle menu" tabindex="-1">
+
+      <!-- ✅ label becomes the hamburger button -->
+      <label for="nav-check" class="nav-toggle" aria-controls="site-nav">
+        <span class="visually-hidden">Menu</span>
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--text-inverse)" aria-hidden="true">
+          <rect x="3" y="6" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="11" width="18" height="2" rx="1"></rect>
+          <rect x="3" y="16" width="18" height="2" rx="1"></rect>
+        </svg>
+      </label>
+
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+  </div>
+</header>        <main id="main">
+      <section>
+        <div class="outer">
+          <div class="inner">
+            <div class="content"><h1>Appear Animations</h1>
+<p>Subtle scroll-based animations can make a page feel alive without pulling in a large library like GSAP. We can build a lightweight <strong>“appear” helper</strong> by combining:</p>
+<ul>
+<li><strong>IntersectionObserver</strong> → detect when elements enter the viewport.  </li>
+<li><strong>CSS transitions</strong> → handle the actual fade/slide/scale animations.  </li>
+<li><strong>A simple <code>.is-visible</code> toggle</strong> → applied once, no reflows.  </li>
+</ul>
+<p>This balances performance and user experience while respecting <code>prefers-reduced-motion</code>.</p>
+<hr />
+<h2>CSS</h2>
+<p>Instead of hardcoding hidden/visible styles globally, we can keep things safe: if the JavaScript never loads, elements remain visible. The script injects the CSS rules dynamically.</p>
+<pre><code class="language-css">.appear {
+  --appear-translate: 128px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  will-change: opacity, transform;
+
+  /* appeared */
+  &amp;.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Variants override the baseline transform */
+.appear-up { 
+  transform: translateY(var(--appear-translate)); 
+}
+.appear-down { 
+  transform: translateY(calc(var(--appear-translate) * -1));
+}
+.appear-left { 
+  transform: translateX(var(--appear-translate)); 
+}
+.appear-right { 
+  transform: translateX(calc(var(--appear-translate) * -1)); 
+}
+.appear-scale { 
+  transform: scale(0.95); 
+}</code></pre>
+<hr />
+<h2>JavaScript</h2>
+<p>The script observes <code>.appear</code> elements and applies <code>.is-visible</code> when they enter the viewport:</p>
+<pre><code class="language-js">    // No IO support → reveal immediately (again: no hiding CSS injected).
+const revealAllNow = () =&gt; {
+    const show = () =&gt; {
+        document
+            .querySelectorAll('.appear')
+            .forEach(el =&gt; el.classList.add('is-visible'))
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', show, { once: true })
+    } else {
+        show()
+    }
+}
+
+// Respect reduced motion → don't inject the hiding CSS; just reveal.
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    revealAllNow()
+} else if (!('IntersectionObserver' in window)) {
+    // No IO support → reveal immediately (again: no hiding CSS injected).
+    revealAllNow()
+} else {
+    // JS present → inject CSS (so elements can start hidden) and observe
+    injectCSS()
+
+    const onIntersect = entries =&gt; {
+        entries.forEach(entry =&gt; {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible')
+                io.unobserve(entry.target)
+            }
+        })
+    }
+
+    const io = new IntersectionObserver(onIntersect, { threshold: 0.2 })
+
+    const start = () =&gt; {
+        const targets = document.querySelectorAll('.appear')
+        if (!targets.length) return
+        targets.forEach(el =&gt; io.observe(el))
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true })
+    } else {
+        start()
+    }
+}</code></pre>
+<hr />
+<h2>Usage</h2>
+<pre><code class="language-html">&lt;!-- Inlcude in &lt;head&gt; or template, etc. --&gt;
+&lt;script defer src="/static/js/apps/appear.js"&gt;&lt;/script&gt;
+
+&lt;h2 class="appear appear-up"&gt;Fade In Heading&lt;/h2&gt;
+
+&lt;p class="appear appear-scale"&gt;This paragraph scales up slightly as it fades in.&lt;/p&gt;
+
+&lt;div class="appear appear-left"&gt;Slide from left&lt;/div&gt;
+&lt;div class="appear appear-right"&gt;Slide from right&lt;/div&gt;</code></pre>
+<hr />
+<h2>Progressive Enhancement</h2>
+<p>⚠️ <strong>JavaScript is required for this effect.</strong><br />
+If the script doesn’t load, <code>.appear</code> elements will remain visible by default. The animations are a progressive enhancement — the page works fine without them.</p>
+<hr />
+<p>✨ That’s all it takes: a sprinkle of CSS + IntersectionObserver for lightweight appear animations.</p></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+  <div class="outer">
+    <div class="inner">
+      <div class="content spread-apart">
+        &copy; 2025 NostalgiaPHP. All rights reserved.
+        <a href="#top" data-back-to-top>⬆ Back to Top</a>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+
+            document.querySelector('[data-back-to-top]').addEventListener('click', e => {
+              e.preventDefault()
+              window.scrollTo({ top: 0 })
+            })
+          })
+        </script>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>  </div>
+</body>
