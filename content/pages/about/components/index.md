@@ -7,9 +7,6 @@ template: main
 <style>
   main .content {
     display: grid;
-    p + p {
-      margin-block-end: var(--size-1-5);
-    }
   }
 </style>
 
@@ -32,7 +29,6 @@ This carousel looks and feels like something you’d normally reach for JavaScri
 
 In short: the browser’s layout and scrolling engine is doing all the work. We’re just layering on styles.
 
-<div style="min-height: var(--size-1-5)"></div>
 
 > **Note:** If your browser doesn’t support newer CSS features like `::scroll-button` and `::scroll-marker`, you may not see the carousel controls or indicators. That’s okay — the content is still fully accessible as a scrollable strip. This is an example of _progressive enhancement_, where modern browsers get the upgraded experience, while older ones still get a usable fallback.
 
@@ -106,7 +102,7 @@ Each tab is backed by a hidden radio input (so only one can be active at a time)
 
 This approach is accessible by default (since radios are part of the native form controls), keyboard-friendly, and requires no scripting. It’s also easy to style so the tabs look like the traditional UI pattern users expect.
 
-<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
+<div class="inner full-width flow" style="--inner-padding-block: var(--size)">
   <div class="tabs" role="tablist" aria-label="Demo tabs">
     <input type="radio" name="tabset" id="tab-1" checked>
     <label for="tab-1">Overview</label>

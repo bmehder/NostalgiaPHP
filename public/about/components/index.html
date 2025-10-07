@@ -43,7 +43,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/static/css/colors.css">
-  <link rel="stylesheet" href="/static/css/reboot.css">
+  <link rel="stylesheet" href="/static/css/reboot-new.css">
   <link rel="stylesheet" href="/static/css/skins.css">
   <link rel="stylesheet" href="/static/css/utilities.css">
   <link rel="stylesheet" href="/static/css/components.css">
@@ -133,7 +133,6 @@
 <li><strong>Responsive by default</strong> — Because it’s flexbox + aspect ratio, the layout adapts gracefully to small or large screens.</li>
 </ul>
 <p>In short: the browser’s layout and scrolling engine is doing all the work. We’re just layering on styles.</p>
-<div style="min-height: var(--size-1-5)"></div>
 <blockquote>
 <p><strong>Note:</strong> If your browser doesn’t support newer CSS features like <code>::scroll-button</code> and <code>::scroll-marker</code>, you may not see the carousel controls or indicators. That’s okay — the content is still fully accessible as a scrollable strip. This is an example of <em>progressive enhancement</em>, where modern browsers get the upgraded experience, while older ones still get a usable fallback.</p>
 </blockquote>
@@ -198,7 +197,7 @@
 <p>Tabs let you organize related content into panels where only one is visible at a time. Traditionally, this required JavaScript to toggle states and hide/show panels. But with plain HTML and CSS, we can achieve the same behavior using radio inputs and labels.</p>
 <p>Each tab is backed by a hidden radio input (so only one can be active at a time), and the labels act as the clickable tab headers. CSS then uses the <code>:checked</code> state to display the correct panel.</p>
 <p>This approach is accessible by default (since radios are part of the native form controls), keyboard-friendly, and requires no scripting. It’s also easy to style so the tabs look like the traditional UI pattern users expect.</p>
-<div class="inner full-width flow" style="--inner-padding-block: var(--size-2)">
+<div class="inner full-width flow" style="--inner-padding-block: var(--size)">
   <div class="tabs" role="tablist" aria-label="Demo tabs">
     <input type="radio" name="tabset" id="tab-1" checked>
     <label for="tab-1">Overview</label>

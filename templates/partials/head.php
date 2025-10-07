@@ -109,7 +109,7 @@ $pathOnly = parse_url($reqUri, PHP_URL_PATH) ?? '/';
 
   <!-- Styles -->
   <link rel="stylesheet" href="<?= url('/static/css/colors.css') ?>">
-  <link rel="stylesheet" href="<?= url('/static/css/reboot.css') ?>">
+  <link rel="stylesheet" href="<?= url('/static/css/reboot-new.css') ?>">
   <link rel="stylesheet" href="<?= url('/static/css/skins.css') ?>">
   <link rel="stylesheet" href="<?= url('/static/css/utilities.css') ?>">
   <link rel="stylesheet" href="<?= url('/static/css/components.css') ?>">

@@ -164,14 +164,8 @@ main h2 {
 	margin-block-start: var(--size-1-5);
 }
 
-main .content {
-	h2 {
-		margin-block-end: var(--size);
-	}
-
-	ul, ol {
-		margin-block: var(--size);
-	}
+main .content > * + * {
+	margin-block-end: var(--size);
 }
 
 button,
