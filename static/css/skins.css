@@ -20,6 +20,11 @@ html {
 	--size-5: calc(var(--size) * 5);
 	--size-6: calc(var(--size) * 6);
 
+	--text-base: 1rem;      /* body */
+  --text-h3:   1.25rem;
+  --text-h2:   1.5rem;
+  --text-h1:   2rem;
+
 	--text: var(--stone-800);
 	--text-heading: var(--stone-900);
 	--text-muted: var(--stone-500);
@@ -110,6 +115,7 @@ html.theme-green {
 
 body {
 	color: var(--text);
+	font-size: var(--text-base);
 	line-height: 1.6;
 }
 
@@ -135,6 +141,10 @@ h3 {
 	margin-block-end: var(--size-0-5);
 }
 
+h1, .h1 { font-size: var(--text-h1); }
+h2, .h2 { font-size: var(--text-h2); }
+h3, .h3 { font-size: var(--text-h3); }
+
 .kicker {
 	font-size: 0.8rem;
 	letter-spacing: 0.12em;
@@ -152,7 +162,6 @@ h3 {
 
 main h2 {
 	margin-block-start: var(--size-1-5);
-	margin-block-end: var(--size-0-2-5);
 }
 
 main .content {

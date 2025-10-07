@@ -25,9 +25,9 @@ sitemap: true
 author: John Doe
 ---
 
-# Markdown Example
-
 [View the markdown file here.](/content/collections/blog/markdown-example.md)
+
+# Markdown Example
 
 # H1 Heading (for page titles)
 ## H2 Heading
@@ -54,9 +54,7 @@ This is a normal paragraph. It can contain **bold**, *italic*, and `inline code`
 
 ## Images
 
-![Alt text for image](/static/media/foo.jpg)
-
-![Another image](/static/media/2.jpg)
+![Alt text for image](/static/media/3.jpg)
 
 ## Blockquotes
 

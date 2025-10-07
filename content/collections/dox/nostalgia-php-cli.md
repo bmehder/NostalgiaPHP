@@ -96,7 +96,7 @@ This command:
 
 >**⚠️ Limitations:** Some pages cannot be safely pre-rendered. For example, the Contact page contains a live form that posts back to the same PHP route. Pre-rendering would freeze it into a static file, breaking submissions. To support forms on static hosting, you’d need to switch to a client-side submission method (JavaScript + API endpoint or a service like Netlify Forms).
 
-<div style="min-height: var(--size-1-5)"></div>
+<div style="min-height: var(--size)"></div>
 
 ```bash
 php nphp build [--out=dist] [--clean]

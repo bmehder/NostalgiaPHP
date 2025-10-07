@@ -11,7 +11,8 @@
 		"submenu": [
 			{ "label": "Components", "href": "/about/components" },
 			{ "label": "Blink", "href": "/about/blink" },
-			{ "label": "Fetch", "href": "/about/fetch" }
+			{ "label": "Fetch", "href": "/about/fetch" },
+			{ "label": "Slider", "href": "/about/slider" }
 		]
 	},
 	{ "label": "Blog", "activeRoot": "/blog", "href": "/blog" },

@@ -10,6 +10,7 @@ code[class*='language-'] {
 
 /* Optional: preserve a bit of horizontal scroll if really needed */
 .content pre[class*='language-'] {
+	margin-block: var(--size);
 	max-inline-size: calc(var(--text-max-width) * 1.05);
 	overflow-x: auto;
 }
@@ -306,6 +307,7 @@ footer {
 		}
 
 		.button {
+			margin-block-start: var(--size);
 			background-color: var(--accent);
 			font-size: clamp(var(--size), 2.5vw, calc(var(--size) * 1.1));
 			box-shadow: var(--shadow-4);
@@ -475,7 +477,8 @@ dialog.lightbox {
 	inline-size: 100%;
 	display: flex;
 	gap: 0.5rem;
-	margin: 3rem auto;
+	margin-block-end: var(--size-3);
+	margin-inline: auto;
 	overflow-x: auto;
 	scroll-behavior: smooth;
 	scroll-snap-type: x mandatory;

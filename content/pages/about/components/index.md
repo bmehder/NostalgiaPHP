@@ -29,7 +29,11 @@ This carousel looks and feels like something you’d normally reach for JavaScri
 
 In short: the browser’s layout and scrolling engine is doing all the work. We’re just layering on styles.
 
+<div style="min-height: var(--size-1-5)"></div>
+
 > **Note:** If your browser doesn’t support newer CSS features like `::scroll-button` and `::scroll-marker`, you may not see the carousel controls or indicators. That’s okay — the content is still fully accessible as a scrollable strip. This is an example of _progressive enhancement_, where modern browsers get the upgraded experience, while older ones still get a usable fallback.
+
+<div style="min-height: var(--size-1-5)"></div>
 
 <div class="carousel">
   <div class="card"><img src="https://picsum.photos/500/300?random=1" width="500" height="300" alt /></div>
