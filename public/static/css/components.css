@@ -761,3 +761,50 @@ dialog.lightbox {
 		}
 	}
 }
+
+/* Breadcrumbs */
+.breadcrumbs {
+	--inner-width: var(--size-3);
+	--inner-padding-block: var(--size-1-5);
+
+	inline-size: min(100% - var(--inner-width), var(--lg));
+	margin-inline: auto;
+	padding-block: var(--inner-padding-block);
+	
+  font-size: 0.9rem;
+  margin-block: var(--size-1) var(--size-2);
+  color: var(--muted, #666);
+}
+
+.breadcrumbs ol {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0;
+  margin: 0;
+}
+
+.breadcrumbs li::after {
+  content: "/";
+  margin-inline: 0.25rem;
+  color: var(--border, #ccc);
+}
+
+.breadcrumbs li:last-child::after {
+  content: "";
+}
+
+.breadcrumbs a {
+  color: var(--link, var(--blue-600));
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumbs [aria-current="page"] {
+  font-weight: 600;
+  color: var(--text, #000);
+}

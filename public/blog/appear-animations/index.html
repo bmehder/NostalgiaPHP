@@ -43,7 +43,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="/static/css/colors.css">
-  <link rel="stylesheet" href="/static/css/reboot-new.css">
+  <link rel="stylesheet" href="/static/css/reboot.css">
   <link rel="stylesheet" href="/static/css/skins.css">
   <link rel="stylesheet" href="/static/css/utilities.css">
   <link rel="stylesheet" href="/static/css/components.css">
@@ -112,10 +112,28 @@
       <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li><li><a href="/about/slider" class="">Slider</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
   </div>
 </header>        <main id="main">
-      <section>
+              <nav class="breadcrumbs" aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+          <ol>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="/"><span itemprop="name">Home</span></a>
+              <meta itemprop="position" content="1">
+            </li>
+            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a itemprop="item" href="/blog">
+                <span itemprop="name">Blog</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+            <li aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span itemprop="name">Appear Animations</span>
+              <meta itemprop="position" content="3">
+            </li>
+          </ol>
+        </nav>
+              <section>
         <div class="outer">
-          <div class="inner">
-            <div class="content"><h1>Appear Animations</h1>
+                      <div class="inner" style="--inner-padding-block: var(--size-1-5)">
+                      <div class="content"><h1>Appear Animations</h1>
 <p>Subtle scroll-based animations can make a page feel alive without pulling in a large library like GSAP. We can build a lightweight <strong>“appear” helper</strong> by combining:</p>
 <ul>
 <li><strong>IntersectionObserver</strong> → detect when elements enter the viewport.  </li>
