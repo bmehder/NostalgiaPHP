@@ -774,37 +774,37 @@ dialog.lightbox {
   font-size: 0.9rem;
   margin-block: var(--size-1) var(--size-2);
   color: var(--muted, #666);
-}
-
-.breadcrumbs ol {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  padding: 0;
-  margin: 0;
-}
-
-.breadcrumbs li::after {
-  content: "/";
-  margin-inline: 0.25rem;
-  color: var(--border, #ccc);
-}
-
-.breadcrumbs li:last-child::after {
-  content: "";
-}
-
-.breadcrumbs a {
-  color: var(--link, var(--blue-600));
-  text-decoration: none;
-}
-
-.breadcrumbs a:hover {
-  text-decoration: underline;
-}
-
-.breadcrumbs [aria-current="page"] {
-  font-weight: 600;
-  color: var(--text, #000);
+	
+	ol {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+		padding: 0;
+		margin: 0;
+	}
+	
+	li::after {
+		content: "/";
+		margin-inline: 0.25rem;
+		color: var(--border, #ccc);
+	}
+	
+	li:last-child::after {
+		content: "";
+	}
+	
+	a {
+		color: var(--link, var(--blue-600));
+		text-decoration: none;
+		
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	
+	& [aria-current="page"] {
+		font-weight: 600;
+		color: var(--text, #000);
+	}
 }
