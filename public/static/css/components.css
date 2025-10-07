@@ -795,7 +795,7 @@ dialog.lightbox {
 	}
 	
 	a {
-		color: var(--link, var(--blue-600));
+		color: var(--accent, var(--blue-600));
 		text-decoration: none;
 		
 		&:hover {
