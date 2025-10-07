@@ -109,7 +109,7 @@
         </svg>
       </label>
 
-      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li><li><a href="/about/slider" class="">Slider</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
   </div>
 </header>        <main id="main">
       <section>
@@ -123,26 +123,26 @@
 <p><strong>reboot.css</strong> - This file contains baseline resets and foundational styles that normalize browser inconsistencies. Think of it as the groundwork that ensures a consistent look across browsers.</p>
 </li>
 <li>
-<p><strong>skins.css</strong> - Skins.css holds design-specific tokens and themes. It defines the overall visual identity, including fonts, spacing, and other design tokens that can be customized or themed.</p>
-</li>
-<li>
-<p><strong>components.css</strong> - This file is dedicated to component-scoped styles. It uses CSS nesting to keep styles modular and encapsulated, making it easier to maintain and update individual UI components without affecting others.</p>
-</li>
-<li>
 <p><strong>colors.css</strong> - Colors.css serves as the color palette reference. It contains Tailwind-inspired CSS custom properties (tokens) such as <code>--stone-100</code>, <code>--amber-200</code>, and others. These tokens provide a consistent and reusable set of colors to choose from without having to generate colors on your own.</p>
+</li>
+<li>
+<p><strong>skins.css</strong> - Skins.css holds design-specific tokens and themes. It defines the overall visual identity, including fonts, spacing, and other design tokens that can be customized or themed.</p>
 </li>
 <li>
 <p><strong>utilities.css</strong> - Utilities.css contains layout primitives and helper classes (e.g., <code>.wrapper</code>, <code>.flow</code>, <code>.inner</code>, <code>.auto-fit</code>, <code>.spread-apart</code>) that are used repeatedly for structure and spacing across the site. These are not traditional Tailwind-style utilities but foundational classes for consistent layout.</p>
 </li>
+<li>
+<p><strong>components.css</strong> - This file is dedicated to component-scoped styles. It uses CSS nesting to keep styles modular and encapsulated, making it easier to maintain and update individual UI components without affecting others.</p>
+</li>
 </ul>
 <h2>Philosophy</h2>
-<p>The organization reflects a clear separation of concerns:</p>
+<p>The organization reflects a clear separation of style concerns:</p>
 <ol>
 <li><strong>Baseline Resets (reboot.css):</strong> Establish a clean slate for styling by resetting default browser styles.</li>
-<li><strong>Design Tokens &amp; Themes (skins.css):</strong> Define the visual language and theming elements.</li>
-<li><strong>Component Styles (components.css):</strong> Encapsulate styles for individual components to promote modularity.</li>
 <li><strong>Color Palette (colors.css):</strong> Provide a centralized and consistent set of color variables inspired by Tailwind CSS for easy theming and maintenance.</li>
+<li><strong>Design Tokens &amp; Themes (skins.css):</strong> Define the visual language and theming elements.</li>
 <li><strong>Utility Classes (utilities.css):</strong> Provide lightweight, single-purpose classes for quick layout or style adjustments without bloating component code.</li>
+<li><strong>Component Styles (components.css):</strong> Encapsulate styles for individual components to promote modularity.</li>
 </ol>
 <p>By structuring these five stylesheets this way, developers can easily navigate, update, and extend the site's design system. If you are using this site as an example or starting point, following this pattern can help keep your CSS organized and scalable.</p></div>
           </div>

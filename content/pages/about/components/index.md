@@ -7,6 +7,9 @@ template: main
 <style>
   main .content {
     display: grid;
+    p + p {
+      margin-block-end: var(--size-1-5);
+    }
   }
 </style>
 

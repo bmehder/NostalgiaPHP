@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>The NostalgiaPHP Manifesto — NostalgiaPHP</title>
+  <title>Slider — NostalgiaPHP</title>
 
-      <meta name="description" content="The NostalgiaPHP Manifesto is a core set of values to understand the philosphy behing NostalgiaPHP.">
   
   <link rel="canonical" href="http://localhost/">
 
@@ -24,8 +23,7 @@
   
   <!-- Open Graph (basic) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="The NostalgiaPHP Manifesto">
-      <meta property="og:description" content="The NostalgiaPHP Manifesto is a core set of values to understand the philosphy behing NostalgiaPHP.">
+  <meta property="og:title" content="Slider">
     <meta property="og:url" content="http://localhost/">
   
   <!-- Useful for client scripts that need the base URL -->
@@ -74,9 +72,33 @@
   <script type="module" src="/static/js/apps/theme-switcher.js"></script>
 
   <!-- Appear.js -->
-  <script defer src="/static/js/apps/appear.js"></script>
+  <script type="module" src="/static/js/apps/appear.js"></script>
 </head>
-<body>
+<style>
+  .inner.slider {
+    --inner-padding-block: 0 var(--size-3);
+    min-inline-size: 100%;
+    display: grid;
+
+    .carousel {
+      .card {
+        min-inline-size: 100%;
+        aspect-ratio: 18/8;
+        border-radius: 0px;
+      }
+
+      &::scroll-button(left) {
+        translate: 110%;
+      }
+
+      &::scroll-button(right) {
+        translate: -110%;
+      }
+    }
+  }
+</style>
+
+<body class="full-width">
   <div class="wrapper">
     <a class="visually-hidden" id="top"></a>
 
@@ -102,30 +124,69 @@
       <!-- ✅ label becomes the hamburger button -->
       <label for="nav-check" class="nav-toggle" aria-controls="site-nav">
         <span class="visually-hidden">Menu</span>
-        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--stone-100)" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="40" height="40" fill="var(--text-inverse)" aria-hidden="true">
           <rect x="3" y="6" width="18" height="2" rx="1"></rect>
           <rect x="3" y="11" width="18" height="2" rx="1"></rect>
           <rect x="3" y="16" width="18" height="2" rx="1"></rect>
         </svg>
       </label>
 
-      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link no-border" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link active" anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li><li><a href="/about/slider" class="active">Slider</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
   </div>
-</header>        <main id="main">
+</header>    <section>
+      <div class="outer">
+        <div class="inner slider">
+          <div class="carousel">
+            <div class="card"><img src="https://picsum.photos/1200/533?random=1" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=2" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=3" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=4" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=5" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=6" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=7" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=8" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=9" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=10" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=11" width="1200" height="533" alt /></div>
+            <div class="card"><img src="https://picsum.photos/1200/533?random=12" width="1200" height="533" alt /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <main id="main">
       <section>
         <div class="outer">
           <div class="inner">
-            <div class="content"><h1>The NostalgiaPHP Manifesto</h1>
-<ol>
-<li><strong>Keep it simple.</strong> If all you need is to show content and sprinkle in a little JavaScript, this is the easiest way I know to publish a site.</li>
-<li><strong>Essentials included.</strong> You get a sitemap.xml, robots.txt, a 404 page, and control over SEO basics (titles, meta descriptions, and sitemap inclusion).</li>
-<li><strong>Flexible Markdown.</strong> Write plain Markdown, drop in HTML when you need more control, or mix the two inside a file.</li>
-<li><strong>Extend with templates.</strong> If Markdown isn’t enough, make a PHP template and reuse partials.</li>
-<li><strong>Low-friction workflow.</strong> Develop locally, push to GitHub, and deploy to Render.com (or anywhere with PHP).</li>
-<li><strong>Minimal dependencies.</strong> Anything else introduces setup, maintenance, and fragility. Add features only when you actually need them.</li>
-<li><strong>Extend outward.</strong> Lean on microservices or language1.agnostic tools (like standalone contact forms) instead of inflating the core.</li>
-<li><strong>Easy exit ramp.</strong> If you outgrow this, migrate your styles and content, then rebuild views in another framework or language.</li>
-</ol></div>
+            <div class="content flow">
+              <h1>CSS-only Slider</h1>
+              <p>
+                This is the same component as the carousel on the <a href="about/components">components page</a> but with the following scoped css
+                changes.
+              </p>
+              
+              <pre><code class="language-javascript">main .inner {
+  --inner-padding-block: 0 var(--size-3);
+
+  min-inline-size: 100%;
+  display: grid;
+  
+  .carousel {
+    .card {
+      min-inline-size: 100%;
+      aspect-ratio: 18/7;
+      border-radius: 0px;
+    }
+  
+    &::scroll-button(left) {
+      translate: 110%;
+    }
+  
+    &::scroll-button(right) {
+      translate: -110%;
+    }
+  }
+}</code></pre>
+            </div>
           </div>
         </div>
       </section>
@@ -153,4 +214,3 @@
 </body>
 
 </html>  </div>
-</body>

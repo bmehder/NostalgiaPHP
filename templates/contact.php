@@ -8,7 +8,7 @@
       <section>
         <div class="outer">
           <div class="inner">
-            <div class="content">
+            <div class="content flow">
               <h1>Contact Us</h1>
               <p>We’d love to hear from you. Fill out the form below:</p>
               <?php include path('partials') . '/contact-form.php'; ?>
