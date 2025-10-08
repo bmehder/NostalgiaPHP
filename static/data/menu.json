@@ -12,7 +12,8 @@
 			{ "label": "Components", "href": "/about/components" },
 			{ "label": "Blink", "href": "/about/blink" },
 			{ "label": "Fetch", "href": "/about/fetch" },
-			{ "label": "Slider", "href": "/about/slider" }
+			{ "label": "Slider", "href": "/about/slider" },
+			{ "label": "REST API", "href": "/api" }
 		]
 	},
 	{ "label": "Blog", "activeRoot": "/blog", "href": "/blog" },

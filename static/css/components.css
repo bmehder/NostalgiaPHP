@@ -235,37 +235,6 @@ footer {
 				grid-template-columns: auto 1fr;
 			}
 		}
-
-		.tags {
-			display: flex;
-			flex-wrap: wrap;
-			gap: var(--size-0-2-5);
-			margin: 0;
-			margin-block-start: var(--size-0-5);
-			padding: 0;
-			list-style: none;
-
-			li {
-				margin: 0;
-			}
-
-			a {
-				display: inline-block;
-				font-size: var(--size-0-7-5);
-				padding: var(--size-0-2-5) var(--size-0-5);
-				border-radius: 999px;
-				background: var(--bg-alt-2);
-				color: var(--text-muted);
-				text-decoration: none;
-				line-height: 1.2;
-				transition: background 0.1s ease, color 0.1s ease;
-			}
-
-			a:hover {
-				background: var(--accent);
-				color: var(--text-inverse);
-			}
-		}
 	}
 }
 

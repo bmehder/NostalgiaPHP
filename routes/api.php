@@ -237,12 +237,14 @@ if ($first === 'items') {
       if (is_string($image) && $image !== '' && $image[0] === '/') {
         $image = url($image);
       }
+      $desc = (string) ($fm['description'] ?? '');
 
       $rows[] = [
         'collection' => $c,
         'slug' => $slug,
         'url' => url("/{$c}/{$slug}"),
         'title' => $title,
+        'description' => $desc,
         'date' => $dateS,
         'tags' => $tagsDisplay, // keep original casing for UI
         'html' => $html,
@@ -301,6 +303,7 @@ if ($first === 'pages') {
           $send(['ok' => true, 'count' => 0, 'pages' => []]);
         $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', basename($slugPath)));
         $dateS = $fmtDate($fm['date'] ?? null);
+        $desc = (string) ($fm['description'] ?? '');
         $send([
           'ok' => true,
           'count' => 1,
@@ -309,6 +312,7 @@ if ($first === 'pages') {
               'slug' => $slugPath,
               'url' => $relToUrl($slugPath),
               'title' => $title,
+              'description' => $desc,
               'date' => $dateS,
               'tags' => $tags,
               'html' => markdown_to_html($mdBody),
@@ -339,11 +343,13 @@ if ($first === 'pages') {
 
     $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', basename($rel)));
     $dateS = $fmtDate($fm['date'] ?? null);
+    $desc = (string) ($fm['description'] ?? '');
 
     $rows[] = [
       'slug' => $rel,
       'url' => $relToUrl($rel),
       'title' => $title,
+      'description' => $desc,
       'date' => $dateS,
       'tags' => $tags,
       'html' => markdown_to_html($mdBody),
@@ -441,11 +447,13 @@ if ($first === 'tags') {
       else
         $url = '/' . $rel;
 
+      $desc = (string) ($fm['description'] ?? '');
       $results[] = [
         'type' => 'page',
         'slug' => $rel,
         'url' => url($url),
         'title' => $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', basename($rel))),
+        'description' => $desc,
         'date' => $fmtDate($fm['date'] ?? null),
         'tags' => $tags,
         'html' => markdown_to_html($mdBody),
@@ -464,12 +472,14 @@ if ($first === 'tags') {
         if (!$matchesTagFilter($tags, $filterTags, $matchMode))
           continue;
 
+        $desc = (string) ($fm['description'] ?? '');
         $results[] = [
           'type' => 'item',
           'collection' => $collection,
           'slug' => $slug,
           'url' => url("/{$collection}/{$slug}"),
           'title' => $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug)),
+          'description' => $desc,
           'date' => $fmtDate($fm['date'] ?? null),
           'tags' => $tags,
           'html' => markdown_to_html($md),

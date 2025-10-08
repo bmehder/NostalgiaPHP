@@ -9,17 +9,17 @@ const injectCSS = () => {
   transform: translateY(20px);
   transition: opacity .5s ease, transform .5s ease;
   will-change: opacity, transform;
-}
-.appear.is-visible {
-  opacity: 1;
-  transform: none;
-}
-/* Variants override the baseline transform */
-.appear-up    { transform: translateY(var(--appear-translate)); }
-.appear-down  { transform: translateY(calc(var(--appear-translate) * -1)); }
-.appear-left  { transform: translateX(var(--appear-translate)); }
-.appear-right { transform: translateX(calc(var(--appear-translate) * -1)); }
-.appear-scale { transform: scale(.95); }
+	}
+	.appear.is-visible {
+		opacity: 1;
+		transform: none;
+	}
+	/* Variants override the baseline transform */
+	.appear-up    { transform: translateY(var(--appear-translate)); }
+	.appear-down  { transform: translateY(calc(var(--appear-translate) * -1)); }
+	.appear-left  { transform: translateX(var(--appear-translate)); }
+	.appear-right { transform: translateX(calc(var(--appear-translate) * -1)); }
+	.appear-scale { transform: scale(.95); }
   `
 	const st = document.createElement('style')
 	st.id = 'appear-css'

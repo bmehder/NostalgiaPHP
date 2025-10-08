@@ -26,7 +26,7 @@ For example, here’s a simple client-side image gallery with a lightbox. The Ja
 <span id="gallery-demo"></span>
 
 ## Client-side rendered gallery
-
+  
 <script type="module" src="/static/js/apps/gallery.js"></script>
 
 <div class="auto-fill" style="--auto-fill-gap: var(--size-1-5)" data-gallery="/static/media/1.jpg, /static/media/2.jpg, /static/media/3.jpg, /static/media/4.jpg, /static/media/5.jpg, /static/media/6.jpg"></div>

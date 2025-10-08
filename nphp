@@ -442,6 +442,40 @@ function copy_dir_recursive($src, $dst)
   }
 }
 
+/**
+ * Copy all files from $src to $dst, recursively, but skip any *.md files.
+ * Creates missing directories on the fly.
+ */
+function copy_dir_except_md(string $src, string $dst): void
+{
+  if (!is_dir($src)) return;
+
+  $it = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($src, FilesystemIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+  );
+
+  foreach ($it as $file) {
+    $rel = substr($file->getPathname(), strlen($src));
+    $to  = rtrim($dst, '/\\') . $rel;
+
+    if ($file->isDir()) {
+      if (!is_dir($to)) mkdir($to, 0775, true);
+      continue;
+    }
+
+    // Skip Markdown files
+    if (strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION)) === 'md') {
+      continue;
+    }
+
+    // Ensure parent dir exists, then copy
+    $parent = dirname($to);
+    if (!is_dir($parent)) mkdir($parent, 0775, true);
+    @copy($file->getPathname(), $to);
+  }
+}
+
 // ---------- SSG: sitemap ----------
 function build_sitemap(string $outDir, bool $includeCollectionIndexes = false): void
 {
@@ -608,6 +642,20 @@ function build_pages(string $outDir)
 
     $out = fix_relative_assets($out);
     write_html_pretty($outDir, $urlPath, $out);
+
+    // Copy colocated assets next to index.md into the page's output folder.
+    // We skip *.md files and only run when this is not the homepage.
+    if ($rel !== '') {
+      $pageDir    = $f->getPath(); // directory containing this index.md
+      $outPageDir = rtrim($outDir, '/\\') . $urlPath; // e.g. dist/about or dist/guides/install
+
+      if (!is_dir($outPageDir)) {
+        mkdir($outPageDir, 0775, true);
+      }
+
+      // Recursively copy everything except Markdown
+      copy_dir_except_md($pageDir, $outPageDir);
+    }
   }
 }
 

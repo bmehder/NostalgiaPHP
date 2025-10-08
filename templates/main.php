@@ -13,7 +13,19 @@
           <?php else: ?>
             <div class="inner">
           <?php endif; ?>
-            <div class="content"><?= $content ?></div>
+            <div class="content">
+              <?php if (is_collection_item_meta($meta)): ?>
+                <div class="post-meta">
+                  <?= meta_date_tag($meta, 'M j, Y') ?>
+                </div>
+              <?php endif; ?>
+              <?= $content ?>
+              <?php if (is_collection_item_meta($meta)): ?>
+                <?= '<hr />' ?>
+                <?= '<h3>Tags</h3>' ?>
+                <?= render_tags($meta) ?>
+              <?php endif; ?>
+            </div>
           </div>
         </div>
       </section>

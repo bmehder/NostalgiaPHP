@@ -84,5 +84,5 @@ Learn more at [NPM](https://www.npmjs.com/package/slank).
         Doubled: <span data-counter-doubled></span></p>
       </div>
     </div>
-  <div>
+  </div>
 </div>

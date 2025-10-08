@@ -118,7 +118,7 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
 ## Usage
 
 ```html
-<!-- Inlcude in <head> or template, etc. -->
+<!-- Include in <head> or template, etc. -->
 <script defer src="/static/js/apps/appear.js"></script>
 
 <h2 class="appear appear-up">Fade In Heading</h2>

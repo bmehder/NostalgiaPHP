@@ -300,6 +300,7 @@ function load_collection_item($collection, $slug)
     return null;
   [$meta, $md] = parse_front_matter(read_file($file));
   $meta['slug'] = $slug;
+  $meta['_collection'] = $collection; // expose collection to templates/helpers
   $html = markdown_to_html($md);
   return ['type' => 'item', 'collection' => $collection, 'slug' => $slug, 'meta' => $meta, 'html' => $html];
 }
@@ -400,6 +401,72 @@ function excerpt_from_html($html, $max = 160)
   return rtrim($cut, " \t\n\r\0\x0B.,;:!?\u{200B}") . '…';
 }
 
+/**
+ * Extract a DateTime from front matter if present.
+ *
+ * @param array $meta
+ * @return ?DateTime
+ */
+function meta_date(?array $meta): ?DateTime
+{
+  $meta = $meta ?? [];
+  if (!array_key_exists('date', $meta) || $meta['date'] === null || $meta['date'] === '') {
+    return null;
+  }
+  $d = $meta['date'];
+  if ($d instanceof DateTime) {
+    return $d;
+  }
+  if (is_string($d)) {
+    try {
+      return new DateTime($d);
+    } catch (Throwable $e) {
+      return null;
+    }
+  }
+  return null;
+}
+
+/**
+ * Format the meta date as a string (escaped). Returns '' if no date.
+ *
+ * @param array  $meta
+ * @param string $format
+ * @return string
+ */
+function format_meta_date(?array $meta, string $format = 'Y-m-d'): string
+{
+  $dt = meta_date($meta);
+  if (!$dt) return '';
+  return htmlspecialchars($dt->format($format), ENT_QUOTES, 'UTF-8');
+}
+
+/**
+ * Return a <time> tag for the meta date or '' if none.
+ *
+ * @param array  $meta
+ * @param string $format Human-facing format (default 'M j, Y')
+ * @return string
+ */
+function meta_date_tag(?array $meta, string $format = 'M j, Y'): string
+{
+  $dt = meta_date($meta);
+  if (!$dt) return '';
+  $iso = htmlspecialchars($dt->format(DateTime::ATOM), ENT_QUOTES, 'UTF-8');
+  $txt = htmlspecialchars($dt->format($format), ENT_QUOTES, 'UTF-8');
+  return '<time datetime="' . $iso . '">' . $txt . '</time>';
+}
+
+/**
+ * True if this meta belongs to a collection item.
+ *
+ * @param array $meta
+ */
+function is_collection_item_meta(?array $meta): bool
+{
+  return is_array($meta) && array_key_exists('_collection', $meta);
+}
+
 /* -------------------------- Active Page Helper ------------------------------- */
 
 /**
@@ -473,6 +540,31 @@ function active_class(string $href, string $current_path, bool $prefix = false, 
 }
 
 /* -------------------------------- Rendering ------------------------------- */
+
+function render_tags(array $meta): string
+{
+  $tagsRaw = $meta['tags'] ?? ($meta['tag'] ?? ($meta['keywords'] ?? []));
+  $tags = is_array($tagsRaw)
+    ? array_values(array_filter(array_map('trim', $tagsRaw)))
+    : array_values(array_filter(array_map('trim', preg_split('/\s*,\s*/', (string) $tagsRaw))));
+
+  if (!$tags)
+    return '';
+
+  ob_start();
+  $tagsPartial = path('partials') . '/tags.php';
+  if (is_file($tagsPartial)) {
+    include $tagsPartial; // partial expects $tags
+  } else {
+    echo '<ul class="tags">';
+    foreach ($tags as $tag) {
+      $safe = htmlspecialchars((string) $tag, ENT_QUOTES, 'UTF-8');
+      echo '<li><a href="' . url('/tag/' . rawurlencode($tag)) . '">' . $safe . '</a></li>';
+    }
+    echo '</ul>';
+  }
+  return ob_get_clean();
+}
 
 function render_for_build(string $template, string $title, string $content, array $meta, string $urlPath): string
 {

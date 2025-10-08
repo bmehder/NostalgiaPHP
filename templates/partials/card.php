@@ -75,14 +75,39 @@ if (is_string($image) && $image !== '' && $image[0] === '/') {
       <?php if ($excerptEsc): ?>
         <p class="card-excerpt"><?= $excerptEsc ?></p>
       <?php endif; ?>
-      <?php if (!empty($tags) && is_array($tags)): ?>
-        <ul class="tags">
-          <?php foreach ($tags as $tag):
-            $t = htmlspecialchars((string) $tag, ENT_QUOTES, 'UTF-8'); ?>
-            <li><a href="<?= url('/tag/' . rawurlencode($tag)) ?>"><?= $t ?></a></li>
-          <?php endforeach; ?>
-        </ul>
-      <?php endif; ?>
+      <?php
+      // Use shared helper if available; otherwise fall back to local render
+      if (function_exists('render_tags_from_meta')) {
+        echo render_tags_from_meta(($item['meta'] ?? []) + ($item['frontmatter'] ?? []));
+      } else {
+        // Fallback: normalize from common FM keys
+        $raw = $item['frontmatter']['tags'] ?? ($item['meta']['tags'] ?? ($item['frontmatter']['tag'] ?? ($item['frontmatter']['keywords'] ?? [])));
+        if (is_array($raw)) {
+          $tagsNorm = array_values(array_filter(array_map(fn($t) => is_string($t) ? trim($t) : '', $raw)));
+        } elseif (is_string($raw)) {
+          $tagsNorm = array_values(array_filter(array_map('trim', preg_split('/\s*,\s*/', $raw))));
+        } else {
+          $tagsNorm = [];
+        }
+
+        if (!empty($tagsNorm)) {
+          $tagsPartial = path('partials') . '/tags.php';
+          if (is_file($tagsPartial)) {
+            // Expose $tags to partial
+            $tags = $tagsNorm;
+            include $tagsPartial;
+          } else {
+            // Minimal fallback markup
+            echo '<ul class="tags">';
+            foreach ($tagsNorm as $tag) {
+              $t = htmlspecialchars((string) $tag, ENT_QUOTES, 'UTF-8');
+              echo '<li><a href="' . url('/tag/' . rawurlencode($tag)) . '">' . $t . '</a></li>';
+            }
+            echo '</ul>';
+          }
+        }
+      }
+      ?>
     </div>
 
     <p class="card-cta" style="margin-block-start: auto;">
