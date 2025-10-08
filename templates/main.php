@@ -21,9 +21,12 @@
               <?php endif; ?>
               <?= $content ?>
               <?php if (is_collection_item_meta($meta)): ?>
-                <?= '<hr />' ?>
-                <?= '<h3>Tags</h3>' ?>
-                <?= render_tags($meta) ?>
+                <?php $tags = render_tags($meta); ?>
+                <?php if (!empty($tags)): ?>
+                  <hr />
+                  <h3>Tags</h3>
+                  <?= $tags ?>
+                <?php endif; ?>
               <?php endif; ?>
             </div>
           </div>

@@ -20,10 +20,10 @@ html {
 	--size-5: calc(var(--size) * 5);
 	--size-6: calc(var(--size) * 6);
 
-	--text-base: 1rem;      /* body */
-  --text-h3:   1.25rem;
-  --text-h2:   1.5rem;
-  --text-h1:   2rem;
+	--text-base: 1rem; /* body */
+	--text-h3: 1.25rem;
+	--text-h2: 1.5rem;
+	--text-h1: 2rem;
 
 	--text: var(--stone-800);
 	--text-heading: var(--stone-900);
@@ -141,9 +141,18 @@ h3 {
 	margin-block-end: var(--size-0-5);
 }
 
-h1, .h1 { font-size: var(--text-h1); }
-h2, .h2 { font-size: var(--text-h2); }
-h3, .h3 { font-size: var(--text-h3); }
+h1,
+.h1 {
+	font-size: var(--text-h1);
+}
+h2,
+.h2 {
+	font-size: var(--text-h2);
+}
+h3,
+.h3 {
+	font-size: var(--text-h3);
+}
 
 .kicker {
 	font-size: 0.8rem;
@@ -158,6 +167,10 @@ h3, .h3 { font-size: var(--text-h3); }
 
 .accent {
 	color: var(--accent);
+}
+
+main h1 {
+	margin-block-end: var(--size-2);
 }
 
 main h2 {
@@ -268,4 +281,41 @@ main :is(ul, ol) li {
 
 .collection {
 	background-color: var(--bg-alt-2);
+}
+
+.content .post-meta {
+	margin-block-end: var(--size);
+	color: var(--text-muted);
+	font-size: 0.875rem;
+}
+
+.tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-0-2-5);
+	margin: 0;
+	margin-block-start: var(--size-0-5);
+	padding: 0;
+	list-style: none;
+
+	li {
+		margin: 0;
+	}
+
+	a {
+		display: inline-block;
+		font-size: var(--size-0-7-5);
+		padding: var(--size-0-2-5) var(--size-0-5);
+		border-radius: 999px;
+		background: var(--bg-alt-2);
+		color: var(--text-muted);
+		text-decoration: none;
+		line-height: 1.2;
+		transition: background 0.1s ease, color 0.1s ease;
+	}
+
+	a:hover {
+		background: var(--accent);
+		color: var(--text-inverse);
+	}
 }

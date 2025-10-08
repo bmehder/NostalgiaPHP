@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Why NostalgiaPHP? — NostalgiaPHP</title>
+  <title>You Might Not Want to Use NostalgiaPHP — NostalgiaPHP</title>
 
-      <meta name="description" content="Building a simple website today often comes with a lot of extra baggage. But what if you just need a small site?">
+      <meta name="description" content="A critical look at NostalgiaPHP, weighing its promise of simplicity against the complexities of modern web development.">
   
   <link rel="canonical" href="http://localhost/">
 
@@ -24,8 +24,8 @@
   
   <!-- Open Graph (basic) -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Why NostalgiaPHP?">
-      <meta property="og:description" content="Building a simple website today often comes with a lot of extra baggage. But what if you just need a small site?">
+  <meta property="og:title" content="You Might Not Want to Use NostalgiaPHP">
+      <meta property="og:description" content="A critical look at NostalgiaPHP, weighing its promise of simplicity against the complexities of modern web development.">
     <meta property="og:url" content="http://localhost/">
   
   <!-- Useful for client scripts that need the base URL -->
@@ -125,7 +125,7 @@
         <meta itemprop="position" content="2">
       </li>
       <li aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-        <span itemprop="name">Why NostalgiaPHP?</span>
+        <span itemprop="name">You Might Not Want to Use NostalgiaPHP</span>
         <meta itemprop="position" content="3">
       </li>
     </ol>
@@ -135,46 +135,23 @@
                       <div class="inner" style="--inner-padding-block: var(--size-1-5)">
                       <div class="content">
                               <div class="post-meta">
-                  <time datetime="2025-09-08T00:00:00+01:00">Sep 8, 2025</time>                </div>
-                            <h1>Why NostalgiaPHP?</h1>
-<h2>The Problem</h2>
-<p>Building a simple website today often comes with a lot of extra baggage:</p>
-<ul>
-<li><strong>WordPress</strong> → instantly drags in a DB, admin UI, plugins, themes, update cycles, PHP version nags, etc.</li>
-<li><strong>Astro / Next / Eleventy</strong> → modern, fast, static-friendly… but need Node, npm, dependencies, configs, build steps.</li>
-<li><strong>Jekyll / Hugo</strong> → great static site generators, but you need Ruby or Go, and a build process. Server side rendering has many more advantages.</li>
-</ul>
-<p>They’re all fantastic at scale. But what if you just need a small site — a few pages, a blog or portfolio, and a header and footer?</p>
-<hr />
-<h2>The Solution</h2>
-<p><strong>NostalgiaPHP</strong>:</p>
-<ul>
-<li>Built in plain PHP.</li>
-<li>Zero database.</li>
-<li>Zero build step.</li>
-<li>Zero frameworks.</li>
-</ul>
-<p>Just <strong>Markdown files</strong> with front matter → served as pages and collections.<br />
-Drop them in <code>/content/pages</code> or <code>/content/collections/{name}/</code> and you’re live.</p>
-<p>Run one command:</p>
-<pre><code class="language-bash">php -S localhost:8000</code></pre>
-<p>…and you’re looking at your site.</p>
-<hr />
-<h2>The Philosophy</h2>
-<ul>
-<li><strong>Pages</strong> are Markdown files.</li>
-<li><strong>Collections</strong> are just folders of Markdown files.</li>
-<li><strong>Partials</strong> are PHP includes.</li>
-<li><strong>Templates</strong> are simple PHP files.</li>
-<li><strong>Assets</strong> are whatever you put in <code>/static</code>.</li>
-</ul>
-<p>No database migrations. No npm install. No build pipeline. No JS metaframeworks.</p>                                                                <hr />
-                  <h3>Tags</h3>
-                  <ul class="tags">
-      <li><a href="/tag/php">php</a></li>
-      <li><a href="/tag/simplicity">simplicity</a></li>
-      <li><a href="/tag/retro">retro</a></li>
-  </ul>                                          </div>
+                  <time datetime="2025-10-08T00:00:00+01:00">Oct 8, 2025</time>                </div>
+                            <h1>You Might Not Want to Use NostalgiaPHP</h1>
+<p>Every few years the web development world rediscovers a seductive idea: <em>what if we could just keep things simple?</em> Write Markdown files, sprinkle in some templates, glue it together with a few hundred lines of PHP, and voilà — a CMS without the CMS. NostalgiaPHP is the latest to embody this dream, and the appeal is understandable.  </p>
+<p>Many developers have spent years building tools like SvelteKit, Next.js, and others to combat complexity, so there is sympathy for this approach. But it’s worth interrogating the “return to simplicity” narrative before canonizing it as the future.  </p>
+<h2>The false binary</h2>
+<p>There’s a tendency to frame modern frameworks as bloated monstrosities, weighed down by build tools, hydration, reactive state libraries, and endless npm dependencies. And then, by contrast, something like NostalgiaPHP seems almost heroic: <em>no build step, no database, just files on disk and some elegant PHP helpers</em>.  </p>
+<p>But the choice is not binary. Complexity doesn’t accrue because developers are masochists; it accrues because requirements do. Accessibility, security, offline support, progressive enhancement, internationalization, streaming, SSR, hydration, edge deployment, scalability — these are not optional for many teams. Pretending otherwise risks setting people up for a painful awakening when “the simple thing” no longer meets their needs.  </p>
+<h2>The persistence of state</h2>
+<p>NostalgiaPHP is primarily a server-side rendering (SSR) framework, with static site generation (SSG) offered as a side option. Static site generation is powerful. It reduces runtime complexity and infrastructure cost. But real-world apps aren’t just documents; they’re conversations between user and server, perpetually changing. Forms, authentication, dashboards, collaborative editing, live data streams — these are not accidental. They’re what the web <em>is</em>.  </p>
+<p>A framework that only concerns itself with “content in, HTML out” risks relegating itself to brochureware. That’s not a criticism if brochureware is all you need. But calling it a general solution to the web is misleading.  </p>
+<h2>Reinventing the wheel, again</h2>
+<p>One of the ironies of NostalgiaPHP is that it touts its <em>lack</em> of frameworks as a virtue — and then slowly re-implements framework features by hand: routing, tags, search indexes, breadcrumbs, page animations. At some point, you’ve built… a framework.  </p>
+<p>The problem is, unlike established frameworks, you don’t benefit from the ecosystem’s accumulated wisdom: performance profiling, accessibility audits, cross-browser quirks, security research, battle-tested plugins. You’re on your own. That’s a heavy price for nostalgia.  </p>
+<h2>The real lesson</h2>
+<p>This is not to sound dismissive. Experiments like this remind us that complexity isn’t inevitable, and that it’s possible to ship real sites with almost nothing. But caution is warranted against romanticizing it into a movement.  </p>
+<p>The future of the web is not about rejecting frameworks or databases or build tools. It’s about making them disappear into the background, giving developers the <em>illusion</em> of simplicity without sacrificing power. That’s the direction many modern tools are moving towards — zero-config builds, compile-time reactivity, tiny runtime footprints.  </p>
+<p>NostalgiaPHP is a nice reminder that HTML is still HTML, CSS is still CSS, and Markdown is a joy. But the future won’t come from rewinding the tape. It’ll come from reimagining what developer experience can be in the face of real-world complexity.</p>                                                                        </div>
           </div>
         </div>
       </section>

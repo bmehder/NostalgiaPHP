@@ -6,11 +6,11 @@
   </url>
   <url>
     <loc>/about</loc>
-    <lastmod>2025-10-07T17:10:19+00:00</lastmod>
+    <lastmod>2025-10-07T17:58:05+00:00</lastmod>
   </url>
   <url>
     <loc>/about/blink</loc>
-    <lastmod>2025-09-23T22:48:22+00:00</lastmod>
+    <lastmod>2025-10-07T18:07:46+00:00</lastmod>
   </url>
   <url>
     <loc>/about/components</loc>
@@ -26,7 +26,7 @@
   </url>
   <url>
     <loc>/blog/appear-animations</loc>
-    <lastmod>2025-10-03T04:33:12+00:00</lastmod>
+    <lastmod>2025-10-08T12:51:59+00:00</lastmod>
   </url>
   <url>
     <loc>/blog/astro-comparison</loc>
@@ -59,6 +59,10 @@
   <url>
     <loc>/blog/nostalgia-php-vs-wordpress</loc>
     <lastmod>2025-09-23T22:52:43+00:00</lastmod>
+  </url>
+  <url>
+    <loc>/blog/not-nostalgia-php</loc>
+    <lastmod>2025-10-08T00:05:08+00:00</lastmod>
   </url>
   <url>
     <loc>/blog/rails-vs-nostalgia</loc>
