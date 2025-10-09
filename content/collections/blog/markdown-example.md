@@ -4,7 +4,6 @@ title: Markdown Example
 description: An example of using writing markdown.
 image: static/media/markdown-example.jpg
 draft: false
-template: main
 
 # Featured image - for Card thumbnails
 # image: /static/media/foo.jpg

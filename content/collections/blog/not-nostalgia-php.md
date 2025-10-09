@@ -3,7 +3,6 @@ title: You Might Not Want to Use NostalgiaPHP
 description: A critical look at NostalgiaPHP, weighing its promise of simplicity against the complexities of modern web development.
 date: 2025-10-08
 image: /static/media/not-nostalgia-php.jpg
-template: main
 ---
 
 # You Might Not Want to Use NostalgiaPHP

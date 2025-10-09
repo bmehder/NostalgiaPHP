@@ -24,7 +24,7 @@
                 <?php $tags = render_tags($meta); ?>
                 <?php if (!empty($tags)): ?>
                   <hr />
-                  <h3>Tags</h3>
+                  <h3>Tagged:</h3>
                   <?= $tags ?>
                 <?php endif; ?>
               <?php endif; ?>

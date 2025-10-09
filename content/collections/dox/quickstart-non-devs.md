@@ -2,8 +2,7 @@
 title: Quickstart for Non-Devs
 description: How to do this for people that have no idea.
 date: 2025-09-10
-image: /static/media/about-nostalgia-php.jpg
-template: main
+image: /static/media/about-nostalgia-php.webp
 excerpt: Make site. Fast. This is the fun way to edit a website — no scary dashboards, no logins, just files and folders.
 ---
 

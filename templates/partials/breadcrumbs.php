@@ -12,7 +12,7 @@ if ($isItem) {
   $item = function_exists('load_collection_item') ? load_collection_item($collection, $slug) : null;
   $title = $item['meta']['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
   ?>
-  <nav class="breadcrumbs" aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+  <nav class="breadcrumbs inner" aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
     <ol>
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <a itemprop="item" href="<?= url('/') ?>"><span itemprop="name">Home</span></a>

@@ -460,7 +460,7 @@ foreach ($cols as $c => $items) {
                 <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                 <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
                 <td><?= h(fm_tags($m)) ?></td>
-                <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
+                <td><code><?= h(($m['template'] ?? '')) ?></code></td>
                 <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                 <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
                 <td><?= date('Y-m-d', $p['lastmod']) ?></td>
@@ -502,7 +502,7 @@ foreach ($cols as $c => $items) {
                   <td class="wrap"><?= h($m['description'] ?? '') ?></td>
                   <td><?= h(fmt_date($m['date'] ?? '')) ?></td>
                   <td><?= h(fm_tags($m)) ?></td>
-                  <td><code><?= h(($m['template'] ?? 'main')) ?></code></td>
+                  <td><code><?= h(($m['template'] ?? '')) ?></code></td>
                   <td><?= !empty($m['draft']) ? 'true' : '' ?></td>
                   <td><?= (isset($m['sitemap']) && $m['sitemap'] === false) ? 'false' : '' ?></td>
                   <td><a href="<?= h(url($it['url'])) ?>"><?= h($it['url']) ?></a></td>

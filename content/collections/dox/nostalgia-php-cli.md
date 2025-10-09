@@ -3,7 +3,6 @@ title: Nosty CLI — Your New Best Friend
 description: Scaffold posts and pages with a single command using the Nosty CLI helper.
 date: 2025-09-28
 image: static/media/nosty-cli.jpg
-template: main
 ---
 
 # NostalgiaPHP CLI

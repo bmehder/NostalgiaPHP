@@ -3,7 +3,6 @@ title: Appear Animations
 description: A lightweight, JS-assisted approach to scroll-based reveal animations using IntersectionObserver and CSS transitions.
 date: 2025-10-02
 image: static/media/appear.jpg
-template: main
 tags: css, animation, intersectionobserver
 ---
 

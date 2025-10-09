@@ -105,5 +105,5 @@ if (!$item) {
   $content = $item['html'];
 }
 
-$template = !empty($meta['template']) ? $meta['template'] : 'main';
+$template = !empty($meta['template']) ? $meta['template'] : 'sidebar';
 render($template, compact('title', 'content', 'path', 'meta'));

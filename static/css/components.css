@@ -733,14 +733,9 @@ dialog.lightbox {
 
 /* Breadcrumbs */
 .breadcrumbs {
-	--inner-width: var(--size-3);
 	--inner-padding-block: var(--size-1-5);
 
-	inline-size: min(100% - var(--inner-width), var(--lg));
-	margin-inline: auto;
-	padding-block: var(--inner-padding-block);
-	
-  font-size: 0.9rem;
+	font-size: 0.85rem;
   margin-block: var(--size-1) var(--size-2);
   color: var(--muted, #666);
 	
@@ -764,7 +759,7 @@ dialog.lightbox {
 	}
 	
 	a {
-		color: var(--accent, var(--blue-600));
+		color: var(--accent);
 		text-decoration: none;
 		
 		&:hover {

@@ -3,7 +3,6 @@ title: Understanding functions.php in NostalgiaPHP
 description: A walkthrough of the helper functions that power routing, rendering, and content loading.
 image: static/media/understanding-functions.jpg
 date: 2025-09-20
-template: main
 tags: php, simplicity, retro
 ---
 
