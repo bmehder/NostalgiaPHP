@@ -5,7 +5,7 @@ html {
 	--sm: 32rem;
 	--md: 48rem;
 	--lg: 64rem;
-	--xl: 72rem;
+	--xl: 70rem;
 
 	--size: 1rem;
 	--size-0-2-5: calc(var(--size) / 4);

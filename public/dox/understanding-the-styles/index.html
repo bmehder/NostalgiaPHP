@@ -76,7 +76,7 @@
   <!-- Appear.js -->
   <script type="module" src="/static/js/apps/appear.js"></script>
 </head>
-<body>
+<body class="layout-sidebar">
   <div class="wrapper">
     <a class="visually-hidden" id="top"></a>
 
@@ -109,10 +109,10 @@
         </svg>
       </label>
 
-      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li><li><a href="/about/slider" class="">Slider</a></li><li><a href="/api" class="">REST API</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/tags" class="">Tags</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
+      <nav id="site-nav" data-site-nav class="nav spread-apart"><a href="/" class="">Home</a><div class="has-submenu"><a href="/about" class="top-link " anchor-name="--parent-nav-item">About</a><ul class="submenu list-style-none flow-0-5"><li><a href="/about/components" class="">Components</a></li><li><a href="/about/blink" class="">Blink</a></li><li><a href="/about/fetch" class="">Fetch</a></li><li><a href="/about/slider" class="">Slider</a></li><li><a href="/api" class="">REST API</a></li></ul></div><a href="/blog" class="">Blog</a><a href="/dox" class="">Dox</a><a href="/search" class="">Search</a><a href="/contact" class="">Contact</a><div class="has-submenu"><a href="/admin" class="top-link " anchor-name="--parent-nav-item">Admin</a><ul class="submenu list-style-none flow-0-5"><li><a href="/sitemap.xml" class="">Sitemap</a></li><li><a href="/robots.txt" class="">Robots</a></li></ul></div><a href="https://github.com/bmehder/NostalgiaPHP" class="github-link border-none" style="line-height:0" target="_blank" rel="noopener">  <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.6-.2.6-.4v-1.4c-2.5.5-3-1.2-3-1.2-.3-.9-.8-1.2-.8-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-2-.2-4.1-1-4.1-4.3 0-1 .4-1.9 1-2.6-.1-.2-.4-1.1.1-2.3 0 0 .8-.2 2.6 1a9 9 0 0 1 4.7 0c1.8-1.2 2.6-1 2.6-1 .5 1.2.2 2.1.1 2.3.7.7 1 1.6 1 2.6 0 3.3-2.1 4-4.1 4.3.3.2.5.6.5 1.3v1.9c0 .2.2.5.6.4A8 8 0 0 0 8 .2Z"/></svg>  <span class="visually-hidden">GitHub</span></a></nav>    </div>
   </div>
 </header>        <main id="main">
-        <nav class="breadcrumbs" aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <nav class="breadcrumbs inner" aria-label="Breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
     <ol>
       <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
         <a itemprop="item" href="/"><span itemprop="name">Home</span></a>
@@ -130,13 +130,14 @@
       </li>
     </ol>
   </nav>
-        <section>
         <div class="outer">
-                      <div class="inner" style="--inner-padding-block: var(--size-1-5)">
-                      <div class="content">
-                              <div class="post-meta">
-                  <time datetime="2025-10-05T00:00:00+01:00">Oct 5, 2025</time>                </div>
-                            <h1>Understanding the Styles</h1>
+                  <div class="inner" style="--inner-padding-block: var(--size-1-5)">
+                      <div class="content content-sidebar">
+              <div>
+                                  <div class="post-meta">
+                    <time datetime="2025-10-05T00:00:00+01:00">Oct 5, 2025</time>                  </div>
+                                <section class="content flow">
+                  <h1>Understanding the Styles</h1>
 <p>When working with this site's stylesheets, it's helpful to understand how the CSS is organized to maintain clarity and scalability. The styles are broken down into five main files, each serving a distinct purpose:</p>
 <h2>Stylesheet Overview</h2>
 <ul>
@@ -165,10 +166,124 @@
 <li><strong>Utility Classes (utilities.css):</strong> Provide lightweight, single-purpose classes for quick layout or style adjustments without bloating component code.</li>
 <li><strong>Component Styles (components.css):</strong> Encapsulate styles for individual components to promote modularity.</li>
 </ol>
-<p>By structuring these five stylesheets this way, developers can easily navigate, update, and extend the site's design system. If you are using this site as an example or starting point, following this pattern can help keep your CSS organized and scalable.</p>                                                                        </div>
+<p>By structuring these five stylesheets this way, developers can easily navigate, update, and extend the site's design system. If you are using this site as an example or starting point, following this pattern can help keep your CSS organized and scalable.</p>                </section>
+                                                                                  </div>
+              
+<aside class="sidebar flow">
+  <h2>Explore</h2>
+
+  <search>
+  <form class="search-form flex" method="get" action="/search" role="search">
+    <label class="visually-hidden" for="q">Search</label>
+    <input id="q" class="flex" type="search" name="q" value="" placeholder="Search this site…"
+      autocomplete="off" />
+    <button type="submit" class="margin-0">Search</button>
+  </form>
+</search>
+  <h3>Recent Items</h3>
+  <ul>
+            <li>
+          <a href="/blog/not-nostalgia-php">You Might Not Want to Use NostalgiaPHP</a><br />
+          <small>2025-10-08</small>
+        </li>
+              <li>
+          <a href="/dox/understanding-the-styles">Understanding the Styles</a><br />
+          <small>2025-10-05</small>
+        </li>
+              <li>
+          <a href="/blog/appear-animations">Appear Animations</a><br />
+          <small>2025-10-02</small>
+        </li>
+              <li>
+          <a href="/dox/nostalgia-php-cli">Nosty CLI — Your New Best Friend</a><br />
+          <small>2025-09-28</small>
+        </li>
+              <li>
+          <a href="/dox/api-routes">Introducing the NostalgiaPHP REST API</a><br />
+          <small>2025-09-27</small>
+        </li>
+        </ul>
+  <!-- ——— TAGS (simple list) ——— -->
+  
+  <section class="sidebar-section">
+    <h3 class="sidebar-heading">Tags</h3>
+          <ul class="tags-list">
+                  <li>
+            <a href="/tag/animation">
+              animation            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/api">
+              api            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/blink">
+              blink            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/css">
+              css            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/intersectionobserver">
+              intersectionobserver            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/js">
+              js            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/json">
+              json            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/nostalgia">
+              nostalgia            </a>
+            <small>(2)</small>
+          </li>
+                  <li>
+            <a href="/tag/php">
+              php            </a>
+            <small>(3)</small>
+          </li>
+                  <li>
+            <a href="/tag/reactivity">
+              reactivity            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/rest">
+              rest            </a>
+            <small>(1)</small>
+          </li>
+                  <li>
+            <a href="/tag/retro">
+              retro            </a>
+            <small>(3)</small>
+          </li>
+                  <li>
+            <a href="/tag/simplicity">
+              simplicity            </a>
+            <small>(3)</small>
+          </li>
+                  <li>
+            <a href="/tag/slank">
+              slank            </a>
+            <small>(1)</small>
+          </li>
+              </ul>
+      <!-- <p class="tag-cloud-more"><a href="/tags">View all tags →</a></p> -->
+      </section>
+</aside>            </div>
           </div>
         </div>
-      </section>
     </main>
     <footer>
   <div class="outer">
@@ -193,4 +308,3 @@
 </body>
 
 </html>  </div>
-</body>

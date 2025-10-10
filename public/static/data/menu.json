@@ -18,7 +18,6 @@
 	},
 	{ "label": "Blog", "activeRoot": "/blog", "href": "/blog" },
 	{ "label": "Dox", "activeRoot": "/dox", "href": "/dox" },
-	{ "label": "Tags", "href": "/tags" },
 	{ "label": "Search", "href": "/search" },
 	{ "label": "Contact", "href": "/contact" },
 	{

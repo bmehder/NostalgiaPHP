@@ -66,7 +66,7 @@ $recent = array_slice($items, 0, $recent_limit);
       foreach ($recent as $it): ?>
         <li>
           <a href="<?= htmlspecialchars($it['url']) ?>"><?= htmlspecialchars($it['title']) ?></a><br />
-          <small><?= htmlspecialchars($it['date']) ?></small>
+          <small><?= htmlspecialchars(date('M j, Y', strtotime($it['date']))) ?></small>
         </li>
       <?php endforeach; else: ?>
       <li><em>No items yet.</em></li>

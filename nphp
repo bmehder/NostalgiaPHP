@@ -323,7 +323,7 @@ if ($cmd === 'make:post') {
   // collect options from remaining args
   $opts = parse_opts(array_slice($argv, 3));
   $title = $opts['title'] ?: title_from_slug($slug);
-  $template = $opts['template'] ?: 'main';
+  $template = $opts['template'] ?: 'sidebar';
   $date = $opts['date'] ?: today_ymd(site_tz($cfg));
   $draft = $opts['draft'];
   $force = $opts['force'];
@@ -676,7 +676,7 @@ function build_collection_items(string $outDir, string $collection)
     $title = $item['meta']['title'] ?? $slug;
     $meta = $item['meta'] ?? [];
     $content = $item['html'];
-    $template = !empty($meta['template']) ? $meta['template'] : 'main';
+    $template = !empty($meta['template']) ? $meta['template'] : 'sidebar';
     $urlPath = url("/{$collection}/{$slug}");
 
     // ✅ Add hero_html

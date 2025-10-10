@@ -15,7 +15,7 @@ $title = htmlspecialchars($titleRaw, ENT_QUOTES, 'UTF-8');
 $date = '';
 $fmDate = $item['meta']['date'] ?? $item['frontmatter']['date'] ?? null;
 if ($fmDate instanceof DateTime) {
-  $date = $fmDate->format('Y-m-d');
+  $date = $fmDate->format('M j, Y');
 } elseif (!empty($fmDate)) {
   $date = htmlspecialchars((string) $fmDate, ENT_QUOTES, 'UTF-8');
 }
