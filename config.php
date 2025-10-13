@@ -12,7 +12,7 @@ return [
       'https://nostalgiaphp.onrender.com',
       'https://nostalgiaphp.netlify.app',
       'http://localhost:5500',
-      // 'http://localhost:5173',
+      'http://localhost:5173',
     ],
   ],
   'collections' => [
