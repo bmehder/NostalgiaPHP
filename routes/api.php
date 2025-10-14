@@ -268,6 +268,35 @@ if ($first === 'items') {
   ]);
 }
 
+// ---- /api/items/{collection}/{slug} ----
+if ($first === 'items' && isset($parts[1], $parts[2])) {
+  $collection = $parts[1];
+  $slug = $parts[2];
+  $mdPath = path("collections/{$collection}/{$slug}.md");
+  if (is_file($mdPath)) {
+    [$fm, $md] = parse_front_matter(read_file($mdPath) ?? '');
+    $html = markdown_to_html($md);
+    $tags = $extractTags((array) $fm);
+    $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
+    $dateS = $fmtDate($fm['date'] ?? null);
+    $desc = (string) ($fm['description'] ?? '');
+    $send([
+      'ok' => true,
+      'collection' => $collection,
+      'slug' => $slug,
+      'url' => url("/{$collection}/{$slug}"),
+      'title' => $title,
+      'description' => $desc,
+      'excerpt' => $fm['excerpt'] ?? excerpt_from_html($html),
+      'date' => $dateS,
+      'tags' => $tags,
+      'html' => $html,
+    ]);
+  } else {
+    $send(['ok' => false, 'error' => 'Not found'], 404);
+  }
+}
+
 // ---- /api/pages  (list or /api/pages/{nested/slug}) ----
 if ($first === 'pages') {
   [$filterTags, $matchMode] = $getTagFilters();
