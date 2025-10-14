@@ -214,7 +214,7 @@ elseif ($first === 'items') {
     return $display;
   };
 
-  $root = rtrim(path('content/collections'), '/');
+  $root = __DIR__ . '/../content/collections';
   if (!is_dir($root)) {
     $send(['ok' => true, 'count' => 0, 'items' => []]);
   }
@@ -430,7 +430,7 @@ if ($first === 'tags') {
     }
   }
   // scan collections
-  $collRoot = rtrim(path('content/collections'), '/');
+  $collRoot = __DIR__ . '/../content/collections';
   if (is_dir($collRoot)) {
     foreach (glob($collRoot . '/*', GLOB_ONLYDIR) as $dir) {
       foreach (glob($dir . '/*.md') as $mdFile) {
@@ -592,7 +592,7 @@ if ($first === 'search') {
   $rows = [];
 
   // ---- scan collections ----
-  $root = rtrim(path('content/collections'), '/');
+  $root = __DIR__ . '/../content/collections';
   if (is_dir($root)) {
     foreach (glob($root . '/*', GLOB_ONLYDIR) as $dir) {
       $collection = basename($dir);
