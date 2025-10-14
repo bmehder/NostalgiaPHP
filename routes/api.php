@@ -126,8 +126,37 @@ $matchesTagFilter = function (array $itemTags, array $filterTags, string $mode) 
   return false;
 };
 
+// ---- /api/items/{collection}/{slug} ----
+if ($first === 'items' && count($parts) === 3) {
+  $collection = $parts[1];
+  $slug = $parts[2];
+  $absPath = __DIR__ . "/../content/collections/{$collection}/{$slug}.md";
+  if ($absPath && is_file($absPath)) {
+    [$fm, $md] = parse_front_matter(read_file($absPath) ?? '');
+    $html = markdown_to_html($md);
+    $tags = $extractTags((array) $fm);
+    $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
+    $dateS = $fmtDate($fm['date'] ?? null);
+    $desc = (string) ($fm['description'] ?? '');
+    $send([
+      'ok' => true,
+      'collection' => $collection,
+      'slug' => $slug,
+      'url' => url("/{$collection}/{$slug}"),
+      'title' => $title,
+      'description' => $desc,
+      'excerpt' => $fm['excerpt'] ?? excerpt_from_html($html),
+      'date' => $dateS,
+      'tags' => $tags,
+      'html' => $html,
+    ]);
+  } else {
+    $send(['ok' => false, 'error' => 'Not found'], 404);
+  }
+}
+
 // GET /api/items (optional ?collection=blog or /api/items/blog; optional ?tag=php)
-if ($first === 'items') {
+elseif ($first === 'items') {
   // optional filters
   $paramCollection = $_GET['collection'] ?? null;
   $fromPath = $parts[1] ?? null;
@@ -185,7 +214,7 @@ if ($first === 'items') {
     return $display;
   };
 
-  $root = rtrim(path('collections'), '/');
+  $root = rtrim(path('content/collections'), '/');
   if (!is_dir($root)) {
     $send(['ok' => true, 'count' => 0, 'items' => []]);
   }
@@ -268,34 +297,6 @@ if ($first === 'items') {
   ]);
 }
 
-// ---- /api/items/{collection}/{slug} ----
-if ($first === 'items' && isset($parts[1], $parts[2])) {
-  $collection = $parts[1];
-  $slug = $parts[2];
-  $mdPath = path("collections/{$collection}/{$slug}.md");
-  if (is_file($mdPath)) {
-    [$fm, $md] = parse_front_matter(read_file($mdPath) ?? '');
-    $html = markdown_to_html($md);
-    $tags = $extractTags((array) $fm);
-    $title = $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug));
-    $dateS = $fmtDate($fm['date'] ?? null);
-    $desc = (string) ($fm['description'] ?? '');
-    $send([
-      'ok' => true,
-      'collection' => $collection,
-      'slug' => $slug,
-      'url' => url("/{$collection}/{$slug}"),
-      'title' => $title,
-      'description' => $desc,
-      'excerpt' => $fm['excerpt'] ?? excerpt_from_html($html),
-      'date' => $dateS,
-      'tags' => $tags,
-      'html' => $html,
-    ]);
-  } else {
-    $send(['ok' => false, 'error' => 'Not found'], 404);
-  }
-}
 
 // ---- /api/pages  (list or /api/pages/{nested/slug}) ----
 if ($first === 'pages') {
@@ -429,7 +430,7 @@ if ($first === 'tags') {
     }
   }
   // scan collections
-  $collRoot = rtrim(path('collections'), '/');
+  $collRoot = rtrim(path('content/collections'), '/');
   if (is_dir($collRoot)) {
     foreach (glob($collRoot . '/*', GLOB_ONLYDIR) as $dir) {
       foreach (glob($dir . '/*.md') as $mdFile) {
@@ -591,7 +592,7 @@ if ($first === 'search') {
   $rows = [];
 
   // ---- scan collections ----
-  $root = rtrim(path('collections'), '/');
+  $root = rtrim(path('content/collections'), '/');
   if (is_dir($root)) {
     foreach (glob($root . '/*', GLOB_ONLYDIR) as $dir) {
       $collection = basename($dir);
