@@ -245,6 +245,7 @@ if ($first === 'items') {
         'url' => url("/{$c}/{$slug}"),
         'title' => $title,
         'description' => $desc,
+        'excerpt' => $fm['excerpt'] ?? excerpt_from_html($html),
         'date' => $dateS,
         'tags' => $tagsDisplay, // keep original casing for UI
         'html' => $html,
@@ -313,6 +314,7 @@ if ($first === 'pages') {
               'url' => $relToUrl($slugPath),
               'title' => $title,
               'description' => $desc,
+              'excerpt' => $fm['excerpt'] ?? excerpt_from_html(markdown_to_html($mdBody)),
               'date' => $dateS,
               'tags' => $tags,
               'html' => markdown_to_html($mdBody),
@@ -350,6 +352,7 @@ if ($first === 'pages') {
       'url' => $relToUrl($rel),
       'title' => $title,
       'description' => $desc,
+      'excerpt' => $fm['excerpt'] ?? excerpt_from_html(markdown_to_html($mdBody)),
       'date' => $dateS,
       'tags' => $tags,
       'html' => markdown_to_html($mdBody),
@@ -454,6 +457,7 @@ if ($first === 'tags') {
         'url' => url($url),
         'title' => $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', basename($rel))),
         'description' => $desc,
+        'excerpt' => $fm['excerpt'] ?? excerpt_from_html(markdown_to_html($mdBody)),
         'date' => $fmtDate($fm['date'] ?? null),
         'tags' => $tags,
         'html' => markdown_to_html($mdBody),
@@ -480,6 +484,7 @@ if ($first === 'tags') {
           'url' => url("/{$collection}/{$slug}"),
           'title' => $fm['title'] ?? ucwords(str_replace(['-', '_'], ' ', $slug)),
           'description' => $desc,
+          'excerpt' => $fm['excerpt'] ?? excerpt_from_html(markdown_to_html($md)),
           'date' => $fmtDate($fm['date'] ?? null),
           'tags' => $tags,
           'html' => markdown_to_html($md),
@@ -578,6 +583,7 @@ if ($first === 'search') {
           'date' => $dateS,
           'tags' => $tags,
           'html' => $html,
+          'excerpt' => $fm['excerpt'] ?? excerpt_from_html($html),
         ];
         if ($matches($row))
           $rows[] = $row;
@@ -620,6 +626,7 @@ if ($first === 'search') {
         'date' => $dateS,
         'tags' => $tags,
         'html' => markdown_to_html($mdBody),
+        'excerpt' => $fm['excerpt'] ?? excerpt_from_html(markdown_to_html($mdBody)),
       ];
       if ($matches($row))
         $rows[] = $row;
