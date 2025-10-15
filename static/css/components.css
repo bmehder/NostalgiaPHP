@@ -302,6 +302,9 @@ footer {
 
 /* Sidebar template */
 /* Stack on narrow screens */
+.content-sidebar {
+	margin-block-end: var(--size-3);
+}
 .sidebar {
 	& :is(p, small) {
 		color: var(--text-muted);

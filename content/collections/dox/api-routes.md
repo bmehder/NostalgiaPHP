@@ -8,20 +8,22 @@ tags: api, json, rest, nostalgia
 
 # Introducing the NostalgiaPHP REST API
 
-NostalgiaPHP has always been about simplicity: flat files, partial templates, and portable sites. Now there’s a new way to consume your content — a minimal **JSON API** that makes your data available for JavaScript frontends, React components, mobile apps, or anything else that speaks HTTP.
+NostalgiaPHP is about simplicity: flat files, partial templates, and portable sites. Now there’s a new way to consume your content — a minimal **JSON API** that makes your data available for JavaScript frontends, React components, mobile apps, or anything else that speaks HTTP.
 
 ## Available Routes
 
 The API lives under `/api`. Here are the routes currently available:
 
-- **`/api`** – overview of the available routes.
-- **`/api/health`** – quick check that the API is alive.
-- **`/api/items`** – list items from all collections.
-- **`/api/items/blog`** – list items from a specific collection.
-- **`/api/pages`** – list all pages.
-- **`/api/pages/{slug}`** – get a single page by slug.
-- **`/api/tags`** – list all tags across collections.
-- **`/api/tags/{tag}`** – list all items filtered by a tag.
+- **`/api`** – Overview of the available routes.
+- **`/api/health`** – Quick check that the API is alive.
+- **`/api/items`** – List items from all collections.
+- **`/api/items/{collection}`** – List items from a specific collection (e.g. `/api/items/blog`).
+- **`/api/items/{collection}/{slug}`** – Get a single item from a collection (e.g. `/api/items/blog/hello-world`).
+- **`/api/pages`** – List all pages.
+- **`/api/pages/{slug}`** – Get a single page by slug (supports nested slugs).
+- **`/api/tags`** – List all tags across pages and collections.
+- **`/api/tags/{tag}`** – List all pages and items filtered by a tag.
+- **`/api/search?q=term`** – Full-text search across titles, tags, and body content.
 
 Responses are JSON, sorted by date (newest first when applicable), and include:
 
@@ -35,6 +37,8 @@ Responses are JSON, sorted by date (newest first when applicable), and include:
       "slug": "nostalgia-manifesto",
       "url": "/blog/nostalgia-manifesto",
       "title": "The NostalgiaPHP Manifesto",
+      "description": "Optional description from front matter",
+      "excerpt": "Auto-generated excerpt of the content…",
       "date": "2025-09-12",
       "tags": ["intro", "php"],
       "html": "<p>Rendered HTML here...</p>"
