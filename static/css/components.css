@@ -308,11 +308,18 @@ footer {
 	}
 }
 
+@media (width > 48rem) {
+	.content-sidebar:has(.post-meta) .sidebar {
+		margin-block-start: var(--size);
+	}
+}
+
 @media (width <= 48rem) {
 	.content-sidebar {
 		grid-template-columns: 1fr;
 	}
 	.sidebar {
+		margin-block-start: 0;
 		/* put sidebar below content */
 		order: 2;
 	}
