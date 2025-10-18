@@ -49,18 +49,18 @@ dialog {
 }
 
 :where(p, li, figcaption, blockquote, hr) {
-  max-inline-size: var(--text-max-width);
+  max-inline-size: 65ch;
   text-wrap: pretty;
 }
 
 ul { padding-inline-start: 1em; } /* keep bullets by default */
 
 hr {
-  margin-block: var(--size-2);
+  margin-block: 2rem;
   margin-inline-start: 0;
   margin-inline-end: auto;
   border: none;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid currentColor;
 }
 
 /* ---------- Media ---------- */
@@ -76,7 +76,7 @@ picture {
   font-style: italic; /* alt text hint */
   background-repeat: no-repeat;
   background-size: cover;
-  shape-margin: var(--size);
+  shape-margin: 1rem;
 }
 
 /* Inline icon pattern: scope to a class instead of all SVG images */
